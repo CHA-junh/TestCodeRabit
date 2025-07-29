@@ -2,19 +2,19 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 /**
- * CSS 클래스들을 병합하는 유틸리티 함수
- * @param inputs 클래스 값들
- * @returns 병합된 클래스 문자열
+ * CSS ?�래?�들??병합?�는 ?�틸리티 ?�수
+ * @param inputs ?�래??값들
+ * @returns 병합???�래??문자??
  */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 /**
- * 날짜를 포맷팅합니다.
- * @param date 날짜 객체 또는 문자열
- * @param format 포맷 문자열 (기본값: 'YYYY-MM-DD')
- * @returns 포맷된 날짜 문자열
+ * ?�짜�??�맷?�합?�다.
+ * @param date ?�짜 객체 ?�는 문자??
+ * @param format ?�맷 문자??(기본�? 'YYYY-MM-DD')
+ * @returns ?�맷???�짜 문자??
  */
 export function formatDate(date: Date | string, format: string = 'YYYY-MM-DD'): string {
   const d = new Date(date);
@@ -37,18 +37,18 @@ export function formatDate(date: Date | string, format: string = 'YYYY-MM-DD'): 
 }
 
 /**
- * 숫자를 천 단위로 포맷팅합니다.
- * @param num 포맷팅할 숫자
- * @returns 포맷된 문자열
+ * ?�자�?�??�위�??�맷?�합?�다.
+ * @param num ?�맷?�할 ?�자
+ * @returns ?�맷??문자??
  */
 export function formatNumber(num: number): string {
   return num.toLocaleString();
 }
 
 /**
- * 문자열을 안전하게 HTML로 이스케이프합니다.
- * @param str 이스케이프할 문자열
- * @returns 이스케이프된 문자열
+ * 문자?�을 ?�전?�게 HTML�??�스케?�프?�니??
+ * @param str ?�스케?�프??문자??
+ * @returns ?�스케?�프??문자??
  */
 export function escapeHtml(str: string): string {
   const div = document.createElement('div');
@@ -57,9 +57,9 @@ export function escapeHtml(str: string): string {
 }
 
 /**
- * 객체의 깊은 복사를 수행합니다.
- * @param obj 복사할 객체
- * @returns 복사된 객체
+ * 객체??깊�? 복사�??�행?�니??
+ * @param obj 복사??객체
+ * @returns 복사??객체
  */
 export function deepClone<T>(obj: T): T {
   if (obj === null || typeof obj !== 'object') return obj;
@@ -78,10 +78,10 @@ export function deepClone<T>(obj: T): T {
 }
 
 /**
- * 디바운스 함수를 생성합니다.
- * @param func 실행할 함수
- * @param delay 지연 시간 (ms)
- * @returns 디바운스된 함수
+ * ?�바?�스 ?�수�??�성?�니??
+ * @param func ?�행???�수
+ * @param delay 지???�간 (ms)
+ * @returns ?�바?�스???�수
  */
 export function debounce<T extends (...args: any[]) => any>(
   func: T,
@@ -95,10 +95,10 @@ export function debounce<T extends (...args: any[]) => any>(
 }
 
 /**
- * 쓰로틀 함수를 생성합니다.
- * @param func 실행할 함수
- * @param delay 지연 시간 (ms)
- * @returns 쓰로틀된 함수
+ * ?�로?� ?�수�??�성?�니??
+ * @param func ?�행???�수
+ * @param delay 지???�간 (ms)
+ * @returns ?�로?�???�수
  */
 export function throttle<T extends (...args: any[]) => any>(
   func: T,
@@ -115,83 +115,84 @@ export function throttle<T extends (...args: any[]) => any>(
 }
 
 /**
- * 로컬 스토리지에 데이터를 저장합니다.
- * @param key 키
- * @param value 저장할 값
+ * 로컬 ?�토리�????�이?��? ?�?�합?�다.
+ * @param key ??
+ * @param value ?�?�할 �?
  */
 export function setLocalStorage(key: string, value: any): void {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
-    console.error('로컬 스토리지 저장 실패:', error);
+    console.error('로컬 ?�토리�? ?�???�패:', error);
   }
 }
 
 /**
- * 로컬 스토리지에서 데이터를 가져옵니다.
- * @param key 키
- * @param defaultValue 기본값
- * @returns 저장된 값 또는 기본값
+ * 로컬 ?�토리�??�서 ?�이?��? 가?�옵?�다.
+ * @param key ??
+ * @param defaultValue 기본�?
+ * @returns ?�?�된 �??�는 기본�?
  */
 export function getLocalStorage<T>(key: string, defaultValue?: T): T | null {
   try {
     const item = localStorage.getItem(key);
     return item ? JSON.parse(item) : defaultValue || null;
   } catch (error) {
-    console.error('로컬 스토리지 읽기 실패:', error);
+    console.error('로컬 ?�토리�? ?�기 ?�패:', error);
     return defaultValue || null;
   }
 }
 
 /**
- * 로컬 스토리지에서 데이터를 삭제합니다.
- * @param key 키
+ * 로컬 ?�토리�??�서 ?�이?��? ??��?�니??
+ * @param key ??
  */
 export function removeLocalStorage(key: string): void {
   try {
     localStorage.removeItem(key);
   } catch (error) {
-    console.error('로컬 스토리지 삭제 실패:', error);
+    console.error('로컬 ?�토리�? ??�� ?�패:', error);
   }
 }
 
 /**
- * 세션 스토리지에 데이터를 저장합니다.
- * @param key 키
- * @param value 저장할 값
+ * ?�션 ?�토리�????�이?��? ?�?�합?�다.
+ * @param key ??
+ * @param value ?�?�할 �?
  */
 export function setSessionStorage(key: string, value: any): void {
   try {
     sessionStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
-    console.error('세션 스토리지 저장 실패:', error);
+    console.error('?�션 ?�토리�? ?�???�패:', error);
   }
 }
 
 /**
- * 세션 스토리지에서 데이터를 가져옵니다.
- * @param key 키
- * @param defaultValue 기본값
- * @returns 저장된 값 또는 기본값
+ * ?�션 ?�토리�??�서 ?�이?��? 가?�옵?�다.
+ * @param key ??
+ * @param defaultValue 기본�?
+ * @returns ?�?�된 �??�는 기본�?
  */
 export function getSessionStorage<T>(key: string, defaultValue?: T): T | null {
   try {
     const item = sessionStorage.getItem(key);
     return item ? JSON.parse(item) : defaultValue || null;
   } catch (error) {
-    console.error('세션 스토리지 읽기 실패:', error);
+    console.error('?�션 ?�토리�? ?�기 ?�패:', error);
     return defaultValue || null;
   }
 }
 
 /**
- * 세션 스토리지에서 데이터를 삭제합니다.
- * @param key 키
+ * ?�션 ?�토리�??�서 ?�이?��? ??��?�니??
+ * @param key ??
  */
 export function removeSessionStorage(key: string): void {
   try {
     sessionStorage.removeItem(key);
   } catch (error) {
-    console.error('세션 스토리지 삭제 실패:', error);
+    console.error('?�션 ?�토리�? ??�� ?�패:', error);
   }
 } 
+

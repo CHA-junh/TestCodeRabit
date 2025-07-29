@@ -1,8 +1,8 @@
 /**
- * SYS1001M00.test.tsx - 프로그램 그룹 관리 화면 테스트
+ * SYS1001M00.test.tsx - ?�로그램 그룹 관�??�면 ?�스??
  * 
- * 테스트 대상: SYS1001M00.tsx
- * 테스트 범위: 프로그램 그룹 관리의 모든 주요 기능
+ * ?�스???�?? SYS1001M00.tsx
+ * ?�스??범위: ?�로그램 그룹 관리의 모든 주요 기능
  */
 
 import React from 'react';
@@ -39,11 +39,11 @@ jest.mock('ag-grid-react', () => ({
 const mockProgramGroupService = ProgramGroupService as jest.Mocked<typeof ProgramGroupService>;
 const mockUsePopup = usePopup as jest.MockedFunction<typeof usePopup>;
 
-describe('SYS1001M00 - 프로그램 그룹 관리', () => {
+describe('SYS1001M00 - ?�로그램 그룹 관�?, () => {
   const mockProgramGroups = [
     {
       pgmGrpId: 'GRP001',
-      pgmGrpNm: '사용자관리 그룹',
+      pgmGrpNm: '?�용?��?�?그룹',
       useYn: 'Y',
       sortSeq: 1,
       regDttm: '2024-01-01',
@@ -52,7 +52,7 @@ describe('SYS1001M00 - 프로그램 그룹 관리', () => {
     },
     {
       pgmGrpId: 'GRP002',
-      pgmGrpNm: '시스템관리 그룹',
+      pgmGrpNm: '?�스?��?�?그룹',
       useYn: 'Y',
       sortSeq: 2,
       regDttm: '2024-01-01',
@@ -64,17 +64,17 @@ describe('SYS1001M00 - 프로그램 그룹 관리', () => {
   const mockPrograms = [
     {
       pgmId: 'USR2010M00',
-      pgmNm: '사용자관리',
-      pgmDivNm: '화면',
-      bizDivNm: '사용자관리',
+      pgmNm: '?�용?��?�?,
+      pgmDivNm: '?�면',
+      bizDivNm: '?�용?��?�?,
       useYn: 'Y',
       sortSeq: 1
     },
     {
       pgmId: 'SYS1000M00',
-      pgmNm: '프로그램관리',
-      pgmDivNm: '화면',
-      bizDivNm: '시스템관리',
+      pgmNm: '?�로그램관�?,
+      pgmDivNm: '?�면',
+      bizDivNm: '?�스?��?�?,
       useYn: 'Y',
       sortSeq: 2
     }
@@ -88,7 +88,7 @@ describe('SYS1001M00 - 프로그램 그룹 관리', () => {
     mockProgramGroupService.getProgramGroupList.mockResolvedValue({
       success: true,
       data: mockProgramGroups,
-      message: '조회 성공'
+      message: '조회 ?�공'
     });
 
     mockProgramGroupService.getProgramGroupDetail.mockResolvedValue({
@@ -97,7 +97,7 @@ describe('SYS1001M00 - 프로그램 그룹 관리', () => {
         ...mockProgramGroups[0],
         programs: mockPrograms
       },
-      message: '조회 성공'
+      message: '조회 ?�공'
     });
 
     mockProgramGroupService.createProgramGroup.mockResolvedValue(mockProgramGroups[0]);
@@ -106,7 +106,7 @@ describe('SYS1001M00 - 프로그램 그룹 관리', () => {
 
     mockProgramGroupService.copyProgramGroup.mockResolvedValue({
       success: true,
-      message: '복사 성공'
+      message: '복사 ?�공'
     });
 
     // Mock popup hook
@@ -120,44 +120,44 @@ describe('SYS1001M00 - 프로그램 그룹 관리', () => {
     });
   });
 
-  describe('화면 렌더링', () => {
-    test('프로그램 그룹 관리 화면이 정상적으로 렌더링됩니다.', async () => {
+  describe('?�면 ?�더�?, () => {
+    test('?�로그램 그룹 관�??�면???�상?�으�??�더링됩?�다.', async () => {
       render(<SYS1001M00 />);
 
-      // 기본 UI 요소들이 렌더링되는지 확인
-      expect(screen.getByText('프로그램 그룹 목록')).toBeInTheDocument();
-      expect(screen.getByText('프로그램 목록')).toBeInTheDocument();
-      expect(screen.getByText('프로그램 그룹 정보')).toBeInTheDocument();
+      // 기본 UI ?�소?�이 ?�더링되?��? ?�인
+      expect(screen.getByText('?�로그램 그룹 목록')).toBeInTheDocument();
+      expect(screen.getByText('?�로그램 목록')).toBeInTheDocument();
+      expect(screen.getByText('?�로그램 그룹 ?�보')).toBeInTheDocument();
     });
 
-    test('검색 조건 입력 필드들이 정상적으로 렌더링됩니다.', () => {
+    test('검??조건 ?�력 ?�드?�이 ?�상?�으�??�더링됩?�다.', () => {
       render(<SYS1001M00 />);
 
-      expect(screen.getByPlaceholderText('그룹명 또는 코드 입력')).toBeInTheDocument();
-      expect(screen.getByDisplayValue('전체')).toBeInTheDocument();
+      expect(screen.getByPlaceholderText('그룹�??�는 코드 ?�력')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('?�체')).toBeInTheDocument();
       expect(screen.getByText('조회')).toBeInTheDocument();
     });
 
-    test('프로그램 그룹 목록 그리드가 정상적으로 렌더링됩니다.', async () => {
+    test('?�로그램 그룹 목록 그리?��? ?�상?�으�??�더링됩?�다.', async () => {
       render(<SYS1001M00 />);
 
       await waitFor(() => {
-        expect(screen.getAllByTestId('ag-grid')).toHaveLength(2); // 왼쪽, 오른쪽 그리드
+        expect(screen.getAllByTestId('ag-grid')).toHaveLength(2); // ?�쪽, ?�른�?그리??
       });
     });
 
-    test('버튼들이 정상적으로 렌더링됩니다.', () => {
+    test('버튼?�이 ?�상?�으�??�더링됩?�다.', () => {
       render(<SYS1001M00 />);
 
-      expect(screen.getByText('신규')).toBeInTheDocument();
-      expect(screen.getByText('저장')).toBeInTheDocument();
-      expect(screen.getByText('삭제')).toBeInTheDocument();
-      expect(screen.getByText('추가')).toBeInTheDocument();
+      expect(screen.getByText('?�규')).toBeInTheDocument();
+      expect(screen.getByText('?�??)).toBeInTheDocument();
+      expect(screen.getByText('??��')).toBeInTheDocument();
+      expect(screen.getByText('추�?')).toBeInTheDocument();
     });
   });
 
-  describe('프로그램 그룹 목록 조회', () => {
-    test('화면 로드 시 프로그램 그룹 목록이 자동으로 조회됩니다.', async () => {
+  describe('?�로그램 그룹 목록 조회', () => {
+    test('?�면 로드 ???�로그램 그룹 목록???�동?�로 조회?�니??', async () => {
       render(<SYS1001M00 />);
 
       await waitFor(() => {
@@ -168,44 +168,44 @@ describe('SYS1001M00 - 프로그램 그룹 관리', () => {
       });
     });
 
-    test('검색 조건을 입력하고 조회 버튼을 클릭하면 해당 조건으로 조회됩니다.', async () => {
+    test('검??조건???�력?�고 조회 버튼???�릭?�면 ?�당 조건?�로 조회?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1001M00 />);
 
-      // 검색 조건 입력
-      const searchInput = screen.getByPlaceholderText('그룹명 또는 코드 입력');
-      await user.type(searchInput, '사용자');
+      // 검??조건 ?�력
+      const searchInput = screen.getByPlaceholderText('그룹�??�는 코드 ?�력');
+      await user.type(searchInput, '?�용??);
 
       const searchButton = screen.getByText('조회');
       await user.click(searchButton);
 
       await waitFor(() => {
         expect(mockProgramGroupService.getProgramGroupList).toHaveBeenCalledWith({
-          PGM_GRP_NM: '사용자',
+          PGM_GRP_NM: '?�용??,
           USE_YN: ''
         });
       });
     });
 
-    test('엔터키를 누르면 자동으로 조회가 실행됩니다.', async () => {
+    test('?�터?��? ?�르�??�동?�로 조회가 ?�행?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1001M00 />);
 
-      const searchInput = screen.getByPlaceholderText('그룹명 또는 코드 입력');
-      await user.type(searchInput, '시스템');
+      const searchInput = screen.getByPlaceholderText('그룹�??�는 코드 ?�력');
+      await user.type(searchInput, '?�스??);
       await user.keyboard('{Enter}');
 
       await waitFor(() => {
         expect(mockProgramGroupService.getProgramGroupList).toHaveBeenCalledWith({
-          PGM_GRP_NM: '시스템',
+          PGM_GRP_NM: '?�스??,
           USE_YN: ''
         });
       });
     });
   });
 
-  describe('프로그램 그룹 선택', () => {
-    test('프로그램 그룹을 클릭하면 해당 그룹의 상세 정보가 표시됩니다.', async () => {
+  describe('?�로그램 그룹 ?�택', () => {
+    test('?�로그램 그룹???�릭?�면 ?�당 그룹???�세 ?�보가 ?�시?�니??', async () => {
       render(<SYS1001M00 />);
 
       await waitFor(() => {
@@ -218,7 +218,7 @@ describe('SYS1001M00 - 프로그램 그룹 관리', () => {
       });
     });
 
-    test('프로그램 그룹을 선택하면 해당 그룹의 프로그램 목록이 표시됩니다.', async () => {
+    test('?�로그램 그룹???�택?�면 ?�당 그룹???�로그램 목록???�시?�니??', async () => {
       render(<SYS1001M00 />);
 
       await waitFor(() => {
@@ -227,37 +227,37 @@ describe('SYS1001M00 - 프로그램 그룹 관리', () => {
       });
 
       await waitFor(() => {
-        expect(screen.getByText('프로그램 목록')).toBeInTheDocument();
+        expect(screen.getByText('?�로그램 목록')).toBeInTheDocument();
       });
     });
   });
 
-  describe('프로그램 그룹 신규 등록', () => {
-    test('신규 버튼을 클릭하면 폼이 초기화됩니다.', async () => {
+  describe('?�로그램 그룹 ?�규 ?�록', () => {
+    test('?�규 버튼???�릭?�면 ?�이 초기?�됩?�다.', async () => {
       const user = userEvent.setup();
       render(<SYS1001M00 />);
 
-      const newButton = screen.getByText('신규');
+      const newButton = screen.getByText('?�규');
       await user.click(newButton);
 
-      // 신규 버튼 클릭 후 상태 확인
+      // ?�규 버튼 ?�릭 ???�태 ?�인
       expect(newButton).toBeInTheDocument();
     });
   });
 
-  describe('프로그램 추가', () => {
-    test('프로그램 추가 버튼을 클릭하면 프로그램 검색 팝업이 열립니다.', async () => {
+  describe('?�로그램 추�?', () => {
+    test('?�로그램 추�? 버튼???�릭?�면 ?�로그램 검???�업???�립?�다.', async () => {
       const user = userEvent.setup();
       render(<SYS1001M00 />);
 
-      // 그룹 선택
+      // 그룹 ?�택
       await waitFor(() => {
         const gridRow = screen.getByTestId('grid-row-0');
         fireEvent.click(gridRow);
       });
 
-      // 프로그램 추가 버튼 클릭
-      const addProgramButton = screen.getByText('추가');
+      // ?�로그램 추�? 버튼 ?�릭
+      const addProgramButton = screen.getByText('추�?');
       await user.click(addProgramButton);
 
       await waitFor(() => {
@@ -266,38 +266,38 @@ describe('SYS1001M00 - 프로그램 그룹 관리', () => {
     });
   });
 
-  describe('검증 및 에러 처리', () => {
-    test('API 호출 실패 시 에러 처리가 정상적으로 작동합니다.', async () => {
-      mockProgramGroupService.getProgramGroupList.mockRejectedValue(new Error('API 오류'));
+  describe('검�?�??�러 처리', () => {
+    test('API ?�출 ?�패 ???�러 처리가 ?�상?�으�??�동?�니??', async () => {
+      mockProgramGroupService.getProgramGroupList.mockRejectedValue(new Error('API ?�류'));
 
       render(<SYS1001M00 />);
 
-      // 에러 발생 시에도 화면이 정상적으로 렌더링되는지 확인
+      // ?�러 발생 ?�에???�면???�상?�으�??�더링되?��? ?�인
       await waitFor(() => {
-        expect(screen.getByText('프로그램 그룹 목록')).toBeInTheDocument();
+        expect(screen.getByText('?�로그램 그룹 목록')).toBeInTheDocument();
       });
     });
   });
 
-  describe('접근성', () => {
-    test('모든 입력 필드에 적절한 placeholder가 설정되어 있습니다.', () => {
+  describe('?�근??, () => {
+    test('모든 ?�력 ?�드???�절??placeholder가 ?�정?�어 ?�습?�다.', () => {
       render(<SYS1001M00 />);
 
-      expect(screen.getByPlaceholderText('그룹명 또는 코드 입력')).toBeInTheDocument();
+      expect(screen.getByPlaceholderText('그룹�??�는 코드 ?�력')).toBeInTheDocument();
     });
 
-    test('키보드로 기본 기능에 접근할 수 있습니다.', async () => {
+    test('?�보?�로 기본 기능???�근?????�습?�다.', async () => {
       const user = userEvent.setup();
       render(<SYS1001M00 />);
 
-      // Tab 키로 포커스 이동
+      // Tab ?�로 ?�커???�동
       await user.tab();
-      expect(screen.getByPlaceholderText('그룹명 또는 코드 입력')).toHaveFocus();
+      expect(screen.getByPlaceholderText('그룹�??�는 코드 ?�력')).toHaveFocus();
     });
   });
 
-  describe('성능 및 최적화', () => {
-    test('그리드 데이터 변경 시 컬럼 크기가 자동으로 조정됩니다.', async () => {
+  describe('?�능 �?최적??, () => {
+    test('그리???�이??변�???컬럼 ?�기가 ?�동?�로 조정?�니??', async () => {
       render(<SYS1001M00 />);
 
       await waitFor(() => {
@@ -305,7 +305,7 @@ describe('SYS1001M00 - 프로그램 그룹 관리', () => {
       });
     });
 
-    test('대량의 데이터가 있어도 화면이 정상적으로 렌더링됩니다.', async () => {
+    test('?�?�의 ?�이?��? ?�어???�면???�상?�으�??�더링됩?�다.', async () => {
       const largeData = Array.from({ length: 1000 }, (_, i) => ({
         pgmGrpId: `GRP${i.toString().padStart(3, '0')}`,
         pgmGrpNm: `그룹 ${i}`,
@@ -316,7 +316,7 @@ describe('SYS1001M00 - 프로그램 그룹 관리', () => {
       mockProgramGroupService.getProgramGroupList.mockResolvedValue({
         success: true,
         data: largeData,
-        message: '조회 성공'
+        message: '조회 ?�공'
       });
 
       render(<SYS1001M00 />);
@@ -327,3 +327,4 @@ describe('SYS1001M00 - 프로그램 그룹 관리', () => {
     });
   });
 }); 
+

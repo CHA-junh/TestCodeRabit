@@ -6,7 +6,7 @@ export default function AuthLayout({
 	children: React.ReactNode
 }) {
 	useEffect(() => {
-		// body의 클래스를 완전히 비움
+		// body???�래?��? ?�전??비�?
 		document.body.className = ''
 	}, [])
 
@@ -16,3 +16,5 @@ export default function AuthLayout({
 		</div>
 	)
 }
+
+

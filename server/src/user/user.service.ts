@@ -9,7 +9,7 @@ import * as crypto from 'crypto';
 
 @Injectable()
 export class UserService {
-  private readonly SALT_ROUNDS = 12; // bcrypt 솔트 라운드
+  private readonly SALT_ROUNDS = 12; // bcrypt ?�트 ?�운??
 
   constructor(
     @InjectRepository(User)
@@ -19,26 +19,26 @@ export class UserService {
   ) {}
 
   /**
-   * 입력값 검증
+   * ?�력�?검�?
    */
   private validateUserId(userId: string): void {
     if (!userId || typeof userId !== 'string') {
-      throw new BadRequestException('유효하지 않은 사용자 ID입니다.');
+      throw new BadRequestException('?�효?��? ?��? ?�용??ID?�니??');
     }
 
-    // 사용자 ID 형식 검증 (숫자만 허용)
+    // ?�용??ID ?�식 검�?(?�자�??�용)
     if (!/^\d+$/.test(userId)) {
-      throw new BadRequestException('사용자 ID는 숫자만 입력 가능합니다.');
+      throw new BadRequestException('?�용??ID???�자�??�력 가?�합?�다.');
     }
 
-    // 길이 제한
+    // 길이 ?�한
     if (userId.length > 20) {
-      throw new BadRequestException('사용자 ID가 너무 깁니다.');
+      throw new BadRequestException('?�용??ID가 ?�무 깁니??');
     }
   }
 
   /**
-   * SHA512 해시 생성
+   * SHA512 ?�시 ?�성
    */
   private generateSHA512Hash(input: string): string {
     return crypto
@@ -49,14 +49,14 @@ export class UserService {
   }
 
   /**
-   * 사번으로 사용자 정보 조회 (부서명/직급명 포함) - SQL Injection 방지
+   * ?�번?�로 ?�용???�보 조회 (부?�명/직급�??�함) - SQL Injection 방�?
    */
   async findUserWithDept(userId: string): Promise<UserInfoDto | null> {
     try {
-      // 입력값 검증
+      // ?�력�?검�?
       this.validateUserId(userId);
 
-      // TypeORM QueryBuilder를 사용한 안전한 쿼리
+      // TypeORM QueryBuilder�??�용???�전??쿼리
       const result = await this.dataSource
         .createQueryBuilder()
         .select([
@@ -94,54 +94,54 @@ export class UserService {
       if (error instanceof BadRequestException) {
         throw error;
       }
-      throw new BadRequestException('사용자 정보 조회 중 오류가 발생했습니다.');
+      throw new BadRequestException('?�용???�보 조회 �??�류가 발생?�습?�다.');
     }
   }
 
   /**
-   * 사용자 비밀번호 검증 (하이브리드 방식: 평문 + SHA512 + bcrypt)
+   * ?�용??비�?번호 검�?(?�이브리??방식: ?�문 + SHA512 + bcrypt)
    */
   async validateUserPassword(
     userId: string,
     password: string,
   ): Promise<boolean> {
     try {
-      // 입력값 검증
+      // ?�력�?검�?
       this.validateUserId(userId);
 
       if (!password || typeof password !== 'string') {
         console.log(
-          `❌ 비밀번호 검증 실패 (${userId}): 비밀번호가 유효하지 않음`,
+          `??비�?번호 검�??�패 (${userId}): 비�?번호가 ?�효?��? ?�음`,
         );
         return false;
       }
 
       const user = await this.userRepository.findOne({ where: { userId } });
       if (!user || !user.userPwd) {
-        // 로그 완전 제거 - 보안상 민감한 정보 노출 방지
+        // 로그 ?�전 ?�거 - 보안??민감???�보 ?�출 방�?
         return false;
       }
 
-      // 1. SHA512 해시 검증 (기존 방식, 128자 16진수)
+      // 1. SHA512 ?�시 검�?(기존 방식, 128??16진수)
       const isSHA512Pattern =
         user.userPwd.length === 128 && /^[A-Fa-f0-9]{128}$/.test(user.userPwd);
 
       if (isSHA512Pattern) {
         const sha512Hash = this.generateSHA512Hash(password);
 
-        // 대소문자 구분 없이 비교
+        // ?�?�문??구분 ?�이 비교
         if (user.userPwd.toUpperCase() === sha512Hash.toUpperCase()) {
-          // 로그인 성공 시 자동으로 bcrypt로 마이그레이션
+          // 로그???�공 ???�동?�로 bcrypt�?마이그레?�션
           this.migratePasswordToBcrypt(userId, password).catch((error) => {
             console.warn(
-              `비밀번호 마이그레이션 실패 (${userId}):`,
+              `비�?번호 마이그레?�션 ?�패 (${userId}):`,
               error.message,
             );
           });
           return true;
         }
 
-        // 사용자 ID와 동일한 경우도 시도
+        // ?�용??ID?� ?�일??경우???�도
         if (userId === password) {
           const userIdHash = this.generateSHA512Hash(userId);
           if (user.userPwd.toUpperCase() === userIdHash.toUpperCase()) {
@@ -152,7 +152,7 @@ export class UserService {
         return false;
       }
 
-      // 2. bcrypt 해시 검증 (새로운 방식, 60자 이상이면서 $2b$ 또는 $2a$로 시작)
+      // 2. bcrypt ?�시 검�?(?�로??방식, 60???�상?�면??$2b$ ?�는 $2a$�??�작)
       if (
         user.userPwd.length >= 60 &&
         (user.userPwd.startsWith('$2b$') || user.userPwd.startsWith('$2a$'))
@@ -161,12 +161,12 @@ export class UserService {
         return bcryptResult;
       }
 
-      // 3. 평문 비밀번호 검증 (레거시 방식)
+      // 3. ?�문 비�?번호 검�?(?�거??방식)
       if (user.userPwd === password) {
-        // 로그인 성공 시 자동으로 bcrypt로 마이그레이션
+        // 로그???�공 ???�동?�로 bcrypt�?마이그레?�션
         this.migratePasswordToBcrypt(userId, password).catch((error) => {
           console.warn(
-            `비밀번호 마이그레이션 실패 (${userId}):`,
+            `비�?번호 마이그레?�션 ?�패 (${userId}):`,
             error.message,
           );
         });
@@ -175,13 +175,13 @@ export class UserService {
 
       return false;
     } catch (error) {
-      // 로그 완전 제거 - 보안상 민감한 정보 노출 방지
+      // 로그 ?�전 ?�거 - 보안??민감???�보 ?�출 방�?
       return false;
     }
   }
 
   /**
-   * 평문 비밀번호를 bcrypt로 마이그레이션
+   * ?�문 비�?번호�?bcrypt�?마이그레?�션
    */
   private async migratePasswordToBcrypt(
     userId: string,
@@ -196,19 +196,19 @@ export class UserService {
           pwdChngDttm: new Date().toISOString().slice(0, 14),
         },
       );
-      console.log(`✅ 비밀번호 마이그레이션 완료: ${userId}`);
+      console.log(`??비�?번호 마이그레?�션 ?�료: ${userId}`);
     } catch (error) {
-      console.error(`❌ 비밀번호 마이그레이션 실패: ${userId}`, error);
+      console.error(`??비�?번호 마이그레?�션 ?�패: ${userId}`, error);
       throw error;
     }
   }
 
   /**
-   * 사용자 존재 여부 확인
+   * ?�용??존재 ?��? ?�인
    */
   async userExists(userId: string): Promise<boolean> {
     try {
-      // 입력값 검증
+      // ?�력�?검�?
       this.validateUserId(userId);
 
       const count = await this.userRepository.count({ where: { userId } });
@@ -219,27 +219,27 @@ export class UserService {
   }
 
   /**
-   * 비밀번호 변경 (bcrypt 사용)
+   * 비�?번호 변�?(bcrypt ?�용)
    */
   async updatePassword(userId: string, newPassword: string): Promise<boolean> {
     try {
-      // 입력값 검증
+      // ?�력�?검�?
       this.validateUserId(userId);
 
       if (!newPassword || typeof newPassword !== 'string') {
-        throw new BadRequestException('유효하지 않은 비밀번호입니다.');
+        throw new BadRequestException('?�효?��? ?��? 비�?번호?�니??');
       }
 
-      // 비밀번호 복잡도 검증
+      // 비�?번호 복잡??검�?
       if (newPassword.length < 8) {
-        throw new BadRequestException('비밀번호는 최소 8자 이상이어야 합니다.');
+        throw new BadRequestException('비�?번호??최소 8???�상?�어???�니??');
       }
 
       if (newPassword === userId) {
-        throw new BadRequestException('비밀번호는 사번과 동일할 수 없습니다.');
+        throw new BadRequestException('비�?번호???�번�??�일?????�습?�다.');
       }
 
-      // bcrypt를 사용한 비밀번호 해싱
+      // bcrypt�??�용??비�?번호 ?�싱
       const hashedPassword = await bcrypt.hash(newPassword, this.SALT_ROUNDS);
 
       const result = await this.userRepository.update(
@@ -254,7 +254,9 @@ export class UserService {
       if (error instanceof BadRequestException) {
         throw error;
       }
-      throw new BadRequestException('비밀번호 변경 중 오류가 발생했습니다.');
+      throw new BadRequestException('비�?번호 변�?�??�류가 발생?�습?�다.');
     }
   }
 }
+
+

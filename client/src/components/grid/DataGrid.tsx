@@ -41,10 +41,10 @@ export default function DataGrid({
 	enableSelection = true,
 	enableExport = true,
 }: DataGridProps) {
-	// 그리드 옵션 설정
+	// 그리???�션 ?�정
 	const gridOptions: GridOptions = useMemo(
 		() => ({
-			// 기본 설정
+			// 기본 ?�정
 			defaultColDef: {
 				sortable: enableSorting,
 				filter: enableFiltering,
@@ -53,30 +53,30 @@ export default function DataGrid({
 				flex: 1,
 			},
 
-			// 페이지네이션 설정
+			// ?�이지?�이???�정
 			pagination: enablePagination,
 			paginationPageSize: 20,
 			paginationPageSizeSelector: [10, 20, 50, 100],
 
-			// 선택 설정
+			// ?�택 ?�정
 			rowSelection: enableSelection ? 'multiple' : undefined,
 			suppressRowClickSelection: !enableSelection,
 
-			// 애니메이션
+			// ?�니메이??
 			animateRows: true,
 
-			// 도구팁
+			// ?�구??
 			tooltipShowDelay: 0,
 			tooltipHideDelay: 2000,
 
-			// 성능 최적화
+			// ?�능 최적??
 			suppressColumnVirtualisation: false,
 			suppressRowVirtualisation: false,
 		}),
 		[enableSorting, enableFiltering, enablePagination, enableSelection]
 	)
 
-	// 행 선택 이벤트 핸들러
+	// ???�택 ?�벤???�들??
 	const onSelectionChanged = useCallback(
 		(event: SelectionChangedEvent) => {
 			if (onRowSelected) {
@@ -87,7 +87,7 @@ export default function DataGrid({
 		[onRowSelected]
 	)
 
-	// 그리드 준비 이벤트 핸들러
+	// 그리??준�??�벤???�들??
 	const onGridReadyHandler = useCallback(
 		(params: GridReadyEvent) => {
 			if (onGridReady) {
@@ -113,3 +113,5 @@ export default function DataGrid({
 		</div>
 	)
 }
+
+

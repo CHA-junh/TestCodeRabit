@@ -25,7 +25,7 @@ export default function SYS1010D00Popup({
   onClose, 
   onSelect, 
   multiple = true,
-  title = "프로그램 선택"
+  title = "?�로그램 ?�택"
 }: SYS1010D00PopupProps) {
   if (!isOpen) return null;
 
@@ -51,7 +51,7 @@ export default function SYS1010D00Popup({
             className={styles.popupClose} 
             type="button"
             onClick={onClose}
-            aria-label="닫기"
+            aria-label="?�기"
           >
             ×
           </button>
@@ -66,3 +66,4 @@ export default function SYS1010D00Popup({
     </div>
   );
 } 
+

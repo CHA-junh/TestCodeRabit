@@ -97,21 +97,21 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
-# BIST_NEW Server - Swagger UI 연동 가이드
+# BIST_NEW Server - Swagger UI ?�동 가?�드
 
-## Swagger란?
-NestJS에서 API 문서를 자동으로 생성해주는 도구입니다. Swagger UI를 통해 API를 웹에서 쉽게 테스트하고 확인할 수 있습니다.
+## Swagger?�?
+NestJS?�서 API 문서�??�동?�로 ?�성?�주???�구?�니?? Swagger UI�??�해 API�??�에???�게 ?�스?�하�??�인?????�습?�다.
 
 ---
 
-## 1. Swagger 패키지 설치
+## 1. Swagger ?�키지 ?�치
 
 ```bash
 npm install @nestjs/swagger swagger-ui-express
 npm install --save-dev @types/swagger-ui-express
 ```
 
-## 2. Validation 패키지 설치
+## 2. Validation ?�키지 ?�치
 
 ```bash
 npm install class-validator class-transformer
@@ -119,7 +119,7 @@ npm install class-validator class-transformer
 
 ---
 
-## 3. main.ts에 Swagger 설정 추가 - 적용됨
+## 3. main.ts??Swagger ?�정 추�? - ?�용??
 
 ```ts
 // src/main.ts
@@ -128,10 +128,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Swagger 설정
+  // Swagger ?�정
   const config = new DocumentBuilder()
     .setTitle('BIST API')
-    .setDescription('BIST 서버 API 문서')
+    .setDescription('BIST ?�버 API 문서')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
@@ -140,27 +140,27 @@ async function bootstrap() {
   app.enableCors();
   const port = process.env.PORT || 8080;
   await app.listen(port);
-  console.log(`🚀 서버가 http://localhost:${port} 에서 실행 중입니다.`);
+  console.log(`?? ?�버가 http://localhost:${port} ?�서 ?�행 중입?�다.`);
 }
 bootstrap();
 ```
 
 ---
 
-## 4. 서버 실행 및 Swagger UI 접속
+## 4. ?�버 ?�행 �?Swagger UI ?�속
 
 ```bash
 npm run start:dev
 ```
 
-- 브라우저에서 [http://localhost:8080/api-docs](http://localhost:8080/api-docs) 접속
-- API 명세 및 테스트 가능
+- 브라?��??�서 [http://localhost:8080/api-docs](http://localhost:8080/api-docs) ?�속
+- API 명세 �??�스??가??
 
 ---
 
-## 5. 컨트롤러/DTO에 Swagger 데코레이터 추가 (선택)
+## 5. 컨트롤러/DTO??Swagger ?�코?�이??추�? (?�택)
 
-더 풍부한 문서화를 위해 아래와 같이 데코레이터를 추가할 수 있습니다.
+???��???문서?��? ?�해 ?�래?� 같이 ?�코?�이?��? 추�??????�습?�다.
 
 ```ts
 import { ApiTags, ApiProperty } from '@nestjs/swagger';
@@ -170,9 +170,9 @@ import { ApiTags, ApiProperty } from '@nestjs/swagger';
 export class AuthController { ... }
 
 export class LoginDto {
-  @ApiProperty({ description: '사용자 아이디' })
+  @ApiProperty({ description: '?�용???�이?? })
   username: string;
-  @ApiProperty({ description: '비밀번호' })
+  @ApiProperty({ description: '비�?번호' })
   password: string;
 }
 ```
@@ -182,3 +182,5 @@ export class LoginDto {
 ## 참고
 - NestJS 공식 문서: https://docs.nestjs.com/openapi/introduction
 - Swagger 공식 문서: https://swagger.io/docs/
+
+

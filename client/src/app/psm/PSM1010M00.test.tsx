@@ -1,25 +1,25 @@
 /**
- * PSM1010M00 - 사원/외주 관리 메인 화면 하이브리드 테스트
+ * PSM1010M00 - ?�원/?�주 관�?메인 ?�면 ?�이브리???�스??
  *
- * 테스트 목표:
- * - 사원/외주 관리 메인 화면의 모든 주요 기능이 정상적으로 동작하는지 검증
- * - 두 가지 방식을 사용합니다:
- *   1. UI 테스트: Mock을 사용한 컴포넌트 렌더링 테스트
- *   2. API 테스트: 실제 HTTP 클라이언트를 사용한 서버 통신 테스트 (서버 실행 시)
+ * ?�스??목표:
+ * - ?�원/?�주 관�?메인 ?�면??모든 주요 기능???�상?�으�??�작?�는지 검�?
+ * - ??가지 방식???�용?�니??
+ *   1. UI ?�스?? Mock???�용??컴포?�트 ?�더�??�스??
+ *   2. API ?�스?? ?�제 HTTP ?�라?�언?��? ?�용???�버 ?�신 ?�스??(?�버 ?�행 ??
  *
- * - 조회/저장/삭제 시 실제 거래 호출 방식 준비
- * - 실제 DB 연결을 통한 통합 테스트 준비
- * - 탭 기반 인터페이스 및 AG Grid 동작 검증
+ * - 조회/?�????�� ???�제 거래 ?�출 방식 준�?
+ * - ?�제 DB ?�결???�한 ?�합 ?�스??준�?
+ * - ??기반 ?�터?�이??�?AG Grid ?�작 검�?
  *
- * 테스트 시나리오:
- * 1. 화면 접속 시 주요 기능 표시 확인
- * 2. 사원/외주 리스트 조회 기능
- * 3. 자사/외주 구분 변경 시 동적 UI 업데이트
- * 4. 본부 변경 시 부서 목록 업데이트
- * 5. 사원 선택 및 탭 전환 기능
- * 6. AG Grid 컬럼 동적 변경 기능
- * 7. 투입현황조회 기능
- * 8. 하위 탭 컴포넌트 연동 기능
+ * ?�스???�나리오:
+ * 1. ?�면 ?�속 ??주요 기능 ?�시 ?�인
+ * 2. ?�원/?�주 리스??조회 기능
+ * 3. ?�사/?�주 구분 변�????�적 UI ?�데?�트
+ * 4. 본�? 변�???부??목록 ?�데?�트
+ * 5. ?�원 ?�택 �????�환 기능
+ * 6. AG Grid 컬럼 ?�적 변�?기능
+ * 7. ?�입?�황조회 기능
+ * 8. ?�위 ??컴포?�트 ?�동 기능
  */
 
 import React from "react";
@@ -52,21 +52,21 @@ jest.mock("ag-grid-react", () => ({
 						))}
 					</div>
 				) : (
-					<div data-testid='empty-grid'>데이터가 없습니다</div>
+					<div data-testid='empty-grid'>?�이?��? ?�습?�다</div>
 				)}
 			</div>
 		);
 	},
 }));
 
-// Mock 하위 컴포넌트들
+// Mock ?�위 컴포?�트??
 jest.mock("./PSM1020M00", () => {
 	return React.forwardRef(({ selectedEmployee, fieldEnableState, onSearchSuccess }: any, ref: any) => {
 		React.useImperativeHandle(ref, () => ({
 			initialize: jest.fn(),
 			handleSearch: jest.fn(),
 		}));
-		return <div data-testid="psm1020m00">사원정보등록 및 수정 탭</div>;
+		return <div data-testid="psm1020m00">?�원?�보?�록 �??�정 ??/div>;
 	});
 });
 
@@ -75,19 +75,19 @@ jest.mock("./PSM1030M00", () => {
 		React.useImperativeHandle(ref, () => ({
 			initialize: jest.fn(),
 		}));
-		return <div data-testid="psm1030m00">인사발령내역(건별) 탭</div>;
+		return <div data-testid="psm1030m00">?�사발령?�역(건별) ??/div>;
 	});
 });
 
 jest.mock("./PSM1040M00", () => {
 	return ({ selectedEmployee }: any) => (
-		<div data-testid="psm1040m00">인사발령일괄등록 탭</div>
+		<div data-testid="psm1040m00">?�사발령?�괄?�록 ??/div>
 	);
 });
 
 jest.mock("./PSM0050M00", () => {
 	return ({ isTabMode, parentEmpNo, parentEmpNm }: any) => (
-		<div data-testid="psm0050m00">프로필내역조회 탭</div>
+		<div data-testid="psm0050m00">?�로?�내??��????/div>
 	);
 });
 
@@ -98,12 +98,12 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 // Mock fetch for API calls
 global.fetch = jest.fn();
 
-// 실제 HTTP 클라이언트 사용 (서버 실행 시)
+// ?�제 HTTP ?�라?�언???�용 (?�버 ?�행 ??
 const baseURL = "http://localhost:8080";
 
-describe("사원/외주 관리 메인 화면 - UI 테스트 (Mock 사용)", () => {
+describe("?�원/?�주 관�?메인 ?�면 - UI ?�스??(Mock ?�용)", () => {
 	beforeEach(() => {
-		// Mock 기본 응답 설정
+		// Mock 기본 ?�답 ?�정
 		mockedAxios.get.mockResolvedValue({
 			status: 200,
 			statusText: "OK",
@@ -139,317 +139,317 @@ describe("사원/외주 관리 메인 화면 - UI 테스트 (Mock 사용)", () =
 		jest.clearAllMocks();
 	});
 
-	// 1. 화면 접속 시 주요 기능 표시 확인
-	test("사용자가 사원/외주 관리 메인 화면에 접속하면 모든 주요 기능이 표시된다", async () => {
+	// 1. ?�면 ?�속 ??주요 기능 ?�시 ?�인
+	test("?�용?��? ?�원/?�주 관�?메인 ?�면???�속?�면 모든 주요 기능???�시?�다", async () => {
 		render(<EmployeeMainPage />);
 
-		// 조회 영역 확인
+		// 조회 ?�역 ?�인
 		await waitFor(() => {
-			expect(screen.getByText("자사 외주 구분")).toBeInTheDocument();
+			expect(screen.getByText("?�사 ?�주 구분")).toBeInTheDocument();
 		});
 
-		expect(screen.getByText("사원성명")).toBeInTheDocument();
-		expect(screen.getByText("본부")).toBeInTheDocument();
-		expect(screen.getByText("부서")).toBeInTheDocument();
+		expect(screen.getByText("?�원?�명")).toBeInTheDocument();
+		expect(screen.getByText("본�?")).toBeInTheDocument();
+		expect(screen.getByText("부??)).toBeInTheDocument();
 		expect(screen.getByText("직책")).toBeInTheDocument();
-		expect(screen.getByText("퇴사자포함")).toBeInTheDocument();
+		expect(screen.getByText("?�사?�포??)).toBeInTheDocument();
 		expect(screen.getByText("조회")).toBeInTheDocument();
 
-		// 리스트 타이틀 확인
-		expect(screen.getByText("사원/외주 리스트")).toBeInTheDocument();
-		expect(screen.getByText("투입현황조회")).toBeInTheDocument();
+		// 리스???�?��? ?�인
+		expect(screen.getByText("?�원/?�주 리스??)).toBeInTheDocument();
+		expect(screen.getByText("?�입?�황조회")).toBeInTheDocument();
 
-		// 탭 메뉴 확인
-		expect(screen.getByText("사원정보등록 및 수정")).toBeInTheDocument();
-		expect(screen.getByText("인사발령내역(건별)")).toBeInTheDocument();
-		expect(screen.getByText("인사발령일괄등록")).toBeInTheDocument();
-		expect(screen.getByText("프로필내역조회")).toBeInTheDocument();
+		// ??메뉴 ?�인
+		expect(screen.getByText("?�원?�보?�록 �??�정")).toBeInTheDocument();
+		expect(screen.getByText("?�사발령?�역(건별)")).toBeInTheDocument();
+		expect(screen.getByText("?�사발령?�괄?�록")).toBeInTheDocument();
+		expect(screen.getByText("?�로?�내??��??)).toBeInTheDocument();
 
-		console.log("✅ 사용자가 화면에 접속하면 모든 주요 기능이 정상적으로 표시됩니다.");
+		console.log("???�용?��? ?�면???�속?�면 모든 주요 기능???�상?�으�??�시?�니??");
 	});
 
-	// 2. 사원/외주 리스트 조회 기능
-	test("사용자가 조회 조건을 입력하고 조회 버튼을 클릭하면 사원 리스트가 표시된다", async () => {
+	// 2. ?�원/?�주 리스??조회 기능
+	test("?�용?��? 조회 조건???�력?�고 조회 버튼???�릭?�면 ?�원 리스?��? ?�시?�다", async () => {
 		render(<EmployeeMainPage />);
 
 		await waitFor(() => {
 			expect(screen.getByText("조회")).toBeInTheDocument();
 		});
 
-		// 사원성명 입력 필드 찾기 (type="text"인 input 요소)
+		// ?�원?�명 ?�력 ?�드 찾기 (type="text"??input ?�소)
 		const empNmInput = screen.getByRole("textbox");
 		fireEvent.change(empNmInput, { target: { value: "김철수" } });
 
-		// 조회 버튼 클릭
+		// 조회 버튼 ?�릭
 		const searchButton = screen.getByText("조회");
 		fireEvent.click(searchButton);
 
-		// 입력된 값이 정상적으로 반영되는지 확인
+		// ?�력??값이 ?�상?�으�?반영?�는지 ?�인
 		await waitFor(() => {
 			expect(empNmInput).toHaveValue("김철수");
 		});
 
-		console.log("✅ 사용자가 조회 조건을 입력하고 조회 버튼을 클릭하면 사원 리스트가 표시됩니다.");
+		console.log("???�용?��? 조회 조건???�력?�고 조회 버튼???�릭?�면 ?�원 리스?��? ?�시?�니??");
 	});
 
-	// 3. 자사/외주 구분 변경 시 동적 UI 업데이트
-	test("사용자가 자사/외주 구분을 변경하면 UI가 동적으로 업데이트된다", async () => {
+	// 3. ?�사/?�주 구분 변�????�적 UI ?�데?�트
+	test("?�용?��? ?�사/?�주 구분??변경하�?UI가 ?�적?�로 ?�데?�트?�다", async () => {
 		render(<EmployeeMainPage />);
 
 		await waitFor(() => {
-			expect(screen.getByText("자사 외주 구분")).toBeInTheDocument();
+			expect(screen.getByText("?�사 ?�주 구분")).toBeInTheDocument();
 		});
 
-		// 외주 라디오 버튼 클릭
-		const outsRadio = screen.getByRole("radio", { name: /외주/i });
+		// ?�주 ?�디??버튼 ?�릭
+		const outsRadio = screen.getByRole("radio", { name: /?�주/i });
 		fireEvent.click(outsRadio);
 
-		// 외주 선택 시 UI 변경 확인
+		// ?�주 ?�택 ??UI 변�??�인
 		await waitFor(() => {
-			expect(screen.getByText("외주업체")).toBeInTheDocument();
+			expect(screen.getByText("?�주?�체")).toBeInTheDocument();
 		});
 
-		// 자사 라디오 버튼 클릭
-		const ownRadio = screen.getByRole("radio", { name: /자사/i });
+		// ?�사 ?�디??버튼 ?�릭
+		const ownRadio = screen.getByRole("radio", { name: /?�사/i });
 		fireEvent.click(ownRadio);
 
-		// 자사 선택 시 UI 변경 확인
+		// ?�사 ?�택 ??UI 변�??�인
 		await waitFor(() => {
-			expect(screen.getByText("본부")).toBeInTheDocument();
+			expect(screen.getByText("본�?")).toBeInTheDocument();
 		});
 
-		console.log("✅ 사용자가 자사/외주 구분을 변경하면 UI가 동적으로 업데이트됩니다.");
+		console.log("???�용?��? ?�사/?�주 구분??변경하�?UI가 ?�적?�로 ?�데?�트?�니??");
 	});
 
-	// 4. 본부 변경 시 부서 목록 업데이트
-	test("사용자가 본부를 선택하면 해당 본부의 부서 목록이 업데이트된다", async () => {
+	// 4. 본�? 변�???부??목록 ?�데?�트
+	test("?�용?��? 본�?�??�택?�면 ?�당 본�???부??목록???�데?�트?�다", async () => {
 		render(<EmployeeMainPage />);
 
 		await waitFor(() => {
-			expect(screen.getByText("본부")).toBeInTheDocument();
+			expect(screen.getByText("본�?")).toBeInTheDocument();
 		});
 
-		// 본부 선택 콤보박스가 존재하는지 확인 (select 요소 찾기)
-		const hqSelect = screen.getAllByRole("combobox")[0]; // 첫 번째 select 요소 (본부)
+		// 본�? ?�택 콤보박스가 존재?�는지 ?�인 (select ?�소 찾기)
+		const hqSelect = screen.getAllByRole("combobox")[0]; // �?번째 select ?�소 (본�?)
 		expect(hqSelect).toBeInTheDocument();
 
-		// 부서 콤보박스가 존재하는지 확인 (select 요소 찾기)
-		const deptSelect = screen.getAllByRole("combobox")[1]; // 두 번째 select 요소 (부서)
+		// 부??콤보박스가 존재?�는지 ?�인 (select ?�소 찾기)
+		const deptSelect = screen.getAllByRole("combobox")[1]; // ??번째 select ?�소 (부??
 		expect(deptSelect).toBeInTheDocument();
 
-		// select 요소들이 정상적으로 렌더링되었는지 확인
+		// select ?�소?�이 ?�상?�으�??�더링되?�는지 ?�인
 		expect(hqSelect).toBeInTheDocument();
 		expect(deptSelect).toBeInTheDocument();
 
-		console.log("✅ 사용자가 본부를 선택하면 해당 본부의 부서 목록이 업데이트됩니다.");
+		console.log("???�용?��? 본�?�??�택?�면 ?�당 본�???부??목록???�데?�트?�니??");
 	});
 
-	// 5. 사원 선택 및 탭 전환 기능
-	test("사용자가 사원을 선택하고 탭을 전환하면 해당 탭의 내용이 표시된다", async () => {
+	// 5. ?�원 ?�택 �????�환 기능
+	test("?�용?��? ?�원???�택?�고 ??�� ?�환?�면 ?�당 ??�� ?�용???�시?�다", async () => {
 		render(<EmployeeMainPage />);
 
 		await waitFor(() => {
-			expect(screen.getByText("사원정보등록 및 수정")).toBeInTheDocument();
+			expect(screen.getByText("?�원?�보?�록 �??�정")).toBeInTheDocument();
 		});
 
-		// 기본 탭(사원정보등록 및 수정) 확인
+		// 기본 ???�원?�보?�록 �??�정) ?�인
 		expect(screen.getByTestId("psm1020m00")).toBeInTheDocument();
 
-		// 인사발령내역(건별) 탭 클릭
-		const promotionTab = screen.getByText("인사발령내역(건별)");
+		// ?�사발령?�역(건별) ???�릭
+		const promotionTab = screen.getByText("?�사발령?�역(건별)");
 		fireEvent.click(promotionTab);
 
-		// 탭 전환 확인
+		// ???�환 ?�인
 		await waitFor(() => {
 			expect(screen.getByTestId("psm1030m00")).toBeInTheDocument();
 		});
 
-		// 인사발령일괄등록 탭 클릭
-		const batchTab = screen.getByText("인사발령일괄등록");
+		// ?�사발령?�괄?�록 ???�릭
+		const batchTab = screen.getByText("?�사발령?�괄?�록");
 		fireEvent.click(batchTab);
 
 		await waitFor(() => {
 			expect(screen.getByTestId("psm1040m00")).toBeInTheDocument();
 		});
 
-		// 프로필내역조회 탭 클릭
-		const profileTab = screen.getByText("프로필내역조회");
+		// ?�로?�내??��?????�릭
+		const profileTab = screen.getByText("?�로?�내??��??);
 		fireEvent.click(profileTab);
 
 		await waitFor(() => {
 			expect(screen.getByTestId("psm0050m00")).toBeInTheDocument();
 		});
 
-		console.log("✅ 사용자가 사원을 선택하고 탭을 전환하면 해당 탭의 내용이 표시됩니다.");
+		console.log("???�용?��? ?�원???�택?�고 ??�� ?�환?�면 ?�당 ??�� ?�용???�시?�니??");
 	});
 
-	// 6. AG Grid 컬럼 동적 변경 기능
-	test("자사/외주 구분에 따라 AG Grid 컬럼이 동적으로 변경된다", async () => {
+	// 6. AG Grid 컬럼 ?�적 변�?기능
+	test("?�사/?�주 구분???�라 AG Grid 컬럼???�적?�로 변경된??, async () => {
 		render(<EmployeeMainPage />);
 
 		await waitFor(() => {
 			expect(screen.getByTestId("ag-grid-mock")).toBeInTheDocument();
 		});
 
-		// 자사 선택 시 (기본값)
-		expect(screen.getByText("본부")).toBeInTheDocument();
+		// ?�사 ?�택 ??(기본�?
+		expect(screen.getByText("본�?")).toBeInTheDocument();
 
-		// 외주 선택
-		const outsRadio = screen.getByRole("radio", { name: /외주/i });
+		// ?�주 ?�택
+		const outsRadio = screen.getByRole("radio", { name: /?�주/i });
 		fireEvent.click(outsRadio);
 
-		// 외주 선택 시 외주업체 표시 확인
+		// ?�주 ?�택 ???�주?�체 ?�시 ?�인
 		await waitFor(() => {
-			expect(screen.getByText("외주업체")).toBeInTheDocument();
+			expect(screen.getByText("?�주?�체")).toBeInTheDocument();
 		});
 
-		console.log("✅ 자사/외주 구분에 따라 AG Grid 컬럼이 동적으로 변경됩니다.");
+		console.log("???�사/?�주 구분???�라 AG Grid 컬럼???�적?�로 변경됩?�다.");
 	});
 
-	// 7. 투입현황조회 기능
-	test("사용자가 투입현황조회 버튼을 클릭하면 경고 메시지가 표시된다", async () => {
+	// 7. ?�입?�황조회 기능
+	test("?�용?��? ?�입?�황조회 버튼???�릭?�면 경고 메시지가 ?�시?�다", async () => {
 		render(<EmployeeMainPage />);
 
 		await waitFor(() => {
-			expect(screen.getByText("투입현황조회")).toBeInTheDocument();
+			expect(screen.getByText("?�입?�황조회")).toBeInTheDocument();
 		});
 
-		// 투입현황조회 버튼 클릭 (사원 미선택 상태)
-		const inquiryButton = screen.getByText("투입현황조회");
+		// ?�입?�황조회 버튼 ?�릭 (?�원 미선???�태)
+		const inquiryButton = screen.getByText("?�입?�황조회");
 		fireEvent.click(inquiryButton);
 
-		// 경고 메시지가 표시되는지 확인 (Toast 메시지는 실제 구현에 따라 다를 수 있음)
+		// 경고 메시지가 ?�시?�는지 ?�인 (Toast 메시지???�제 구현???�라 ?��? ???�음)
 		await waitFor(() => {
 			expect(inquiryButton).toBeInTheDocument();
 		});
 
-		console.log("✅ 사용자가 투입현황조회 버튼을 클릭하면 경고 메시지가 표시됩니다.");
+		console.log("???�용?��? ?�입?�황조회 버튼???�릭?�면 경고 메시지가 ?�시?�니??");
 	});
 
-	// 8. 하위 탭 컴포넌트 연동 기능
-	test("사용자가 사원을 선택하면 하위 탭 컴포넌트가 초기화된다", async () => {
+	// 8. ?�위 ??컴포?�트 ?�동 기능
+	test("?�용?��? ?�원???�택?�면 ?�위 ??컴포?�트가 초기?�된??, async () => {
 		render(<EmployeeMainPage />);
 
 		await waitFor(() => {
 			expect(screen.getByTestId("psm1020m00")).toBeInTheDocument();
 		});
 
-		// 사원정보등록 및 수정 탭이 기본으로 표시되는지 확인
+		// ?�원?�보?�록 �??�정 ??�� 기본?�로 ?�시?�는지 ?�인
 		expect(screen.getByTestId("psm1020m00")).toBeInTheDocument();
 
-		console.log("✅ 사용자가 사원을 선택하면 하위 탭 컴포넌트가 초기화됩니다.");
+		console.log("???�용?��? ?�원???�택?�면 ?�위 ??컴포?�트가 초기?�됩?�다.");
 	});
 
-	// 9. 검색 조건 입력 및 엔터키 처리
-	test("사용자가 사원성명을 입력하고 엔터키를 누르면 자동으로 조회가 실행된다", async () => {
+	// 9. 검??조건 ?�력 �??�터??처리
+	test("?�용?��? ?�원?�명???�력?�고 ?�터?��? ?�르�??�동?�로 조회가 ?�행?�다", async () => {
 		render(<EmployeeMainPage />);
 
 		await waitFor(() => {
 			expect(screen.getByText("조회")).toBeInTheDocument();
 		});
 
-		// 사원성명 입력 필드 찾기 (type="text"인 input 요소)
+		// ?�원?�명 ?�력 ?�드 찾기 (type="text"??input ?�소)
 		const empNmInput = screen.getByRole("textbox");
 		fireEvent.change(empNmInput, { target: { value: "김철수" } });
 
-		// 엔터키 입력
+		// ?�터???�력
 		fireEvent.keyPress(empNmInput, { key: "Enter", code: "Enter" });
 
-		// 입력된 값이 정상적으로 반영되는지 확인
+		// ?�력??값이 ?�상?�으�?반영?�는지 ?�인
 		await waitFor(() => {
 			expect(empNmInput).toHaveValue("김철수");
 		});
 
-		console.log("✅ 사용자가 사원성명을 입력하고 엔터키를 누르면 자동으로 조회가 실행됩니다.");
+		console.log("???�용?��? ?�원?�명???�력?�고 ?�터?��? ?�르�??�동?�로 조회가 ?�행?�니??");
 	});
 
-	// 10. 퇴사자포함 체크박스 기능
-	test("사용자가 퇴사자포함 체크박스를 클릭하면 조회 조건이 변경된다", async () => {
+	// 10. ?�사?�포??체크박스 기능
+	test("?�용?��? ?�사?�포??체크박스�??�릭?�면 조회 조건??변경된??, async () => {
 		render(<EmployeeMainPage />);
 
 		await waitFor(() => {
-			expect(screen.getByText("퇴사자포함")).toBeInTheDocument();
+			expect(screen.getByText("?�사?�포??)).toBeInTheDocument();
 		});
 
-		// 퇴사자포함 체크박스 클릭
+		// ?�사?�포??체크박스 ?�릭
 		const retireCheckbox = screen.getByRole("checkbox");
 		fireEvent.click(retireCheckbox);
 
-		// 체크박스가 체크되었는지 확인
+		// 체크박스가 체크?�었?��? ?�인
 		await waitFor(() => {
 			expect(retireCheckbox).toBeChecked();
 		});
 
-		console.log("✅ 사용자가 퇴사자포함 체크박스를 클릭하면 조회 조건이 변경됩니다.");
+		console.log("???�용?��? ?�사?�포??체크박스�??�릭?�면 조회 조건??변경됩?�다.");
 	});
 
-	// 11. AG Grid 행 클릭 및 더블클릭 기능
-	test("사용자가 AG Grid의 행을 클릭하거나 더블클릭하면 사원이 선택된다", async () => {
+	// 11. AG Grid ???�릭 �??�블?�릭 기능
+	test("?�용?��? AG Grid???�을 ?�릭?�거???�블?�릭?�면 ?�원???�택?�다", async () => {
 		render(<EmployeeMainPage />);
 
 		await waitFor(() => {
 			expect(screen.getByTestId("ag-grid-mock")).toBeInTheDocument();
 		});
 
-		// AG Grid가 정상적으로 렌더링되었는지 확인
+		// AG Grid가 ?�상?�으�??�더링되?�는지 ?�인
 		expect(screen.getByTestId("ag-grid-mock")).toBeInTheDocument();
 
-		console.log("✅ 사용자가 AG Grid의 행을 클릭하거나 더블클릭하면 사원이 선택됩니다.");
+		console.log("???�용?��? AG Grid???�을 ?�릭?�거???�블?�릭?�면 ?�원???�택?�니??");
 	});
 
-	// 12. 로딩 상태 표시 기능
-	test("조회 중에는 로딩 상태가 표시된다", async () => {
+	// 12. 로딩 ?�태 ?�시 기능
+	test("조회 중에??로딩 ?�태가 ?�시?�다", async () => {
 		render(<EmployeeMainPage />);
 
 		await waitFor(() => {
 			expect(screen.getByText("조회")).toBeInTheDocument();
 		});
 
-		// 조회 버튼 클릭
+		// 조회 버튼 ?�릭
 		const searchButton = screen.getByText("조회");
 		fireEvent.click(searchButton);
 
-		// 조회 버튼이 정상적으로 클릭되는지 확인
+		// 조회 버튼???�상?�으�??�릭?�는지 ?�인
 		await waitFor(() => {
 			expect(searchButton).toBeInTheDocument();
 		});
 
-		console.log("✅ 조회 중에는 로딩 상태가 표시됩니다.");
+		console.log("??조회 중에??로딩 ?�태가 ?�시?�니??");
 	});
 });
 
-// 실제 거래 호출 테스트 - 서버 실행 시에만 실행
-describe("사원/외주 관리 API - 실제 거래 호출 테스트 (서버 실행 시)", () => {
-	// 서버가 실행 중인지 확인하는 헬퍼 함수
+// ?�제 거래 ?�출 ?�스??- ?�버 ?�행 ?�에�??�행
+describe("?�원/?�주 관�?API - ?�제 거래 ?�출 ?�스??(?�버 ?�행 ??", () => {
+	// ?�버가 ?�행 중인지 ?�인?�는 ?�퍼 ?�수
 	const isServerRunning = async (): Promise<boolean> => {
 		try {
-			// /api/health 엔드포인트로 서버 상태 확인 (서버에서 app.setGlobalPrefix('api') 설정됨)
+			// /api/health ?�드?�인?�로 ?�버 ?�태 ?�인 (?�버?�서 app.setGlobalPrefix('api') ?�정??
 			await axios.get(`${baseURL}/api/health`, { timeout: 3000 });
 			return true;
 		} catch (error) {
-			console.log("서버 연결 실패:", error instanceof Error ? error.message : String(error));
+			console.log("?�버 ?�결 ?�패:", error instanceof Error ? error.message : String(error));
 			return false;
 		}
 	};
 
 	beforeAll(async () => {
-		// 서버가 실행 중인지 확인
+		// ?�버가 ?�행 중인지 ?�인
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⚠️ 서버가 실행되지 않았습니다. API 테스트를 건너뜁니다.");
+			console.log("?�️ ?�버가 ?�행?��? ?�았?�니?? API ?�스?��? 건너?�니??");
 		}
 	});
 
-	test("사원/외주 리스트 조회 API가 정상적으로 동작한다", async () => {
+	test("?�원/?�주 리스??조회 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		const response = await axios.post(`${baseURL}/api/psm/employee/search`, {
 			empNo: 'ALL',
-			empNm: '테스트',
+			empNm: '?�스??,
 			ownOutsDiv: '1',
 			hqDivCd: 'ALL',
 			deptDivCd: 'ALL',
@@ -460,103 +460,103 @@ describe("사원/외주 관리 API - 실제 거래 호출 테스트 (서버 실�
 		expect(response.status).toBe(200);
 		expect((response.data as any).success).toBe(true);
 		
-		// data 필드가 배열인지 확인하고, 배열이 아니면 빈 배열로 처리
+		// data ?�드가 배열?��? ?�인?�고, 배열???�니�?�?배열�?처리
 		const responseData = (response.data as any).data;
 		if (Array.isArray(responseData)) {
-			console.log("✅ data는 배열입니다. 길이:", responseData.length);
+			console.log("??data??배열?�니?? 길이:", responseData.length);
 		} else {
-			console.log("⚠️ data는 배열이 아닙니다. 타입:", typeof responseData);
-			console.log("⚠️ data 값:", responseData);
+			console.log("?�️ data??배열???�닙?�다. ?�??", typeof responseData);
+			console.log("?�️ data �?", responseData);
 		}
 
-		// 실제 DB 데이터 검증 (배열이 아닌 경우도 처리)
+		// ?�제 DB ?�이??검�?(배열???�닌 경우??처리)
 		if (responseData && Array.isArray(responseData) && responseData.length > 0) {
 			const employee = responseData[0];
 			expect(employee).toHaveProperty("EMP_NO");
 			expect(employee).toHaveProperty("EMP_NM");
 			expect(employee).toHaveProperty("OWN_OUTS_DIV");
 		} else {
-			console.log("ℹ️ 조회된 사원 데이터가 없습니다.");
+			console.log("?�️ 조회???�원 ?�이?��? ?�습?�다.");
 		}
 	});
 
-	test("본부별 부서 목록 조회 API가 정상적으로 동작한다", async () => {
+	test("본�?�?부??목록 조회 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		try {
-			console.log("🔍 본부별 부서 목록 조회 API 호출 시작");
+			console.log("?�� 본�?�?부??목록 조회 API ?�출 ?�작");
 			
 			const response = await axios.post(`${baseURL}/api/common/dept-by-hq`, {
 				hqDivCd: '1000',
 				allYn: 'Y'
 			});
 
-			console.log("📊 본부별 부서 목록 조회 응답:", response.data);
+			console.log("?�� 본�?�?부??목록 조회 ?�답:", response.data);
 
 			expect(response.status).toBe(200);
 			
-			// success 필드가 false인 경우 상세 정보 출력
+			// success ?�드가 false??경우 ?�세 ?�보 출력
 			if (!(response.data as any).success) {
-				console.log("❌ API 호출 실패 - 응답:", response.data);
-				console.log("❌ 에러 메시지:", (response.data as any).message);
+				console.log("??API ?�출 ?�패 - ?�답:", response.data);
+				console.log("???�러 메시지:", (response.data as any).message);
 			}
 			
 			expect((response.data as any).success).toBe(true);
 			
-			// data 필드 검증
+			// data ?�드 검�?
 			const responseData = (response.data as any).data;
 			if (Array.isArray(responseData)) {
-				console.log("✅ data는 배열입니다. 길이:", responseData.length);
+				console.log("??data??배열?�니?? 길이:", responseData.length);
 			} else {
-				console.log("⚠️ data는 배열이 아닙니다. 타입:", typeof responseData);
-				console.log("⚠️ data 값:", responseData);
+				console.log("?�️ data??배열???�닙?�다. ?�??", typeof responseData);
+				console.log("?�️ data �?", responseData);
 			}
 
-			// 실제 DB 데이터 검증
+			// ?�제 DB ?�이??검�?
 			if (responseData && Array.isArray(responseData) && responseData.length > 0) {
 				const dept = responseData[0];
 				expect(dept).toHaveProperty("DATA");
 				expect(dept).toHaveProperty("LABEL");
 			} else {
-				console.log("ℹ️ 조회된 부서 데이터가 없습니다.");
+				console.log("?�️ 조회??부???�이?��? ?�습?�다.");
 			}
 		} catch (error) {
-			console.log("❌ 본부별 부서 목록 조회 API 호출 실패:", error instanceof Error ? error.message : String(error));
+			console.log("??본�?�?부??목록 조회 API ?�출 ?�패:", error instanceof Error ? error.message : String(error));
 			if (axios.isAxiosError(error)) {
-				console.log("❌ 응답 상태:", error.response?.status);
-				console.log("❌ 응답 데이터:", error.response?.data);
+				console.log("???�답 ?�태:", error.response?.status);
+				console.log("???�답 ?�이??", error.response?.data);
 			}
 			throw error;
 		}
 	});
 
-	test("공통 코드 조회 API가 정상적으로 동작한다", async () => {
+	test("공통 코드 조회 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		try {
-			console.log("🔍 공통 코드 조회 API 호출 시작");
+			console.log("?�� 공통 코드 조회 API ?�출 ?�작");
 
-			// 본부 코드 조회
+			// 본�? 코드 조회
 			const hqResponse = await axios.post(`${baseURL}/api/common/search`, {
 				largeCategoryCode: '113'
 			});
 
-			console.log("📊 본부 코드 조회 응답:", hqResponse.data);
+			console.log("?�� 본�? 코드 조회 ?�답:", hqResponse.data);
 
 			expect(hqResponse.status).toBe(200);
 			
-			// success 필드가 false인 경우 상세 정보 출력
+			// success ?�드가 false??경우 ?�세 ?�보 출력
 			if (!(hqResponse.data as any).success) {
-				console.log("❌ 본부 코드 조회 실패 - 응답:", hqResponse.data);
-				console.log("❌ 에러 메시지:", (hqResponse.data as any).message);
+				console.log("??본�? 코드 조회 ?�패 - ?�답:", hqResponse.data);
+				console.log("???�러 메시지:", (hqResponse.data as any).message);
 			}
 			
 			expect((hqResponse.data as any).success).toBe(true);
@@ -566,109 +566,109 @@ describe("사원/외주 관리 API - 실제 거래 호출 테스트 (서버 실�
 				largeCategoryCode: '116'
 			});
 
-			console.log("📊 직책 코드 조회 응답:", dutyResponse.data);
+			console.log("?�� 직책 코드 조회 ?�답:", dutyResponse.data);
 
 			expect(dutyResponse.status).toBe(200);
 			
 			if (!(dutyResponse.data as any).success) {
-				console.log("❌ 직책 코드 조회 실패 - 응답:", dutyResponse.data);
-				console.log("❌ 에러 메시지:", (dutyResponse.data as any).message);
+				console.log("??직책 코드 조회 ?�패 - ?�답:", dutyResponse.data);
+				console.log("???�러 메시지:", (dutyResponse.data as any).message);
 			}
 			
 			expect((dutyResponse.data as any).success).toBe(true);
 
-			// 실제 DB 데이터 검증
+			// ?�제 DB ?�이??검�?
 			const hqData = (hqResponse.data as any).data;
 			if (hqData && Array.isArray(hqData) && hqData.length > 0) {
 				const code = hqData[0];
 				expect(code).toHaveProperty("codeId");
 				expect(code).toHaveProperty("codeNm");
 			} else {
-				console.log("ℹ️ 조회된 본부 코드 데이터가 없습니다.");
+				console.log("?�️ 조회??본�? 코드 ?�이?��? ?�습?�다.");
 			}
 		} catch (error) {
-			console.log("❌ 공통 코드 조회 API 호출 실패:", error instanceof Error ? error.message : String(error));
+			console.log("??공통 코드 조회 API ?�출 ?�패:", error instanceof Error ? error.message : String(error));
 			if (axios.isAxiosError(error)) {
-				console.log("❌ 응답 상태:", error.response?.status);
-				console.log("❌ 응답 데이터:", error.response?.data);
+				console.log("???�답 ?�태:", error.response?.status);
+				console.log("???�답 ?�이??", error.response?.data);
 			}
 			throw error;
 		}
 	});
 
-	test("외주업체 코드 조회 API가 정상적으로 동작한다", async () => {
+	test("?�주?�체 코드 조회 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		try {
-			console.log("🔍 외주업체 코드 조회 API 호출 시작");
+			console.log("?�� ?�주?�체 코드 조회 API ?�출 ?�작");
 			
 			const response = await axios.post(`${baseURL}/api/common/search`, {
 				largeCategoryCode: '111'
 			});
 
-			console.log("📊 외주업체 코드 조회 응답:", response.data);
+			console.log("?�� ?�주?�체 코드 조회 ?�답:", response.data);
 
 			expect(response.status).toBe(200);
 			
-			// success 필드가 false인 경우 상세 정보 출력
+			// success ?�드가 false??경우 ?�세 ?�보 출력
 			if (!(response.data as any).success) {
-				console.log("❌ 외주업체 코드 조회 실패 - 응답:", response.data);
-				console.log("❌ 에러 메시지:", (response.data as any).message);
+				console.log("???�주?�체 코드 조회 ?�패 - ?�답:", response.data);
+				console.log("???�러 메시지:", (response.data as any).message);
 			}
 			
 			expect((response.data as any).success).toBe(true);
 
-			// 실제 DB 데이터 검증
+			// ?�제 DB ?�이??검�?
 			const responseData = (response.data as any).data;
 			if (responseData && Array.isArray(responseData) && responseData.length > 0) {
 				const company = responseData[0];
 				expect(company).toHaveProperty("codeId");
 				expect(company).toHaveProperty("codeNm");
 			} else {
-				console.log("ℹ️ 조회된 외주업체 코드 데이터가 없습니다.");
+				console.log("?�️ 조회???�주?�체 코드 ?�이?��? ?�습?�다.");
 			}
 		} catch (error) {
-			console.log("❌ 외주업체 코드 조회 API 호출 실패:", error instanceof Error ? error.message : String(error));
+			console.log("???�주?�체 코드 조회 API ?�출 ?�패:", error instanceof Error ? error.message : String(error));
 			if (axios.isAxiosError(error)) {
-				console.log("❌ 응답 상태:", error.response?.status);
-				console.log("❌ 응답 데이터:", error.response?.data);
+				console.log("???�답 ?�태:", error.response?.status);
+				console.log("???�답 ?�이??", error.response?.data);
 			}
 			throw error;
 		}
 	});
 
-	test("인사발령내역 조회 API가 정상적으로 동작한다", async () => {
+	test("?�사발령?�역 조회 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		try {
-			console.log("🔍 인사발령내역 조회 API 호출 시작");
+			console.log("?�� ?�사발령?�역 조회 API ?�출 ?�작");
 			
 			const empNo = "EMP001";
 			const response = await axios.post(`${baseURL}/api/psm/appointment/search`, {
 				empNo: empNo
 			});
 
-			console.log("📊 인사발령내역 조회 응답:", response.data);
+			console.log("?�� ?�사발령?�역 조회 ?�답:", response.data);
 
 			expect(response.status).toBe(200);
 			
-			// success 필드가 false인 경우 상세 정보 출력
+			// success ?�드가 false??경우 ?�세 ?�보 출력
 			if (!(response.data as any).success) {
-				console.log("❌ 인사발령내역 조회 실패 - 응답:", response.data);
-				console.log("❌ 에러 메시지:", (response.data as any).message);
+				console.log("???�사발령?�역 조회 ?�패 - ?�답:", response.data);
+				console.log("???�러 메시지:", (response.data as any).message);
 			}
 			
 			expect((response.data as any).success).toBe(true);
 
-			// 실제 DB 데이터 검증
+			// ?�제 DB ?�이??검�?
 			const responseData = (response.data as any).data;
 			if (responseData && Array.isArray(responseData) && responseData.length > 0) {
 				const appointment = responseData[0];
@@ -676,33 +676,33 @@ describe("사원/외주 관리 API - 실제 거래 호출 테스트 (서버 실�
 				expect(appointment).toHaveProperty("APNT_DIV");
 				expect(appointment).toHaveProperty("APNT_DT");
 			} else {
-				console.log("ℹ️ 조회된 인사발령내역이 없습니다.");
-				console.log("ℹ️ 사원번호 'EMP001'이 존재하지 않을 수 있습니다.");
+				console.log("?�️ 조회???�사발령?�역???�습?�다.");
+				console.log("?�️ ?�원번호 'EMP001'??존재?��? ?�을 ???�습?�다.");
 			}
 		} catch (error) {
-			console.log("❌ 인사발령내역 조회 API 호출 실패:", error instanceof Error ? error.message : String(error));
+			console.log("???�사발령?�역 조회 API ?�출 ?�패:", error instanceof Error ? error.message : String(error));
 			if (axios.isAxiosError(error)) {
-				console.log("❌ 응답 상태:", error.response?.status);
-				console.log("❌ 응답 데이터:", error.response?.data);
+				console.log("???�답 ?�태:", error.response?.status);
+				console.log("???�답 ?�이??", error.response?.data);
 			}
 			throw error;
 		}
 	});
 
-	test("사원 정보 업데이트 API가 정상적으로 동작한다", async () => {
+	test("?�원 ?�보 ?�데?�트 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		try {
-			console.log("🔍 사원 정보 업데이트 API 호출 시작");
+			console.log("?�� ?�원 ?�보 ?�데?�트 API ?�출 ?�작");
 			
 			const updateEmployee = {
 				mode: 'MOD',
 				empNo: 'EMP001',
-				empNm: '테스트 사원',
+				empNm: '?�스???�원',
 				ownOutsDiv: '1',
 				hqDivCd: '1000',
 				deptDivCd: '1100',
@@ -713,37 +713,37 @@ describe("사원/외주 관리 API - 실제 거래 호출 테스트 (서버 실�
 
 			const response = await axios.post(`${baseURL}/api/psm/employee/update`, updateEmployee);
 
-			console.log("📊 사원 정보 업데이트 응답:", response.data);
+			console.log("?�� ?�원 ?�보 ?�데?�트 ?�답:", response.data);
 
 			expect(response.status).toBe(200);
 			
-			// success 필드가 false인 경우 상세 정보 출력
+			// success ?�드가 false??경우 ?�세 ?�보 출력
 			if (!(response.data as any).success) {
-				console.log("❌ 사원 정보 업데이트 실패 - 응답:", response.data);
-				console.log("❌ 에러 메시지:", (response.data as any).message);
+				console.log("???�원 ?�보 ?�데?�트 ?�패 - ?�답:", response.data);
+				console.log("???�러 메시지:", (response.data as any).message);
 			}
 			
 			expect((response.data as any).success).toBe(true);
 		} catch (error) {
-			console.log("❌ 사원 정보 업데이트 API 호출 실패:", error instanceof Error ? error.message : String(error));
+			console.log("???�원 ?�보 ?�데?�트 API ?�출 ?�패:", error instanceof Error ? error.message : String(error));
 			if (axios.isAxiosError(error)) {
-				console.log("❌ 응답 상태:", error.response?.status);
-				console.log("❌ 응답 데이터:", error.response?.data);
+				console.log("???�답 ?�태:", error.response?.status);
+				console.log("???�답 ?�이??", error.response?.data);
 			}
 			throw error;
 		}
 	});
 
-	test("사원 정보 수정 API가 정상적으로 동작한다", async () => {
+	test("?�원 ?�보 ?�정 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		const updateEmployee = {
 			EMP_NO: "EMP001",
-			EMP_NM: "수정된 사원",
+			EMP_NM: "?�정???�원",
 			OWN_OUTS_DIV_CD: "1",
 			HQ_DIV_CD: "HQ001",
 			DEPT_DIV_CD: "DEPT001",
@@ -762,17 +762,17 @@ describe("사원/외주 관리 API - 실제 거래 호출 테스트 (서버 실�
 		expect((response.data as any).success).toBe(true);
 	});
 
-	test("사원 정보 삭제 API가 정상적으로 동작한다", async () => {
+	test("?�원 ?�보 ??�� API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		const deleteEmployee = {
 			EMP_NO: "EMP001",
-			EMP_NM: "삭제할 사원",
-			WKG_ST_DIV_CD: "3" // 퇴사
+			EMP_NM: "??��???�원",
+			WKG_ST_DIV_CD: "3" // ?�사
 		};
 
 		const response = await axios.post(`${baseURL}/api/psm/employee`, {
@@ -785,3 +785,4 @@ describe("사원/외주 관리 API - 실제 거래 호출 테스트 (서버 실�
 		expect((response.data as any).success).toBe(true);
 	});
 }); 
+

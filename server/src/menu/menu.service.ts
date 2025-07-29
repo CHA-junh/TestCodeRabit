@@ -7,7 +7,7 @@ import { MenuEntity } from './entities/menu.entity';
 export class MenuService {
   constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
 
-  // 전체 메뉴 리스트
+  // ?�체 메뉴 리스??
   async findAll(): Promise<MenuEntity[]> {
     return this.dataSource.query(`
       SELECT * FROM TBL_MENU_INF
@@ -15,7 +15,7 @@ export class MenuService {
   }
 
   async getMenuListByRole(usrRoleId: string): Promise<any[]> {
-    // console.log('🔍 getMenuListByRole 호출됨, usrRoleId:', usrRoleId);
+    // console.log('?�� getMenuListByRole ?�출?? usrRoleId:', usrRoleId);
 
     const result = await this.dataSource.query(
       `
@@ -63,9 +63,11 @@ export class MenuService {
       [usrRoleId, usrRoleId],
     );
 
-    // console.log('📋 메뉴 조회 결과 (처음 5개):', result.slice(0, 5));
-    // console.log('📋 전체 메뉴 개수:', result.length);
+    // console.log('?�� 메뉴 조회 결과 (처음 5�?:', result.slice(0, 5));
+    // console.log('?�� ?�체 메뉴 개수:', result.length);
 
     return result;
   }
 }
+
+

@@ -32,3 +32,5 @@ export class TblEmpInf {
   @Column({ name: 'EMAIL_ADDR', nullable: true })
   emailAddr: string;
 }
+
+

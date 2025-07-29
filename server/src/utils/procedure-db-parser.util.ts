@@ -3,7 +3,7 @@ import { OracleService } from '../database/database.provider'
 import * as oracledb from 'oracledb'
 
 /**
- * 프로시저 정보 타입 (원본 주석만 포함)
+ * ?�로?��? ?�보 ?�??(?�본 주석�??�함)
  */
 export interface ProcedureInfo {
   name: string
@@ -11,16 +11,16 @@ export interface ProcedureInfo {
 }
 
 /**
- * DB에서 실시간으로 프로시저 주석을 조회하는 유틸리티
+ * DB?�서 ?�시간으�??�로?��? 주석??조회?�는 ?�틸리티
  */
 @Injectable()
 export class ProcedureDbParser {
   constructor(private readonly oracle: OracleService) {}
 
   /**
-   * DB에서 프로시저 소스 코드를 조회합니다.
-   * @param procedureName - 프로시저명
-   * @returns 프로시저 소스 코드
+   * DB?�서 ?�로?��? ?�스 코드�?조회?�니??
+   * @param procedureName - ?�로?��?�?
+   * @returns ?�로?��? ?�스 코드
    */
   private async getProcedureSource(procedureName: string): Promise<string> {
     const conn = await this.oracle.getConnection()
@@ -48,8 +48,8 @@ export class ProcedureDbParser {
   }
 
   /**
-   * 프로시저 주석을 추출합니다.
-   * @param sourceCode - 프로시저 소스 코드
+   * ?�로?��? 주석??추출?�니??
+   * @param sourceCode - ?�로?��? ?�스 코드
    * @returns 주석 부분만 추출
    */
   private extractComment(sourceCode: string): string {
@@ -62,7 +62,7 @@ export class ProcedureDbParser {
     for (const line of lines) {
       const trimmedLine = line.trim()
       
-      // 주석 블록 시작 확인 (여러 패턴 지원)
+      // 주석 블록 ?�작 ?�인 (?�러 ?�턴 지??
       if (trimmedLine.includes('/**********************************************************************************') || 
           trimmedLine.includes('/********************************************************************************') ||
           trimmedLine.includes('/*******************************************************************************')) {
@@ -71,7 +71,7 @@ export class ProcedureDbParser {
         continue
       }
       
-      // 주석 블록 종료 확인 (여러 패턴 지원)
+      // 주석 블록 종료 ?�인 (?�러 ?�턴 지??
       if (trimmedLine.includes('**************************************************************************************/') ||
           trimmedLine.includes('********************************************************************************/') ||
           trimmedLine.includes('*******************************************************************************/')) {
@@ -80,7 +80,7 @@ export class ProcedureDbParser {
         break
       }
       
-      // 주석 블록 내부의 모든 라인 추가
+      // 주석 블록 ?��???모든 ?�인 추�?
       if (inCommentBlock) {
         commentLines.push(line)
       }
@@ -88,7 +88,7 @@ export class ProcedureDbParser {
     
     const extractedComment = commentLines.join('\n')
     
-    // 주석이 추출되지 않았거나 너무 짧으면 전체 소스에서 주석 부분만 찾기
+    // 주석??추출?��? ?�았거나 ?�무 짧으�??�체 ?�스?�서 주석 부분만 찾기
     if (!extractedComment || extractedComment.length < 50) {
       return this.extractCommentFromFullSource(sourceCode)
     }
@@ -97,62 +97,62 @@ export class ProcedureDbParser {
   }
 
   /**
-   * 전체 소스에서 주석 부분을 찾습니다.
-   * @param sourceCode - 프로시저 소스 코드
-   * @returns 주석 부분
+   * ?�체 ?�스?�서 주석 부분을 찾습?�다.
+   * @param sourceCode - ?�로?��? ?�스 코드
+   * @returns 주석 부�?
    */
   private extractCommentFromFullSource(sourceCode: string): string {
     const commentStart = sourceCode.indexOf('/**********************************************************************************')
     if (commentStart === -1) {
-      return '프로시저 주석을 찾을 수 없습니다.'
+      return '?�로?��? 주석??찾을 ???�습?�다.'
     }
     
     const commentEnd = sourceCode.indexOf('**************************************************************************************/')
     if (commentEnd === -1) {
-      return '프로시저 주석을 찾을 수 없습니다.'
+      return '?�로?��? 주석??찾을 ???�습?�다.'
     }
     
-    return sourceCode.substring(commentStart, commentEnd + 50) // 50은 종료 주석 길이
+    return sourceCode.substring(commentStart, commentEnd + 50) // 50?� 종료 주석 길이
   }
 
   /**
-   * 줄바꿈을 HTML에서 제대로 표시되도록 변환합니다.
-   * @param text - 원본 텍스트
-   * @returns 줄바꿈이 제대로 표시되는 텍스트
+   * 줄바꿈을 HTML?�서 ?��?�??�시?�도�?변?�합?�다.
+   * @param text - ?�본 ?�스??
+   * @returns 줄바꿈이 ?��?�??�시?�는 ?�스??
    */
   private formatCommentForDisplay(text: string): string {
     if (!text) return ''
     
-    // 문자열 \n을 실제 줄바꿈으로 변환하고, 탭을 공백으로 변환
+    // 문자??\n???�제 줄바꿈으�?변?�하�? ??�� 공백?�로 변??
     let formatted = text
-      .replace(/\\n/g, '\n')  // 문자열 \n을 실제 줄바꿈으로
-      .replace(/\t/g, '    ') // 탭을 4개 공백으로
+      .replace(/\\n/g, '\n')  // 문자??\n???�제 줄바꿈으�?
+      .replace(/\t/g, '    ') // ??�� 4�?공백?�로
       .trim()
     
-    // 실제 줄바꿈이 있는 경우 그대로 유지
+    // ?�제 줄바꿈이 ?�는 경우 그�?�??��?
     return formatted
   }
 
   /**
-   * DB에서 프로시저 정보를 실시간으로 조회합니다.
-   * @param procedureName - 프로시저명
-   * @returns 프로시저 정보 (원본 주석만 포함)
+   * DB?�서 ?�로?��? ?�보�??�시간으�?조회?�니??
+   * @param procedureName - ?�로?��?�?
+   * @returns ?�로?��? ?�보 (?�본 주석�??�함)
    */
   async getProcedureInfoFromDb(procedureName: string): Promise<ProcedureInfo> {
     try {
       const sourceCode = await this.getProcedureSource(procedureName)
-      // console.log(`=== ${procedureName} 소스 코드 (처음 1000자) ===`)
+      // console.log(`=== ${procedureName} ?�스 코드 (처음 1000?? ===`)
       // console.log(sourceCode.substring(0, 1000))
       // console.log('==========================================')
       
       const originalComment = this.extractComment(sourceCode)
-      // console.log(`=== ${procedureName} 추출된 주석 ===`)
+      // console.log(`=== ${procedureName} 추출??주석 ===`)
       // console.log(originalComment)
       // console.log('==========================================')
       
       const formattedComment = this.formatCommentForDisplay(originalComment)
       
-      // 줄바꿈을 배열로 제공
+      // 줄바꿈을 배열�??�공
       const commentLines = formattedComment.split('\n').filter(line => line.trim() !== '')
       
       return {
@@ -160,20 +160,20 @@ export class ProcedureDbParser {
         originalCommentLines: commentLines
       }
     } catch (error) {
-      console.error(`프로시저 정보 조회 오류 (${procedureName}):`, error)
+      console.error(`?�로?��? ?�보 조회 ?�류 (${procedureName}):`, error)
       
-      // 오류 발생 시 기본 정보 반환
+      // ?�류 발생 ??기본 ?�보 반환
       return {
         name: procedureName,
-        originalCommentLines: ['프로시저 정보를 조회할 수 없습니다.']
+        originalCommentLines: ['?�로?��? ?�보�?조회?????�습?�다.']
       }
     }
   }
 
   /**
-   * 여러 프로시저의 정보를 일괄 조회합니다.
-   * @param procedureNames - 프로시저명 배열
-   * @returns 프로시저 정보 맵
+   * ?�러 ?�로?��????�보�??�괄 조회?�니??
+   * @param procedureNames - ?�로?��?�?배열
+   * @returns ?�로?��? ?�보 �?
    */
   async getMultipleProcedureInfo(procedureNames: string[]): Promise<Record<string, ProcedureInfo>> {
     const results: Record<string, ProcedureInfo> = {}
@@ -185,3 +185,4 @@ export class ProcedureDbParser {
     return results
   }
 } 
+

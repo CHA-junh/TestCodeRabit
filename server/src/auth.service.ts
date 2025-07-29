@@ -25,7 +25,7 @@ export class AuthService {
       if (!response.ok) {
         return {
           success: false,
-          message: `GW 인증 실패: ${response.status}`,
+          message: `GW ?�증 ?�패: ${response.status}`,
         };
       }
 
@@ -34,7 +34,7 @@ export class AuthService {
       if (data.jsonMessage?.result === 'success') {
         return {
           success: true,
-          message: '인증 성공',
+          message: '?�증 ?�공',
           user: {
             empNo,
             name: data.jsonMessage.name || '',
@@ -45,15 +45,17 @@ export class AuthService {
       } else {
         return {
           success: false,
-          message: data.jsonMessage?.message || '인증 실패',
+          message: data.jsonMessage?.message || '?�증 ?�패',
         };
       }
     } catch (error) {
       return {
         success: false,
-        message: 'GW 인증 중 오류 발생',
+        message: 'GW ?�증 �??�류 발생',
         error: error instanceof Error ? error.message : error,
       };
     }
   }
 }
+
+

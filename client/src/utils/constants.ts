@@ -1,30 +1,30 @@
 /**
- * 애플리케이션 전역 상수 정의
- * 하드코딩된 값들을 중앙 집중식으로 관리
+ * ?�플리�??�션 ?�역 ?�수 ?�의
+ * ?�드코딩??값들??중앙 집중?�으�?관�?
  */
 
-// 메시지 관련 상수
+// 메시지 관???�수
 export const MESSAGE_CONSTANTS = {
 	MAX_TABS:
-		'최대 5개의 화면만 열 수 있습니다. 다른 화면을 닫고 다시 시도해주세요.',
-	LOADING: '로딩 중...',
-	UNAUTHORIZED: '인증되지 않은 사용자, 로그인 페이지로 리다이렉트',
+		'최�? 5개의 ?�면�??????�습?�다. ?�른 ?�면???�고 ?�시 ?�도?�주?�요.',
+	LOADING: '로딩 �?..',
+	UNAUTHORIZED: '?�증?��? ?��? ?�용?? 로그???�이지�?리다?�렉??,
 } as const
 
-// 라우팅 관련 상수
+// ?�우??관???�수
 export const ROUTE_CONSTANTS = {
 	LOGIN: '/signin',
 	MAINFRAME: '/mainframe',
 	DEFAULT: '/',
 } as const
 
-// 탭 관련 상수
+// ??관???�수
 export const TAB_CONSTANTS = {
 	MAX_TABS: 5,
 	DEFAULT_TAB_WIDTH: 150,
 } as const
 
-// 버튼 관련 상수
+// 버튼 관???�수
 export const BUTTON_CONSTANTS = {
 	HEIGHT: 26,
 	MIN_WIDTH: 64,
@@ -33,7 +33,7 @@ export const BUTTON_CONSTANTS = {
 	FONT_SIZE: 14,
 } as const
 
-// 입력 필드 관련 상수
+// ?�력 ?�드 관???�수
 export const INPUT_CONSTANTS = {
 	HEIGHT: 26,
 	PADDING_X: 8,
@@ -42,7 +42,7 @@ export const INPUT_CONSTANTS = {
 	CALENDAR_WIDTH: 150,
 } as const
 
-// 색상 상수
+// ?�상 ?�수
 export const COLORS = {
 	PRIMARY: '#58A5EE',
 	PRIMARY_HOVER: '#4A8FD8',
@@ -57,3 +57,5 @@ export const COLORS = {
 	BORDER: '#E5E7EB',
 	BORDER_HOVER: '#D1D5DB',
 } as const
+
+

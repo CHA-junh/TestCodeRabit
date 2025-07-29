@@ -5,14 +5,14 @@ export default async function handler(
 	res: NextApiResponse
 ) {
 	try {
-		// Next.js rewrites를 활용하여 상대 경로 사용
-		// next.config.mjs에서 /api/:path* -> 백엔드로 프록시 설정됨
+		// Next.js rewrites�??�용?�여 ?��? 경로 ?�용
+		// next.config.mjs?�서 /api/:path* -> 백엔?�로 ?�록???�정??
 		const response = await fetch('/api/sys/menus', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			credentials: 'include', // 세션 쿠키 포함
+			credentials: 'include', // ?�션 쿠키 ?�함
 		})
 
 		if (!response.ok) {
@@ -28,6 +28,8 @@ export default async function handler(
 		}
 	} catch (error) {
 		console.error('Menu API error:', error)
-		res.status(500).json({ error: '메뉴 데이터를 가져오는데 실패했습니다.' })
+		res.status(500).json({ error: '메뉴 ?�이?��? 가?�오?�데 ?�패?�습?�다.' })
 	}
 }
+
+

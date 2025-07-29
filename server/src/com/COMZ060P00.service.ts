@@ -13,7 +13,7 @@ export class COMZ060P00Service {
   constructor(private readonly oracleService: OracleService) {}
 
   /**
-   * 부서번호/년도/부서구분코드로 부서 리스트 조회
+   * 부?�번???�도/부?�구분코?�로 부??리스??조회
    */
   async searchDeptNo(sp: string, param: any[]): Promise<COMZ060P00ResponseDto> {
     this.logger.log(`executeProcedure called: sp=${sp}, param=${JSON.stringify(param)}`);
@@ -21,12 +21,13 @@ export class COMZ060P00Service {
     try {
       const result = await this.oracleService.executeProcedure(sp, param);
       
-      // 결과를 카멜케이스로 변환하여 반환
+      // 결과�?카멜케?�스�?변?�하??반환
       return toCamelCase(result);
     } catch (error) {
-      this.logger.error('부서번호 검색 중 오류:', error);
-      throw new InternalServerErrorException('부서번호 검색 중 오류가 발생했습니다.');
+      this.logger.error('부?�번??검??�??�류:', error);
+      throw new InternalServerErrorException('부?�번??검??�??�류가 발생?�습?�다.');
     }
   }
 
 } 
+

@@ -26,7 +26,7 @@ export class TblUserRolePgmGrp {
   @Column({ name: 'CHNGR_ID', type: 'varchar2', length: 20, nullable: true })
   chngrId?: string;
 
-  // TBL_PGM_GRP 테이블과 조인하기 위한 가상 컬럼 (DB에는 없음)
+  // TBL_PGM_GRP ?�이블과 조인?�기 ?�한 가??컬럼 (DB?�는 ?�음)
   @Column({ select: false, insert: false, update: false })
   pgmGrpNm?: string;
 
@@ -54,3 +54,5 @@ export class TblUserRolePgmGrp {
     return `${year}${month}${day}${hours}${minutes}${seconds}`;
   }
 }
+
+

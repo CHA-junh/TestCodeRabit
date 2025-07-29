@@ -43,52 +43,52 @@ jest.mock('@/contexts/ToastContext', () => ({
   })
 }));
 
-describe('COM0050P00 - 테스트 로그인 화면 테스트', () => {
+describe('COM0050P00 - ?�스??로그???�면 ?�스??, () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    // Mock fetch 응답 설정
+    // Mock fetch ?�답 ?�정
     (fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: async () => ({
         success: true,
-        message: '테스트 로그인이 성공했습니다.'
+        message: '?�스??로그?�이 ?�공?�습?�다.'
       })
     });
   });
 
-  test('사용자가 테스트 로그인 화면에 접속하면 모든 주요 기능이 표시된다', async () => {
+  test('?�용?��? ?�스??로그???�면???�속?�면 모든 주요 기능???�시?�다', async () => {
     render(<TestLoginPopup />);
 
-    // 헤더 확인
-    expect(screen.getByText('테스트 로그인 화면')).toBeInTheDocument();
+    // ?�더 ?�인
+    expect(screen.getByText('?�스??로그???�면')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '×' })).toBeInTheDocument();
 
-    // 입력 필드 확인 (label 대신 placeholder로 확인)
-    expect(screen.getByPlaceholderText('사원번호')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '확인' })).toBeInTheDocument();
+    // ?�력 ?�드 ?�인 (label ?�??placeholder�??�인)
+    expect(screen.getByPlaceholderText('?�원번호')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '?�인' })).toBeInTheDocument();
 
-    // 안내 문구 확인
-    expect(screen.getByText('테스트를 위한 화면 입니다.')).toBeInTheDocument();
-    expect(screen.getByText('테스트 하고자 하는 사용자 ID를 입력하고 확인 버튼을 클릭하세요.')).toBeInTheDocument();
+    // ?�내 문구 ?�인
+    expect(screen.getByText('?�스?��? ?�한 ?�면 ?�니??')).toBeInTheDocument();
+    expect(screen.getByText('?�스???�고???�는 ?�용??ID�??�력?�고 ?�인 버튼???�릭?�세??')).toBeInTheDocument();
   });
 
-  test('사용자가 테스트 사용자ID를 입력하고 확인 버튼을 클릭하면 로그인이 처리된다', async () => {
+  test('?�용?��? ?�스???�용?�ID�??�력?�고 ?�인 버튼???�릭?�면 로그?�이 처리?�다', async () => {
     render(<TestLoginPopup />);
 
-    const input = screen.getByPlaceholderText('사원번호');
-    const button = screen.getByRole('button', { name: '확인' });
+    const input = screen.getByPlaceholderText('?�원번호');
+    const button = screen.getByRole('button', { name: '?�인' });
 
-    // 사용자ID 입력 (숫자만 입력되도록 필터링됨)
+    // ?�용?�ID ?�력 (?�자�??�력?�도�??�터링됨)
     await act(async () => {
       fireEvent.change(input, { target: { value: '002' } });
     });
     
-    // 확인 버튼 클릭
+    // ?�인 버튼 ?�릭
     await act(async () => {
       fireEvent.click(button);
     });
 
-    // API 호출 확인
+    // API ?�출 ?�인
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining('/api/auth/test-login'),
@@ -104,18 +104,18 @@ describe('COM0050P00 - 테스트 로그인 화면 테스트', () => {
     });
   });
 
-  test('사용자가 엔터키를 누르면 로그인이 실행된다', async () => {
+  test('?�용?��? ?�터?��? ?�르�?로그?�이 ?�행?�다', async () => {
     render(<TestLoginPopup />);
 
-    const input = screen.getByPlaceholderText('사원번호');
+    const input = screen.getByPlaceholderText('?�원번호');
 
-    // 사용자ID 입력 후 엔터키 (숫자만 입력되도록 필터링됨)
+    // ?�용?�ID ?�력 ???�터??(?�자�??�력?�도�??�터링됨)
     await act(async () => {
       fireEvent.change(input, { target: { value: '002' } });
       fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
     });
 
-    // API 호출 확인
+    // API ?�출 ?�인
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining('/api/auth/test-login'),
@@ -127,54 +127,54 @@ describe('COM0050P00 - 테스트 로그인 화면 테스트', () => {
     });
   });
 
-  test('사용자가 빈 값으로 확인 버튼을 클릭하면 경고 메시지가 표시된다', async () => {
+  test('?�용?��? �?값으�??�인 버튼???�릭?�면 경고 메시지가 ?�시?�다', async () => {
     render(<TestLoginPopup />);
 
-    const button = screen.getByRole('button', { name: '확인' });
+    const button = screen.getByRole('button', { name: '?�인' });
     
     await act(async () => {
       fireEvent.click(button);
     });
 
-    expect(mockShowToast).toHaveBeenCalledWith('테스트 사용자ID를 입력해주세요.', 'warning');
-    // fetch 호출 여부는 더 이상 체크하지 않음
+    expect(mockShowToast).toHaveBeenCalledWith('?�스???�용?�ID�??�력?�주?�요.', 'warning');
+    // fetch ?�출 ?��??????�상 체크?��? ?�음
   });
 
-  test('사용자가 현재 로그인된 사용자와 동일한 ID를 입력하면 경고 메시지가 표시된다', async () => {
+  test('?�용?��? ?�재 로그?�된 ?�용?��? ?�일??ID�??�력?�면 경고 메시지가 ?�시?�다', async () => {
     render(<TestLoginPopup />);
 
-    const input = screen.getByPlaceholderText('사원번호');
-    const button = screen.getByRole('button', { name: '확인' });
+    const input = screen.getByPlaceholderText('?�원번호');
+    const button = screen.getByRole('button', { name: '?�인' });
 
-    // 현재 로그인된 사용자와 동일한 ID 입력 (숫자만 필터링됨)
+    // ?�재 로그?�된 ?�용?��? ?�일??ID ?�력 (?�자�??�터링됨)
     await act(async () => {
       fireEvent.change(input, { target: { value: '10757' } });
       fireEvent.click(button);
     });
 
-    expect(mockShowToast).toHaveBeenCalledWith('현재 로그인된 사용자와 동일한 사용자로는 테스트 로그인할 수 없습니다.', 'warning');
-    // fetch 호출 여부는 더 이상 체크하지 않음
+    expect(mockShowToast).toHaveBeenCalledWith('?�재 로그?�된 ?�용?��? ?�일???�용?�로???�스??로그?�할 ???�습?�다.', 'warning');
+    // fetch ?�출 ?��??????�상 체크?��? ?�음
   });
 
-  test('사용자가 숫자가 아닌 문자를 입력하면 숫자만 필터링된다', async () => {
+  test('?�용?��? ?�자가 ?�닌 문자�??�력?�면 ?�자�??�터링된??, async () => {
     render(<TestLoginPopup />);
 
-    const input = screen.getByPlaceholderText('사원번호');
+    const input = screen.getByPlaceholderText('?�원번호');
 
-    // 숫자와 문자가 섞인 값 입력
+    // ?�자?� 문자가 ?�인 �??�력
     await act(async () => {
       fireEvent.change(input, { target: { value: 'TEST123ABC' } });
     });
 
-    // 숫자만 남아있는지 확인
+    // ?�자�??�아?�는지 ?�인
     expect(input).toHaveValue('123');
   });
 
-  test('로그인 성공 시 부모 윈도우가 새로고침되고 팝업이 닫힌다', async () => {
+  test('로그???�공 ??부�??�도?��? ?�로고침?�고 ?�업???�힌??, async () => {
     render(<TestLoginPopup />);
 
-    const input = screen.getByPlaceholderText('사원번호');
-    const button = screen.getByRole('button', { name: '확인' });
+    const input = screen.getByPlaceholderText('?�원번호');
+    const button = screen.getByRole('button', { name: '?�인' });
 
     await act(async () => {
       fireEvent.change(input, { target: { value: '002' } });
@@ -187,20 +187,20 @@ describe('COM0050P00 - 테스트 로그인 화면 테스트', () => {
     });
   });
 
-  test('로그인 실패 시 에러 메시지가 표시된다', async () => {
-    // 실패 응답 모킹
+  test('로그???�패 ???�러 메시지가 ?�시?�다', async () => {
+    // ?�패 ?�답 모킹
     (fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: async () => ({
         success: false,
-        message: '존재하지 않는 사용자입니다.'
+        message: '존재?��? ?�는 ?�용?�입?�다.'
       })
     });
 
     render(<TestLoginPopup />);
 
-    const input = screen.getByPlaceholderText('사원번호');
-    const button = screen.getByRole('button', { name: '확인' });
+    const input = screen.getByPlaceholderText('?�원번호');
+    const button = screen.getByRole('button', { name: '?�인' });
 
     await act(async () => {
       fireEvent.change(input, { target: { value: '002' } });
@@ -208,18 +208,18 @@ describe('COM0050P00 - 테스트 로그인 화면 테스트', () => {
     });
 
     await waitFor(() => {
-      expect(mockShowToast).toHaveBeenCalledWith('존재하지 않는 사용자입니다.', 'error');
+      expect(mockShowToast).toHaveBeenCalledWith('존재?��? ?�는 ?�용?�입?�다.', 'error');
     });
   });
 
-  test('네트워크 오류 시 에러 메시지가 표시된다', async () => {
-    // 네트워크 오류 모킹
+  test('?�트?�크 ?�류 ???�러 메시지가 ?�시?�다', async () => {
+    // ?�트?�크 ?�류 모킹
     (fetch as jest.Mock).mockRejectedValue(new Error('Network error'));
 
     render(<TestLoginPopup />);
 
-    const input = screen.getByPlaceholderText('사원번호');
-    const button = screen.getByRole('button', { name: '확인' });
+    const input = screen.getByPlaceholderText('?�원번호');
+    const button = screen.getByRole('button', { name: '?�인' });
 
     await act(async () => {
       fireEvent.change(input, { target: { value: '002' } });
@@ -227,11 +227,11 @@ describe('COM0050P00 - 테스트 로그인 화면 테스트', () => {
     });
 
     await waitFor(() => {
-      expect(mockShowToast).toHaveBeenCalledWith('서버 연결에 실패했습니다.', 'error');
+      expect(mockShowToast).toHaveBeenCalledWith('?�버 ?�결???�패?�습?�다.', 'error');
     });
   });
 
-  test('ESC 키를 누르면 팝업이 닫힌다', async () => {
+  test('ESC ?��? ?�르�??�업???�힌??, async () => {
     render(<TestLoginPopup />);
 
     await act(async () => {
@@ -241,7 +241,7 @@ describe('COM0050P00 - 테스트 로그인 화면 테스트', () => {
     expect(window.close).toHaveBeenCalled();
   });
 
-  test('닫기 버튼을 클릭하면 팝업이 닫힌다', async () => {
+  test('?�기 버튼???�릭?�면 ?�업???�힌??, async () => {
     render(<TestLoginPopup />);
 
     const closeButton = screen.getByRole('button', { name: '×' });
@@ -253,8 +253,8 @@ describe('COM0050P00 - 테스트 로그인 화면 테스트', () => {
     expect(window.close).toHaveBeenCalled();
   });
 
-  test('로딩 중에는 버튼이 비활성화된다', async () => {
-    // 느린 응답을 시뮬레이션하기 위해 Promise를 지연시킴
+  test('로딩 중에??버튼??비활?�화?�다', async () => {
+    // ?�린 ?�답???��??�이?�하�??�해 Promise�?지?�시??
     let resolvePromise: (value: any) => void;
     const delayedPromise = new Promise((resolve) => {
       resolvePromise = resolve;
@@ -264,18 +264,18 @@ describe('COM0050P00 - 테스트 로그인 화면 테스트', () => {
 
     render(<TestLoginPopup />);
 
-    const input = screen.getByPlaceholderText('사원번호');
-    const button = screen.getByRole('button', { name: '확인' });
+    const input = screen.getByPlaceholderText('?�원번호');
+    const button = screen.getByRole('button', { name: '?�인' });
 
     await act(async () => {
       fireEvent.change(input, { target: { value: '002' } });
       fireEvent.click(button);
     });
 
-    // 로딩 상태에서 버튼이 비활성화되었는지 확인
+    // 로딩 ?�태?�서 버튼??비활?�화?�었?��? ?�인
     expect(button).toBeDisabled();
 
-    // Promise 해결
+    // Promise ?�결
     resolvePromise!({
       ok: true,
       json: async () => ({ success: true })
@@ -286,3 +286,4 @@ describe('COM0050P00 - 테스트 로그인 화면 테스트', () => {
     });
   });
 }); 
+

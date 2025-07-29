@@ -7,7 +7,7 @@ import { createDynamicComponent } from '@/utils/componentMapping'
 interface ContentFrameProps {
 	programId: string
 	title: string
-	menuPath?: string // menuPath를 추가로 받음
+	menuPath?: string // menuPath�?추�?�?받음
 }
 
 export default function ContentFrame({
@@ -21,38 +21,40 @@ export default function ContentFrame({
 
 	useEffect(() => {
 		if (!menuPath) {
-			setError('해당 화면이 존재하지 않습니다.')
+			setError('?�당 ?�면??존재?��? ?�습?�다.')
 			setDynamicComponent(null)
 			return
 		}
 
 		setError(null)
 
-		// 동적 컴포넌트 생성 및 즉시 설정
+		// ?�적 컴포?�트 ?�성 �?즉시 ?�정
 		const component = createDynamicComponent(menuPath)
 		if (component) {
 			setDynamicComponent(() => component)
 		} else {
-			setError('해당 화면이 존재하지 않습니다.')
+			setError('?�당 ?�면??존재?��? ?�습?�다.')
 		}
 	}, [menuPath])
 
-	// 에러가 있으면 에러 메시지 표시
+	// ?�러가 ?�으�??�러 메시지 ?�시
 	if (error) {
 		return (
 			<div className='error-message-box'>
-				<div className='error-message-icon'>⚠️</div>
+				<div className='error-message-icon'>?�️</div>
 				{error}
-				<div className='error-message-desc'>관리자에게 문의하세요.</div>
+				<div className='error-message-desc'>관리자?�게 문의?�세??</div>
 			</div>
 		)
 	}
 
-	// 컴포넌트가 없으면 빈 div 반환 (로딩 중)
+	// 컴포?�트가 ?�으�?�?div 반환 (로딩 �?
 	if (!DynamicComponent) {
 		return <div style={{ display: 'none' }} />
 	}
 
-	// 컴포넌트 렌더링
+	// 컴포?�트 ?�더�?
 	return <DynamicComponent title={title} />
 }
+
+

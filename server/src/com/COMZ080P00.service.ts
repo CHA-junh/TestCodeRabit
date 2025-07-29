@@ -55,7 +55,7 @@ export class COMZ080P00Service {
         return response;
       }
       
-      // Entity 형태로 변환
+      // Entity ?�태�?변??
       const employeeDtos: EmployeeDto[] = rows.map((row: any, idx: number) => ({
         LIST_NO: String(idx + 1),
         OWN_OUTS_NM: row.OWN_OUTS_NM,
@@ -83,7 +83,7 @@ export class COMZ080P00Service {
         TCN_GRD: row.TCN_GRD,
       }));
       
-      // DB에서 실시간으로 프로시저 정보 가져오기
+      // DB?�서 ?�시간으�??�로?��? ?�보 가?�오�?
       const procedureInfo = await this.getProcedureInfo('COM_02_0411_S');
       
       const response = new EmployeeSearchResponseDto();
@@ -93,15 +93,15 @@ export class COMZ080P00Service {
       
       return response;
     } catch (error: any) {
-      console.error('직원 조회 오류:', error);
-      throw new Error(`직원 조회 중 오류가 발생했습니다: ${error.message}`);
+      console.error('직원 조회 ?�류:', error);
+      throw new Error(`직원 조회 �??�류가 발생?�습?�다: ${error.message}`);
     } finally {
       await connection.close();
     }
   }
 
   /**
-   * DB에서 실시간으로 프로시저 정보 조회
+   * DB?�서 ?�시간으�??�로?��? ?�보 조회
    */
   private async getProcedureInfo(procedureName: string): Promise<ProcedureInfoDto> {
     try {
@@ -113,14 +113,15 @@ export class COMZ080P00Service {
       
       return dto;
     } catch (error) {
-      console.error(`프로시저 정보 조회 오류 (${procedureName}):`, error);
+      console.error(`?�로?��? ?�보 조회 ?�류 (${procedureName}):`, error);
       
-      // 오류 발생 시 기본 정보 반환
+      // ?�류 발생 ??기본 ?�보 반환
       const dto = new ProcedureInfoDto();
       dto.name = procedureName;
-      dto.originalCommentLines = ['프로시저 정보를 조회할 수 없습니다.'];
+      dto.originalCommentLines = ['?�로?��? ?�보�?조회?????�습?�다.'];
       
       return dto;
     }
   }
 } 
+

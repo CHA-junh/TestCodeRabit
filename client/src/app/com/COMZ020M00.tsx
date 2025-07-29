@@ -9,78 +9,78 @@ import { useToast } from '@/contexts/ToastContext'
 import '../common/common.css'
 
 /**
- * 단가 데이터 인터페이스
- * ASIS COM_01_0200.mxml의 데이터 구조를 기반으로 정의
+ * ?��? ?�이???�터?�이??
+ * ASIS COM_01_0200.mxml???�이??구조�?기반?�로 ?�의
  */
 interface UnitPriceData {
-	OWN_OUTS_DIV: string // 자사/외주 구분 (1: 자사, 2: 외주)
-	OWN_OUTS_DIV_NM: string // 구분명 (자사/외주)
-	YR: string // 년도
-	TCN_GRD: string // 기술등급 코드
-	TCN_GRD_NM: string // 기술등급명 (초급/중급/고급)
+	OWN_OUTS_DIV: string // ?�사/?�주 구분 (1: ?�사, 2: ?�주)
+	OWN_OUTS_DIV_NM: string // 구분�?(?�사/?�주)
+	YR: string // ?�도
+	TCN_GRD: string // 기술?�급 코드
+	TCN_GRD_NM: string // 기술?�급�?(초급/중급/고급)
 	DUTY_CD: string // 직책 코드
-	DUTY_NM: string // 직책명 (사원/대리/과장 등)
-	UPRC: string // 단가 (원)
+	DUTY_NM: string // 직책�?(?�원/?��?과장 ??
+	UPRC: string // ?��? (??
 }
 
 /**
- * 등급별 단가 등록 화면
- * ASIS: COM_01_0200.mxml → TOBE: COMZ020M00.tsx
+ * ?�급�??��? ?�록 ?�면
+ * ASIS: COM_01_0200.mxml ??TOBE: COMZ020M00.tsx
  *
  * 주요 기능:
- * 1. 등급별 단가 조회 (COM_01_0201_S)
- * 2. 등급별 단가 등록/수정 (COM_01_0202_T)
- * 3. 등급별 단가 삭제 (COM_01_0203_D)
+ * 1. ?�급�??��? 조회 (COM_01_0201_S)
+ * 2. ?�급�??��? ?�록/?�정 (COM_01_0202_T)
+ * 3. ?�급�??��? ??�� (COM_01_0203_D)
  */
 export default function MainPage() {
 	/**
-	 * 년도 범위 설정
-	 * 현재 년도부터 이전 N년까지의 범위를 설정
+	 * ?�도 범위 ?�정
+	 * ?�재 ?�도부???�전 N?�까지??범위�??�정
 	 */
-	const YEAR_RANGE = 10 // 이전 10년까지
+	const YEAR_RANGE = 10 // ?�전 10?�까지
 
 	/**
-	 * 조회 조건 상태 관리
-	 * 단가 조회 시 사용하는 조건들
+	 * 조회 조건 ?�태 관�?
+	 * ?��? 조회 ???�용?�는 조건??
 	 */
 	const [searchCondition, setSearchCondition] = useState({
-		type: '1', // 1: 자사, 2: 외주 (ASIS: rdIODiv.selectedValue)
-		year: new Date().getFullYear().toString(), // 현재 년도 (ASIS: txtYrNm.text)
+		type: '1', // 1: ?�사, 2: ?�주 (ASIS: rdIODiv.selectedValue)
+		year: new Date().getFullYear().toString(), // ?�재 ?�도 (ASIS: txtYrNm.text)
 	})
 
 	/**
 	 *
-	 * 폼 데이터 상태 관리
-	 * 단가 저장/삭제 시 사용하는 데이터들
+	 * ???�이???�태 관�?
+	 * ?��? ?�????�� ???�용?�는 ?�이?�들
 	 */
 	const [formData, setFormData] = useState({
-		type: '1', // 1: 자사, 2: 외주
-		year: new Date().getFullYear().toString(), // 년도
-		grade: '', // 기술등급 코드 (ASIS: cbTcnGrd.value)
+		type: '1', // 1: ?�사, 2: ?�주
+		year: new Date().getFullYear().toString(), // ?�도
+		grade: '', // 기술?�급 코드 (ASIS: cbTcnGrd.value)
 		position: '', // 직책 코드 (ASIS: cbDutyCd.value)
-		price: '', // 단가 (ASIS: txtUnitPrice.getValue())
+		price: '', // ?��? (ASIS: txtUnitPrice.getValue())
 	})
 
 	/**
-	 * 그리드 데이터 상태 관리
+	 * 그리???�이???�태 관�?
 	 * ASIS: initDG (ArrayCollection)
 	 */
 	const [rows, setRows] = useState<UnitPriceData[]>([])
 
 	/**
-	 * 로딩 상태 관리
-	 * API 호출 중 사용자에게 피드백 제공
+	 * 로딩 ?�태 관�?
+	 * API ?�출 �??�용?�에�??�드�??�공
 	 */
 	const [loading, setLoading] = useState(false)
 
 	/**
-	 * 선택된 행 인덱스
+	 * ?�택?????�덱??
 	 * ASIS: grdUntPrc.selectedIndex
 	 */
 	const [selectedRow, setSelectedRow] = useState<number>(-1)
 
 	/**
-	 * 코드 데이터 상태 관리
+	 * 코드 ?�이???�태 관�?
 	 * ASIS: cbTcnGrd.setLargeCode('104', ''), cbDutyCd.setLargeCode('105', '')
 	 */
 	const [gradeOptions, setGradeOptions] = useState<
@@ -92,13 +92,13 @@ export default function MainPage() {
 
 	const { showToast, showConfirm } = useToast()
 
-	// AG Grid 관련
+	// AG Grid 관??
 	const gridRef = useRef<AgGridReact<UnitPriceData>>(null)
 
-	// 컬럼 정의
+	// 컬럼 ?�의
 	const [colDefs] = useState<ColDef[]>([
 		{
-			headerName: '등급',
+			headerName: '?�급',
 			field: 'TCN_GRD_NM',
 			flex: 1,
 			minWidth: 100,
@@ -114,7 +114,7 @@ export default function MainPage() {
 			headerClass: 'text-center',
 		},
 		{
-			headerName: '단가',
+			headerName: '?��?',
 			field: 'UPRC',
 			type: 'numericColumn',
 			flex: 1,
@@ -123,7 +123,7 @@ export default function MainPage() {
 			headerClass: 'text-center',
 			valueFormatter: (params) => {
 				if (params.value) {
-					return Number(params.value).toLocaleString() + '원'
+					return Number(params.value).toLocaleString() + '??
 				}
 				return ''
 			},
@@ -131,23 +131,23 @@ export default function MainPage() {
 	])
 
 	/**
-	 * 컴포넌트 초기화
-	 * ASIS: init() 함수와 동일한 역할
+	 * 컴포?�트 초기??
+	 * ASIS: init() ?�수?� ?�일????��
 	 */
 	useEffect(() => {
-		// 페이지 로드 시 코드 데이터 로드 후 자동 조회 실행
+		// ?�이지 로드 ??코드 ?�이??로드 ???�동 조회 ?�행
 		const initializeData = async () => {
 			await loadCodeData()
-			// 코드 데이터 로드 완료 후 자동 조회 실행
+			// 코드 ?�이??로드 ?�료 ???�동 조회 ?�행
 			handleSearch()
 		}
 		initializeData()
 	}, [])
 
 	/**
-	 * 코드 조회 함수
-	 * @param largeCategoryCode - 대분류 코드
-	 * @returns 코드 데이터 배열
+	 * 코드 조회 ?�수
+	 * @param largeCategoryCode - ?�분류 코드
+	 * @returns 코드 ?�이??배열
 	 */
 	const fetchCodeData = async (
 		largeCategoryCode: string
@@ -169,33 +169,33 @@ export default function MainPage() {
 			}
 			return []
 		} catch (error) {
-			console.error(`코드 조회 오류 (${largeCategoryCode}):`, error)
+			console.error(`코드 조회 ?�류 (${largeCategoryCode}):`, error)
 			return []
 		}
 	}
 
 	/**
-	 * 코드 데이터 로드
+	 * 코드 ?�이??로드
 	 * ASIS: cbTcnGrd.setLargeCode('104', ''), cbDutyCd.setLargeCode('105', '')
 	 */
 	const loadCodeData = async () => {
 		try {
-			// 등급 코드와 직책 코드를 병렬로 조회
+			// ?�급 코드?� 직책 코드�?병렬�?조회
 			const [gradeData, positionData] = await Promise.all([
-				fetchCodeData('104'), // 등급 코드 조회
+				fetchCodeData('104'), // ?�급 코드 조회
 				fetchCodeData('105'), // 직책 코드 조회
 			])
 
 			setGradeOptions(gradeData)
 			setPositionOptions(positionData)
 		} catch (error) {
-			console.error('코드 데이터 로드 오류:', error)
+			console.error('코드 ?�이??로드 ?�류:', error)
 		}
 	}
 
 	/**
-	 * 조회 조건 변경 핸들러
-	 * 자사/외주 구분, 년도 변경 시 사용
+	 * 조회 조건 변�??�들??
+	 * ?�사/?�주 구분, ?�도 변�????�용
 	 */
 	const handleSearchConditionChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -205,8 +205,8 @@ export default function MainPage() {
 	}
 
 	/**
-	 * 폼 입력값 변경 핸들러
-	 * ASIS: 각 입력 필드의 change 이벤트와 동일
+	 * ???�력�?변�??�들??
+	 * ASIS: �??�력 ?�드??change ?�벤?��? ?�일
 	 */
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -216,20 +216,20 @@ export default function MainPage() {
 	}
 
 	/**
-	 * 등급별 단가 조회 기능
-	 * ASIS: onSearchClick() 함수와 동일한 로직
+	 * ?�급�??��? 조회 기능
+	 * ASIS: onSearchClick() ?�수?� ?�일??로직
 	 *
-	 * 프로시저: COM_01_0201_S(?, ?, ?)
-	 * 파라미터: 자사/외주구분, 년도
+	 * ?�로?��?: COM_01_0201_S(?, ?, ?)
+	 * ?�라미터: ?�사/?�주구분, ?�도
 	 */
 	const handleSearch = async () => {
 		// ASIS: validation check
 		if (!searchCondition.year) {
-			showToast('년도를 입력하세요.', 'warning')
+			showToast('?�도�??�력?�세??', 'warning')
 			return
 		}
 
-		// ASIS: 폼 초기화
+		// ASIS: ??초기??
 		setFormData((prev) => ({
 			...prev,
 			grade: '',
@@ -238,7 +238,7 @@ export default function MainPage() {
 		}))
 		setSelectedRow(-1)
 		
-		// 그리드 데이터 초기화 (이전 데이터 제거)
+		// 그리???�이??초기??(?�전 ?�이???�거)
 		setRows([])
 
 		setLoading(true)
@@ -249,8 +249,8 @@ export default function MainPage() {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					ownOutsDiv: searchCondition.type, // 자사/외주 구분 (조회조건 사용)
-					year: searchCondition.year, // 년도 (조회조건 사용)
+					ownOutsDiv: searchCondition.type, // ?�사/?�주 구분 (조회조건 ?�용)
+					year: searchCondition.year, // ?�도 (조회조건 ?�용)
 				}),
 			})
 
@@ -259,55 +259,55 @@ export default function MainPage() {
 				const newRows = data.data || []
 				setRows(newRows)
 
-				// ASIS: 조회 후 첫번째 행 클릭한 효과 주기 (새로운 데이터 로드 후)
+				// ASIS: 조회 ??첫번�????�릭???�과 주기 (?�로???�이??로드 ??
 				if (newRows.length > 0) {
-					// 새로운 데이터를 직접 전달
+					// ?�로???�이?��? 직접 ?�달
 					setTimeout(() => {
 						setSelectedRow(0)
-						handleRowClick(0, newRows[0]) // 새로운 데이터 직접 전달
+						handleRowClick(0, newRows[0]) // ?�로???�이??직접 ?�달
 					}, 100)
 				}
 			} else {
-				showToast('조회 중 오류가 발생했습니다.', 'error')
+				showToast('조회 �??�류가 발생?�습?�다.', 'error')
 			}
 		} catch (error) {
-			console.error('검색 오류:', error)
-			showToast('조회 중 오류가 발생했습니다.', 'error')
+			console.error('검???�류:', error)
+			showToast('조회 �??�류가 발생?�습?�다.', 'error')
 		} finally {
 			setLoading(false)
 		}
 	}
 
 	/**
-	 * 그리드 행 클릭 이벤트
-	 * ASIS: onClickGrid(idx:int) 함수와 동일한 로직
+	 * 그리?????�릭 ?�벤??
+	 * ASIS: onClickGrid(idx:int) ?�수?� ?�일??로직
 	 *
-	 * 선택된 행의 데이터를 폼에 자동 입력
+	 * ?�택???�의 ?�이?��? ?�에 ?�동 ?�력
 	 */
 	const handleRowClick = (index: number, rowData?: UnitPriceData) => {
 		setSelectedRow(index)
-		// 새로운 데이터가 전달되면 그것을 사용, 없으면 기존 rows에서 가져옴
+		// ?�로???�이?��? ?�달?�면 그것???�용, ?�으�?기존 rows?�서 가?�옴
 		const row = rowData || rows[index]
 		
 		if (row) {
-			// ASIS: 폼에 선택된 행 데이터 설정 (검색 조건은 유지)
+			// ASIS: ?�에 ?�택?????�이???�정 (검??조건?� ?��?)
 			setFormData((prev) => ({
-				...prev, // 기존 검색 조건 유지 (type, year)
-				type: row.OWN_OUTS_DIV, // 자사/외주 구분 (히든값에서 가져옴)
-				year: row.YR, // 년도 (히든값에서 가져옴)
-				grade: row.TCN_GRD, // 기술등급 코드
+				...prev, // 기존 검??조건 ?��? (type, year)
+				type: row.OWN_OUTS_DIV, // ?�사/?�주 구분 (?�든값에??가?�옴)
+				year: row.YR, // ?�도 (?�든값에??가?�옴)
+				grade: row.TCN_GRD, // 기술?�급 코드
 				position: row.DUTY_CD, // 직책 코드
-				price: String(row.UPRC), // 단가 (문자열로 변환)
+				price: String(row.UPRC), // ?��? (문자?�로 변??
 			}))
 		}
 	}
 
 	/**
-	 * 단가 저장 기능
-	 * ASIS: onSaveClick() 함수와 동일한 로직
+	 * ?��? ?�??기능
+	 * ASIS: onSaveClick() ?�수?� ?�일??로직
 	 *
-	 * 프로시저: COM_01_0202_T(?, ?, ?, ?, ?, ?)
-	 * 파라미터: 자사/외주구분, 년도, 기술등급, 직책, 단가
+	 * ?�로?��?: COM_01_0202_T(?, ?, ?, ?, ?, ?)
+	 * ?�라미터: ?�사/?�주구분, ?�도, 기술?�급, 직책, ?��?
 	 */
 	const handleSave = async () => {
 		// ASIS: validation check
@@ -316,7 +316,7 @@ export default function MainPage() {
 		}
 
 		if (!formData.price) {
-			showToast('단가를 입력하세요.', 'warning')
+			showToast('?��?�??�력?�세??', 'warning')
 			return
 		}
 
@@ -328,44 +328,44 @@ export default function MainPage() {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					ownOutsDiv: formData.type, // 자사/외주 구분
-					year: formData.year, // 년도
-					tcnGrd: formData.grade, // 기술등급
+					ownOutsDiv: formData.type, // ?�사/?�주 구분
+					year: formData.year, // ?�도
+					tcnGrd: formData.grade, // 기술?�급
 					dutyCd: formData.position, // 직책
-					unitPrice: formData.price, // 단가
+					unitPrice: formData.price, // ?��?
 				}),
 			})
 
 			if (response.ok) {
 				const data = await response.json()
 				if (data.success || data.rtn === 'SUCCESS' || data.rtn === '1') {
-					// ASIS: 저장 성공 후 메시지 표시
-					showToast('저장되었습니다.', 'info')
-					handleSearch() // ASIS: 다시 조회
-					clearForm() // ASIS: 폼 초기화
+					// ASIS: ?�???�공 ??메시지 ?�시
+					showToast('?�?�되?�습?�다.', 'info')
+					handleSearch() // ASIS: ?�시 조회
+					clearForm() // ASIS: ??초기??
 				} else {
-					// 실패 시 Oracle 에러 메시지 표시
+					// ?�패 ??Oracle ?�러 메시지 ?�시
 					const errorMessage =
-						data.message || data.rtn || '저장 중 오류가 발생했습니다.'
-					showToast(`저장 실패: ${errorMessage}`, 'error')
+						data.message || data.rtn || '?�??�??�류가 발생?�습?�다.'
+					showToast(`?�???�패: ${errorMessage}`, 'error')
 				}
 			} else {
-				showToast('저장 중 오류가 발생했습니다.', 'error')
+				showToast('?�??�??�류가 발생?�습?�다.', 'error')
 			}
 		} catch (error) {
-			console.error('저장 오류:', error)
-			showToast('저장 중 오류가 발생했습니다.', 'error')
+			console.error('?�???�류:', error)
+			showToast('?�??�??�류가 발생?�습?�다.', 'error')
 		} finally {
 			setLoading(false)
 		}
 	}
 
 	/**
-	 * 단가 삭제 기능
-	 * ASIS: onDelClick() 함수와 동일한 로직
+	 * ?��? ??�� 기능
+	 * ASIS: onDelClick() ?�수?� ?�일??로직
 	 *
-	 * 프로시저: COM_01_0203_D(?, ?, ?, ?, ?)
-	 * 파라미터: 자사/외주구분, 년도, 기술등급, 직책
+	 * ?�로?��?: COM_01_0203_D(?, ?, ?, ?, ?)
+	 * ?�라미터: ?�사/?�주구분, ?�도, 기술?�급, 직책
 	 */
 	const handleDelete = async () => {
 		// ASIS: validation check
@@ -373,9 +373,9 @@ export default function MainPage() {
 			return
 		}
 
-		// ASIS: 사용자 확인
+		// ASIS: ?�용???�인
 		showConfirm({
-			message: '선택한 항목을 삭제하시겠습니까?',
+			message: '?�택????��????��?�시겠습?�까?',
 			type: 'warning',
 			onConfirm: async () => {
 				setLoading(true)
@@ -386,9 +386,9 @@ export default function MainPage() {
 							'Content-Type': 'application/json',
 						},
 						body: JSON.stringify({
-							ownOutsDiv: formData.type, // 자사/외주 구분
-							year: formData.year, // 년도
-							tcnGrd: formData.grade, // 기술등급
+							ownOutsDiv: formData.type, // ?�사/?�주 구분
+							year: formData.year, // ?�도
+							tcnGrd: formData.grade, // 기술?�급
 							dutyCd: formData.position, // 직책
 						}),
 					})
@@ -396,22 +396,22 @@ export default function MainPage() {
 					if (response.ok) {
 						const data = await response.json()
 						if (data.success || data.rtn === 'SUCCESS' || data.rtn === '1') {
-							// ASIS: 삭제 성공 후 메시지 표시
-							showToast('삭제되었습니다.', 'info')
-							handleSearch() // ASIS: 다시 조회
-							clearForm() // ASIS: 폼 초기화
+							// ASIS: ??�� ?�공 ??메시지 ?�시
+							showToast('??��?�었?�니??', 'info')
+							handleSearch() // ASIS: ?�시 조회
+							clearForm() // ASIS: ??초기??
 						} else {
-							// 실패 시 Oracle 에러 메시지 표시
+							// ?�패 ??Oracle ?�러 메시지 ?�시
 							const errorMessage =
-								data.message || data.rtn || '삭제 중 오류가 발생했습니다.'
-							showToast(`삭제 실패: ${errorMessage}`, 'error')
+								data.message || data.rtn || '??�� �??�류가 발생?�습?�다.'
+							showToast(`??�� ?�패: ${errorMessage}`, 'error')
 						}
 					} else {
-						showToast('삭제 중 오류가 발생했습니다.', 'error')
+						showToast('??�� �??�류가 발생?�습?�다.', 'error')
 					}
 				} catch (error) {
-					console.error('삭제 오류:', error)
-					showToast('삭제 중 오류가 발생했습니다.', 'error')
+					console.error('??�� ?�류:', error)
+					showToast('??�� �??�류가 발생?�습?�다.', 'error')
 				} finally {
 					setLoading(false)
 				}
@@ -420,27 +420,27 @@ export default function MainPage() {
 	}
 
 	/**
-	 * 폼 검증 함수
-	 * ASIS: chkValidation():Boolean 함수와 동일한 로직
+	 * ??검�??�수
+	 * ASIS: chkValidation():Boolean ?�수?� ?�일??로직
 	 *
-	 * @returns {boolean} 검증 통과 여부
+	 * @returns {boolean} 검�??�과 ?��?
 	 */
 	const validateForm = (): boolean => {
-		// ASIS: 년도 필수 입력 체크
+		// ASIS: ?�도 ?�수 ?�력 체크
 		if (!formData.year) {
-			showToast('년도를 입력하세요.', 'warning')
+			showToast('?�도�??�력?�세??', 'warning')
 			return false
 		}
 
-		// ASIS: 기술등급 필수 입력 체크
+		// ASIS: 기술?�급 ?�수 ?�력 체크
 		if (!formData.grade) {
-			showToast('기술등급을 입력하세요.', 'warning')
+			showToast('기술?�급???�력?�세??', 'warning')
 			return false
 		}
 
-		// ASIS: 자사인 경우 직책 필수 입력 체크
+		// ASIS: ?�사??경우 직책 ?�수 ?�력 체크
 		if (formData.type === '1' && !formData.position) {
-			showToast('직책을 입력하세요.', 'warning')
+			showToast('직책???�력?�세??', 'warning')
 			return false
 		}
 
@@ -448,8 +448,8 @@ export default function MainPage() {
 	}
 
 	/**
-	 * 폼 초기화 함수
-	 * ASIS: 저장/삭제 성공 후 폼 초기화와 동일
+	 * ??초기???�수
+	 * ASIS: ?�????�� ?�공 ????초기?��? ?�일
 	 */
 	const clearForm = () => {
 		setFormData((prev) => ({
@@ -462,9 +462,9 @@ export default function MainPage() {
 	}
 
 	/**
-	 * 키보드 이벤트 처리 함수
-	 * ASIS: 키보드 이벤트 처리와 동일
-	 * Enter: 검색 실행
+	 * ?�보???�벤??처리 ?�수
+	 * ASIS: ?�보???�벤??처리?� ?�일
+	 * Enter: 검???�행
 	 */
 	const handleKeyDown = (
 		e: React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>
@@ -475,14 +475,14 @@ export default function MainPage() {
 	}
 
 	/**
-	 * 입력 필드 포커스 시 전체 선택
+	 * ?�력 ?�드 ?�커?????�체 ?�택
 	 */
 	const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
 		e.target.select()
 	}
 
 	/**
-	 * AG Grid 행 선택 핸들러
+	 * AG Grid ???�택 ?�들??
 	 */
 	const onSelectionChanged = (event: SelectionChangedEvent) => {
 		const selectedRows = event.api.getSelectedRows()
@@ -497,12 +497,12 @@ export default function MainPage() {
 
 	return (
 		<div className='mdi'>
-			{/* 검색 영역 */}
+			{/* 검???�역 */}
 			<div className='search-div mb-4'>
 				<table className='search-table'>
 					<tbody>
 						<tr className='search-tr'>
-							<th className='search-th w-[130px]'>자사/외주</th>
+							<th className='search-th w-[130px]'>?�사/?�주</th>
 							<td className='search-td w-[120px]'>
 								<label className='mr-3'>
 									<input
@@ -513,7 +513,7 @@ export default function MainPage() {
 										onChange={handleSearchConditionChange}
 										className='mr-1'
 									/>
-									자사
+									?�사
 								</label>
 								<label>
 									<input
@@ -524,10 +524,10 @@ export default function MainPage() {
 										onChange={handleSearchConditionChange}
 										className='mr-1'
 									/>
-									외주
+									?�주
 								</label>
 							</td>
-							<th className='search-th w-[80px]'>년도</th>
+							<th className='search-th w-[80px]'>?�도</th>
 							<td className='search-td w-[150px]'>
 								<select
 									name='year'
@@ -557,7 +557,7 @@ export default function MainPage() {
 									onClick={handleSearch}
 									disabled={loading}
 								>
-									{loading ? '조회중...' : '조회'}
+									{loading ? '조회�?..' : '조회'}
 								</button>
 							</td>
 						</tr>
@@ -565,11 +565,11 @@ export default function MainPage() {
 				</table>
 			</div>
 
-			{/* 그리드 영역 */}
+			{/* 그리???�역 */}
 			<div className='gridbox-div mb-4' style={{ height: '400px' }}>
 				{loading && (
 					<div className='flex items-center justify-center h-32 text-gray-500'>
-						단가 목록을 불러오는 중...
+						?��? 목록??불러?�는 �?..
 					</div>
 				)}
 				{!loading && (
@@ -605,7 +605,7 @@ export default function MainPage() {
 							onGridReady={(params) => {
 								params.api.sizeColumnsToFit()
 							}}
-							// 커스텀 헤더 컴포넌트 - 모든 헤더를 가운데 정렬 (임시 스타일)
+							// 커스?� ?�더 컴포?�트 - 모든 ?�더�?가?�데 ?�렬 (?�시 ?��???
 							components={{
 								agColumnHeader: (props: { displayName: string }) => {
 									return (
@@ -620,12 +620,12 @@ export default function MainPage() {
 				)}
 			</div>
 
-			{/* 등록 영역 */}
+			{/* ?�록 ?�역 */}
 			<div className='mb-3'>
 				<table className='form-table mb-4'>
 					<tbody>
 						<tr className='form-tr'>
-							<th className='form-th w-[80px]'>등급</th>
+							<th className='form-th w-[80px]'>?�급</th>
 							<td className='form-td w-[180px]'>
 								<select
 									name='grade'
@@ -633,7 +633,7 @@ export default function MainPage() {
 									onChange={handleChange}
 									className='combo-base w-full'
 								>
-									<option value=''>선택</option>
+									<option value=''>?�택</option>
 									{gradeOptions.map((option) => (
 										<option key={option.codeId} value={option.codeId}>
 											{option.codeNm}
@@ -650,7 +650,7 @@ export default function MainPage() {
 									onChange={handleChange}
 									className='combo-base w-full'
 								>
-									<option value=''>선택</option>
+									<option value=''>?�택</option>
 									{positionOptions.map((option) => (
 										<option key={option.codeId} value={option.codeId}>
 											{option.codeNm}
@@ -659,7 +659,7 @@ export default function MainPage() {
 								</select>
 							</td>
 
-							<th className='form-th w-[80px]'>단가</th>
+							<th className='form-th w-[80px]'>?��?</th>
 							<td className='form-td w-[180px]'>
 								<div className='flex items-center gap-1'>
 									<input
@@ -671,7 +671,7 @@ export default function MainPage() {
 										className='input-base input-default w-full text-right-align'
 										placeholder='0'
 									/>
-									<span className='m-1'>원</span>
+									<span className='m-1'>??/span>
 								</div>
 							</td>
 						</tr>
@@ -679,21 +679,21 @@ export default function MainPage() {
 				</table>
 			</div>
 
-			{/* 버튼 영역 */}
+			{/* 버튼 ?�역 */}
 			<div className='flex justify-end gap-2'>
 				<button
 					className='btn-base btn-delete'
 					onClick={handleDelete}
 					disabled={loading}
 				>
-					삭제
+					??��
 				</button>
 				<button
 					className='btn-base btn-act'
 					onClick={handleSave}
 					disabled={loading}
 				>
-					저장
+					?�??
 				</button>
 				<button
 					className='btn-base btn-delete'
@@ -706,3 +706,5 @@ export default function MainPage() {
 		</div>
 	)
 }
+
+

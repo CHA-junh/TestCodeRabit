@@ -14,7 +14,7 @@ import { SysService } from './sys.service';
 import { ProgramEntity } from '../entities/program.entity';
 import { Response } from 'express';
 
-// 프로그램 생성/수정용 DTO 타입
+// ?�로그램 ?�성/?�정??DTO ?�??
 type CreateProgramDto = Omit<ProgramEntity, 'regDttm' | 'chngDttm' | 'chngrId'>;
 type UpdateProgramDto = Partial<CreateProgramDto>;
 
@@ -22,7 +22,7 @@ type UpdateProgramDto = Partial<CreateProgramDto>;
 export class SysController {
   constructor(private readonly sysService: SysService) {}
 
-  // 프로그램 목록 조회
+  // ?�로그램 목록 조회
   @Get('programs')
   async findPrograms(
     @Query('pgmKwd') pgmKwd?: string,
@@ -42,20 +42,20 @@ export class SysController {
       return {
         success: true,
         data: programs,
-        message: '프로그램 목록 조회 성공',
+        message: '?�로그램 목록 조회 ?�공',
       };
     } catch (error) {
-      console.error('프로그램 목록 조회 실패:', error);
+      console.error('?�로그램 목록 조회 ?�패:', error);
       return {
         success: false,
         data: [],
-        message: '프로그램 목록 조회 실패',
+        message: '?�로그램 목록 조회 ?�패',
         error: error.message,
       };
     }
   }
 
-  // 프로그램 생성
+  // ?�로그램 ?�성
   @Post('programs')
   async createProgram(@Body() program: CreateProgramDto) {
     try {
@@ -63,20 +63,20 @@ export class SysController {
       return {
         success: true,
         data: createdProgram,
-        message: '프로그램 생성 성공',
+        message: '?�로그램 ?�성 ?�공',
       };
     } catch (error) {
-      console.error('프로그램 생성 실패:', error);
+      console.error('?�로그램 ?�성 ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '프로그램 생성 실패',
+        message: '?�로그램 ?�성 ?�패',
         error: error.message,
       };
     }
   }
 
-  // 프로그램 수정
+  // ?�로그램 ?�정
   @Put('programs/:pgmId')
   async updateProgram(@Param('pgmId') pgmId: string, @Body() program: UpdateProgramDto) {
     try {
@@ -84,20 +84,20 @@ export class SysController {
       return {
         success: true,
         data: updatedProgram,
-        message: '프로그램 수정 성공',
+        message: '?�로그램 ?�정 ?�공',
       };
     } catch (error) {
-      console.error('프로그램 수정 실패:', error);
+      console.error('?�로그램 ?�정 ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '프로그램 수정 실패',
+        message: '?�로그램 ?�정 ?�패',
         error: error.message,
       };
     }
   }
 
-  // ===== SYS1002M00: 메뉴 관리 =====
+  // ===== SYS1002M00: 메뉴 관�?=====
   
   @Get('sys-menus/tree')
   async getMenuTree() {
@@ -106,14 +106,14 @@ export class SysController {
       return {
         success: true,
         data: tree,
-        message: '메뉴 트리 조회 성공',
+        message: '메뉴 ?�리 조회 ?�공',
       };
     } catch (error) {
-      console.error('메뉴 트리 조회 실패:', error);
+      console.error('메뉴 ?�리 조회 ?�패:', error);
       return {
         success: false,
         data: [],
-        message: '메뉴 트리 조회 실패',
+        message: '메뉴 ?�리 조회 ?�패',
         error: error.message,
       };
     }
@@ -126,14 +126,14 @@ export class SysController {
       return {
         success: true,
         data: menus,
-        message: '메뉴 목록 조회 성공',
+        message: '메뉴 목록 조회 ?�공',
       };
     } catch (error) {
-      console.error('메뉴 목록 조회 실패:', error);
+      console.error('메뉴 목록 조회 ?�패:', error);
       return {
         success: false,
         data: [],
-        message: '메뉴 목록 조회 실패',
+        message: '메뉴 목록 조회 ?�패',
         error: error.message,
       };
     }
@@ -146,14 +146,14 @@ export class SysController {
       return {
         success: true,
         data: menu,
-        message: '메뉴 조회 성공',
+        message: '메뉴 조회 ?�공',
       };
     } catch (error) {
-      console.error('메뉴 조회 실패:', error);
+      console.error('메뉴 조회 ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '메뉴 조회 실패',
+        message: '메뉴 조회 ?�패',
         error: error.message,
       };
     }
@@ -166,14 +166,14 @@ export class SysController {
       return {
         success: true,
         data: createdMenu,
-        message: '메뉴 생성 성공',
+        message: '메뉴 ?�성 ?�공',
       };
     } catch (error) {
-      console.error('메뉴 생성 실패:', error);
+      console.error('메뉴 ?�성 ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '메뉴 생성 실패',
+        message: '메뉴 ?�성 ?�패',
         error: error.message,
       };
     }
@@ -186,14 +186,14 @@ export class SysController {
       return {
         success: true,
         data: updatedMenu,
-        message: '메뉴 수정 성공',
+        message: '메뉴 ?�정 ?�공',
       };
     } catch (error) {
-      console.error('메뉴 수정 실패:', error);
+      console.error('메뉴 ?�정 ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '메뉴 수정 실패',
+        message: '메뉴 ?�정 ?�패',
         error: error.message,
       };
     }
@@ -206,14 +206,14 @@ export class SysController {
       return {
         success: true,
         data: null,
-        message: '메뉴 삭제 성공',
+        message: '메뉴 ??�� ?�공',
       };
     } catch (error) {
-      console.error('메뉴 삭제 실패:', error);
+      console.error('메뉴 ??�� ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '메뉴 삭제 실패',
+        message: '메뉴 ??�� ?�패',
         error: error.message,
       };
     }
@@ -226,14 +226,14 @@ export class SysController {
       return {
         success: true,
         data: result,
-        message: '메뉴 복사 성공',
+        message: '메뉴 복사 ?�공',
       };
     } catch (error) {
-      console.error('메뉴 복사 실패:', error);
+      console.error('메뉴 복사 ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '메뉴 복사 실패',
+        message: '메뉴 복사 ?�패',
         error: error.message,
       };
     }
@@ -242,29 +242,29 @@ export class SysController {
   @Get('sys-menus/:menuId/tree')
   async getMenuTreeByMenu(@Param('menuId') menuId: string) {
     try {
-      console.log('🔍 컨트롤러: getMenuTreeByMenu 엔드포인트 호출 - 메뉴ID:', menuId);
-      console.log('📡 요청 URL:', `/api/sys/sys-menus/${menuId}/tree`);
+      console.log('?�� 컨트롤러: getMenuTreeByMenu ?�드?�인???�출 - 메뉴ID:', menuId);
+      console.log('?�� ?�청 URL:', `/api/sys/sys-menus/${menuId}/tree`);
       
       const tree = await this.sysService.getMenuTreeByMenu(menuId);
       
-      console.log('✅ 컨트롤러: 서비스 호출 완료');
-      console.log('📊 반환할 트리 데이터 개수:', tree?.length || 0);
+      console.log('??컨트롤러: ?�비???�출 ?�료');
+      console.log('?�� 반환???�리 ?�이??개수:', tree?.length || 0);
       
       const response = {
         success: true,
         data: tree,
-        message: '메뉴 트리 조회 성공',
+        message: '메뉴 ?�리 조회 ?�공',
       };
       
-      console.log('🎯 컨트롤러: 응답 데이터:', response);
+      console.log('?�� 컨트롤러: ?�답 ?�이??', response);
       
       return response;
     } catch (error) {
-      console.error('❌ 컨트롤러: 메뉴 트리 조회 실패:', error);
+      console.error('??컨트롤러: 메뉴 ?�리 조회 ?�패:', error);
       return {
         success: false,
         data: [],
-        message: '메뉴 트리 조회 실패',
+        message: '메뉴 ?�리 조회 ?�패',
         error: error.message,
       };
     }
@@ -277,14 +277,14 @@ export class SysController {
       return {
         success: true,
         data: details,
-        message: '메뉴 상세 조회 성공',
+        message: '메뉴 ?�세 조회 ?�공',
       };
     } catch (error) {
-      console.error('메뉴 상세 조회 실패:', error);
+      console.error('메뉴 ?�세 조회 ?�패:', error);
       return {
         success: false,
         data: [],
-        message: '메뉴 상세 조회 실패',
+        message: '메뉴 ?�세 조회 ?�패',
         error: error.message,
       };
     }
@@ -297,14 +297,14 @@ export class SysController {
       return {
         success: true,
         data: programs,
-        message: '메뉴별 프로그램 조회 성공',
+        message: '메뉴�??�로그램 조회 ?�공',
       };
     } catch (error) {
-      console.error('메뉴별 프로그램 조회 실패:', error);
+      console.error('메뉴�??�로그램 조회 ?�패:', error);
       return {
         success: false,
         data: [],
-        message: '메뉴별 프로그램 조회 실패',
+        message: '메뉴�??�로그램 조회 ?�패',
         error: error.message,
       };
     }
@@ -317,14 +317,14 @@ export class SysController {
       return {
         success: true,
         data: null,
-        message: '프로그램 추가 성공',
+        message: '?�로그램 추�? ?�공',
       };
     } catch (error) {
-      console.error('프로그램 추가 실패:', error);
+      console.error('?�로그램 추�? ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '프로그램 추가 실패',
+        message: '?�로그램 추�? ?�패',
         error: error.message,
       };
     }
@@ -337,14 +337,14 @@ export class SysController {
       return {
         success: true,
         data: null,
-        message: '메뉴 프로그램 삭제 성공',
+        message: '메뉴 ?�로그램 ??�� ?�공',
       };
     } catch (error) {
-      console.error('메뉴 프로그램 삭제 실패:', error);
+      console.error('메뉴 ?�로그램 ??�� ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '메뉴 프로그램 삭제 실패',
+        message: '메뉴 ?�로그램 ??�� ?�패',
         error: error.message,
       };
     }
@@ -353,23 +353,23 @@ export class SysController {
   @Post('sys-menus/:menuId/programs/save')
   async saveMenuPrograms(@Param('menuId') menuId: string, @Body() body: { MENU_PGM: any[] }) {
     try {
-      console.log('🔍 컨트롤러: saveMenuPrograms 엔드포인트 호출');
-      console.log('📋 메뉴ID:', menuId);
-      console.log('📋 저장할 데이터:', body.MENU_PGM);
+      console.log('?�� 컨트롤러: saveMenuPrograms ?�드?�인???�출');
+      console.log('?�� 메뉴ID:', menuId);
+      console.log('?�� ?�?�할 ?�이??', body.MENU_PGM);
       
       await this.sysService.saveMenuPrograms(menuId, body.MENU_PGM);
       
       return {
         success: true,
         data: null,
-        message: '메뉴 프로그램 저장 성공',
+        message: '메뉴 ?�로그램 ?�???�공',
       };
     } catch (error) {
-      console.error('메뉴 프로그램 저장 실패:', error);
+      console.error('메뉴 ?�로그램 ?�???�패:', error);
       return {
         success: false,
         data: null,
-        message: '메뉴 프로그램 저장 실패',
+        message: '메뉴 ?�로그램 ?�???�패',
         error: error.message,
       };
     }
@@ -382,20 +382,20 @@ export class SysController {
       return {
         success: true,
         data: null,
-        message: '메뉴 트리 순서 업데이트 성공',
+        message: '메뉴 ?�리 ?�서 ?�데?�트 ?�공',
       };
     } catch (error) {
-      console.error('메뉴 트리 순서 업데이트 실패:', error);
+      console.error('메뉴 ?�리 ?�서 ?�데?�트 ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '메뉴 트리 순서 업데이트 실패',
+        message: '메뉴 ?�리 ?�서 ?�데?�트 ?�패',
         error: error.message,
       };
     }
   }
 
-  // 트리 순서 업데이트 (SEIZE_TO_BIST 방식)
+  // ?�리 ?�서 ?�데?�트 (SEIZE_TO_BIST 방식)
   @Post('sys-menus/:menuId/update-tree-menu')
   async updateTreeMenu(@Param('menuId') menuId: string, @Body() body: { TREE_MENU: any[] }) {
     try {
@@ -403,20 +403,20 @@ export class SysController {
       return {
         success: true,
         data: null,
-        message: '메뉴 트리 순서 업데이트 성공',
+        message: '메뉴 ?�리 ?�서 ?�데?�트 ?�공',
       };
     } catch (error) {
-      console.error('메뉴 트리 순서 업데이트 실패:', error);
+      console.error('메뉴 ?�리 ?�서 ?�데?�트 ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '메뉴 트리 순서 업데이트 실패',
+        message: '메뉴 ?�리 ?�서 ?�데?�트 ?�패',
         error: error.message,
       };
     }
   }
 
-  // 샘플 메뉴 트리 데이터 생성 (테스트용)
+  // ?�플 메뉴 ?�리 ?�이???�성 (?�스?�용)
   @Post('sys-menus/sample-tree')
   async createSampleMenuTree() {
     try {
@@ -424,14 +424,14 @@ export class SysController {
       return {
         success: true,
         data: null,
-        message: '샘플 메뉴 트리 데이터 생성 성공',
+        message: '?�플 메뉴 ?�리 ?�이???�성 ?�공',
       };
     } catch (error) {
-      console.error('샘플 메뉴 트리 데이터 생성 실패:', error);
+      console.error('?�플 메뉴 ?�리 ?�이???�성 ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '샘플 메뉴 트리 데이터 생성 실패',
+        message: '?�플 메뉴 ?�리 ?�이???�성 ?�패',
         error: error.message,
       };
     }
@@ -450,22 +450,22 @@ export class SysController {
         USE_YN: useYn,
       };
 
-      console.log('=== 컨트롤러 findAllProgramGroups 호출됨 ===');
-      console.log('검색 조건:', searchCondition);
+      console.log('=== 컨트롤러 findAllProgramGroups ?�출??===');
+      console.log('검??조건:', searchCondition);
 
       const result = await this.sysService.findAllProgramGroups(searchCondition);
       
       return {
         success: true,
         data: result,
-        message: '프로그램 그룹 목록 조회 성공',
+        message: '?�로그램 그룹 목록 조회 ?�공',
       };
     } catch (error) {
-      console.error('프로그램 그룹 목록 조회 실패:', error);
+      console.error('?�로그램 그룹 목록 조회 ?�패:', error);
       return {
         success: false,
         data: [],
-        message: '프로그램 그룹 목록 조회 실패',
+        message: '?�로그램 그룹 목록 조회 ?�패',
         error: error.message,
       };
     }
@@ -478,14 +478,14 @@ export class SysController {
       return {
         success: true,
         data: { pgmGrpId: groupId },
-        message: '프로그램 그룹 ID 생성 성공',
+        message: '?�로그램 그룹 ID ?�성 ?�공',
       };
     } catch (error) {
-      console.error('프로그램 그룹 ID 생성 실패:', error);
+      console.error('?�로그램 그룹 ID ?�성 ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '프로그램 그룹 ID 생성 실패',
+        message: '?�로그램 그룹 ID ?�성 ?�패',
         error: error.message,
       };
     }
@@ -498,14 +498,14 @@ export class SysController {
       return {
         success: true,
         data: programGroup,
-        message: '프로그램 그룹 조회 성공',
+        message: '?�로그램 그룹 조회 ?�공',
       };
     } catch (error) {
-      console.error('프로그램 그룹 조회 실패:', error);
+      console.error('?�로그램 그룹 조회 ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '프로그램 그룹 조회 실패',
+        message: '?�로그램 그룹 조회 ?�패',
         error: error.message,
       };
     }
@@ -518,14 +518,14 @@ export class SysController {
       return {
         success: true,
         data: programs,
-        message: '그룹별 프로그램 목록 조회 성공',
+        message: '그룹�??�로그램 목록 조회 ?�공',
       };
     } catch (error) {
-      console.error('그룹별 프로그램 목록 조회 실패:', error);
+      console.error('그룹�??�로그램 목록 조회 ?�패:', error);
       return {
         success: false,
         data: [],
-        message: '그룹별 프로그램 목록 조회 실패',
+        message: '그룹�??�로그램 목록 조회 ?�패',
         error: error.message,
       };
     }
@@ -541,21 +541,21 @@ export class SysController {
       return res.status(HttpStatus.CREATED).json({
         success: true,
         data: newGroup,
-        message: '프로그램 그룹 복사 성공',
+        message: '?�로그램 그룹 복사 ?�공',
       });
     } catch (error) {
-      console.error('프로그램 그룹 복사 실패:', error);
+      console.error('?�로그램 그룹 복사 ?�패:', error);
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .json({ 
           success: false,
-          message: '프로그램 그룹 복사에 실패했습니다.', 
+          message: '?�로그램 그룹 복사???�패?�습?�다.', 
           error: error.message 
         });
     }
   }
 
-  // 프로그램 그룹 생성
+  // ?�로그램 그룹 ?�성
   @Post('sys-program-groups')
   async createProgramGroup(@Body() programGroup: any) {
     try {
@@ -563,20 +563,20 @@ export class SysController {
       return {
         success: true,
         data: createdProgramGroup,
-        message: '프로그램 그룹 생성 성공',
+        message: '?�로그램 그룹 ?�성 ?�공',
       };
     } catch (error) {
-      console.error('프로그램 그룹 생성 실패:', error);
+      console.error('?�로그램 그룹 ?�성 ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '프로그램 그룹 생성 실패',
+        message: '?�로그램 그룹 ?�성 ?�패',
         error: error.message,
       };
     }
   }
 
-  // 프로그램 그룹 수정
+  // ?�로그램 그룹 ?�정
   @Put('sys-program-groups/:groupId')
   async updateProgramGroup(@Param('groupId') groupId: string, @Body() programGroup: any) {
     try {
@@ -584,20 +584,20 @@ export class SysController {
       return {
         success: true,
         data: updatedProgramGroup,
-        message: '프로그램 그룹 수정 성공',
+        message: '?�로그램 그룹 ?�정 ?�공',
       };
     } catch (error) {
-      console.error('프로그램 그룹 수정 실패:', error);
+      console.error('?�로그램 그룹 ?�정 ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '프로그램 그룹 수정 실패',
+        message: '?�로그램 그룹 ?�정 ?�패',
         error: error.message,
       };
     }
   }
 
-  // 프로그램 그룹에서 프로그램 삭제
+  // ?�로그램 그룹?�서 ?�로그램 ??��
   @Delete('sys-program-groups/:groupId/programs')
   async removeProgramsFromGroup(
     @Param('groupId') groupId: string,
@@ -608,98 +608,98 @@ export class SysController {
       return {
         success: true,
         data: { deletedCount },
-        message: `${deletedCount}개의 프로그램이 삭제되었습니다.`,
+        message: `${deletedCount}개의 ?�로그램????��?�었?�니??`,
       };
     } catch (error) {
-      console.error('프로그램 삭제 실패:', error);
+      console.error('?�로그램 ??�� ?�패:', error);
       return {
         success: false,
         data: null,
-        message: '프로그램 삭제 실패',
+        message: '?�로그램 ??�� ?�패',
         error: error.message,
       };
     }
   }
 
-  // SYS1000 - 프로그램 관리 관련 엔드포인트들
+  // SYS1000 - ?�로그램 관�?관???�드?�인?�들
 
   /**
-   * 프로그램 목록 조회
+   * ?�로그램 목록 조회
    */
   @Post('programs/list')
   async getProgramList(@Body() searchCondition: any) {
-    console.log('=== SYS1000 프로그램 목록 조회 API 호출 ===');
-    console.log('검색 조건:', searchCondition);
+    console.log('=== SYS1000 ?�로그램 목록 조회 API ?�출 ===');
+    console.log('검??조건:', searchCondition);
     
     try {
       const result = await this.sysService.getProgramList(searchCondition);
-      console.log('프로그램 목록 조회 완료:', result.length + '건');
+      console.log('?�로그램 목록 조회 ?�료:', result.length + '�?);
       return { success: true, data: result };
     } catch (error) {
-      console.error('프로그램 목록 조회 API 오류:', error);
+      console.error('?�로그램 목록 조회 API ?�류:', error);
       return { success: false, error: error.message };
     }
   }
 
   /**
-   * 프로그램 언어 목록 조회
+   * ?�로그램 ?�어 목록 조회
    */
   @Get('programs/:pgmId/languages')
   async getProgramLanguageList(@Param('pgmId') pgmId: string) {
-    console.log('=== SYS1000 프로그램 언어 목록 조회 API 호출 ===');
-    console.log('프로그램 ID:', pgmId);
+    console.log('=== SYS1000 ?�로그램 ?�어 목록 조회 API ?�출 ===');
+    console.log('?�로그램 ID:', pgmId);
     
     try {
       const result = await this.sysService.getProgramLanguageList(pgmId);
-      console.log('프로그램 언어 목록 조회 완료:', result.length + '건');
+      console.log('?�로그램 ?�어 목록 조회 ?�료:', result.length + '�?);
       return { success: true, data: result };
     } catch (error) {
-      console.error('프로그램 언어 목록 조회 API 오류:', error);
+      console.error('?�로그램 ?�어 목록 조회 API ?�류:', error);
       return { success: false, error: error.message };
     }
   }
 
   /**
-   * 프로그램 정보 저장/수정
+   * ?�로그램 ?�보 ?�???�정
    */
   @Post('programs/save')
   async saveProgram(@Body() programData: any) {
-    console.log('=== SYS1000 프로그램 정보 저장/수정 API 호출 ===');
-    console.log('저장 데이터:', programData);
+    console.log('=== SYS1000 ?�로그램 ?�보 ?�???�정 API ?�출 ===');
+    console.log('?�???�이??', programData);
     
     try {
-      // 신규 등록인 경우 중복 체크
+      // ?�규 ?�록??경우 중복 체크
       if (programData.isNew) {
         const exists = await this.sysService.checkProgramIdExists(programData.pgmId);
         if (exists) {
-          console.log('프로그램 ID 중복:', programData.pgmId);
-          return { success: false, error: '이미 존재하는 프로그램 ID입니다.' };
+          console.log('?�로그램 ID 중복:', programData.pgmId);
+          return { success: false, error: '?��? 존재?�는 ?�로그램 ID?�니??' };
         }
       }
 
       const result = await this.sysService.saveProgram(programData);
-      console.log('프로그램 정보 저장 완료');
+      console.log('?�로그램 ?�보 ?�???�료');
       return result;
     } catch (error) {
-      console.error('프로그램 정보 저장 API 오류:', error);
+      console.error('?�로그램 ?�보 ?�??API ?�류:', error);
       return { success: false, error: error.message };
     }
   }
 
   /**
-   * 프로그램 ID 중복 체크
+   * ?�로그램 ID 중복 체크
    */
   @Get('programs/check/:pgmId')
   async checkProgramId(@Param('pgmId') pgmId: string) {
-    console.log('=== SYS1000 프로그램 ID 중복 체크 API 호출 ===');
-    console.log('프로그램 ID:', pgmId);
+    console.log('=== SYS1000 ?�로그램 ID 중복 체크 API ?�출 ===');
+    console.log('?�로그램 ID:', pgmId);
     
     try {
       const exists = await this.sysService.checkProgramIdExists(pgmId);
       console.log('중복 체크 결과:', exists);
       return { success: true, exists };
     } catch (error) {
-      console.error('프로그램 ID 중복 체크 API 오류:', error);
+      console.error('?�로그램 ID 중복 체크 API ?�류:', error);
       return { success: false, error: error.message };
     }
   }
@@ -707,29 +707,29 @@ export class SysController {
   // ===== SYS1012R00: 메뉴 미리보기 =====
   @Get('sys-menus/:menuId/preview')
   async getMenuPreview(@Param('menuId') menuId: string) {
-    console.log('=== SYS1012R00 메뉴 미리보기 API 호출 ===');
+    console.log('=== SYS1012R00 메뉴 미리보기 API ?�출 ===');
     console.log('메뉴 ID:', menuId);
     
     try {
       const menuPreview = await this.sysService.getMenuPreview(menuId);
-      console.log('메뉴 미리보기 조회 완료:', menuPreview.length + '건');
+      console.log('메뉴 미리보기 조회 ?�료:', menuPreview.length + '�?);
       return {
         success: true,
         data: menuPreview,
-        message: '메뉴 미리보기 조회 성공',
+        message: '메뉴 미리보기 조회 ?�공',
       };
     } catch (error) {
-      console.error('메뉴 미리보기 조회 실패:', error);
+      console.error('메뉴 미리보기 조회 ?�패:', error);
       return {
         success: false,
         data: [],
-        message: '메뉴 미리보기 조회 실패',
+        message: '메뉴 미리보기 조회 ?�패',
         error: error.message,
       };
     }
   }
 
-  // ===== SYS1010D00: 프로그램 찾기 =====
+  // ===== SYS1010D00: ?�로그램 찾기 =====
   @Get('programs/search')
   async findProgramsForSearch(
     @Query('PGM_KWD') pgmKwd?: string,
@@ -738,8 +738,8 @@ export class SysController {
     @Query('PGM_GRP_ID') pgmGrpId?: string,
   ) {
     try {
-      console.log('=== SYS1010D00 프로그램 찾기 API 호출 ===');
-      console.log('검색 조건:', { pgmKwd, pgmDivCd, bizDivCd, pgmGrpId });
+      console.log('=== SYS1010D00 ?�로그램 찾기 API ?�출 ===');
+      console.log('검??조건:', { pgmKwd, pgmDivCd, bizDivCd, pgmGrpId });
       
       const searchCondition = {
         PGM_KWD: pgmKwd,
@@ -753,14 +753,14 @@ export class SysController {
       return {
         success: true,
         data: result,
-        message: '프로그램 찾기 조회 성공',
+        message: '?�로그램 찾기 조회 ?�공',
       };
     } catch (error) {
-      console.error('프로그램 찾기 API 실패:', error);
+      console.error('?�로그램 찾기 API ?�패:', error);
       return {
         success: false,
         data: [],
-        message: '프로그램 찾기 조회 실패',
+        message: '?�로그램 찾기 조회 ?�패',
         error: error.message,
       };
     }
@@ -775,7 +775,7 @@ export class SysController {
       await this.sysService.deleteMenuProgramsHierarchical(menuId, body.menuSeqs);
       return { success: true };
     } catch (error) {
-      console.error('계층 삭제 실패:', error);
+      console.error('계층 ??�� ?�패:', error);
       return { success: false, message: error.message };
     }
   }
@@ -793,3 +793,5 @@ export class SysController {
     }
   }
 }
+
+

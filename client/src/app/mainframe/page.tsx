@@ -6,19 +6,19 @@ import { useAuth } from '../../modules/auth/hooks/useAuth'
 import COM0000M00 from './COM0000M00'
 import { MESSAGE_CONSTANTS, ROUTE_CONSTANTS } from '../../utils/constants'
 
-// 프리페치 방지
+// ?�리?�치 방�?
 export const dynamic = 'force-dynamic'
 
 /**
- * Mainframe Page - 메인프레임 페이지
+ * Mainframe Page - 메인?�레???�이지
  *
  * 주요 기능:
- * - 인증 상태 확인
- * - 메인프레임 화면 렌더링
- * - 미인증 사용자 리다이렉트
+ * - ?�증 ?�태 ?�인
+ * - 메인?�레???�면 ?�더�?
+ * - 미인�??�용??리다?�렉??
  *
- * 연관 컴포넌트:
- * - COM0000M00 (메인프레임 화면)
+ * ?��? 컴포?�트:
+ * - COM0000M00 (메인?�레???�면)
  */
 
 export default function MainframePage() {
@@ -26,23 +26,23 @@ export default function MainframePage() {
 	const router = useRouter()
 	const [isClient, setIsClient] = useState(false)
 
-	// 클라이언트 사이드 렌더링 확인
+	// ?�라?�언???�이???�더�??�인
 	useEffect(() => {
 		setIsClient(true)
 	}, [])
 
 	useEffect(() => {
-		// 클라이언트에서만 인증 체크
+		// ?�라?�언?�에?�만 ?�증 체크
 		if (!isClient) return
 
-		// 로딩이 완료되고 인증되지 않은 경우 로그인 페이지로 리다이렉트
+		// 로딩???�료?�고 ?�증?��? ?��? 경우 로그???�이지�?리다?�렉??
 		if (!loading && !isAuthenticated) {
-			console.log('🔒', MESSAGE_CONSTANTS.UNAUTHORIZED)
+			console.log('?��', MESSAGE_CONSTANTS.UNAUTHORIZED)
 			window.location.href = '/signin'
 		}
 	}, [loading, isAuthenticated, isClient])
 
-	// 클라이언트가 아니거나 로딩 중이거나 인증되지 않은 경우 로딩 화면 표시
+	// ?�라?�언?��? ?�니거나 로딩 중이거나 ?�증?��? ?��? 경우 로딩 ?�면 ?�시
 	if (!isClient || loading || !isAuthenticated) {
 		return (
 			<div className='min-h-screen flex items-center justify-center'>
@@ -75,3 +75,5 @@ export default function MainframePage() {
 
 	return <COM0000M00 />
 }
+
+

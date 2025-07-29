@@ -22,3 +22,5 @@ export class LoginResponseDto {
   user?: UserInfoDto;
   token?: string;
 }
+
+

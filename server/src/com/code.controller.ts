@@ -4,12 +4,12 @@ import { ApiOperation, ApiResponse, ApiBody, ApiTags } from '@nestjs/swagger';
 import { CodeService } from './code.service';
 import { CodeSearchRequestDto, CodeSearchResponseDto } from './dto/code.dto';
 
-// express-session 타입 확장
+// express-session ?�???�장
 interface RequestWithSession extends Request {
   session: any;
 }
 
-@ApiTags('코드 관리')
+@ApiTags('코드 관�?)
 @Controller('code')
 export class CodeController {
   constructor(private readonly codeService: CodeService) {}
@@ -17,24 +17,24 @@ export class CodeController {
   @Post('search')
   @ApiOperation({ 
     summary: '코드 조회',
-    description: '대분류코드에 해당하는 소분류 코드들을 조회합니다.'
+    description: '?�분류코드???�당?�는 ?�분�?코드?�을 조회?�니??'
   })
   @ApiBody({ type: CodeSearchRequestDto })
   @ApiResponse({ 
     status: 200, 
-    description: '코드 조회 성공',
+    description: '코드 조회 ?�공',
     type: CodeSearchResponseDto
   })
-  @ApiResponse({ status: 401, description: '세션이 유효하지 않습니다.' })
-  @ApiResponse({ status: 500, description: '코드 조회 중 오류가 발생했습니다.' })
+  @ApiResponse({ status: 401, description: '?�션???�효?��? ?�습?�다.' })
+  @ApiResponse({ status: 500, description: '코드 조회 �??�류가 발생?�습?�다.' })
   async searchCodes(@Req() req: RequestWithSession, @Res() res: Response, @Body() body: CodeSearchRequestDto) {
-    // 세션 체크 주석 처리 (Swagger UI 테스트용)
+    // ?�션 체크 주석 처리 (Swagger UI ?�스?�용)
     /*
     const userInfo = req.session.user;
     if (!userInfo) {
       return res
         .status(401)
-        .json({ success: false, message: '세션이 유효하지 않습니다.' });
+        .json({ success: false, message: '?�션???�효?��? ?�습?�다.' });
     }
     */
     
@@ -49,7 +49,8 @@ export class CodeController {
     } catch (err) {
       return res
         .status(500)
-        .json({ success: false, message: '코드 조회 중 오류가 발생했습니다.', error: err });
+        .json({ success: false, message: '코드 조회 �??�류가 발생?�습?�다.', error: err });
     }
   }
 } 
+

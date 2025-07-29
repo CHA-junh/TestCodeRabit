@@ -1,4 +1,4 @@
-// 인사 기본 정보 타입
+// ?�사 기본 ?�보 ?�??
 export interface Personnel {
 	employeeId: string
 	name: string
@@ -14,7 +14,7 @@ export interface Personnel {
 	updatedAt: string
 }
 
-// 인사 상세 정보 타입
+// ?�사 ?�세 ?�보 ?�??
 export interface PersonnelDetail extends Personnel {
 	address: string
 	emergencyContact: string
@@ -25,7 +25,7 @@ export interface PersonnelDetail extends Personnel {
 	workHistory: WorkHistory[]
 }
 
-// 근무 이력 타입
+// 근무 ?�력 ?�??
 export interface WorkHistory {
 	id: string
 	company: string
@@ -35,7 +35,7 @@ export interface WorkHistory {
 	description: string
 }
 
-// 인사 검색 조건 타입
+// ?�사 검??조건 ?�??
 export interface PersonnelSearchCriteria {
 	name?: string
 	department?: string
@@ -44,3 +44,5 @@ export interface PersonnelSearchCriteria {
 	hireDateFrom?: string
 	hireDateTo?: string
 }
+
+

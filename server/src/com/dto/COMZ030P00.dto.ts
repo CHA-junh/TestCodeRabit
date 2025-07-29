@@ -2,34 +2,34 @@ import { ApiProperty } from '@nestjs/swagger'
 import { IsString, IsNotEmpty, IsOptional } from 'class-validator'
 
 /**
- * 단가 검색 파라미터 타입
+ * ?��? 검???�라미터 ?�??
  */
 export class UnitPriceSearchParams {
   @ApiProperty({ 
     required: true, 
-    description: '내부/외부 구분 (필수) - 1: 자사, 2: 외주', 
+    description: '?��?/?��? 구분 (?�수) - 1: ?�사, 2: ?�주', 
     default: '1',
     example: '1',
     type: String
   })
   @IsString()
-  @IsNotEmpty({ message: '내부/외부 구분은 필수입니다.' })
+  @IsNotEmpty({ message: '?��?/?��? 구분?� ?�수?�니??' })
   ownOutsDiv: string = '1'
 
   @ApiProperty({ 
     required: true, 
-    description: '년도 (필수) - 검색할 년도를 입력하세요 (예: 2024)', 
+    description: '?�도 (?�수) - 검?�할 ?�도�??�력?�세??(?? 2024)', 
     default: '',
     example: '2024',
     type: String
   })
   @IsString()
-  @IsNotEmpty({ message: '년도는 필수입니다.' })
+  @IsNotEmpty({ message: '?�도???�수?�니??' })
   year: string = ''
 
   @ApiProperty({ 
     required: false, 
-    description: '사업자번호 (선택) - 특정 사업자의 단가만 검색할 때 사용', 
+    description: '?�업?�번??(?�택) - ?�정 ?�업?�의 ?��?�?검?�할 ???�용', 
     default: '' 
   })
   @IsOptional()
@@ -38,7 +38,7 @@ export class UnitPriceSearchParams {
 }
 
 /**
- * 단가 정보 타입
+ * ?��? ?�보 ?�??
  */
 export interface UnitPrice {
   OWN_OUTS_DIV: string
@@ -53,26 +53,27 @@ export interface UnitPrice {
 }
 
 /**
- * 프로시저 정보 DTO
+ * ?�로?��? ?�보 DTO
  */
 export class ProcedureInfoDto {
-  @ApiProperty({ description: '프로시저명' })
+  @ApiProperty({ description: '?�로?��?�? })
   name: string
 
-  @ApiProperty({ description: '원본 주석 (줄별 배열)', type: [String] })
+  @ApiProperty({ description: '?�본 주석 (줄별 배열)', type: [String] })
   originalCommentLines: string[]
 }
 
 /**
- * 단가 검색 응답 DTO
+ * ?��? 검???�답 DTO
  */
 export class UnitPriceSearchResponseDto {
-  @ApiProperty({ description: '단가 목록', type: [Object] })
+  @ApiProperty({ description: '?��? 목록', type: [Object] })
   data: UnitPrice[]
 
-  @ApiProperty({ description: '프로시저 정보', type: ProcedureInfoDto })
+  @ApiProperty({ description: '?�로?��? ?�보', type: ProcedureInfoDto })
   procedureInfo: ProcedureInfoDto
 
-  @ApiProperty({ description: '총 개수' })
+  @ApiProperty({ description: '�?개수' })
   totalCount: number
 } 
+

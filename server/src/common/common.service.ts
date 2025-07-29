@@ -1,24 +1,24 @@
 /**
- * CommonService - 공통 기능 서비스
+ * CommonService - 공통 기능 ?�비??
  *
  * 주요 기능:
- * - 공통 코드 조회 (대분류코드별 소분류코드)
- * - 부서구분코드 조회 (직접 DB 조회)
- * - 본부별 부서 코드 조회 (프로시저 호출)
+ * - 공통 코드 조회 (?�분류코드�??�분류코??
+ * - 부?�구분코??조회 (직접 DB 조회)
+ * - 본�?�?부??코드 조회 (?�로?��? ?�출)
  *
- * 연관 프로시저:
- * - COM_03_0101_S: 공통코드 조회 (대분류코드별 소분류코드)
- * - COM_03_0201_S: 본부별 부서 코드 조회
+ * ?��? ?�로?��?:
+ * - COM_03_0101_S: 공통코드 조회 (?�분류코드�??�분류코??
+ * - COM_03_0201_S: 본�?�?부??코드 조회
  *
- * 연관 테이블:
- * - TBL_SML_CSF_CD: 소분류코드 테이블
- *   - LRG_CSF_CD: 대분류코드 (112=부서구분, 113=본부구분, 101=권한구분)
- *   - SML_CSF_CD: 소분류코드
- *   - SML_CSF_NM: 소분류명
+ * ?��? ?�이�?
+ * - TBL_SML_CSF_CD: ?�분류코???�이�?
+ *   - LRG_CSF_CD: ?�분류코드 (112=부?�구�? 113=본�?구분, 101=권한구분)
+ *   - SML_CSF_CD: ?�분류코??
+ *   - SML_CSF_NM: ?�분류명
  *
- * 의존성:
- * - OracleService: Oracle DB 연결 관리
- * - ProcedureDbParser: 프로시저 정보 파싱
+ * ?�존??
+ * - OracleService: Oracle DB ?�결 관�?
+ * - ProcedureDbParser: ?�로?��? ?�보 ?�싱
  */
 import { Injectable } from '@nestjs/common';
 import { OracleService } from '../database/database.provider';
@@ -31,7 +31,7 @@ import {
 import { ProcedureDbParser } from '../utils/procedure-db-parser.util';
 import { DeptDivCodeDto } from '../com/dto/common.dto';
 
-// toCamelCase 유틸리티 함수
+// toCamelCase ?�틸리티 ?�수
 const toCamelCase = (obj: any): any => {
   if (Array.isArray(obj)) {
     return obj.map(toCamelCase);
@@ -59,27 +59,27 @@ export class CommonService {
   ) {}
 
   /**
-   * 부서구분코드 목록 조회
+   * 부?�구분코??목록 조회
    *
    * @description
-   * - 부서구분코드(112)에 해당하는 모든 부서 목록을 직접 DB 쿼리로 조회합니다.
-   * - 프로시저 호출 없이 단순 SELECT 쿼리만 수행하여 빠른 응답을 제공합니다.
-   * - TBL_SML_CSF_CD 테이블에서 LRG_CSF_CD = '112' 조건으로 조회합니다.
+   * - 부?�구분코??112)???�당?�는 모든 부??목록??직접 DB 쿼리�?조회?�니??
+   * - ?�로?��? ?�출 ?�이 ?�순 SELECT 쿼리�??�행?�여 빠른 ?�답???�공?�니??
+   * - TBL_SML_CSF_CD ?�이블에??LRG_CSF_CD = '112' 조건?�로 조회?�니??
    *
-   * @returns Promise<DeptDivCodeDto[]> - 부서구분코드 목록
+   * @returns Promise<DeptDivCodeDto[]> - 부?�구분코??목록
    * @example
    * const deptCodes = await commonService.getDeptDivCodes();
    * // 결과: [
-   * //   { code: "1000", name: "사내공통(25)" },
-   * //   { code: "1100", name: "디지털영업본부(25)" }
+   * //   { code: "1000", name: "?�내공통(25)" },
+   * //   { code: "1100", name: "?��??�영?�본부(25)" }
    * // ]
    *
-   * @throws Error - DB 연결 실패 또는 쿼리 실행 오류 시
+   * @throws Error - DB ?�결 ?�패 ?�는 쿼리 ?�행 ?�류 ??
    */
   async getDeptDivCodes(): Promise<DeptDivCodeDto[]> {
     const conn = await this.oracle.getConnection();
     try {
-      // 부서구분코드(112)에 해당하는 소분류코드 조회
+      // 부?�구분코??112)???�당?�는 ?�분류코??조회
       const result = await conn.execute(
         `SELECT SML_CSF_CD as code, SML_CSF_NM as name 
          FROM TBL_SML_CSF_CD 
@@ -95,27 +95,27 @@ export class CommonService {
   }
 
   /**
-   * 본부구분코드 목록 조회
+   * 본�?구분코드 목록 조회
    *
    * @description
-   * - 본부구분코드(113)에 해당하는 모든 본부 목록을 직접 DB 쿼리로 조회합니다.
-   * - 프로시저 호출 없이 단순 SELECT 쿼리만 수행하여 빠른 응답을 제공합니다.
-   * - TBL_SML_CSF_CD 테이블에서 LRG_CSF_CD = '113' 조건으로 조회합니다.
+   * - 본�?구분코드(113)???�당?�는 모든 본�? 목록??직접 DB 쿼리�?조회?�니??
+   * - ?�로?��? ?�출 ?�이 ?�순 SELECT 쿼리�??�행?�여 빠른 ?�답???�공?�니??
+   * - TBL_SML_CSF_CD ?�이블에??LRG_CSF_CD = '113' 조건?�로 조회?�니??
    *
-   * @returns Promise<DeptDivCodeDto[]> - 본부구분코드 목록
+   * @returns Promise<DeptDivCodeDto[]> - 본�?구분코드 목록
    * @example
    * const hqCodes = await commonService.getHqDivCodes();
    * // 결과: [
-   * //   { code: "01", name: "경영지원본부" },
-   * //   { code: "02", name: "영업본부" }
+   * //   { code: "01", name: "경영지?�본부" },
+   * //   { code: "02", name: "?�업본�?" }
    * // ]
    *
-   * @throws Error - DB 연결 실패 또는 쿼리 실행 오류 시
+   * @throws Error - DB ?�결 ?�패 ?�는 쿼리 ?�행 ?�류 ??
    */
   async getHqDivCodes(): Promise<DeptDivCodeDto[]> {
     const conn = await this.oracle.getConnection();
     try {
-      // 본부구분코드(113)에 해당하는 소분류코드 조회
+      // 본�?구분코드(113)???�당?�는 ?�분류코??조회
       const result = await conn.execute(
         `SELECT SML_CSF_CD as code, SML_CSF_NM as name 
          FROM TBL_SML_CSF_CD 
@@ -132,29 +132,29 @@ export class CommonService {
   }
 
   /**
-   * 공통 코드 조회 (프로시저 호출)
+   * 공통 코드 조회 (?�로?��? ?�출)
    *
    * @description
-   * - COM_03_0101_S 프로시저를 호출하여 대분류코드에 해당하는 소분류 코드들을 조회합니다.
-   * - 프로시저 정보와 함께 응답을 반환합니다.
-   * - 에러 발생 시 상세한 에러 메시지를 포함하여 예외를 발생시킵니다.
+   * - COM_03_0101_S ?�로?��?�??�출?�여 ?�분류코드???�당?�는 ?�분�?코드?�을 조회?�니??
+   * - ?�로?��? ?�보?� ?�께 ?�답??반환?�니??
+   * - ?�러 발생 ???�세???�러 메시지�??�함?�여 ?�외�?발생?�킵?�다.
    *
-   * @param param - 대분류코드 (예: '113'=본부구분, '112'=부서구분, '101'=권한구분)
-   * @returns Promise<CodeSearchResponseDto> - 코드 목록 및 프로시저 정보
+   * @param param - ?�분류코드 (?? '113'=본�?구분, '112'=부?�구�? '101'=권한구분)
+   * @returns Promise<CodeSearchResponseDto> - 코드 목록 �??�로?��? ?�보
    * @example
    * const codes = await commonService.searchCodes('113');
    * // 결과: {
-   * //   data: [{ codeId: "1000", codeNm: "사내공통(25)" }],
+   * //   data: [{ codeId: "1000", codeNm: "?�내공통(25)" }],
    * //   procedureInfo: { name: "COM_03_0101_S" },
    * //   totalCount: 1
    * // }
    *
-   * @throws Error - 프로시저 호출 실패 또는 DB 오류 시
+   * @throws Error - ?�로?��? ?�출 ?�패 ?�는 DB ?�류 ??
    */
   async searchCodes(param: string): Promise<CodeSearchResponseDto> {
     const conn = await this.oracle.getConnection();
     try {
-      // COM_03_0101_S 프로시저 호출
+      // COM_03_0101_S ?�로?��? ?�출
       const result = (await conn.execute(
         `
         BEGIN
@@ -172,10 +172,10 @@ export class CommonService {
       )) as { outBinds: { cursor: oracledb.ResultSet<any> } };
 
       const rs = result.outBinds.cursor;
-      const rows = await rs.getRows(100); // 최대 100개 행 조회
+      const rows = await rs.getRows(100); // 최�? 100�???조회
       await rs.close();
 
-      // 데이터가 없는 경우 빈 응답 반환
+      // ?�이?��? ?�는 경우 �??�답 반환
       if (!rows || rows.length === 0) {
         const response = new CodeSearchResponseDto();
         response.data = [];
@@ -185,7 +185,7 @@ export class CommonService {
         return response;
       }
 
-      // 결과 데이터 매핑 (대소문자 구분 없이 처리)
+      // 결과 ?�이??매핑 (?�?�문??구분 ?�이 처리)
       const codes = rows.map((code: any) => ({
         codeId: code.DATA || code.data,
         codeNm: code.LABEL || code.label,
@@ -193,7 +193,7 @@ export class CommonService {
         sortSeq: code.SORT_SEQ || code.sort_seq,
       }));
 
-      // 프로시저 정보 조회 및 응답 구성
+      // ?�로?��? ?�보 조회 �??�답 구성
       const procedureInfo =
         await this.procedureDbParser.getProcedureInfoFromDb('COM_03_0101_S');
       const response = new CodeSearchResponseDto();
@@ -202,33 +202,33 @@ export class CommonService {
       response.totalCount = codes.length;
       return response;
     } catch (error: any) {
-      console.error('코드 조회 오류:', error);
-      throw new Error(`코드 조회 중 오류가 발생했습니다: ${error.message}`);
+      console.error('코드 조회 ?�류:', error);
+      throw new Error(`코드 조회 �??�류가 발생?�습?�다: ${error.message}`);
     } finally {
       await conn.close();
     }
   }
 
   /**
-   * 본부별 부서 코드 조회 (프로시저 호출)
+   * 본�?�?부??코드 조회 (?�로?��? ?�출)
    *
    * @description
-   * - COM_03_0201_S 프로시저를 호출하여 특정 본부에 속한 부서 코드들을 조회합니다.
-   * - 본부코드가 'ALL'인 경우 전체 부서를 조회합니다.
-   * - 프로시저 정보와 함께 응답을 반환합니다.
+   * - COM_03_0201_S ?�로?��?�??�출?�여 ?�정 본�????�한 부??코드?�을 조회?�니??
+   * - 본�?코드가 'ALL'??경우 ?�체 부?��? 조회?�니??
+   * - ?�로?��? ?�보?� ?�께 ?�답??반환?�니??
    *
-   * @param hqDivCd - 본부구분코드 (예: '1000', 'ALL'=전체부서)
-   * @param allYn - 전체포함여부 (기본값: 'Y')
-   * @returns Promise<CodeSearchResponseDto> - 부서 코드 목록 및 프로시저 정보
+   * @param hqDivCd - 본�?구분코드 (?? '1000', 'ALL'=?�체부??
+   * @param allYn - ?�체?�함?��? (기본�? 'Y')
+   * @returns Promise<CodeSearchResponseDto> - 부??코드 목록 �??�로?��? ?�보
    * @example
    * const deptCodes = await commonService.searchDeptCodesByHq('1000', 'Y');
    * // 결과: {
-   * //   data: [{ codeId: "1100", codeNm: "디지털영업본부(25)" }],
+   * //   data: [{ codeId: "1100", codeNm: "?��??�영?�본부(25)" }],
    * //   procedureInfo: { name: "COM_03_0201_S" },
    * //   totalCount: 1
    * // }
    *
-   * @throws Error - 프로시저 호출 실패 또는 DB 오류 시
+   * @throws Error - ?�로?��? ?�출 ?�패 ?�는 DB ?�류 ??
    */
   async searchDeptCodesByHq(
     hqDivCd: string,
@@ -236,15 +236,15 @@ export class CommonService {
   ): Promise<CodeSearchResponseDto> {
     const conn = await this.oracle.getConnection();
     try {
-      // 본부코드에 따른 검색 타입 설정
-      let schType = '2'; // 특정 본부 검색
+      // 본�?코드???�른 검???�???�정
+      let schType = '2'; // ?�정 본�? 검??
       let hqDivParam = hqDivCd;
       if (hqDivCd === 'ALL') {
-        schType = '1'; // 전체 부서 검색
+        schType = '1'; // ?�체 부??검??
         hqDivParam = '';
       }
 
-      // COM_03_0201_S 프로시저 호출
+      // COM_03_0201_S ?�로?��? ?�출
       const result = (await conn.execute(
         `
         BEGIN
@@ -266,10 +266,10 @@ export class CommonService {
       )) as { outBinds: { cursor: oracledb.ResultSet<any> } };
 
       const rs = result.outBinds.cursor;
-      const rows = await rs.getRows(100); // 최대 100개 행 조회
+      const rows = await rs.getRows(100); // 최�? 100�???조회
       await rs.close();
 
-      // 데이터가 없는 경우 빈 응답 반환
+      // ?�이?��? ?�는 경우 �??�답 반환
       if (!rows || rows.length === 0) {
         const response = new CodeSearchResponseDto();
         response.data = [];
@@ -279,7 +279,7 @@ export class CommonService {
         return response;
       }
 
-      // 결과 데이터 매핑 (대소문자 구분 없이 처리)
+      // 결과 ?�이??매핑 (?�?�문??구분 ?�이 처리)
       const codes = rows.map((code: any) => ({
         codeId: code.DATA || code.data,
         codeNm: code.LABEL || code.label,
@@ -287,7 +287,7 @@ export class CommonService {
         sortSeq: code.SORT_SEQ || code.sort_seq,
       }));
 
-      // 프로시저 정보 조회 및 응답 구성
+      // ?�로?��? ?�보 조회 �??�답 구성
       const procedureInfo =
         await this.procedureDbParser.getProcedureInfoFromDb('COM_03_0201_S');
       const response = new CodeSearchResponseDto();
@@ -296,9 +296,9 @@ export class CommonService {
       response.totalCount = codes.length;
       return response;
     } catch (error: any) {
-      console.error('본부별 부서 코드 조회 오류:', error);
+      console.error('본�?�?부??코드 조회 ?�류:', error);
       throw new Error(
-        `본부별 부서 코드 조회 중 오류가 발생했습니다: ${error.message}`,
+        `본�?�?부??코드 조회 �??�류가 발생?�습?�다: ${error.message}`,
       );
     } finally {
       await conn.close();
@@ -306,33 +306,33 @@ export class CommonService {
   }
 
   /**
-   * 본부별 부서 목록 조회 (직접 DB 조회)
+   * 본�?�?부??목록 조회 (직접 DB 조회)
    *
    * @description
-   * - 특정 본부에 속한 부서 목록을 직접 DB 쿼리로 조회합니다.
-   * - TBL_SML_CSF_CD 테이블에서 LINK_CD1 컬럼을 사용하여 본부별 필터링합니다.
-   * - 프로시저 호출 없이 단순 SELECT 쿼리만 수행하여 빠른 응답을 제공합니다.
+   * - ?�정 본�????�한 부??목록??직접 DB 쿼리�?조회?�니??
+   * - TBL_SML_CSF_CD ?�이블에??LINK_CD1 컬럼???�용?�여 본�?�??�터링합?�다.
+   * - ?�로?��? ?�출 ?�이 ?�순 SELECT 쿼리�??�행?�여 빠른 ?�답???�공?�니??
    *
-   * @param hqCd - 본부구분코드 (예: '01', '02', '03', '04')
-   * @returns Promise<DeptDivCodeDto[]> - 본부별 부서 목록
+   * @param hqCd - 본�?구분코드 (?? '01', '02', '03', '04')
+   * @returns Promise<DeptDivCodeDto[]> - 본�?�?부??목록
    * @example
    * const deptList = await commonService.getDeptByHq('01');
    * // 결과: [
-   * //   { code: "1101", name: "경영지원팀" },
-   * //   { code: "1102", name: "인사팀" }
+   * //   { code: "1101", name: "경영지?��?" },
+   * //   { code: "1102", name: "?�사?�" }
    * // ]
    *
-   * @throws Error - DB 연결 실패 또는 쿼리 실행 오류 시
+   * @throws Error - DB ?�결 ?�패 ?�는 쿼리 ?�행 ?�류 ??
    */
   async getDeptByHq(hqCd: string): Promise<DeptDivCodeDto[]> {
     const conn = await this.oracle.getConnection();
     try {
-      // 본부코드가 없거나 'ALL'인 경우 빈 배열 반환
+      // 본�?코드가 ?�거??'ALL'??경우 �?배열 반환
       if (!hqCd || hqCd === 'ALL') {
         return [];
       }
 
-      // 본부별 부서 조회 (LINK_CD1 사용)
+      // 본�?�?부??조회 (LINK_CD1 ?�용)
       const result = await conn.execute(
         `SELECT SML_CSF_CD as code, SML_CSF_NM as name 
          FROM TBL_SML_CSF_CD 
@@ -349,3 +349,5 @@ export class CommonService {
     }
   }
 }
+
+

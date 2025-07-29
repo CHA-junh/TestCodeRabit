@@ -34,3 +34,5 @@ export class Dept {
   @Column({ name: 'CHNGR_ID', type: 'varchar2', length: 10, nullable: true })
   chngrId?: string;
 }
+
+

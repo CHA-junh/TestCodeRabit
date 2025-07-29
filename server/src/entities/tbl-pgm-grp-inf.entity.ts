@@ -50,3 +50,5 @@ export class TblPgmGrpInf {
     return `${year}${month}${day}${hours}${minutes}${seconds}`;
   }
 }
+
+

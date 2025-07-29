@@ -10,20 +10,21 @@ export class COMZ010M00Service {
   async handleCodeMgmt(body: { SP: string; PARAM: string }) {
     try {
       const { SP, PARAM } = body;
-      // SP에서 프로시저명만 추출 (괄호 전까지)
+      // SP?�서 ?�로?��?명만 추출 (괄호 ?�까지)
       const procName = SP.split('(')[0];
-      // 파라미터 분리 (| 구분)
+      // ?�라미터 분리 (| 구분)
       const params = PARAM.split('|');
       
-      // PROCNAME: 동적 프로시저명 (SP 파라미터에서 추출)
-      // OracleService의 executeProcedure 메서드 사용
+      // PROCNAME: ?�적 ?�로?��?�?(SP ?�라미터?�서 추출)
+      // OracleService??executeProcedure 메서???�용
       const result = await this.oracleService.executeProcedure(procName, params);
       
-      // 결과를 카멜케이스로 변환하여 반환
+      // 결과�?카멜케?�스�?변?�하??반환
       return toCamelCase(result);
     } catch (error) {
-      this.logger.error('시스템코드관리 프로시저 호출 오류:', error);
-      throw new InternalServerErrorException('시스템코드관리 프로시저 호출 오류');
+      this.logger.error('?�스?�코?��?�??�로?��? ?�출 ?�류:', error);
+      throw new InternalServerErrorException('?�스?�코?��?�??�로?��? ?�출 ?�류');
     }
   }
 } 
+

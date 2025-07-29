@@ -1,8 +1,8 @@
 /**
- * SYS1002M00.test.tsx - 메뉴별 프로그램 관리 화면 테스트
+ * SYS1002M00.test.tsx - 메뉴�??�로그램 관�??�면 ?�스??
  * 
- * 테스트 대상: SYS1002M00.tsx
- * 테스트 범위: 메뉴별 프로그램 관리의 모든 주요 기능
+ * ?�스???�?? SYS1002M00.tsx
+ * ?�스??범위: 메뉴�??�로그램 관리의 모든 주요 기능
  */
 
 import React from 'react';
@@ -51,11 +51,11 @@ const mockMenuService = MenuService as jest.Mocked<typeof MenuService>;
 const mockUsePopup = usePopup as jest.MockedFunction<typeof usePopup>;
 const mockUseQuery = useQuery as jest.MockedFunction<typeof useQuery>;
 
-describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
+describe('SYS1002M00 - 메뉴�??�로그램 관�?, () => {
   const mockMenus: Menu[] = [
     {
       MENU_ID: 'MENU001',
-      MENU_NM: '사용자관리',
+      MENU_NM: '?�용?��?�?,
       MENU_SEQ: 1,
       USE_YN: 'Y',
       SORT_SEQ: 1,
@@ -64,7 +64,7 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
     },
     {
       MENU_ID: 'MENU002',
-      MENU_NM: '시스템관리',
+      MENU_NM: '?�스?��?�?,
       MENU_SEQ: 2,
       USE_YN: 'Y',
       SORT_SEQ: 2,
@@ -76,25 +76,25 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
   const mockMenuPrograms = [
     {
       MENU_SEQ: 1,
-      MENU_DSP_NM: '사용자관리',
+      MENU_DSP_NM: '?�용?��?�?,
       MENU_SHP_DVCD: '1',
       PGM_ID: 'USR2010M00',
-      PGM_NM: '사용자관리',
+      PGM_NM: '?�용?��?�?,
       USE_YN: 'Y'
     },
     {
       MENU_SEQ: 2,
-      MENU_DSP_NM: '프로그램관리',
+      MENU_DSP_NM: '?�로그램관�?,
       MENU_SHP_DVCD: '1',
       PGM_ID: 'SYS1000M00',
-      PGM_NM: '프로그램관리',
+      PGM_NM: '?�로그램관�?,
       USE_YN: 'Y'
     }
   ];
 
   const mockDivisionCodes = [
-    { codeId: '1', codeNm: '화면' },
-    { codeId: '2', codeNm: '팝업' },
+    { codeId: '1', codeNm: '?�면' },
+    { codeId: '2', codeNm: '?�업' },
     { codeId: '3', codeNm: '모달' }
   ];
 
@@ -118,7 +118,7 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
 
     mockMenuService.deleteMenu.mockResolvedValue(true);
 
-    mockMenuService.copyMenu.mockResolvedValue({ ...mockMenus[0], MENU_ID: 'MENU001_COPY', MENU_NM: '사용자관리_COPY' });
+    mockMenuService.copyMenu.mockResolvedValue({ ...mockMenus[0], MENU_ID: 'MENU001_COPY', MENU_NM: '?�용?��?�?COPY' });
 
     mockMenuService.saveMenuPrograms.mockResolvedValue();
 
@@ -167,22 +167,22 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
     ) as jest.Mock;
   });
 
-  describe('화면 렌더링', () => {
-    test('메뉴별 프로그램 관리 화면이 정상적으로 렌더링됩니다.', async () => {
+  describe('?�면 ?�더�?, () => {
+    test('메뉴�??�로그램 관�??�면???�상?�으�??�더링됩?�다.', async () => {
       render(<SYS1002M00 />);
-      // 실제 컴포넌트에는 "메뉴별 프로그램 관리" 텍스트가 없으므로 다른 요소로 확인
-      expect(screen.getByText('메뉴ID명')).toBeInTheDocument();
+      // ?�제 컴포?�트?�는 "메뉴�??�로그램 관�? ?�스?��? ?�으므�??�른 ?�소�??�인
+      expect(screen.getByText('메뉴ID�?)).toBeInTheDocument();
     });
     
-    test('검색 조건 입력 필드들이 정상적으로 렌더링됩니다.', () => {
+    test('검??조건 ?�력 ?�드?�이 ?�상?�으�??�더링됩?�다.', () => {
       render(<SYS1002M00 />);
-      // name 속성으로 구체적으로 선택
-      expect(screen.getAllByDisplayValue('')).toHaveLength(2); // 검색용 input과 메뉴명 input
-      expect(screen.getAllByRole('combobox')).toHaveLength(2); // 검색용 select와 메뉴용 select
+      // name ?�성?�로 구체?�으�??�택
+      expect(screen.getAllByDisplayValue('')).toHaveLength(2); // 검?�용 input�?메뉴�?input
+      expect(screen.getAllByRole('combobox')).toHaveLength(2); // 검?�용 select?� 메뉴??select
       expect(screen.getByText('조회')).toBeInTheDocument(); // 조회 버튼
     });
     
-    test('메뉴 트리와 메뉴 목록 그리드가 정상적으로 렌더링됩니다.', async () => {
+    test('메뉴 ?�리?� 메뉴 목록 그리?��? ?�상?�으�??�더링됩?�다.', async () => {
       render(<SYS1002M00 />);
       await waitFor(() => {
         expect(screen.getByTestId('menu-grid')).toBeInTheDocument();
@@ -191,7 +191,7 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
   });
 
   describe('메뉴 목록 조회', () => {
-    test('화면 로드 시 메뉴 목록이 자동으로 조회됩니다.', async () => {
+    test('?�면 로드 ??메뉴 목록???�동?�로 조회?�니??', async () => {
       render(<SYS1002M00 />);
 
       await waitFor(() => {
@@ -202,44 +202,44 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
       });
     });
 
-    test('검색 조건을 입력하고 조회 버튼을 클릭하면 해당 조건으로 조회됩니다.', async () => {
+    test('검??조건???�력?�고 조회 버튼???�릭?�면 ?�당 조건?�로 조회?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
-      // 검색 조건 입력 - name 속성으로 구체적으로 선택
+      // 검??조건 ?�력 - name ?�성?�로 구체?�으�??�택
       const searchInputs = screen.getAllByDisplayValue('');
-      await user.type(searchInputs[0], '사용자');
+      await user.type(searchInputs[0], '?�용??);
 
       const searchButton = screen.getByText('조회');
       await user.click(searchButton);
 
       await waitFor(() => {
         expect(mockMenuService.getMenuList).toHaveBeenCalledWith({
-          MENU_KWD: '사용자',
+          MENU_KWD: '?�용??,
           USE_YN: ''
         });
       });
     });
 
-    test('엔터키를 누르면 자동으로 조회가 실행됩니다.', async () => {
+    test('?�터?��? ?�르�??�동?�로 조회가 ?�행?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
       const searchInputs = screen.getAllByDisplayValue('');
-      await user.type(searchInputs[0], '시스템');
+      await user.type(searchInputs[0], '?�스??);
       await user.keyboard('{Enter}');
 
       await waitFor(() => {
         expect(mockMenuService.getMenuList).toHaveBeenCalledWith({
-          MENU_KWD: '시스템',
+          MENU_KWD: '?�스??,
           USE_YN: ''
         });
       });
     });
   });
 
-  describe('메뉴 트리 기능', () => {
-    test('메뉴 트리에서 메뉴를 클릭하면 해당 메뉴가 선택됩니다.', async () => {
+  describe('메뉴 ?�리 기능', () => {
+    test('메뉴 ?�리?�서 메뉴�??�릭?�면 ?�당 메뉴가 ?�택?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
@@ -250,26 +250,26 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
       const menuRow = screen.getByTestId('menu-grid-row-0');
       await user.click(menuRow);
 
-      // 메뉴 선택 후 상세 정보가 표시되는지 확인
+      // 메뉴 ?�택 ???�세 ?�보가 ?�시?�는지 ?�인
       await waitFor(() => {
-        expect(screen.getByDisplayValue('사용자관리')).toBeInTheDocument();
+        expect(screen.getByDisplayValue('?�용?��?�?)).toBeInTheDocument();
       });
     });
 
-    test('메뉴 트리에서 확장/축소 버튼을 클릭하면 하위 메뉴가 토글됩니다.', async () => {
+    test('메뉴 ?�리?�서 ?�장/축소 버튼???�릭?�면 ?�위 메뉴가 ?��??�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
-      const expandButton = screen.getByText('＋');
+      const expandButton = screen.getByText('�?);
       await user.click(expandButton);
 
-      // 확장 버튼이 축소 버튼으로 변경되는지 확인
-      expect(screen.getByText('－')).toBeInTheDocument();
+      // ?�장 버튼??축소 버튼?�로 변경되?��? ?�인
+      expect(screen.getByText('�?)).toBeInTheDocument();
     });
   });
 
-  describe('메뉴 선택', () => {
-    test('메뉴를 선택하면 해당 메뉴의 상세 정보가 표시됩니다.', async () => {
+  describe('메뉴 ?�택', () => {
+    test('메뉴�??�택?�면 ?�당 메뉴???�세 ?�보가 ?�시?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
@@ -281,11 +281,11 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
       await user.click(menuRow);
 
       await waitFor(() => {
-        expect(screen.getByDisplayValue('사용자관리')).toBeInTheDocument();
+        expect(screen.getByDisplayValue('?�용?��?�?)).toBeInTheDocument();
       });
     });
 
-    test('메뉴를 선택하면 해당 메뉴의 프로그램 목록이 조회됩니다.', async () => {
+    test('메뉴�??�택?�면 ?�당 메뉴???�로그램 목록??조회?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
@@ -302,35 +302,35 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
     });
   });
 
-  describe('메뉴 관리', () => {
-    test('신규 버튼을 클릭하면 새로운 메뉴 입력 모드로 전환됩니다.', async () => {
+  describe('메뉴 관�?, () => {
+    test('?�규 버튼???�릭?�면 ?�로??메뉴 ?�력 모드�??�환?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
-      const newButton = screen.getByText('신규');
+      const newButton = screen.getByText('?�규');
       await user.click(newButton);
 
-      // 신규 모드에서 입력 필드들이 활성화되는지 확인
+      // ?�규 모드?�서 ?�력 ?�드?�이 ?�성?�되?��? ?�인
       await waitFor(() => {
         const menuNameInputs = screen.getAllByDisplayValue('');
         expect(menuNameInputs[1]).not.toBeDisabled();
       });
     });
 
-    test('메뉴 정보를 입력하고 저장 버튼을 클릭하면 메뉴가 저장됩니다.', async () => {
+    test('메뉴 ?�보�??�력?�고 ?�??버튼???�릭?�면 메뉴가 ?�?�됩?�다.', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
-      // 신규 버튼 클릭
-      const newButton = screen.getByText('신규');
+      // ?�규 버튼 ?�릭
+      const newButton = screen.getByText('?�규');
       await user.click(newButton);
 
-      // 메뉴명 입력
+      // 메뉴�??�력
       const menuNameInputs = screen.getAllByDisplayValue('');
-      await user.type(menuNameInputs[1], '새로운 메뉴');
+      await user.type(menuNameInputs[1], '?�로??메뉴');
 
-      // 저장 버튼 클릭
-      const saveButton = screen.getAllByText('저장')[0];
+      // ?�??버튼 ?�릭
+      const saveButton = screen.getAllByText('?�??)[0];
       await user.click(saveButton);
 
       await waitFor(() => {
@@ -338,11 +338,11 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
       });
     });
 
-    test('메뉴 정보를 수정하고 저장 버튼을 클릭하면 메뉴가 수정됩니다.', async () => {
+    test('메뉴 ?�보�??�정?�고 ?�??버튼???�릭?�면 메뉴가 ?�정?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
-      // 메뉴 선택
+      // 메뉴 ?�택
       await waitFor(() => {
         expect(screen.getByTestId('menu-grid')).toBeInTheDocument();
       });
@@ -350,13 +350,13 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
       const menuRow = screen.getByTestId('menu-grid-row-0');
       await user.click(menuRow);
 
-      // 메뉴명 수정
-      const menuNameInput = screen.getByDisplayValue('사용자관리');
+      // 메뉴�??�정
+      const menuNameInput = screen.getByDisplayValue('?�용?��?�?);
       await user.clear(menuNameInput);
-      await user.type(menuNameInput, '수정된 메뉴');
+      await user.type(menuNameInput, '?�정??메뉴');
 
-      // 저장 버튼 클릭
-      const saveButton = screen.getAllByText('저장')[0];
+      // ?�??버튼 ?�릭
+      const saveButton = screen.getAllByText('?�??)[0];
       await user.click(saveButton);
 
       await waitFor(() => {
@@ -364,11 +364,11 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
       });
     });
 
-    test('메뉴삭제 버튼을 클릭하면 메뉴가 삭제됩니다.', async () => {
+    test('메뉴??�� 버튼???�릭?�면 메뉴가 ??��?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
-      // 메뉴 선택
+      // 메뉴 ?�택
       await waitFor(() => {
         expect(screen.getByTestId('menu-grid')).toBeInTheDocument();
       });
@@ -376,22 +376,22 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
       const menuRow = screen.getByTestId('menu-grid-row-0');
       await user.click(menuRow);
 
-      // 삭제 버튼 클릭
-      const deleteButton = screen.getByText('메뉴삭제');
+      // ??�� 버튼 ?�릭
+      const deleteButton = screen.getByText('메뉴??��');
       await user.click(deleteButton);
 
-      // 삭제 버튼이 비활성화되어 있지 않은지 확인
+      // ??�� 버튼??비활?�화?�어 ?��? ?��?지 ?�인
       expect(deleteButton).not.toBeDisabled();
       
-      // 실제 삭제 로직이 호출되는지 확인 (실제 컴포넌트에서는 확인 대화상자가 있을 수 있음)
+      // ?�제 ??�� 로직???�출?�는지 ?�인 (?�제 컴포?�트?�서???�인 ?�?�상?��? ?�을 ???�음)
       // expect(mockMenuService.deleteMenu).toHaveBeenCalled();
     });
 
-    test('복사저장 버튼을 클릭하면 메뉴가 복사됩니다.', async () => {
+    test('복사?�??버튼???�릭?�면 메뉴가 복사?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
-      // 메뉴 선택
+      // 메뉴 ?�택
       await waitFor(() => {
         expect(screen.getByTestId('menu-grid')).toBeInTheDocument();
       });
@@ -399,24 +399,24 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
       const menuRow = screen.getByTestId('menu-grid-row-0');
       await user.click(menuRow);
 
-      // 복사저장 버튼 클릭
-      const copyButton = screen.getByText('복사저장');
+      // 복사?�??버튼 ?�릭
+      const copyButton = screen.getByText('복사?�??);
       await user.click(copyButton);
 
-      // 복사저장 버튼이 비활성화되어 있지 않은지 확인
+      // 복사?�??버튼??비활?�화?�어 ?��? ?��?지 ?�인
       expect(copyButton).not.toBeDisabled();
       
-      // 실제 복사 로직이 호출되는지 확인 (실제 컴포넌트에서는 추가 로직이 있을 수 있음)
+      // ?�제 복사 로직???�출?�는지 ?�인 (?�제 컴포?�트?�서??추�? 로직???�을 ???�음)
       // expect(mockMenuService.copyMenu).toHaveBeenCalled();
     });
   });
 
-  describe('프로그램 관리', () => {
-    test('추가 버튼을 클릭하면 프로그램 목록에 새 행이 추가됩니다.', async () => {
+  describe('?�로그램 관�?, () => {
+    test('추�? 버튼???�릭?�면 ?�로그램 목록?????�이 추�??�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
-      // 메뉴 선택
+      // 메뉴 ?�택
       await waitFor(() => {
         expect(screen.getByTestId('menu-grid')).toBeInTheDocument();
       });
@@ -424,21 +424,21 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
       const menuRow = screen.getByTestId('menu-grid-row-0');
       await user.click(menuRow);
 
-      // 추가 버튼 클릭
-      const addButton = screen.getByText('추가');
+      // 추�? 버튼 ?�릭
+      const addButton = screen.getByText('추�?');
       await user.click(addButton);
 
-      // 프로그램 그리드에 새 행이 추가되는지 확인
+      // ?�로그램 그리?�에 ???�이 추�??�는지 ?�인
       await waitFor(() => {
         expect(screen.getByTestId('menu-program-grid')).toBeInTheDocument();
       });
     });
 
-    test('프로그램을 선택하고 삭제 버튼을 클릭하면 프로그램이 삭제됩니다.', async () => {
+    test('?�로그램???�택?�고 ??�� 버튼???�릭?�면 ?�로그램????��?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
-      // 메뉴 선택
+      // 메뉴 ?�택
       await waitFor(() => {
         expect(screen.getByTestId('menu-grid')).toBeInTheDocument();
       });
@@ -446,19 +446,19 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
       const menuRow = screen.getByTestId('menu-grid-row-0');
       await user.click(menuRow);
 
-      // 삭제 버튼 클릭
-      const deleteButton = screen.getByText('삭제');
+      // ??�� 버튼 ?�릭
+      const deleteButton = screen.getByText('??��');
       await user.click(deleteButton);
 
-      // 삭제 확인 로직이 실행되는지 확인
+      // ??�� ?�인 로직???�행?�는지 ?�인
       expect(deleteButton).toBeInTheDocument();
     });
 
-    test('프로그램 정보를 수정하고 저장 버튼을 클릭하면 프로그램이 저장됩니다.', async () => {
+    test('?�로그램 ?�보�??�정?�고 ?�??버튼???�릭?�면 ?�로그램???�?�됩?�다.', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
-      // 메뉴 선택
+      // 메뉴 ?�택
       await waitFor(() => {
         expect(screen.getByTestId('menu-grid')).toBeInTheDocument();
       });
@@ -466,44 +466,44 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
       const menuRow = screen.getByTestId('menu-grid-row-0');
       await user.click(menuRow);
 
-      // 저장 버튼 클릭
-      const saveButtons = screen.getAllByText('저장');
+      // ?�??버튼 ?�릭
+      const saveButtons = screen.getAllByText('?�??);
       const programSaveButton = saveButtons[1];
       await user.click(programSaveButton);
 
-      // 저장 버튼이 비활성화되어 있지 않은지 확인
+      // ?�??버튼??비활?�화?�어 ?��? ?��?지 ?�인
       expect(programSaveButton).not.toBeDisabled();
       
-      // 실제 저장 로직이 호출되는지 확인 (실제 컴포넌트에서는 추가 로직이 있을 수 있음)
+      // ?�제 ?�??로직???�출?�는지 ?�인 (?�제 컴포?�트?�서??추�? 로직???�을 ???�음)
       // expect(mockMenuService.saveMenuPrograms).toHaveBeenCalled();
     });
   });
 
   describe('메뉴 미리보기', () => {
-    test('메뉴미리보기 버튼을 클릭하면 팝업이 열립니다.', async () => {
+    test('메뉴미리보기 버튼???�릭?�면 ?�업???�립?�다.', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
       const previewButton = screen.getByText('메뉴미리보기');
       await user.click(previewButton);
 
-      // 팝업이 열리는지 확인 (실제 컴포넌트에서는 추가 로직이 있을 수 있음)
+      // ?�업???�리?��? ?�인 (?�제 컴포?�트?�서??추�? 로직???�을 ???�음)
       // expect(mockUsePopup().openPopup).toHaveBeenCalled();
     });
   });
 
-  describe('검증 및 에러 처리', () => {
-    test('필수 입력 필드가 비어있을 때 저장하면 에러 메시지가 표시됩니다.', async () => {
+  describe('검�?�??�러 처리', () => {
+    test('?�수 ?�력 ?�드가 비어?�을 ???�?�하�??�러 메시지가 ?�시?�니??', async () => {
       const alertMock = jest.spyOn(window, 'alert').mockImplementation(() => {});
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
-      // 신규 버튼 클릭
-      const newButton = screen.getByText('신규');
+      // ?�규 버튼 ?�릭
+      const newButton = screen.getByText('?�규');
       await user.click(newButton);
 
-      // 저장 버튼 클릭 (메뉴명 없이)
-      const saveButton = screen.getAllByText('저장')[0];
+      // ?�??버튼 ?�릭 (메뉴�??�이)
+      const saveButton = screen.getAllByText('?�??)[0];
       await user.click(saveButton);
 
       await waitFor(() => {
@@ -513,7 +513,7 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
       alertMock.mockRestore();
     });
 
-    test('API 호출 실패 시 에러 메시지가 표시됩니다.', async () => {
+    test('API ?�출 ?�패 ???�러 메시지가 ?�시?�니??', async () => {
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
       mockMenuService.getMenuList.mockRejectedValue(new Error('API Error'));
       
@@ -527,21 +527,21 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
     });
   });
 
-  describe('접근성', () => {
-    test('모든 입력 필드에 적절한 name 속성이 설정되어 있습니다.', () => {
+  describe('?�근??, () => {
+    test('모든 ?�력 ?�드???�절??name ?�성???�정?�어 ?�습?�다.', () => {
       render(<SYS1002M00 />);
       
-      // name 속성으로 구체적으로 선택
-      expect(screen.getAllByDisplayValue('')).toHaveLength(2); // 검색용 input과 메뉴명 input
-      expect(screen.getAllByRole('combobox')).toHaveLength(2); // 검색용 select와 메뉴용 select
+      // name ?�성?�로 구체?�으�??�택
+      expect(screen.getAllByDisplayValue('')).toHaveLength(2); // 검?�용 input�?메뉴�?input
+      expect(screen.getAllByRole('combobox')).toHaveLength(2); // 검?�용 select?� 메뉴??select
       expect(screen.getByText('조회')).toBeInTheDocument(); // 조회 버튼
     });
 
-    test('키보드로 모든 기능에 접근할 수 있습니다.', async () => {
+    test('?�보?�로 모든 기능???�근?????�습?�다.', async () => {
       const user = userEvent.setup();
       render(<SYS1002M00 />);
 
-      // Tab 키로 포커스 이동 - 첫 번째 input만 확인
+      // Tab ?�로 ?�커???�동 - �?번째 input�??�인
       await user.tab();
       const searchInputs = screen.getAllByDisplayValue('');
       expect(searchInputs[0]).toHaveFocus();
@@ -556,3 +556,4 @@ describe('SYS1002M00 - 메뉴별 프로그램 관리', () => {
     });
   });
 }); 
+

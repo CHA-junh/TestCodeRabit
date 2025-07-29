@@ -1,4 +1,4 @@
-/* 팝업 스타일 */
+/* ?�업 ?��???*/
 .popupHeader {
   display: flex;
   justify-content: space-between;
@@ -31,7 +31,7 @@
   color: #333;
 }
 
-/* 팝업 컨테이너 */
+/* ?�업 컨테?�너 */
 .popupContainer {
   position: fixed;
   top: 50%;
@@ -47,7 +47,7 @@
   overflow: hidden;
 }
 
-/* 팝업 오버레이 */
+/* ?�업 ?�버?�이 */
 .popupOverlay {
   position: fixed;
   top: 0;
@@ -58,14 +58,14 @@
   z-index: 999;
 }
 
-/* 팝업 내용 영역 */
+/* ?�업 ?�용 ?�역 */
 .popupContent {
   padding: 20px;
   max-height: calc(90vh - 120px);
   overflow-y: auto;
 }
 
-/* 선택된 프로그램 표시 영역 */
+/* ?�택???�로그램 ?�시 ?�역 */
 .selectedPrograms {
   background-color: #f0f8ff;
   border: 1px solid #b3d9ff;
@@ -96,20 +96,20 @@
   border-radius: 3px;
 }
 
-/* 체크박스 스타일 */
+/* 체크박스 ?��???*/
 .checkbox {
   width: 16px;
   height: 16px;
   cursor: pointer;
 }
 
-/* 그리드 행 선택 스타일 */
+/* 그리?????�택 ?��???*/
 .selectedRow {
   background-color: #e3f2fd !important;
   border-left: 3px solid #2196f3;
 }
 
-/* 반응형 디자인 */
+/* 반응???�자??*/
 @media (max-width: 768px) {
   .popupContainer {
     min-width: 95vw;
@@ -135,7 +135,7 @@
   }
 }
 
-/* 애니메이션 */
+/* ?�니메이??*/
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -151,7 +151,7 @@
   animation: fadeIn 0.3s ease-out;
 }
 
-/* 스크롤바 스타일 */
+/* ?�크롤바 ?��???*/
 .popupContent::-webkit-scrollbar {
   width: 8px;
 }
@@ -169,3 +169,4 @@
 .popupContent::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 } 
+

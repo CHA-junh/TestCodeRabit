@@ -1,5 +1,5 @@
 /**
- * PSM0060M00 - 개발환경 선택 팝업 테스트
+ * PSM0060M00 - 개발?�경 ?�택 ?�업 ?�스??
  */
 
 import React from 'react';
@@ -15,7 +15,7 @@ jest.mock('@/contexts/ToastContext', () => ({
 
 const mockUseToast = useToast as jest.MockedFunction<typeof useToast>;
 
-describe('PSM0060M00 - 개발환경 선택 팝업', () => {
+describe('PSM0060M00 - 개발?�경 ?�택 ?�업', () => {
   const mockOnConfirm = jest.fn();
   const mockOnClose = jest.fn();
   const mockShowToast = jest.fn();
@@ -33,37 +33,37 @@ describe('PSM0060M00 - 개발환경 선택 팝업', () => {
     });
   });
 
-  describe('기본 렌더링 테스트', () => {
-    test('컴포넌트가 정상적으로 렌더링된다', () => {
+  describe('기본 ?�더�??�스??, () => {
+    test('컴포?�트가 ?�상?�으�??�더링된??, () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
-      expect(screen.getByText('개발환경/DBMS/언어 내용 입력')).toBeInTheDocument();
-      expect(screen.getByText('운영체제(OS)')).toBeInTheDocument();
+      expect(screen.getByText('개발?�경/DBMS/?�어 ?�용 ?�력')).toBeInTheDocument();
+      expect(screen.getByText('?�영체제(OS)')).toBeInTheDocument();
       expect(screen.getByText('DBMS')).toBeInTheDocument();
-      expect(screen.getByText('프레임웍')).toBeInTheDocument();
-      expect(screen.getByText('WAS/미들웨어')).toBeInTheDocument();
-      expect(screen.getByText('언어/개발환경')).toBeInTheDocument();
+      expect(screen.getByText('?�레?�웍')).toBeInTheDocument();
+      expect(screen.getByText('WAS/미들?�어')).toBeInTheDocument();
+      expect(screen.getByText('?�어/개발?�경')).toBeInTheDocument();
       expect(screen.getByText('TOOL')).toBeInTheDocument();
-      expect(screen.getByText('모바일')).toBeInTheDocument();
-      expect(screen.getAllByText('기타')).toHaveLength(8); // 8개의 기타 텍스트가 있음 (7개 체크박스 + 1개 섹션 제목)
+      expect(screen.getByText('모바??)).toBeInTheDocument();
+      expect(screen.getAllByText('기�?')).toHaveLength(8); // 8개의 기�? ?�스?��? ?�음 (7�?체크박스 + 1�??�션 ?�목)
     });
 
-    test('확인과 취소 버튼이 표시된다', () => {
+    test('?�인�?취소 버튼???�시?�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
-      expect(screen.getByText('확인')).toBeInTheDocument();
+      expect(screen.getByText('?�인')).toBeInTheDocument();
       expect(screen.getByText('취소')).toBeInTheDocument();
     });
 
-    test('닫기 버튼(X)이 표시된다', () => {
+    test('?�기 버튼(X)???�시?�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
       expect(screen.getByText('×')).toBeInTheDocument();
     });
   });
 
-  describe('체크박스 선택 테스트', () => {
-    test('운영체제 체크박스를 선택할 수 있다', () => {
+  describe('체크박스 ?�택 ?�스??, () => {
+    test('?�영체제 체크박스�??�택?????�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
       const unixCheckbox = screen.getByLabelText('UNIX');
@@ -78,7 +78,7 @@ describe('PSM0060M00 - 개발환경 선택 팝업', () => {
       expect(linuxCheckbox).not.toBeChecked();
     });
 
-    test('DBMS 체크박스를 선택할 수 있다', () => {
+    test('DBMS 체크박스�??�택?????�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
       const oracleCheckbox = screen.getByLabelText('ORACLE');
@@ -91,7 +91,7 @@ describe('PSM0060M00 - 개발환경 선택 팝업', () => {
       expect(mssqlCheckbox).toBeChecked();
     });
 
-    test('언어/개발환경 체크박스를 선택할 수 있다', () => {
+    test('?�어/개발?�경 체크박스�??�택?????�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
       const javaCheckbox = screen.getByLabelText('JAVA,JSP');
@@ -105,15 +105,15 @@ describe('PSM0060M00 - 개발환경 선택 팝업', () => {
     });
   });
 
-  describe('기타 텍스트 입력 테스트', () => {
-    test('운영체제 기타 텍스트를 입력할 수 있다', () => {
+  describe('기�? ?�스???�력 ?�스??, () => {
+    test('?�영체제 기�? ?�스?��? ?�력?????�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
-      // 운영체제 섹션의 기타 체크박스 (첫 번째 기타)
-      const osEtcCheckboxes = screen.getAllByLabelText('기타');
+      // ?�영체제 ?�션??기�? 체크박스 (�?번째 기�?)
+      const osEtcCheckboxes = screen.getAllByLabelText('기�?');
       const osEtcCheckbox = osEtcCheckboxes[0];
       
-      // 운영체제 섹션의 기타 입력 필드 (첫 번째 disabled input)
+      // ?�영체제 ?�션??기�? ?�력 ?�드 (�?번째 disabled input)
       const disabledInputs = screen.getAllByRole('textbox').filter(input => input.hasAttribute('disabled'));
       const osEtcInput = disabledInputs[0];
       
@@ -124,32 +124,32 @@ describe('PSM0060M00 - 개발환경 선택 팝업', () => {
       expect(osEtcInput).toHaveValue('macOS');
     });
 
-    test('기타 텍스트 입력이 활성화/비활성화된다', () => {
+    test('기�? ?�스???�력???�성??비활?�화?�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
-      // 운영체제 섹션의 기타 체크박스 (첫 번째 기타)
-      const osEtcCheckboxes = screen.getAllByLabelText('기타');
+      // ?�영체제 ?�션??기�? 체크박스 (�?번째 기�?)
+      const osEtcCheckboxes = screen.getAllByLabelText('기�?');
       const osEtcCheckbox = osEtcCheckboxes[0];
       
-      // 운영체제 섹션의 기타 입력 필드 (첫 번째 disabled input)
+      // ?�영체제 ?�션??기�? ?�력 ?�드 (�?번째 disabled input)
       const disabledInputs = screen.getAllByRole('textbox').filter(input => input.hasAttribute('disabled'));
       const osEtcInput = disabledInputs[0];
       
-      // 초기에는 비활성화
+      // 초기?�는 비활?�화
       expect(osEtcInput).toBeDisabled();
       
-      // 체크박스 선택 시 활성화
+      // 체크박스 ?�택 ???�성??
       fireEvent.click(osEtcCheckbox);
       expect(osEtcInput).toBeEnabled();
       
-      // 체크박스 해제 시 비활성화
+      // 체크박스 ?�제 ??비활?�화
       fireEvent.click(osEtcCheckbox);
       expect(osEtcInput).toBeDisabled();
     });
   });
 
-  describe('버튼 클릭 테스트', () => {
-    test('취소 버튼 클릭 시 onClose가 호출된다', () => {
+  describe('버튼 ?�릭 ?�스??, () => {
+    test('취소 버튼 ?�릭 ??onClose가 ?�출?�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
       const cancelButton = screen.getByText('취소');
@@ -158,7 +158,7 @@ describe('PSM0060M00 - 개발환경 선택 팝업', () => {
       expect(mockOnClose).toHaveBeenCalledTimes(1);
     });
 
-    test('닫기 버튼(X) 클릭 시 onClose가 호출된다', () => {
+    test('?�기 버튼(X) ?�릭 ??onClose가 ?�출?�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
       const closeButton = screen.getByText('×');
@@ -167,16 +167,16 @@ describe('PSM0060M00 - 개발환경 선택 팝업', () => {
       expect(mockOnClose).toHaveBeenCalledTimes(1);
     });
 
-    test('확인 버튼 클릭 시 선택된 데이터가 onConfirm으로 전달된다', () => {
+    test('?�인 버튼 ?�릭 ???�택???�이?��? onConfirm?�로 ?�달?�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
-      // 몇 가지 옵션 선택
+      // �?가지 ?�션 ?�택
       fireEvent.click(screen.getByLabelText('UNIX'));
       fireEvent.click(screen.getByLabelText('ORACLE'));
       fireEvent.click(screen.getByLabelText('JAVA,JSP'));
       fireEvent.click(screen.getByLabelText('Spring'));
       
-      const confirmButton = screen.getByText('확인');
+      const confirmButton = screen.getByText('?�인');
       fireEvent.click(confirmButton);
       
       expect(mockOnConfirm).toHaveBeenCalledWith('UNIX, ORACLE, JAVA,JSP, Spring');
@@ -184,14 +184,14 @@ describe('PSM0060M00 - 개발환경 선택 팝업', () => {
     });
   });
 
-  describe('데이터 수집 테스트', () => {
-    test('선택된 모든 데이터가 올바르게 수집된다', () => {
+  describe('?�이???�집 ?�스??, () => {
+    test('?�택??모든 ?�이?��? ?�바르게 ?�집?�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
-      // 운영체제
+      // ?�영체제
       fireEvent.click(screen.getByLabelText('UNIX'));
-      const osEtcCheckboxes = screen.getAllByLabelText('기타');
-      fireEvent.click(osEtcCheckboxes[0]); // 운영체제 기타
+      const osEtcCheckboxes = screen.getAllByLabelText('기�?');
+      fireEvent.click(osEtcCheckboxes[0]); // ?�영체제 기�?
       const disabledInputs = screen.getAllByRole('textbox').filter(input => input.hasAttribute('disabled'));
       fireEvent.change(disabledInputs[0], { target: { value: 'macOS' } });
       
@@ -199,45 +199,45 @@ describe('PSM0060M00 - 개발환경 선택 팝업', () => {
       fireEvent.click(screen.getByLabelText('ORACLE'));
       fireEvent.click(screen.getByLabelText('MS-SQL'));
       
-      // 언어
+      // ?�어
       fireEvent.click(screen.getByLabelText('JAVA,JSP'));
       fireEvent.click(screen.getByLabelText('Spring'));
       
-      // 기타 텍스트
-      const etcInput = screen.getByPlaceholderText('기타 내용을 입력하세요');
-      fireEvent.change(etcInput, { target: { value: '추가 기술' } });
+      // 기�? ?�스??
+      const etcInput = screen.getByPlaceholderText('기�? ?�용???�력?�세??);
+      fireEvent.change(etcInput, { target: { value: '추�? 기술' } });
       
-      const confirmButton = screen.getByText('확인');
+      const confirmButton = screen.getByText('?�인');
       fireEvent.click(confirmButton);
       
-      expect(mockOnConfirm).toHaveBeenCalledWith('UNIX, ORACLE, MS-SQL, JAVA,JSP, Spring, 추가 기술');
+      expect(mockOnConfirm).toHaveBeenCalledWith('UNIX, ORACLE, MS-SQL, JAVA,JSP, Spring, 추�? 기술');
     });
 
-    test('선택된 항목이 없으면 빈 문자열이 전달된다', () => {
+    test('?�택????��???�으�?�?문자?�이 ?�달?�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
-      const confirmButton = screen.getByText('확인');
+      const confirmButton = screen.getByText('?�인');
       fireEvent.click(confirmButton);
       
       expect(mockOnConfirm).toHaveBeenCalledWith('');
     });
 
-    test('기타 체크박스가 선택되지 않으면 해당 텍스트는 포함되지 않는다', () => {
+    test('기�? 체크박스가 ?�택?��? ?�으�??�당 ?�스?�는 ?�함?��? ?�는??, () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
-      // 기타 텍스트만 입력하고 체크박스는 선택하지 않음
+      // 기�? ?�스?�만 ?�력?�고 체크박스???�택?��? ?�음
       const disabledInputs = screen.getAllByRole('textbox').filter(input => input.hasAttribute('disabled'));
       fireEvent.change(disabledInputs[0], { target: { value: 'macOS' } });
       
-      const confirmButton = screen.getByText('확인');
+      const confirmButton = screen.getByText('?�인');
       fireEvent.click(confirmButton);
       
       expect(mockOnConfirm).toHaveBeenCalledWith('');
     });
   });
 
-  describe('UI 상호작용 테스트', () => {
-    test('모든 체크박스가 초기에 선택되지 않은 상태이다', () => {
+  describe('UI ?�호?�용 ?�스??, () => {
+    test('모든 체크박스가 초기???�택?��? ?��? ?�태?�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
       const checkboxes = screen.getAllByRole('checkbox');
@@ -246,7 +246,7 @@ describe('PSM0060M00 - 개발환경 선택 팝업', () => {
       });
     });
 
-    test('모든 텍스트 입력이 초기에 빈 값이다', () => {
+    test('모든 ?�스???�력??초기??�?값이??, () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
       const textInputs = screen.getAllByRole('textbox');
@@ -255,43 +255,43 @@ describe('PSM0060M00 - 개발환경 선택 팝업', () => {
       });
     });
 
-    test('기타 텍스트 입력이 초기에 비활성화되어 있다', () => {
+    test('기�? ?�스???�력??초기??비활?�화?�어 ?�다', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
       const textInputs = screen.getAllByRole('textbox');
       textInputs.forEach(input => {
-        if (input !== screen.getByPlaceholderText('기타 내용을 입력하세요')) {
+        if (input !== screen.getByPlaceholderText('기�? ?�용???�력?�세??)) {
           expect(input).toBeDisabled();
         }
       });
     });
   });
 
-  describe('에러 처리 테스트', () => {
-    test('onConfirm이 없어도 에러가 발생하지 않는다', () => {
+  describe('?�러 처리 ?�스??, () => {
+    test('onConfirm???�어???�러가 발생?��? ?�는??, () => {
       expect(() => {
         render(<PSM0060M00 onClose={mockOnClose} />);
       }).not.toThrow();
     });
 
-    test('onClose가 없어도 에러가 발생하지 않는다', () => {
+    test('onClose가 ?�어???�러가 발생?��? ?�는??, () => {
       expect(() => {
         render(<PSM0060M00 onConfirm={mockOnConfirm} />);
       }).not.toThrow();
     });
 
-    test('props가 없어도 정상 동작한다', () => {
+    test('props가 ?�어???�상 ?�작?�다', () => {
       expect(() => {
         render(<PSM0060M00 />);
       }).not.toThrow();
     });
   });
 
-  describe('실제 사용 시나리오 테스트', () => {
-    test('Java 개발자 시나리오', () => {
+  describe('?�제 ?�용 ?�나리오 ?�스??, () => {
+    test('Java 개발???�나리오', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
-      // Java 개발자 일반적인 선택
+      // Java 개발???�반?�인 ?�택
       fireEvent.click(screen.getByLabelText('WINDOW'));
       fireEvent.click(screen.getByLabelText('ORACLE'));
       fireEvent.click(screen.getByLabelText('Spring'));
@@ -299,26 +299,27 @@ describe('PSM0060M00 - 개발환경 선택 팝업', () => {
       fireEvent.click(screen.getByLabelText('JQuery'));
       fireEvent.click(screen.getByLabelText('HTML5'));
       
-      const confirmButton = screen.getByText('확인');
+      const confirmButton = screen.getByText('?�인');
       fireEvent.click(confirmButton);
       
-      // 실제 데이터 순서에 맞춰 수정
+      // ?�제 ?�이???�서??맞춰 ?�정
       expect(mockOnConfirm).toHaveBeenCalledWith('WINDOW, ORACLE, JAVA,JSP, Spring, JQuery, HTML5');
     });
 
-    test('모바일 개발자 시나리오', () => {
+    test('모바??개발???�나리오', () => {
       render(<PSM0060M00 onConfirm={mockOnConfirm} onClose={mockOnClose} />);
       
-      // 모바일 개발자 일반적인 선택
+      // 모바??개발???�반?�인 ?�택
       fireEvent.click(screen.getByLabelText('LINUX'));
       fireEvent.click(screen.getByLabelText('Android'));
       fireEvent.click(screen.getByLabelText('IO/S'));
       fireEvent.click(screen.getByLabelText('JAVA,JSP'));
       
-      const confirmButton = screen.getByText('확인');
+      const confirmButton = screen.getByText('?�인');
       fireEvent.click(confirmButton);
       
       expect(mockOnConfirm).toHaveBeenCalledWith('LINUX, JAVA,JSP, Android, IO/S');
     });
   });
 }); 
+

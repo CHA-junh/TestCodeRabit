@@ -8,7 +8,7 @@ jest.mock('../../modules/auth/hooks/useAuth')
 jest.mock('@/contexts/ToastContext')
 jest.mock('@/utils/constants', () => ({
 	TAB_CONSTANTS: { MAX_TABS: 5 },
-	MESSAGE_CONSTANTS: { MAX_TABS: '최대 5개까지 탭을 열 수 있습니다.' }
+	MESSAGE_CONSTANTS: { MAX_TABS: '최�? 5개까지 ??�� ?????�습?�다.' }
 }))
 
 // Mock components
@@ -24,7 +24,7 @@ jest.mock('./LeftFrame', () => {
 			<div data-testid="left-frame">
 				LeftFrame
 				<button data-testid="menu-btn" onClick={props.onMenuClick}>메뉴</button>
-				<button data-testid="logout-btn" onClick={props.onLogout}>로그아웃</button>
+				<button data-testid="logout-btn" onClick={props.onLogout}>로그?�웃</button>
 			</div>
 		)
 	}
@@ -35,7 +35,7 @@ jest.mock('./MenuTree', () => {
 		return (
 			<div data-testid="menu-tree">
 				MenuTree
-				<button data-testid="menu-item-btn" onClick={() => props.onMenuClick && props.onMenuClick('USR2010M00')}>메뉴아이템</button>
+				<button data-testid="menu-item-btn" onClick={() => props.onMenuClick && props.onMenuClick('USR2010M00')}>메뉴?�이??/button>
 			</div>
 		)
 	}
@@ -46,8 +46,8 @@ jest.mock('./MainTab', () => {
 		return (
 			<div data-testid="main-tab">
 				MainTab
-				<button data-testid="tab-btn" onClick={() => props.onTabClick && props.onTabClick('USR2010M00')}>탭</button>
-				<button data-testid="tab-close-btn" onClick={() => props.onTabClose && props.onTabClose('USR2010M00')}>탭닫기</button>
+				<button data-testid="tab-btn" onClick={() => props.onTabClick && props.onTabClick('USR2010M00')}>??/button>
+				<button data-testid="tab-close-btn" onClick={() => props.onTabClose && props.onTabClose('USR2010M00')}>??���?/button>
 			</div>
 		)
 	}
@@ -65,7 +65,7 @@ jest.mock('./ContentFrame', () => {
 	}
 })
 
-describe('COM0000M00 - 메인프레임 화면', () => {
+describe('COM0000M00 - 메인?�레???�면', () => {
 	const mockLogout = jest.fn()
 	const mockShowToast = jest.fn()
 
@@ -76,9 +76,9 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 		const { useAuth } = require('../../modules/auth/hooks/useAuth')
 		useAuth.mockReturnValue({
 			user: {
-				name: '김부뜰',
-				department: 'SI 3팀',
-				position: '대리',
+				name: '김부??,
+				department: 'SI 3?�',
+				position: '?��?,
 				empNo: '25'
 			},
 			session: {
@@ -86,33 +86,33 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 					menuList: [
 						{
 							MENU_SEQ: '1',
-							MENU_DSP_NM: '시스템 관리',
+							MENU_DSP_NM: '?�스??관�?,
 							PGM_ID: null,
 							MENU_SHP_DVCD: 'F',
 							HGRK_MENU_SEQ: '0',
 							FLAG: 1,
 							MENU_USE_YN: 'Y',
 							MENU_LVL: 1,
-							MAP_TITLE: '시스템 관리',
+							MAP_TITLE: '?�스??관�?,
 							MENU_PATH: '/sys'
 						},
 						{
 							MENU_SEQ: '2',
-							MENU_DSP_NM: '사용자 관리',
+							MENU_DSP_NM: '?�용??관�?,
 							PGM_ID: 'USR2010M00',
 							MENU_SHP_DVCD: 'L',
 							HGRK_MENU_SEQ: '1',
 							FLAG: 2,
 							MENU_USE_YN: 'Y',
 							MENU_LVL: 2,
-							MAP_TITLE: '사용자 관리',
+							MAP_TITLE: '?�용??관�?,
 							MENU_PATH: '/usr/USR2010M00'
 						}
 					],
 					programList: [
 						{
 							PGM_ID: 'USR2010M00',
-							PGM_NM: '사용자 관리',
+							PGM_NM: '?�용??관�?,
 							LINK_PATH: '/usr/USR2010M00.tsx'
 						}
 					]
@@ -129,15 +129,15 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 		})
 	})
 
-	describe('렌더링 테스트', () => {
-		it('메인프레임이 올바르게 렌더링되어야 한다', () => {
+	describe('?�더�??�스??, () => {
+		it('메인?�레?�이 ?�바르게 ?�더링되?�야 ?�다', () => {
 			render(<COM0000M00 />)
 			
 			expect(screen.getByTestId('top-frame')).toBeInTheDocument()
 			expect(screen.getByTestId('left-frame')).toBeInTheDocument()
 		})
 
-		it('인증되지 않은 경우 아무것도 렌더링하지 않아야 한다', () => {
+		it('?�증?��? ?��? 경우 ?�무것도 ?�더링하지 ?�아???�다', () => {
 			const { useAuth } = require('../../modules/auth/hooks/useAuth')
 			useAuth.mockReturnValue({
 				user: null,
@@ -150,7 +150,7 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 			expect(container.firstChild).toBeNull()
 		})
 
-		it('사용자 정보가 없으면 아무것도 렌더링하지 않아야 한다', () => {
+		it('?�용???�보가 ?�으�??�무것도 ?�더링하지 ?�아???�다', () => {
 			const { useAuth } = require('../../modules/auth/hooks/useAuth')
 			useAuth.mockReturnValue({
 				user: null,
@@ -164,8 +164,8 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 		})
 	})
 
-	describe('메뉴 클릭 테스트', () => {
-		it('메뉴 클릭 시 새 탭이 추가되어야 한다', async () => {
+	describe('메뉴 ?�릭 ?�스??, () => {
+		it('메뉴 ?�릭 ??????�� 추�??�어???�다', async () => {
 			render(<COM0000M00 />)
 			const menuBtn = screen.getByTestId('menu-btn')
 			fireEvent.click(menuBtn)
@@ -176,24 +176,24 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 			})
 		})
 
-		it('최대 탭 개수 초과 시 경고 메시지가 표시되어야 한다', async () => {
+		it('최�? ??개수 초과 ??경고 메시지가 ?�시?�어???�다', async () => {
 			render(<COM0000M00 />)
 			const menuBtn = screen.getByTestId('menu-btn')
-			// 6개의 탭을 추가하려고 시도 (최대 5개)
+			// 6개의 ??�� 추�??�려�??�도 (최�? 5�?
 			for (let i = 0; i < 6; i++) {
 				fireEvent.click(menuBtn)
 				const menuItemBtn = await screen.findByTestId('menu-item-btn')
 				fireEvent.click(menuItemBtn)
 			}
-			// 실제로는 showToast가 호출되지 않을 수 있으므로, 탭이 추가되었는지만 확인
+			// ?�제로는 showToast가 ?�출?��? ?�을 ???�으므�? ??�� 추�??�었?��?�??�인
 			await waitFor(() => {
 				expect(screen.getByTestId('main-tab')).toBeInTheDocument()
 			})
 		})
 	})
 
-	describe('탭 관리 테스트', () => {
-		it('탭 클릭 시 활성 탭이 변경되어야 한다', async () => {
+	describe('??관�??�스??, () => {
+		it('???�릭 ???�성 ??�� 변경되?�야 ?�다', async () => {
 			render(<COM0000M00 />)
 			const menuBtn = screen.getByTestId('menu-btn')
 			fireEvent.click(menuBtn)
@@ -206,7 +206,7 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 			})
 		})
 
-		it('탭 닫기 시 탭이 제거되어야 한다', async () => {
+		it('???�기 ????�� ?�거?�어???�다', async () => {
 			render(<COM0000M00 />)
 			const menuBtn = screen.getByTestId('menu-btn')
 			fireEvent.click(menuBtn)
@@ -214,15 +214,15 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 			fireEvent.click(menuItemBtn)
 			const tabCloseBtn = await screen.findByTestId('tab-close-btn')
 			fireEvent.click(tabCloseBtn)
-			// 탭이 닫혔는지 확인 (main-tab이 없어야 함)
+			// ??�� ?�혔?��? ?�인 (main-tab???�어????
 			await waitFor(() => {
 				expect(screen.queryByTestId('main-tab')).not.toBeInTheDocument()
 			})
 		})
 	})
 
-	describe('로그아웃 테스트', () => {
-		it('로그아웃 버튼 클릭 시 logout 함수가 호출되어야 한다', async () => {
+	describe('로그?�웃 ?�스??, () => {
+		it('로그?�웃 버튼 ?�릭 ??logout ?�수가 ?�출?�어???�다', async () => {
 			render(<COM0000M00 />)
 			const logoutBtn = screen.getByTestId('logout-btn')
 			fireEvent.click(logoutBtn)
@@ -232,8 +232,8 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 		})
 	})
 
-	describe('메뉴트리 상태 테스트', () => {
-		it('메뉴트리 토글 버튼 클릭 시 메뉴트리가 표시되어야 한다', async () => {
+	describe('메뉴?�리 ?�태 ?�스??, () => {
+		it('메뉴?�리 ?��? 버튼 ?�릭 ??메뉴?�리가 ?�시?�어???�다', async () => {
 			render(<COM0000M00 />)
 			const menuBtn = screen.getByTestId('menu-btn')
 			fireEvent.click(menuBtn)
@@ -243,8 +243,8 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 		})
 	})
 
-	describe('콘텐츠 영역 테스트', () => {
-		it('탭이 없을 때 콘텐츠 영역이 표시되지 않아야 한다', () => {
+	describe('콘텐�??�역 ?�스??, () => {
+		it('??�� ?�을 ??콘텐�??�역???�시?��? ?�아???�다', () => {
 			render(<COM0000M00 />)
 			
 			expect(screen.queryByTestId('main-tab')).not.toBeInTheDocument()
@@ -252,7 +252,7 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 			expect(screen.queryByTestId('content-frame')).not.toBeInTheDocument()
 		})
 
-		it('탭이 있을 때 콘텐츠 영역이 표시되어야 한다', async () => {
+		it('??�� ?�을 ??콘텐�??�역???�시?�어???�다', async () => {
 			render(<COM0000M00 />)
 			
 			const menuBtn = screen.getByTestId('menu-btn')
@@ -268,8 +268,8 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 		})
 	})
 
-	describe('사용자 정보 테스트', () => {
-		it('사용자 정보가 올바르게 전달되어야 한다', () => {
+	describe('?�용???�보 ?�스??, () => {
+		it('?�용???�보가 ?�바르게 ?�달?�어???�다', () => {
 			render(<COM0000M00 />)
 			
 			const topFrame = screen.getByTestId('top-frame')
@@ -277,8 +277,8 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 		})
 	})
 
-	describe('접근성 테스트', () => {
-		it('키보드 네비게이션이 가능해야 한다', () => {
+	describe('?�근???�스??, () => {
+		it('?�보???�비게이?�이 가?�해???�다', () => {
 			render(<COM0000M00 />)
 			
 			const leftFrame = screen.getByTestId('left-frame')
@@ -287,7 +287,7 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 			expect(leftFrame).toBeInTheDocument()
 		})
 
-		it('스크린 리더가 인식할 수 있는 구조여야 한다', () => {
+		it('?�크�?리더가 ?�식?????�는 구조?�야 ?�다', () => {
 			render(<COM0000M00 />)
 			
 			expect(screen.getByTestId('top-frame')).toBeInTheDocument()
@@ -295,3 +295,4 @@ describe('COM0000M00 - 메인프레임 화면', () => {
 		})
 	})
 }) 
+

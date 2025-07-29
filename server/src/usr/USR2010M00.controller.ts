@@ -1,34 +1,34 @@
 /**
- * UsrController - 사용자 관리 API 컨트롤러
+ * UsrController - ?�용??관�?API 컨트롤러
  *
  * 주요 기능:
- * - 사용자 목록 조회 및 검색
- * - 사용자 정보 저장 (신규/수정)
- * - 사용자 업무권한 관리
- * - 비밀번호 초기화
- * - 승인결재자 검색
- * - 사용자 역할 관리
+ * - ?�용??목록 조회 �?검??
+ * - ?�용???�보 ?�??(?�규/?�정)
+ * - ?�용???�무권한 관�?
+ * - 비�?번호 초기??
+ * - ?�인결재??검??
+ * - ?�용????�� 관�?
  *
- * API 엔드포인트:
- * - GET /api/usr/list - 사용자 목록 조회
- * - GET /api/usr/work-auth/:userId - 사용자 업무권한 조회
- * - POST /api/usr/save - 사용자 정보 저장
- * - POST /api/usr/password-init - 비밀번호 초기화
- * - GET /api/usr/approver-search - 승인결재자 검색
- * - GET /api/usr/roles - 사용자 역할 목록 조회
+ * API ?�드?�인??
+ * - GET /api/usr/list - ?�용??목록 조회
+ * - GET /api/usr/work-auth/:userId - ?�용???�무권한 조회
+ * - POST /api/usr/save - ?�용???�보 ?�??
+ * - POST /api/usr/password-init - 비�?번호 초기??
+ * - GET /api/usr/approver-search - ?�인결재??검??
+ * - GET /api/usr/roles - ?�용????�� 목록 조회
  *
- * 연관 서비스:
- * - UsrService: 사용자 관리 비즈니스 로직
+ * ?��? ?�비??
+ * - UsrService: ?�용??관�?비즈?�스 로직
  *
- * 사용 화면:
- * - USR2010M00: 사용자 관리 화면
+ * ?�용 ?�면:
+ * - USR2010M00: ?�용??관�??�면
  */
 import { Controller, Get, Post, Body, Query, Param, Req } from '@nestjs/common';
 import { Request } from 'express';
 import session from 'express-session';
 import { UsrService } from './USR2010M00.service';
 
-// express-session 타입 확장
+// express-session ?�???�장
 interface RequestWithSession extends Request {
   session: session.Session & { user?: any };
 }
@@ -38,25 +38,25 @@ export class UsrController {
   constructor(private readonly usrService: UsrService) {}
 
   /**
-   * 사용자 목록 조회 (GET)
+   * ?�용??목록 조회 (GET)
    *
    * @description
-   * - 본부, 부서, 사용자명 조건으로 사용자 목록을 조회합니다.
-   * - TypeORM 쿼리를 사용하여 복잡한 JOIN으로 사용자 정보와 권한 정보를 함께 조회합니다.
-   * - 검색 조건이 없으면 전체 사용자를 조회합니다.
+   * - 본�?, 부?? ?�용?�명 조건?�로 ?�용??목록??조회?�니??
+   * - TypeORM 쿼리�??�용?�여 복잡??JOIN?�로 ?�용???�보?� 권한 ?�보�??�께 조회?�니??
+   * - 검??조건???�으�??�체 ?�용?��? 조회?�니??
    *
-   * @param hqDiv - 본부구분코드 (쿼리 파라미터, ALL=전체)
-   * @param deptDiv - 부서구분코드 (쿼리 파라미터, ALL=전체)
-   * @param userNm - 사용자명 (쿼리 파라미터, 부분 검색)
+   * @param hqDiv - 본�?구분코드 (쿼리 ?�라미터, ALL=?�체)
+   * @param deptDiv - 부?�구분코??(쿼리 ?�라미터, ALL=?�체)
+   * @param userNm - ?�용?�명 (쿼리 ?�라미터, 부�?검??
    * @returns { success: boolean, data?: UserData[], message?: string }
    * @example
-   * GET /api/usr/list?hqDiv=1000&deptDiv=1100&userNm=홍길동
+   * GET /api/usr/list?hqDiv=1000&deptDiv=1100&userNm=?�길??
    * Response: {
    *   "success": true,
-   *   "data": [{ "empNo": "E001", "empNm": "홍길동", "hqDivNm": "디지털영업본부" }]
+   *   "data": [{ "empNo": "E001", "empNm": "?�길??, "hqDivNm": "?��??�영?�본부" }]
    * }
    *
-   * @throws Error - 서비스 호출 실패 시
+   * @throws Error - ?�비???�출 ?�패 ??
    */
   @Get('list')
   async getUserList(
@@ -64,152 +64,152 @@ export class UsrController {
     @Query('deptDiv') deptDiv?: string,
     @Query('userNm') userNm?: string,
   ) {
-    console.log('🔍 사용자 목록 조회 요청:', { hqDiv, deptDiv, userNm });
+    console.log('?�� ?�용??목록 조회 ?�청:', { hqDiv, deptDiv, userNm });
 
     try {
       const result = await this.usrService.getUserList(hqDiv, deptDiv, userNm);
-      console.log('✅ 사용자 목록 조회 성공:', result.length + '건');
+      console.log('???�용??목록 조회 ?�공:', result.length + '�?);
       return { success: true, data: result };
     } catch (error) {
-      console.error('❌ 사용자 목록 조회 실패:', error);
+      console.error('???�용??목록 조회 ?�패:', error);
       return { success: false, message: (error as Error).message };
     }
   }
 
   /**
-   * 사용자 업무권한 목록 조회 (GET)
+   * ?�용???�무권한 목록 조회 (GET)
    *
    * @description
-   * - 특정 사용자의 업무권한 목록을 조회합니다.
-   * - USR_01_0202_S 프로시저를 호출하여 업무별 사용권한 정보를 가져옵니다.
-   * - 업무구분코드, 업무구분명, 사용권한여부 등을 반환합니다.
+   * - ?�정 ?�용?�의 ?�무권한 목록??조회?�니??
+   * - USR_01_0202_S ?�로?��?�??�출?�여 ?�무�??�용권한 ?�보�?가?�옵?�다.
+   * - ?�무구분코드, ?�무구분�? ?�용권한?��? ?�을 반환?�니??
    *
-   * @param userId - 사용자 ID (경로 파라미터, 사번)
+   * @param userId - ?�용??ID (경로 ?�라미터, ?�번)
    * @returns { success: boolean, data?: WorkAuthData[], message?: string }
    * @example
    * GET /api/usr/work-auth/E001
    * Response: {
    *   "success": true,
-   *   "data": [{ "smlCsfCd": "01", "smlCsfNm": "사업관리", "wrkUseYn": "1" }]
+   *   "data": [{ "smlCsfCd": "01", "smlCsfNm": "?�업관�?, "wrkUseYn": "1" }]
    * }
    *
-   * @throws Error - 서비스 호출 실패 시
+   * @throws Error - ?�비???�출 ?�패 ??
    */
   @Get('work-auth/:userId')
   async getWorkAuthList(@Param('userId') userId: string) {
-    console.log('🔍 사용자 업무권한 목록 조회 요청:', userId);
+    console.log('?�� ?�용???�무권한 목록 조회 ?�청:', userId);
 
     try {
       const result = await this.usrService.getWorkAuthList(userId);
-      console.log('✅ 사용자 업무권한 목록 조회 성공:', result.length + '건');
+      console.log('???�용???�무권한 목록 조회 ?�공:', result.length + '�?);
       return { success: true, data: result };
     } catch (error) {
-      console.error('❌ 사용자 업무권한 목록 조회 실패:', error);
+      console.error('???�용???�무권한 목록 조회 ?�패:', error);
       return { success: false, message: (error as Error).message };
     }
   }
 
   /**
-   * 사용자 정보 저장 (POST)
+   * ?�용???�보 ?�??(POST)
    *
    * @description
-   * - 사용자 정보를 신규 생성하거나 수정합니다.
-   * - USR_01_0204_T 프로시저를 호출하여 사용자 정보와 업무권한을 함께 저장합니다.
-   * - 트랜잭션을 사용하여 안전하게 처리합니다.
-   * - 사용자역할(USR_ROLE_ID) 정보도 함께 저장됩니다.
-   * - 현재 로그인한 사용자의 세션 정보를 활용하여 등록자/변경자 정보를 설정합니다.
+   * - ?�용???�보�??�규 ?�성?�거???�정?�니??
+   * - USR_01_0204_T ?�로?��?�??�출?�여 ?�용???�보?� ?�무권한???�께 ?�?�합?�다.
+   * - ?�랜??��???�용?�여 ?�전?�게 처리?�니??
+   * - ?�용?�역??USR_ROLE_ID) ?�보???�께 ?�?�됩?�다.
+   * - ?�재 로그?�한 ?�용?�의 ?�션 ?�보�??�용?�여 ?�록??변경자 ?�보�??�정?�니??
    *
-   * @param userData - 저장할 사용자 정보 (요청 본문)
-   * @param req - Express 요청 객체 (세션 정보 포함)
+   * @param userData - ?�?�할 ?�용???�보 (?�청 본문)
+   * @param req - Express ?�청 객체 (?�션 ?�보 ?�함)
    * @returns { success: boolean, data?: string, message?: string }
    * @example
    * POST /api/usr/save
    * Body: {
    *   "empNo": "E001",
-   *   "empNm": "홍길동",
+   *   "empNm": "?�길??,
    *   "hqDivCd": "1000",
    *   "deptDivCd": "1100",
    *   "workAuthList": [{ "smlCsfCd": "01", "wrkUseYn": "1" }]
    * }
    * Response: {
    *   "success": true,
-   *   "data": "저장되었습니다."
+   *   "data": "?�?�되?�습?�다."
    * }
    *
-   * @throws Error - 서비스 호출 실패 시
+   * @throws Error - ?�비???�출 ?�패 ??
    */
   @Post('save')
   async saveUser(@Body() userData: any, @Req() req: RequestWithSession) {
-    console.log('💾 사용자 정보 저장 요청:', userData);
+    console.log('?�� ?�용???�보 ?�???�청:', userData);
 
     try {
-      // 현재 로그인한 사용자 세션 정보 확인
+      // ?�재 로그?�한 ?�용???�션 ?�보 ?�인
       if (!req.session.user) {
         return {
           success: false,
-          message: '로그인이 필요합니다.',
+          message: '로그?�이 ?�요?�니??',
         };
       }
 
       const currentUser = req.session.user;
       const currentUserId = currentUser.empNo || currentUser.userId;
-      console.log('🔍 현재 로그인 사용자:', currentUserId);
+      console.log('?�� ?�재 로그???�용??', currentUserId);
 
       const result = await this.usrService.saveUser(userData, currentUserId);
-      console.log('✅ 사용자 정보 저장 성공:', result);
+      console.log('???�용???�보 ?�???�공:', result);
       return { success: true, data: result };
     } catch (error) {
-      console.error('❌ 사용자 정보 저장 실패:', error);
+      console.error('???�용???�보 ?�???�패:', error);
       return { success: false, message: (error as Error).message };
     }
   }
 
   /**
-   * 비밀번호 초기화 (POST)
+   * 비�?번호 초기??(POST)
    *
    * @description
-   * - 사용자의 비밀번호를 사용자ID(사번)로 초기화합니다 (기존 Flex 방식과 동일).
-   * - MD5 해시를 사용하여 비밀번호를 암호화합니다.
-   * - 비밀번호 변경일시를 현재 시간으로 설정합니다.
-   * - 현재 로그인한 사용자의 세션 정보를 확인하여 권한을 검증합니다.
+   * - ?�용?�의 비�?번호�??�용?�ID(?�번)�?초기?�합?�다 (기존 Flex 방식�??�일).
+   * - MD5 ?�시�??�용?�여 비�?번호�??�호?�합?�다.
+   * - 비�?번호 변경일?��? ?�재 ?�간?�로 ?�정?�니??
+   * - ?�재 로그?�한 ?�용?�의 ?�션 ?�보�??�인?�여 권한??검증합?�다.
    *
-   * @param data - 비밀번호 초기화할 사용자 정보 (요청 본문)
-   * @param data.userId - 사용자 ID (사번)
-   * @param req - Express 요청 객체 (세션 정보 포함)
+   * @param data - 비�?번호 초기?�할 ?�용???�보 (?�청 본문)
+   * @param data.userId - ?�용??ID (?�번)
+   * @param req - Express ?�청 객체 (?�션 ?�보 ?�함)
    * @returns { success: boolean, data?: string, message?: string }
    * @example
    * POST /api/usr/password-init
    * Body: { "userId": "E001" }
    * Response: {
    *   "success": true,
-   *   "data": "비밀번호가 초기화되었습니다."
+   *   "data": "비�?번호가 초기?�되?�습?�다."
    * }
    *
-   * @throws Error - 서비스 호출 실패 시
+   * @throws Error - ?�비???�출 ?�패 ??
    */
   @Post('password-init')
   async initPassword(
     @Body() data: { userId: string },
     @Req() req: RequestWithSession,
   ) {
-    console.log('🔑 비밀번호 초기화 요청:', data.userId);
+    console.log('?�� 비�?번호 초기???�청:', data.userId);
 
     try {
-      // 현재 로그인한 사용자 세션 정보 확인
+      // ?�재 로그?�한 ?�용???�션 ?�보 ?�인
       if (!req.session.user) {
         return {
           success: false,
-          message: '로그인이 필요합니다.',
+          message: '로그?�이 ?�요?�니??',
         };
       }
 
       const currentUser = req.session.user;
       console.log(
-        '🔍 현재 로그인 사용자:',
+        '?�� ?�재 로그???�용??',
         currentUser.empNo || currentUser.userId,
       );
 
-      // 관리자 권한 확인 (권한코드 A 또는 특정 역할)
+      // 관리자 권한 ?�인 (권한코드 A ?�는 ?�정 ??��)
       const isAdmin =
         currentUser.authCd === 'A' ||
         currentUser.usrRoleId === 'A250715005' ||
@@ -218,82 +218,84 @@ export class UsrController {
       if (!isAdmin) {
         return {
           success: false,
-          message: '비밀번호 초기화 권한이 없습니다.',
+          message: '비�?번호 초기??권한???�습?�다.',
         };
       }
 
       const result = await this.usrService.initPassword(data.userId);
-      console.log('✅ 비밀번호 초기화 성공:', result);
+      console.log('??비�?번호 초기???�공:', result);
       return { success: true, data: result };
     } catch (error) {
-      console.error('❌ 비밀번호 초기화 실패:', error);
+      console.error('??비�?번호 초기???�패:', error);
       return { success: false, message: (error as Error).message };
     }
   }
 
   /**
-   * 승인결재자 검색 (GET)
+   * ?�인결재??검??(GET)
    *
    * @description
-   * - 승인결재자를 사용자명으로 검색합니다.
-   * - USR_01_0201_S 프로시저를 호출하여 승인결재자 목록을 조회합니다.
-   * - 사용자명으로 부분 검색이 가능합니다.
-   * - 최대 100개까지 조회 가능합니다.
+   * - ?�인결재?��? ?�용?�명?�로 검?�합?�다.
+   * - USR_01_0201_S ?�로?��?�??�출?�여 ?�인결재??목록??조회?�니??
+   * - ?�용?�명?�로 부�?검?�이 가?�합?�다.
+   * - 최�? 100개까지 조회 가?�합?�다.
    *
-   * @param approverNm - 승인결재자명 (쿼리 파라미터, 부분 검색)
+   * @param approverNm - ?�인결재?�명 (쿼리 ?�라미터, 부�?검??
    * @returns { success: boolean, data?: UserData[], message?: string }
    * @example
-   * GET /api/usr/approver-search?approverNm=홍길동
+   * GET /api/usr/approver-search?approverNm=?�길??
    * Response: {
    *   "success": true,
-   *   "data": [{ "empNo": "E001", "empNm": "홍길동", "authCd": "10" }]
+   *   "data": [{ "empNo": "E001", "empNm": "?�길??, "authCd": "10" }]
    * }
    *
-   * @throws Error - 서비스 호출 실패 시
+   * @throws Error - ?�비???�출 ?�패 ??
    */
   @Get('approver-search')
   async searchApprover(@Query('approverNm') approverNm: string) {
-    console.log('🔍 승인결재자 검색 요청:', approverNm);
+    console.log('?�� ?�인결재??검???�청:', approverNm);
 
     try {
       const result = await this.usrService.searchApprover(approverNm);
-      console.log('✅ 승인결재자 검색 성공:', result.length + '건');
+      console.log('???�인결재??검???�공:', result.length + '�?);
       return { success: true, data: result };
     } catch (error) {
-      console.error('❌ 승인결재자 검색 실패:', error);
+      console.error('???�인결재??검???�패:', error);
       return { success: false, message: (error as Error).message };
     }
   }
 
   /**
-   * 사용자 역할 목록 조회 (GET)
+   * ?�용????�� 목록 조회 (GET)
    *
    * @description
-   * - 사용여부가 'Y'인 사용자 역할 목록을 조회합니다.
-   * - 역할명 순으로 정렬하여 반환합니다.
-   * - 사용자 관리 화면에서 사용자역할 콤보박스용으로 사용됩니다.
+   * - ?�용?��?가 'Y'???�용????�� 목록??조회?�니??
+   * - ??���??�으�??�렬?�여 반환?�니??
+   * - ?�용??관�??�면?�서 ?�용?�역??콤보박스?�으�??�용?�니??
    *
    * @returns { success: boolean, data?: TblUserRole[], message?: string }
    * @example
    * GET /api/usr/roles
    * Response: {
    *   "success": true,
-   *   "data": [{ "usrRoleId": "A250715001", "usrRoleNm": "일반사용자" }]
+   *   "data": [{ "usrRoleId": "A250715001", "usrRoleNm": "?�반?�용?? }]
    * }
    *
-   * @throws Error - 서비스 호출 실패 시
+   * @throws Error - ?�비???�출 ?�패 ??
    */
   @Get('roles')
   async getUserRoles() {
-    console.log('🔍 사용자 역할 목록 조회 요청');
+    console.log('?�� ?�용????�� 목록 조회 ?�청');
 
     try {
       const result = await this.usrService.getUserRoles();
-      console.log('✅ 사용자 역할 목록 조회 성공:', result.length + '건');
+      console.log('???�용????�� 목록 조회 ?�공:', result.length + '�?);
       return { success: true, data: result };
     } catch (error) {
-      console.error('❌ 사용자 역할 목록 조회 실패:', error);
+      console.error('???�용????�� 목록 조회 ?�패:', error);
       return { success: false, message: (error as Error).message };
     }
   }
 }
+
+

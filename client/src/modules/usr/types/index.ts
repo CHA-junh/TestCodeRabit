@@ -1,4 +1,4 @@
-// 사용자 타입
+// ?�용???�??
 export interface User {
 	userId: string
 	username: string
@@ -12,7 +12,7 @@ export interface User {
 	updatedAt: string
 }
 
-// 사용자 권한 타입
+// ?�용??권한 ?�??
 export interface UserRole {
 	roleId: string
 	roleName: string
@@ -20,7 +20,7 @@ export interface UserRole {
 	description?: string
 }
 
-// 사용자 검색 조건 타입
+// ?�용??검??조건 ?�??
 export interface UserSearchCriteria {
 	username?: string
 	name?: string
@@ -29,3 +29,5 @@ export interface UserSearchCriteria {
 	role?: string
 	status?: string
 }
+
+

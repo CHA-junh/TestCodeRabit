@@ -1,15 +1,16 @@
-// 공통 부서구분코드 DTO (여러 화면에서 재사용)
+// 공통 부?�구분코??DTO (?�러 ?�면?�서 ?�사??
 import { ApiProperty } from '@nestjs/swagger';
 
 /**
- * 부서구분코드(112) 공통 DTO
- * code: 부서구분코드
- * name: 부서구분명
+ * 부?�구분코??112) 공통 DTO
+ * code: 부?�구분코??
+ * name: 부?�구분명
  */
 export class DeptDivCodeDto {
-  @ApiProperty({ description: '부서구분코드' })
+  @ApiProperty({ description: '부?�구분코?? })
   code: string;
 
-  @ApiProperty({ description: '부서구분명' })
+  @ApiProperty({ description: '부?�구분명' })
   name: string;
 } 
+

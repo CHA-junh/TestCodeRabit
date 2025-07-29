@@ -1,14 +1,14 @@
 export interface ProgramGroup {
   pgmGrpId: string;
   pgmGrpNm: string;
-  useYn: string;  // 실제 DB 컬럼명 USE_YN에 맞춰 useYn으로 통일
+  useYn: string;  // ?�제 DB 컬럼�?USE_YN??맞춰 useYn?�로 ?�일
   cnt?: number;
 }
 
 export interface ProgramGroupDetail {
   pgmGrpId: string;
   pgmGrpNm: string;
-  useYn: string;  // 실제 DB 컬럼명 USE_YN에 맞춰 useYn으로 수정
+  useYn: string;  // ?�제 DB 컬럼�?USE_YN??맞춰 useYn?�로 ?�정
   regDttm?: string;
   chngDttm?: string;
   chngrId?: string;
@@ -46,3 +46,4 @@ export interface ProgramGroupUpdateDto {
   PGM_GRP_NM?: string;
   USE_YN?: string;
 } 
+

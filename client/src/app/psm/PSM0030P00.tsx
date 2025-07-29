@@ -5,26 +5,26 @@ import { useToast } from '@/contexts/ToastContext';
 import '../common/common.css'
 
 /**
- * PSM0030P00 - 기술등급이력 조회 팝업
+ * PSM0030P00 - 기술?�급?�력 조회 ?�업
  * 
- * 사원의 기술등급 변경 이력을 조회하는 팝업 화면입니다.
- * AS-IS PSM_01_0110.mxml의 기술등급이력 조회 기능을 React로 구현한 버전입니다.
+ * ?�원??기술?�급 변�??�력??조회?�는 ?�업 ?�면?�니??
+ * AS-IS PSM_01_0110.mxml??기술?�급?�력 조회 기능??React�?구현??버전?�니??
  * 
  * 주요 기능:
- * - 사원의 기술등급 변경 이력 조회
- * - 등급 변경 일자 및 비고 정보 표시
- * - 경력 계산 기준일 기준 등급 정보 표시
- * - 팝업 형태로 모달 표시
+ * - ?�원??기술?�급 변�??�력 조회
+ * - ?�급 변�??�자 �?비고 ?�보 ?�시
+ * - 경력 계산 기�???기�? ?�급 ?�보 ?�시
+ * - ?�업 ?�태�?모달 ?�시
  * 
- * AS-IS: PSM_01_0110.mxml (기술등급이력 조회)
- * TO-BE: React 기반 팝업 컴포넌트
+ * AS-IS: PSM_01_0110.mxml (기술?�급?�력 조회)
+ * TO-BE: React 기반 ?�업 컴포?�트
  * 
- * 사용 예시:
+ * ?�용 ?�시:
  * ```tsx
- * // PSM1010M00에서 호출
+ * // PSM1010M00?�서 ?�출
  * <PSM0030P00 
  *   empNo="10001"
- *   empNm="홍길동"
+ *   empNm="?�길??
  *   onClose={() => setShowPopup(false)}
  * />
  * ```
@@ -57,19 +57,19 @@ interface EmployeeInfo {
 interface RoleManagementPopupProps {
   empNo?: string;
   onClose?: () => void;
-  // AS-IS PSM_01_0110에서 전달하는 값들
-  ownOutsKb?: string;      // 자사외주구분
-  ownOutsCd?: string;      // 자사외주구분코드
-  empNm?: string;          // 성명
-  entrDt?: string;         // 입사일자
-  lastAdbgDiv?: string;    // 최종학력구분
-  ctql?: string;           // 자격증
-  ctqlPurDt?: string;      // 자격취득일자
-  adbgCarrMcnt?: string;   // 학력경력개월수
-  ctqlCarrMcnt?: string;   // 자격경력개월수
-  carrCalcStndDt?: string; // 경력계산기준일
-  lastTcnGrd?: string;     // 최종기술등급
-  lastTcnGrdCd?: string;   // 최종기술등급코드
+  // AS-IS PSM_01_0110?�서 ?�달?�는 값들
+  ownOutsKb?: string;      // ?�사?�주구분
+  ownOutsCd?: string;      // ?�사?�주구분코드
+  empNm?: string;          // ?�명
+  entrDt?: string;         // ?�사?�자
+  lastAdbgDiv?: string;    // 최종?�력구분
+  ctql?: string;           // ?�격�?
+  ctqlPurDt?: string;      // ?�격취득?�자
+  adbgCarrMcnt?: string;   // ?�력경력개월??
+  ctqlCarrMcnt?: string;   // ?�격경력개월??
+  carrCalcStndDt?: string; // 경력계산기�???
+  lastTcnGrd?: string;     // 최종기술?�급
+  lastTcnGrdCd?: string;   // 최종기술?�급코드
   carrDiv?: string;        // 경력구분코드
 }
 
@@ -94,7 +94,7 @@ export default function RoleManagementPopup({
   const [loading, setLoading] = useState(false);
   const [gradeHistory, setGradeHistory] = useState<GradeHistoryItem[]>([]);
   
-  // AS-IS에서 전달받은 값으로 employeeInfo 초기화
+  // AS-IS?�서 ?�달받�? 값으�?employeeInfo 초기??
   const [employeeInfo, setEmployeeInfo] = useState<EmployeeInfo>({
     OWN_OUTS_KB: ownOutsKb,
     EMP_NM: empNm,
@@ -109,14 +109,14 @@ export default function RoleManagementPopup({
     CARR_DIV: carrDiv
   });
 
-  // 팝업이 열릴 때 자동으로 기술등급이력 조회
+  // ?�업???�릴 ???�동?�로 기술?�급?�력 조회
   useEffect(() => {
     if (empNo) {
       fetchGradeHistory(empNo);
     }
   }, [empNo]);
 
-  // AS-IS PSM_01_0161_S 프로시저 호출
+  // AS-IS PSM_01_0161_S ?�로?��? ?�출
   const fetchGradeHistory = async (empNo: string) => {
     setLoading(true);
     try {
@@ -135,44 +135,44 @@ export default function RoleManagementPopup({
       if (response.ok && data.success) {
         setGradeHistory(data.data || []);
       } else {
-        showToast('데이터 조회에 실패했습니다: ' + (data.message || ''), 'error');
+        showToast('?�이??조회???�패?�습?�다: ' + (data.message || ''), 'error');
         setGradeHistory([]);
       }
     } catch (error) {
-      console.error('기술등급이력 조회 중 오류:', error);
-      showToast('기술등급이력 조회 중 오류가 발생했습니다.', 'error');
+      console.error('기술?�급?�력 조회 �??�류:', error);
+      showToast('기술?�급?�력 조회 �??�류가 발생?�습?�다.', 'error');
       setGradeHistory([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // 조회 버튼 클릭 (AS-IS onBtnClickCarrCalc 함수와 동일)
+  // 조회 버튼 ?�릭 (AS-IS onBtnClickCarrCalc ?�수?� ?�일)
   const handleSearch = () => {
     if (!empNo) {
-      showToast('사원번호가 필요합니다.', 'warning');
+      showToast('?�원번호가 ?�요?�니??', 'warning');
       return;
     }
     
-    // AS-IS에서는 부모화면에서 전달받은 값 사용하므로 기술등급이력만 조회
+    // AS-IS?�서??부모화면에???�달받�? �??�용?��?�?기술?�급?�력�?조회
     fetchGradeHistory(empNo);
   };
 
-  // AS-IS grdTcnGrdHstyListStyleFunc와 동일한 스타일링
+  // AS-IS grdTcnGrdHstyListStyleFunc?� ?�일???��??�링
   const getRowStyle = (item: GradeHistoryItem) => {
     if (item.TCN_GRD_NM === employeeInfo.LAST_TCN_GRD) {
-      return 'text-red-500 font-bold'; // 현재 기술등급 ROW 전체를 붉은색으로
+      return 'text-red-500 font-bold'; // ?�재 기술?�급 ROW ?�체�?붉�??�으�?
     }
     return '';
   };
 
-  // 날짜 포맷 변환: YYYYMMDD → YYYY-MM-DD
+  // ?�짜 ?�맷 변?? YYYYMMDD ??YYYY-MM-DD
   const formatDate = (dateStr: string): string => {
     if (!dateStr || dateStr.length !== 8) return dateStr;
     return `${dateStr.substring(0, 4)}-${dateStr.substring(4, 6)}-${dateStr.substring(6, 8)}`;
   };
 
-  // 경력개월수를 년/월로 분리 (AS-IS setCarrMcntDivision 함수와 동일)
+  // 경력개월?��? ???�로 분리 (AS-IS setCarrMcntDivision ?�수?� ?�일)
   const getYearMonthFromMonths = (months: string) => {
     const numMonths = Number(months);
     const years = Math.floor(numMonths / 12);
@@ -183,7 +183,7 @@ export default function RoleManagementPopup({
   const adbgCareer = getYearMonthFromMonths(employeeInfo.ADBG_CARR_MCNT);
   const ctqlCareer = getYearMonthFromMonths(employeeInfo.CTQL_CARR_MCNT);
 
-  // 종료 버튼 클릭
+  // 종료 버튼 ?�릭
   const handleClose = () => {
     if (onClose) {
       onClose();
@@ -213,7 +213,7 @@ export default function RoleManagementPopup({
         }}
       >
         <div className="popup-header" style={{ height: '32px', padding: '0 16px' }}>
-          <h3 className="popup-title" style={{ fontSize: '14px', lineHeight: '32px' }}>기술등급이력조회</h3>
+          <h3 className="popup-title" style={{ fontSize: '14px', lineHeight: '32px' }}>기술?�급?�력조회</h3>
           <button className="popup-close" type="button" onClick={handleClose} style={{ fontSize: '18px', lineHeight: '32px' }}>×</button>
         </div>
 
@@ -226,62 +226,62 @@ export default function RoleManagementPopup({
                 <td className="clear-td min-w-[160px]">
                   <input type="text" value={employeeInfo.OWN_OUTS_KB} className="input-base input-default w-full" disabled />
                 </td>
-                <th className="clear-th w-[60px]">성명</th>
+                <th className="clear-th w-[60px]">?�명</th>
                 <td className="clear-td min-w-[160px]">
                   <input type="text" value={employeeInfo.EMP_NM} className="input-base input-default w-full" disabled />
                 </td>
-                <th className="clear-th w-[80px]">입사일자</th>
+                <th className="clear-th w-[80px]">?�사?�자</th>
                 <td className="clear-td min-w-[160px]">
                   <input type="text" value={formatDate(employeeInfo.ENTR_DT)} className="input-base input-default w-full" disabled />
                 </td>
               </tr>
 
               <tr className="clear-tr">
-                <th className="clear-th w-[80px]">최종학력</th>
+                <th className="clear-th w-[80px]">최종?�력</th>
                 <td className="clear-td min-w-[160px]">
                   <input type="text" value={employeeInfo.LAST_ADBG_DIV} className="input-base input-default w-full" disabled />
                 </td>
-                <th className="clear-th w-[80px]">자격증</th>
+                <th className="clear-th w-[80px]">?�격�?/th>
                 <td className="clear-td min-w-[160px]">
                   <input type="text" value={employeeInfo.CTQL} className="input-base input-default w-full" disabled />
                 </td>
-                <th className="clear-th w-[90px]">자격취득일</th>
+                <th className="clear-th w-[90px]">?�격취득??/th>
                 <td className="clear-td min-w-[160px]">
                   <input type="text" value={formatDate(employeeInfo.CTQL_PUR_DT)} className="input-base input-default w-full" disabled />
                 </td>
               </tr>
 
               <tr className="clear-tr">
-                <th className="clear-th w-[100px]">학력경력개월</th>
+                <th className="clear-th w-[100px]">?�력경력개월</th>
                 <td className="clear-td min-w-[160px]">
                   <div className="flex items-center gap-1">
                     <input type="text" value={adbgCareer.years} className="input-base input-default !w-[50px]" disabled />
-                    <span className="m-1">년</span>
+                    <span className="m-1">??/span>
                     <input type="text" value={adbgCareer.months} className="input-base input-default !w-[50px]" disabled />
                     <span className="m-1">개월</span>
                   </div>
                 </td>
-                <th className="clear-th w-[110px]">기술자격경력</th>
+                <th className="clear-th w-[110px]">기술?�격경력</th>
                 <td className="clear-td min-w-[160px]">
                   <div className="flex items-center gap-1">
                     <input type="text" value={ctqlCareer.years} className="input-base input-default !w-[50px]" disabled />
-                    <span className="m-1">년</span>
+                    <span className="m-1">??/span>
                     <input type="text" value={ctqlCareer.months} className="input-base input-default !w-[50px]" disabled />
                     <span className="m-1">개월</span>
                   </div>
                 </td>
-                <th className="clear-th w-[100px]">경력계산기준</th>
+                <th className="clear-th w-[100px]">경력계산기�?</th>
                 <td className="clear-td min-w-[160px]">
                   <input type="text" value={formatDate(employeeInfo.CARR_CALC_STND_DT)} className="input-base input-default w-full" disabled />
                 </td>
               </tr>
 
               <tr className="clear-tr">
-                <th className="clear-th w-[100px]">기술등급(현)</th>
+                <th className="clear-th w-[100px]">기술?�급(??</th>
                 <td className="clear-td min-w-[160px]">
                   <input type="text" value={employeeInfo.LAST_TCN_GRD} className="input-base input-default text-red-500 font-bold w-full" disabled />
                 </td>
-                <th className="clear-th w-[100px]">경력기준</th>
+                <th className="clear-th w-[100px]">경력기�?</th>
                 <td className="clear-td min-w-[160px]" colSpan={3}>
                   <div className="flex items-center gap-4">
                     <label>
@@ -290,7 +290,7 @@ export default function RoleManagementPopup({
                         name="calcType" 
                         checked={employeeInfo.CARR_DIV === '1'} 
                         disabled 
-                      /> 학력
+                      /> ?�력
                     </label>
                     <label>
                       <input 
@@ -298,7 +298,7 @@ export default function RoleManagementPopup({
                         name="calcType" 
                         checked={employeeInfo.CARR_DIV === '2'} 
                         disabled 
-                      /> 기술자격
+                      /> 기술?�격
                     </label>
                   </div>
                 </td>
@@ -307,9 +307,9 @@ export default function RoleManagementPopup({
           </table>
         </div>
 
-        {/* 등급 이력 테이블 */}
+        {/* ?�급 ?�력 ?�이�?*/}
         <div className="tit_area">
-          <h3>개발 기술등급 이력</h3>
+          <h3>개발 기술?�급 ?�력</h3>
           <div>
             <button 
               type="button" 
@@ -317,7 +317,7 @@ export default function RoleManagementPopup({
               onClick={handleSearch}
               disabled={loading}
             >
-              {loading ? '조회중...' : '조회'}
+              {loading ? '조회�?..' : '조회'}
             </button>
           </div>
         </div>
@@ -325,8 +325,8 @@ export default function RoleManagementPopup({
           <table className="grid-table w-full">
             <thead>
               <tr>
-                <th className="grid-th">기술등급</th>
-                <th className="grid-th">시작일자</th>
+                <th className="grid-th">기술?�급</th>
+                <th className="grid-th">?�작?�자</th>
                 <th className="grid-th">비고</th>
               </tr>
             </thead>
@@ -334,7 +334,7 @@ export default function RoleManagementPopup({
               {gradeHistory.length === 0 ? (
                 <tr className="grid-tr">
                   <td colSpan={3} className="grid-td text-center text-gray-500">
-                    {loading ? '조회중...' : '데이터가 없습니다'}
+                    {loading ? '조회�?..' : '?�이?��? ?�습?�다'}
                   </td>
                 </tr>
               ) : (
@@ -356,10 +356,10 @@ export default function RoleManagementPopup({
           </table>
         </div>
 
-        {/* 안내 및 종료 버튼 */}
+        {/* ?�내 �?종료 버튼 */}
         <div className="flex justify-between items-center mt-2">
           <div className="text-xs text-blue-700">
-            * 시작일자는 등급이 시작되는 년월일을 말함. 리스트의 <span className="text-red-500">붉은색</span>은 경력계산기준일의 등급임.
+            * ?�작?�자???�급???�작?�는 ?�월?�을 말함. 리스?�의 <span className="text-red-500">붉�???/span>?� 경력계산기�??�의 ?�급??
           </div>
           <button type="button" className="btn-base btn-delete px-4" onClick={handleClose}>종료</button>
         </div>
@@ -368,3 +368,5 @@ export default function RoleManagementPopup({
     </div>
   );
 }
+
+

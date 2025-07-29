@@ -18,17 +18,17 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
-    let message = '서버 내부 오류가 발생했습니다.';
+    let message = '?�버 ?��? ?�류가 발생?�습?�다.';
 
     if (exception instanceof HttpException) {
       status = exception.getStatus();
       message = exception.message;
     }
 
-    // 개발 환경에서만 상세 에러 메시지 노출
+    // 개발 ?�경?�서�??�세 ?�러 메시지 ?�출
     if (process.env.NODE_ENV === 'development') {
       message =
-        exception instanceof Error ? exception.message : '알 수 없는 오류';
+        exception instanceof Error ? exception.message : '?????�는 ?�류';
     }
 
     const errorResponse = {
@@ -48,27 +48,27 @@ export class HttpExceptionFilter implements ExceptionFilter {
       ip: request.ip || request.connection.remoteAddress || 'Unknown',
     };
 
-    // 로그 레벨 결정: 401, 403, 404는 WARN, 나머지는 ERROR
+    // 로그 ?�벨 결정: 401, 403, 404??WARN, ?�머지??ERROR
     const isClientError = status >= 400 && status < 500 && status !== 500;
     const isAuthError = status === 401 || status === 403;
     const isSessionCheck = request.url?.includes('/api/auth/session');
 
-    // 세션 체크 401 에러는 로그 제외 (정상적인 동작)
+    // ?�션 체크 401 ?�러??로그 ?�외 (?�상?�인 ?�작)
     if (isAuthError && isSessionCheck) {
-      // 로그 없음 - 정상적인 세션 체크 실패
+      // 로그 ?�음 - ?�상?�인 ?�션 체크 ?�패
     } else if (isAuthError) {
       this.logger.warn(
-        `🔒 인증 실패: ${request.method} ${request.url} from ${errorData.ip}`,
+        `?�� ?�증 ?�패: ${request.method} ${request.url} from ${errorData.ip}`,
         errorData,
       );
     } else if (isClientError) {
       this.logger.warn(
-        `⚠️ 클라이언트 요청 오류: ${request.method} ${request.url}`,
+        `?�️ ?�라?�언???�청 ?�류: ${request.method} ${request.url}`,
         errorData,
       );
     } else {
       this.logger.error(
-        `❌ HTTP 예외 발생: ${request.method} ${request.url}`,
+        `??HTTP ?�외 발생: ${request.method} ${request.url}`,
         errorData,
       );
     }
@@ -76,3 +76,5 @@ export class HttpExceptionFilter implements ExceptionFilter {
     response.status(status).json(errorResponse);
   }
 }
+
+

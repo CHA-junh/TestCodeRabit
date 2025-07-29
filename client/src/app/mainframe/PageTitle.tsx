@@ -31,29 +31,31 @@ export default function PageTitle({ programId, title, onClose }: Props) {
 						}
 					}}
 					className='hover:opacity-70 transition-opacity'
-					title='개발자 도구'
+					title='개발???�구'
 				>
 					<Image src='/icon_bug.svg' alt='버그' width={16} height={16} />
 				</button>
 				<button
 					onClick={() => {
 						alert(
-							`프로그램 정보\n\n프로그램 ID: ${programId}\n프로그램명: ${title}`
+							`?�로그램 ?�보\n\n?�로그램 ID: ${programId}\n?�로그램�? ${title}`
 						)
 					}}
 					className='hover:opacity-70 transition-opacity'
-					title='프로그램 정보'
+					title='?�로그램 ?�보'
 				>
-					<Image src='/icon_infor.svg' alt='정보' width={16} height={16} />
+					<Image src='/icon_infor.svg' alt='?�보' width={16} height={16} />
 				</button>
 				<button
 					onClick={onClose}
 					className='hover:opacity-70 transition-opacity'
-					title='창 닫기'
+					title='�??�기'
 				>
-					<Image src='/icon_close.svg' alt='닫기' width={16} height={16} />
+					<Image src='/icon_close.svg' alt='?�기' width={16} height={16} />
 				</button>
 			</div>
 		</div>
 	)
 }
+
+

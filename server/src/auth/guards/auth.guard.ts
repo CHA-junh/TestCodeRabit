@@ -7,7 +7,7 @@ import {
 import { Request } from 'express';
 import session from 'express-session';
 
-// express-session 타입 확장
+// express-session ?�???�장
 interface RequestWithSession extends Request {
   session: session.Session & { user?: any };
 }
@@ -19,10 +19,12 @@ export class AuthGuard implements CanActivate {
 
     if (!request.session?.user) {
       throw new UnauthorizedException(
-        '로그인이 필요합니다. 세션이 만료되었거나 인증되지 않았습니다.',
+        '로그?�이 ?�요?�니?? ?�션??만료?�었거나 ?�증?��? ?�았?�니??',
       );
     }
 
     return true;
   }
 }
+
+

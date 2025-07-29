@@ -3,7 +3,7 @@
 import React from 'react'
 
 interface Tab {
-	id: string // programId와 동일하게 사용
+	id: string // programId?� ?�일?�게 ?�용
 	title: string
 }
 
@@ -54,3 +54,5 @@ export default function Maintab({
 		</div>
 	)
 }
+
+

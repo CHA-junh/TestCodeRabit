@@ -13,7 +13,7 @@ export default function AuthGuard({ children, fallback }: AuthGuardProps) {
 	const { isAuthenticated, loading } = useAuth()
 	const pathname = usePathname()
 
-	// 로그인 관련 페이지들
+	// 로그??관???�이지??
 	const isAuthPage =
 		pathname === '/signin' ||
 		pathname === '/login' ||
@@ -21,7 +21,7 @@ export default function AuthGuard({ children, fallback }: AuthGuardProps) {
 		pathname.startsWith('/login')
 
 	useEffect(() => {
-		// 로딩이 완료되고, 인증되지 않았고, 로그인 페이지가 아닌 경우에만 리다이렉트
+		// 로딩???�료?�고, ?�증?��? ?�았�? 로그???�이지가 ?�닌 경우?�만 리다?�렉??
 		if (!loading && !isAuthenticated && !isAuthPage) {
 			window.location.href = '/signin'
 		}
@@ -51,18 +51,18 @@ export default function AuthGuard({ children, fallback }: AuthGuardProps) {
 							d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
 						></path>
 					</svg>
-					<span className='text-gray-600'>인증 확인 중...</span>
+					<span className='text-gray-600'>?�증 ?�인 �?..</span>
 				</div>
 			</div>
 		)
 	}
 
-	// 로그인 페이지에서는 인증 상태와 관계없이 렌더링
+	// 로그???�이지?�서???�증 ?�태?� 관계없???�더�?
 	if (isAuthPage) {
 		return <>{children}</>
 	}
 
-	// 인증되지 않은 경우 fallback 또는 null 반환
+	// ?�증?��? ?��? 경우 fallback ?�는 null 반환
 	if (!isAuthenticated) {
 		if (fallback) {
 			return <>{fallback}</>
@@ -72,3 +72,5 @@ export default function AuthGuard({ children, fallback }: AuthGuardProps) {
 
 	return <>{children}</>
 }
+
+

@@ -18,97 +18,97 @@ import PSM1040M00 from './PSM1040M00'
 import PSM0050M00 from './PSM0050M00'
 
 /**
- * AS-IS PSM_01_0100.mxml의 사원 리스트 데이터 구조
- * PSM_01_0101_S 프로시저에서 반환되는 데이터와 동일한 구조
+ * AS-IS PSM_01_0100.mxml???�원 리스???�이??구조
+ * PSM_01_0101_S ?�로?��??�서 반환?�는 ?�이?��? ?�일??구조
  */
 interface EmployeeListData {
-	LIST_NO?: string // 순번
-	EMP_NO?: string // 사원번호
-	OWN_OUTS_DIV?: string // 자사/외주 구분명
-	OWN_OUTS_DIV_CD?: string // 자사/외주 구분코드 (1:자사, 2:외주)
-	EMP_NM?: string // 사원명
-	DUTY?: string // 직책명
+	LIST_NO?: string // ?�번
+	EMP_NO?: string // ?�원번호
+	OWN_OUTS_DIV?: string // ?�사/?�주 구분�?
+	OWN_OUTS_DIV_CD?: string // ?�사/?�주 구분코드 (1:?�사, 2:?�주)
+	EMP_NM?: string // ?�원�?
+	DUTY?: string // 직책�?
 	DUTY_CD?: string // 직책코드
-	HQ_DIV?: string // 본부명
-	HQ_DIV_CD?: string // 본부코드
-	DEPT_DIV?: string // 부서명
-	DEPT_DIV_CD?: string // 부서코드
-	CRPN_NM?: string // 업체명 (외주인력용)
-	ENTR_NO?: string // 입사번호
-	ENTR_DT?: string // 입사일자 (YYYYMMDD)
-	WKG_ST_DIV?: string // 근무상태명 (재직/휴직/퇴사)
-	WKG_ST_DIV_CD?: string // 근무상태코드 (1:재직, 2:휴직, 3:퇴사)
-	LAST_TCN_GRD?: string // 최종기술등급명
-	CARR_YM?: string // 경력 (년월)
-	CTQL_CD_NM?: string // 자격증명
-	CTQL_CD?: string // 자격증코드
-	MOB_PHN_NO?: string // 휴대폰번호
-	EMAIL_ADDR?: string // 이메일주소
-	RETIR_DT?: string // 퇴사일자 (YYYYMMDD)
-	LAST_IN_DT?: string // 최종투입일자
-	FST_IN_DT?: string // 최초투입일자
-	LAST_END_DT?: string // 최종철수일자
-	LAST_IN_STRT_DT?: string // 최종투입시작일자
-	LAST_IN_END_DT?: string // 최종투입종료일자
-	LAST_PRJT?: string // 최종프로젝트명
+	HQ_DIV?: string // 본�?�?
+	HQ_DIV_CD?: string // 본�?코드
+	DEPT_DIV?: string // 부?�명
+	DEPT_DIV_CD?: string // 부?�코??
+	CRPN_NM?: string // ?�체�?(?�주?�력??
+	ENTR_NO?: string // ?�사번호
+	ENTR_DT?: string // ?�사?�자 (YYYYMMDD)
+	WKG_ST_DIV?: string // 근무?�태�?(?�직/?�직/?�사)
+	WKG_ST_DIV_CD?: string // 근무?�태코드 (1:?�직, 2:?�직, 3:?�사)
+	LAST_TCN_GRD?: string // 최종기술?�급�?
+	CARR_YM?: string // 경력 (?�월)
+	CTQL_CD_NM?: string // ?�격증명
+	CTQL_CD?: string // ?�격증코??
+	MOB_PHN_NO?: string // ?��??�번??
+	EMAIL_ADDR?: string // ?�메?�주??
+	RETIR_DT?: string // ?�사?�자 (YYYYMMDD)
+	LAST_IN_DT?: string // 최종?�입?�자
+	FST_IN_DT?: string // 최초?�입?�자
+	LAST_END_DT?: string // 최종철수?�자
+	LAST_IN_STRT_DT?: string // 최종?�입?�작?�자
+	LAST_IN_END_DT?: string // 최종?�입종료?�자
+	LAST_PRJT?: string // 최종?�로?�트�?
 	RMK?: string // 비고
-	EMP_ENG_NM?: string // 영문명
-	RES_REG_NO?: string // 주민등록번호
-	BIR_YR_MN_DT?: string // 생년월일
-	SEX_DIV_CD?: string // 성별코드
-	NTLT_DIV_CD?: string // 국적코드
-	HOME_TEL?: string // 자택전화번호
-	HOME_ZIP_NO?: string // 자택우편번호
-	HOME_ADDR?: string // 자택주소
-	HOME_DET_ADDR?: string // 자택상세주소
-	LAST_SCHL?: string // 최종학력
-	MAJR?: string // 전공
-	LAST_GRAD_DT?: string // 최종졸업일자
-	CTQL_PUR_DT?: string // 자격취득일자
-	CARR_MCNT?: string // 경력개월수
+	EMP_ENG_NM?: string // ?�문�?
+	RES_REG_NO?: string // 주�??�록번호
+	BIR_YR_MN_DT?: string // ?�년?�일
+	SEX_DIV_CD?: string // ?�별코드
+	NTLT_DIV_CD?: string // �?��코드
+	HOME_TEL?: string // ?�택?�화번호
+	HOME_ZIP_NO?: string // ?�택?�편번호
+	HOME_ADDR?: string // ?�택주소
+	HOME_DET_ADDR?: string // ?�택?�세주소
+	LAST_SCHL?: string // 최종?�력
+	MAJR?: string // ?�공
+	LAST_GRAD_DT?: string // 최종졸업?�자
+	CTQL_PUR_DT?: string // ?�격취득?�자
+	CARR_MCNT?: string // 경력개월??
 }
 
 /**
- * 공통 코드 데이터 구조
- * 대분류 코드 조회 시 사용되는 인터페이스
+ * 공통 코드 ?�이??구조
+ * ?�분류 코드 조회 ???�용?�는 ?�터?�이??
  */
 interface CommonCode {
-	data?: string // 코드값
-	label?: string // 코드명
+	data?: string // 코드�?
+	label?: string // 코드�?
 	codeId?: string // 코드ID
-	codeNm?: string // 코드명
-	DATA?: string // 서버 응답용 코드값
-	LABEL?: string // 서버 응답용 코드명
+	codeNm?: string // 코드�?
+	DATA?: string // ?�버 ?�답??코드�?
+	LABEL?: string // ?�버 ?�답??코드�?
 }
 
 /**
- * PSM1010M00 - 사원/외주 관리 메인 화면
+ * PSM1010M00 - ?�원/?�주 관�?메인 ?�면
  *
- * 사원과 외주 인력의 정보를 관리하는 통합 메인 화면입니다.
- * 탭 기반 인터페이스로 여러 관리 기능을 제공하며, 각 탭은 독립적인 컴포넌트로 구성됩니다.
+ * ?�원�??�주 ?�력???�보�?관리하???�합 메인 ?�면?�니??
+ * ??기반 ?�터?�이?�로 ?�러 관�?기능???�공?�며, �???? ?�립?�인 컴포?�트�?구성?�니??
  *
  * 주요 기능:
- * - 사원/외주 리스트 조회 및 검색
- * - 사원 정보 등록/수정 (PSM1020M00)
- * - 인사발령내역 관리 (PSM1030M00)
- * - 인사발령일괄등록 (PSM1040M00)
- * - 프로필내역조회 (PSM0050M00)
- * - 투입현황조회
+ * - ?�원/?�주 리스??조회 �?검??
+ * - ?�원 ?�보 ?�록/?�정 (PSM1020M00)
+ * - ?�사발령?�역 관�?(PSM1030M00)
+ * - ?�사발령?�괄?�록 (PSM1040M00)
+ * - ?�로?�내??��??(PSM0050M00)
+ * - ?�입?�황조회
  *
- * 화면 구성:
- * - 상단: 검색 조건 영역 (사원명, 내부/외주 구분, 근무상태 등)
- * - 중앙: 사원/외주 목록 그리드 (AG Grid)
- * - 하단: 탭 영역 (사원정보, 인사발령, 일괄등록, 프로필)
+ * ?�면 구성:
+ * - ?�단: 검??조건 ?�역 (?�원�? ?��?/?�주 구분, 근무?�태 ??
+ * - 중앙: ?�원/?�주 목록 그리??(AG Grid)
+ * - ?�단: ???�역 (?�원?�보, ?�사발령, ?�괄?�록, ?�로??
  *
- * AS-IS: PSM_01_0100.mxml (사원/외주 관리 메인 화면)
- * TO-BE: React 기반 통합 관리 화면
+ * AS-IS: PSM_01_0100.mxml (?�원/?�주 관�?메인 ?�면)
+ * TO-BE: React 기반 ?�합 관�??�면
  *
- * 사용 예시:
+ * ?�용 ?�시:
  * ```tsx
- * // 독립 화면으로 사용
+ * // ?�립 ?�면?�로 ?�용
  * <PSM1010M00 />
  *
- * // 메뉴에서 호출
+ * // 메뉴?�서 ?�출
  * globalHandleMenuClick('PSM1010', {});
  * ```
  *
@@ -118,39 +118,39 @@ interface CommonCode {
 export default function EmployeeMainPage() {
 	const { showToast, showConfirm } = useToast()
 
-	// 상태 관리
-	const [activeTab, setActiveTab] = useState(0) // 현재 활성 탭 인덱스
-	const [employeeList, setEmployeeList] = useState<EmployeeListData[]>([]) // 사원 리스트
+	// ?�태 관�?
+	const [activeTab, setActiveTab] = useState(0) // ?�재 ?�성 ???�덱??
+	const [employeeList, setEmployeeList] = useState<EmployeeListData[]>([]) // ?�원 리스??
 	const [selectedEmployee, setSelectedEmployee] =
-		useState<EmployeeListData | null>(null) // 선택된 사원
-	const [isLoading, setIsLoading] = useState(false) // 로딩 상태
-	const [error, setError] = useState<string | null>(null) // 에러 메시지
+		useState<EmployeeListData | null>(null) // ?�택???�원
+	const [isLoading, setIsLoading] = useState(false) // 로딩 ?�태
+	const [error, setError] = useState<string | null>(null) // ?�러 메시지
 	const [gridApi, setGridApi] = useState<GridApi | null>(null) // AG Grid API
 
-	// 하위 컴포넌트 ref
-	const psm1020M00Ref = useRef<PSM1020M00Ref>(null) // 사원정보등록및수정 탭 ref
-	const psm1030M00Ref = useRef<PSM1030M00Ref>(null) // 인사발령내역 탭 ref
+	// ?�위 컴포?�트 ref
+	const psm1020M00Ref = useRef<PSM1020M00Ref>(null) // ?�원?�보?�록및수????ref
+	const psm1030M00Ref = useRef<PSM1030M00Ref>(null) // ?�사발령?�역 ??ref
 
 	/**
-	 * AS-IS 조회 조건 상태
-	 * PSM_01_0101_S 프로시저 호출 시 사용되는 파라미터
+	 * AS-IS 조회 조건 ?�태
+	 * PSM_01_0101_S ?�로?��? ?�출 ???�용?�는 ?�라미터
 	 */
 	const [searchConditions, setSearchConditions] = useState({
-		ownOutsDiv: '1', // 자사/외주 구분 (1:자사, 2:외주)
-		empNm: '', // 사원성명
-		hqDiv: 'ALL', // 본부/외주업체 (ALL:전체)
-		deptDiv: 'ALL', // 부서 (ALL:전체)
-		duty: 'ALL', // 직책 (ALL:전체)
-		retirYn: 'N', // 퇴사자포함유무 (Y:포함, N:미포함)
+		ownOutsDiv: '1', // ?�사/?�주 구분 (1:?�사, 2:?�주)
+		empNm: '', // ?�원?�명
+		hqDiv: 'ALL', // 본�?/?�주?�체 (ALL:?�체)
+		deptDiv: 'ALL', // 부??(ALL:?�체)
+		duty: 'ALL', // 직책 (ALL:?�체)
+		retirYn: 'N', // ?�사?�포?�유�?(Y:?�함, N:미포??
 	})
 
 	/**
-	 * AS-IS 공통 코드 상태
-	 * 대분류 코드 조회 결과를 저장
+	 * AS-IS 공통 코드 ?�태
+	 * ?�분류 코드 조회 결과�??�??
 	 */
 	const [commonCodes, setCommonCodes] = useState<{
-		hqDiv: CommonCode[] // 본부/외주업체 코드 목록
-		deptDiv: CommonCode[] // 부서 코드 목록
+		hqDiv: CommonCode[] // 본�?/?�주?�체 코드 목록
+		deptDiv: CommonCode[] // 부??코드 목록
 		duty: CommonCode[] // 직책 코드 목록
 	}>({
 		hqDiv: [],
@@ -159,27 +159,27 @@ export default function EmployeeMainPage() {
 	})
 
 	/**
-	 * 탭 메뉴 정의
-	 * AS-IS와 동일한 탭 구성
+	 * ??메뉴 ?�의
+	 * AS-IS?� ?�일????구성
 	 */
 	const tabs = [
-		'사원정보등록 및 수정',
-		'인사발령내역(건별)',
-		'인사발령일괄등록',
-		'프로필내역조회',
+		'?�원?�보?�록 �??�정',
+		'?�사발령?�역(건별)',
+		'?�사발령?�괄?�록',
+		'?�로?�내??��??,
 	]
 
 	/**
-	 * 퇴사자 여부를 확인하는 함수
+	 * ?�사???��?�??�인?�는 ?�수
 	 */
 	const isRetiredEmployee = (data: any) => {
 		const workStatus = data?.WKG_ST_DIV
 		const workStatusCd = data?.WKG_ST_DIV_CD
-		return workStatus === '퇴사' || workStatusCd === '3'
+		return workStatus === '?�사' || workStatusCd === '3'
 	}
 
 	/**
-	 * 퇴사자 텍스트를 빨간색으로 렌더링하는 공통 함수
+	 * ?�사???�스?��? 빨간?�으�??�더링하??공통 ?�수
 	 */
 	const renderRetiredText = (value: any, data: any) => {
 		if (isRetiredEmployee(data)) {
@@ -191,8 +191,8 @@ export default function EmployeeMainPage() {
 	}
 
 	/**
-	 * AG Grid 컬럼 정의
-	 * AS-IS AdvancedDataGrid와 동일한 컬럼 구성
+	 * AG Grid 컬럼 ?�의
+	 * AS-IS AdvancedDataGrid?� ?�일??컬럼 구성
 	 */
 	const columnDefs = useMemo<ColDef[]>(
 		() => [
@@ -207,7 +207,7 @@ export default function EmployeeMainPage() {
 				filter: false,
 			},
 			{ 
-				headerName: '사원번호', 
+				headerName: '?�원번호', 
 				field: 'EMP_NO', 
 				width: 100,
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
@@ -219,7 +219,7 @@ export default function EmployeeMainPage() {
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
 			},
 			{
-				headerName: '성명',
+				headerName: '?�명',
 				field: 'EMP_NM',
 				width: 80,
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
@@ -231,32 +231,32 @@ export default function EmployeeMainPage() {
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
 			},
 			{ 
-				headerName: '본부', 
+				headerName: '본�?', 
 				field: 'HQ_DIV', 
 				width: 150, 
 				hide: false,
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
 			},
 			{ 
-				headerName: '부서', 
+				headerName: '부??, 
 				field: 'DEPT_DIV', 
 				width: 150, 
 				hide: false,
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
 			},
 			{ 
-				headerName: '업체명', 
+				headerName: '?�체�?, 
 				field: 'CRPN_NM', 
 				width: 90, 
 				hide: true,
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
 			},
 			{
-				headerName: '입사일자',
+				headerName: '?�사?�자',
 				field: 'ENTR_DT',
 				width: 110,
 				cellRenderer: (params: any) => {
-					// YYYYMMDD 형식을 YYYY-MM-DD 형식으로 변환
+					// YYYYMMDD ?�식??YYYY-MM-DD ?�식?�로 변??
 					let value = params.value
 					if (!value) value = ''
 					if (
@@ -270,13 +270,13 @@ export default function EmployeeMainPage() {
 				},
 			},
 			{ 
-				headerName: '상태', 
+				headerName: '?�태', 
 				field: 'WKG_ST_DIV', 
 				width: 80,
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
 			},
 			{ 
-				headerName: '등급', 
+				headerName: '?�급', 
 				field: 'LAST_TCN_GRD_CD', 
 				width: 80,
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
@@ -288,25 +288,25 @@ export default function EmployeeMainPage() {
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
 			},
 			{ 
-				headerName: '자격증', 
+				headerName: '?�격�?, 
 				field: 'CTQL_CD_NM', 
 				width: 130,
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
 			},
 			{ 
-				headerName: '연락처', 
+				headerName: '?�락�?, 
 				field: 'MOB_PHN_NO', 
 				width: 130, 
 				hide: false,
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
 			},
 			{
-				headerName: '퇴사일자',
+				headerName: '?�사?�자',
 				field: 'RETIR_DT',
 				width: 110,
 				hide: false,
 				cellRenderer: (params: any) => {
-					// YYYYMMDD 형식을 YYYY-MM-DD 형식으로 변환
+					// YYYYMMDD ?�식??YYYY-MM-DD ?�식?�로 변??
 					let value = params.value
 					if (!value) value = ''
 					if (
@@ -320,21 +320,21 @@ export default function EmployeeMainPage() {
 				},
 			},
 			{
-				headerName: '최종투입일',
+				headerName: '최종?�입??,
 				field: 'LAST_IN_STRT_DT',
 				width: 100,
 				hide: true,
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
 			},
 			{
-				headerName: '최종철수일',
+				headerName: '최종철수??,
 				field: 'LAST_IN_END_DT',
 				width: 100,
 				hide: true,
 				cellRenderer: (params: any) => renderRetiredText(params.value, params.data),
 			},
 			{
-				headerName: '최종프로젝트',
+				headerName: '최종?�로?�트',
 				field: 'LAST_PRJT',
 				width: 150,
 				hide: true,
@@ -352,52 +352,52 @@ export default function EmployeeMainPage() {
 	)
 
 	/**
-	 * AG Grid 기본 설정
-	 * 모든 컬럼에 공통으로 적용되는 속성
+	 * AG Grid 기본 ?�정
+	 * 모든 컬럼??공통?�로 ?�용?�는 ?�성
 	 */
 	const defaultColDef = useMemo(
 		() => ({
-			sortable: true, // 정렬 가능
-			filter: true, // 필터 가능
-			resizable: true, // 크기 조정 가능
-			minWidth: 60, // 최소 너비
-			maxWidth: 300, // 최대 너비
+			sortable: true, // ?�렬 가??
+			filter: true, // ?�터 가??
+			resizable: true, // ?�기 조정 가??
+			minWidth: 60, // 최소 ?�비
+			maxWidth: 300, // 최�? ?�비
 		}),
 		[]
 	)
 
 	/**
-	 * 컴포넌트 초기화
-	 * AS-IS init() 함수와 동일한 역할
+	 * 컴포?�트 초기??
+	 * AS-IS init() ?�수?� ?�일????��
 	 */
 	useEffect(() => {
 		initializeData()
 	}, [])
 
 	/**
-	 * 초기 데이터 로드
-	 * 공통 코드 로드 및 초기 조회 실행
+	 * 초기 ?�이??로드
+	 * 공통 코드 로드 �?초기 조회 ?�행
 	 */
 	const initializeData = async () => {
 		try {
-			// AS-IS와 동일한 공통 코드 로드
+			// AS-IS?� ?�일??공통 코드 로드
 			await loadCommonCodes()
 
-			// AS-IS와 동일한 초기 조회
+			// AS-IS?� ?�일??초기 조회
 			await handleSearch()
 		} catch (error) {
-			console.error('초기화 중 오류:', error)
-			setError('초기화 중 오류가 발생했습니다.')
+			console.error('초기??�??�류:', error)
+			setError('초기??�??�류가 발생?�습?�다.')
 		}
 	}
 
 	/**
 	 * AS-IS 공통 코드 로드
-	 * 대분류 코드 조회 (AS-IS: S_cbHqDiv.setLargeCode2113, S_cbDuty.setLargeCode2 등)
+	 * ?�분류 코드 조회 (AS-IS: S_cbHqDiv.setLargeCode2113, S_cbDuty.setLargeCode2 ??
 	 */
 	const loadCommonCodes = async () => {
 		try {
-			// 본부 코드 로드 (AS-IS: S_cbHqDiv.setLargeCode2113)
+			// 본�? 코드 로드 (AS-IS: S_cbHqDiv.setLargeCode2113)
 			const hqResponse = await fetch('/api/common/search', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -415,7 +415,7 @@ export default function EmployeeMainPage() {
 			const dutyResult = await dutyResponse.json()
 			const dutyData = dutyResult.data || []
 
-			// 부서 코드 로드 (AS-IS: S_cbDeptDiv.setDeptCode3(ALL,'ALL','Y))
+			// 부??코드 로드 (AS-IS: S_cbDeptDiv.setDeptCode3(ALL,'ALL','Y))
 			const deptResponse = await fetch('/api/psm/dept-by-hq', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -428,10 +428,10 @@ export default function EmployeeMainPage() {
 			const deptResult = await deptResponse.json()
 			const deptData = deptResult.data || []
 
-			// 서버 데이터에서 ALL코드를 제거하고 클라이언트에서 맨 위에 추가
+			// ?�버 ?�이?�에??ALL코드�??�거?�고 ?�라?�언?�에??�??�에 추�?
 			const filterAndAddAllOption = (data: any[]) => {
 				const filteredData = data?.filter((item) => item.codeId !== 'ALL') || []
-				return [{ codeId: 'ALL', codeNm: '전체' }, ...filteredData]
+				return [{ codeId: 'ALL', codeNm: '?�체' }, ...filteredData]
 			}
 
 			const finalHqDiv = filterAndAddAllOption(hqData)
@@ -444,12 +444,12 @@ export default function EmployeeMainPage() {
 				duty: finalDuty,
 			})
 		} catch (error) {
-			console.error('공통 코드 로드 중 오류:', error)
+			console.error('공통 코드 로드 �??�류:', error)
 		}
 	}
 
 	/**
-	 * AS-IS 본부 변경 시 부서 로드
+	 * AS-IS 본�? 변�???부??로드
 	 * AS-IS: S_cbDeptDiv.setDeptCode3(strS_DeptDiv,strS_HqDiv,"Y")
 	 */
 	const handleHqDivChange = async (hqDiv: string) => {
@@ -457,7 +457,7 @@ export default function EmployeeMainPage() {
 			setSearchConditions((prev) => ({
 				...prev,
 				hqDiv,
-				deptDiv: 'ALL', // 본부 변경 시 부서는 전체로 초기화
+				deptDiv: 'ALL', // 본�? 변�???부?�는 ?�체�?초기??
 			}))
 
 			// AS-IS: S_cbDeptDiv.setDeptCode3(strS_DeptDiv,strS_HqDiv,"Y")
@@ -473,11 +473,11 @@ export default function EmployeeMainPage() {
 			const deptResult = await response.json()
 			const deptData = deptResult.data || []
 
-			// 서버 데이터에서 ALL코드를 제거하고 클라이언트에서 맨 위에 추가
+			// ?�버 ?�이?�에??ALL코드�??�거?�고 ?�라?�언?�에??�??�에 추�?
 			const filteredDeptData =
 				deptData?.filter((item: any) => item.DATA !== 'ALL') || []
 			const finalDeptData = [
-				{ DATA: 'ALL', LABEL: '전체' },
+				{ DATA: 'ALL', LABEL: '?�체' },
 				...filteredDeptData,
 			]
 
@@ -486,13 +486,13 @@ export default function EmployeeMainPage() {
 				deptDiv: finalDeptData,
 			}))
 		} catch (error) {
-			console.error('부서 로드 중 오류:', error)
+			console.error('부??로드 �??�류:', error)
 		}
 	}
 
 	/**
-	 * AS-IS 자사/외주 구분 변경
-	 * 자사면 본부, 외주면 외주업체 코드 로드
+	 * AS-IS ?�사/?�주 구분 변�?
+	 * ?�사�?본�?, ?�주�??�주?�체 코드 로드
 	 */
 	const handleOwnOutsDivChange = async (ownOutsDiv: string) => {
 		setSearchConditions((prev) => ({
@@ -502,58 +502,58 @@ export default function EmployeeMainPage() {
 			deptDiv: 'ALL',
 		}))
 
-		// AS-IS와 동일한 로직: 자사면 본부, 외주면 외주업체
+		// AS-IS?� ?�일??로직: ?�사�?본�?, ?�주�??�주?�체
 		if (ownOutsDiv === '1') {
-			// 자사: 본부 코드 로드
+			// ?�사: 본�? 코드 로드
 			await loadCommonCodes()
 		} else {
-			// 외주: 외주업체 코드 로드 (AS-IS: S_cbHqDiv.setLargeCode2('111','ALL'))
+			// ?�주: ?�주?�체 코드 로드 (AS-IS: S_cbHqDiv.setLargeCode2('111','ALL'))
 			try {
 				const response = await fetch('/api/common/search', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ largeCategoryCode: '111' }), // 외주업체 대분류 코드
+					body: JSON.stringify({ largeCategoryCode: '111' }), // ?�주?�체 ?�분류 코드
 				})
 				const outsCompanyResult = await response.json()
 				const outsCompanyData = outsCompanyResult.data || []
 
-				// 외주업체 목록에 전체션 추가
+				// ?�주?�체 목록???�체??추�?
 				const filterAndAddAllOption = (data: any[]) => {
 					const filteredData =
 						data?.filter((item) => item.codeId !== 'ALL') || []
-					return [{ codeId: 'ALL', codeNm: '전체' }, ...filteredData]
+					return [{ codeId: 'ALL', codeNm: '?�체' }, ...filteredData]
 				}
 
 				setCommonCodes((prev) => ({
 					...prev,
 					hqDiv: filterAndAddAllOption(outsCompanyData),
-					deptDiv: [{ codeId: 'ALL', codeNm: '전체' }], // 외주는 부서가 없으므로 전체만
-					duty: prev.duty, // 직책은 그대로 유지
+					deptDiv: [{ codeId: 'ALL', codeNm: '?�체' }], // ?�주??부?��? ?�으므�??�체�?
+					duty: prev.duty, // 직책?� 그�?�??��?
 				}))
 			} catch (error) {
-				console.error('외주업체 코드 로드 중 오류:', error)
+				console.error('?�주?�체 코드 로드 �??�류:', error)
 			}
 		}
 	}
 
 	/**
-	 * AS-IS 사원 리스트 조회
-	 * PSM_01_0101_S 프로시저 호출
+	 * AS-IS ?�원 리스??조회
+	 * PSM_01_0101_S ?�로?��? ?�출
 	 */
 	const handleSearch = async () => {
 		setIsLoading(true)
 		setError(null)
 
 		try {
-			// AS-IS와 동일한 파라미터 구성
+			// AS-IS?� ?�일???�라미터 구성
 			const params = [
-				'ALL', // 사원번호
-				searchConditions.empNm, // 사원성명
+				'ALL', // ?�원번호
+				searchConditions.empNm, // ?�원?�명
 				searchConditions.ownOutsDiv, // 구분
-				searchConditions.hqDiv, // 본부
-				searchConditions.deptDiv, // 부서
+				searchConditions.hqDiv, // 본�?
+				searchConditions.deptDiv, // 부??
 				searchConditions.duty, // 직책
-				searchConditions.retirYn, // 퇴사자포함유무
+				searchConditions.retirYn, // ?�사?�포?�유�?
 			].join('|')
 
 			const response = await fetch('/api/psm/employee/search', {
@@ -574,10 +574,10 @@ export default function EmployeeMainPage() {
 				const result = await response.json()
 
 				if (result.success) {
-					// 프로시저에서 반환하는 원본 데이터를 그대로 사용
+					// ?�로?��??�서 반환?�는 ?�본 ?�이?��? 그�?�??�용
 					setEmployeeList(result.data || [])
 
-					// 조회 시 하단 탭들 초기화
+					// 조회 ???�단 ??�� 초기??
 					if (psm1020M00Ref.current) {
 						psm1020M00Ref.current.initialize()
 					}
@@ -586,30 +586,30 @@ export default function EmployeeMainPage() {
 						psm1030M00Ref.current.initialize()
 					}
 
-					// 선택된 사원 초기화
+					// ?�택???�원 초기??
 					setSelectedEmployee(null)
 
-					// AS-IS와 동일하게 조회 성공 후 그리드 컬럼 변경
+					// AS-IS?� ?�일?�게 조회 ?�공 ??그리??컬럼 변�?
 					updateGridColumns()
 					if (result.data && result.data.length > 0) {
 						showToast(
-							`${result.data.length}명의 사원이 조회되었습니다.`,
+							`${result.data.length}명의 ?�원??조회?�었?�니??`,
 							'info'
 						)
 					} else {
-						showToast('조회된 사원이 없습니다.', 'warning')
+						showToast('조회???�원???�습?�다.', 'warning')
 					}
 				} else {
-					setError(result.message || '조회에 실패했습니다.')
-					showToast(result.message || '조회에 실패했습니다.', 'error')
+					setError(result.message || '조회???�패?�습?�다.')
+					showToast(result.message || '조회???�패?�습?�다.', 'error')
 				}
 			} else {
-				throw new Error('조회에 실패했습니다.')
+				throw new Error('조회???�패?�습?�다.')
 			}
 		} catch (error) {
-			console.error('사원 리스트 조회 중 오류:', error)
+			console.error('?�원 리스??조회 �??�류:', error)
 			const errorMessage =
-				error instanceof Error ? error.message : '조회 중 오류가 발생했습니다.'
+				error instanceof Error ? error.message : '조회 �??�류가 발생?�습?�다.'
 			setError(errorMessage)
 			showToast(errorMessage, 'error')
 		} finally {
@@ -618,8 +618,8 @@ export default function EmployeeMainPage() {
 	}
 
 	/**
-	 * AS-IS와 동일하게 조회 성공 후 그리드 컬럼 동적 변경
-	 * 자사/외주 구분에 따라 컬럼 표시/숨김 처리
+	 * AS-IS?� ?�일?�게 조회 ?�공 ??그리??컬럼 ?�적 변�?
+	 * ?�사/?�주 구분???�라 컬럼 ?�시/?��? 처리
 	 */
 	const updateGridColumns = () => {
 		if (!gridApi) return
@@ -627,79 +627,79 @@ export default function EmployeeMainPage() {
 		const isOwn = searchConditions.ownOutsDiv === '1'
 		const isOuts = searchConditions.ownOutsDiv === '2'
 
-		// AS-IS와 동일한 컬럼 visible 처리
+		// AS-IS?� ?�일??컬럼 visible 처리
 		if (isOwn) {
-			// 자사 인력 조회 시
-			gridApi.setColumnVisible('HQ_DIV', true) // 본부
-			gridApi.setColumnVisible('DEPT_DIV', true) // 부서
-			gridApi.setColumnVisible('CRPN_NM', false) // 업체명
-			gridApi.setColumnVisible('MOB_PHN_NO', true) // 연락처
-			gridApi.setColumnVisible('RETIR_DT', true) // 퇴사일자
-			gridApi.setColumnVisible('LAST_IN_STRT_DT', false) // 최종투입일
-			gridApi.setColumnVisible('LAST_IN_END_DT', false) // 최종철수일
-			gridApi.setColumnVisible('LAST_PRJT', false) // 최종프로젝트
+			// ?�사 ?�력 조회 ??
+			gridApi.setColumnVisible('HQ_DIV', true) // 본�?
+			gridApi.setColumnVisible('DEPT_DIV', true) // 부??
+			gridApi.setColumnVisible('CRPN_NM', false) // ?�체�?
+			gridApi.setColumnVisible('MOB_PHN_NO', true) // ?�락�?
+			gridApi.setColumnVisible('RETIR_DT', true) // ?�사?�자
+			gridApi.setColumnVisible('LAST_IN_STRT_DT', false) // 최종?�입??
+			gridApi.setColumnVisible('LAST_IN_END_DT', false) // 최종철수??
+			gridApi.setColumnVisible('LAST_PRJT', false) // 최종?�로?�트
 
-			// 컬럼명 변경
+			// 컬럼�?변�?
 			const columnApi = gridApi.getColumnDef('ENTR_DT')
 			if (columnApi) {
-				columnApi.headerName = '입사일자'
+				columnApi.headerName = '?�사?�자'
 				gridApi.refreshHeader()
 			}
 		} else if (isOuts) {
-			// 외주 인력 조회 시
-			gridApi.setColumnVisible('HQ_DIV', false) // 본부
-			gridApi.setColumnVisible('DEPT_DIV', false) // 부서
-			gridApi.setColumnVisible('CRPN_NM', true) // 업체명
-			gridApi.setColumnVisible('MOB_PHN_NO', false) // 연락처
-			gridApi.setColumnVisible('RETIR_DT', false) // 퇴사일자
-			gridApi.setColumnVisible('LAST_IN_STRT_DT', true) // 최종투입일
-			gridApi.setColumnVisible('LAST_IN_END_DT', true) // 최종철수일
-			gridApi.setColumnVisible('LAST_PRJT', true) // 최종프로젝트
+			// ?�주 ?�력 조회 ??
+			gridApi.setColumnVisible('HQ_DIV', false) // 본�?
+			gridApi.setColumnVisible('DEPT_DIV', false) // 부??
+			gridApi.setColumnVisible('CRPN_NM', true) // ?�체�?
+			gridApi.setColumnVisible('MOB_PHN_NO', false) // ?�락�?
+			gridApi.setColumnVisible('RETIR_DT', false) // ?�사?�자
+			gridApi.setColumnVisible('LAST_IN_STRT_DT', true) // 최종?�입??
+			gridApi.setColumnVisible('LAST_IN_END_DT', true) // 최종철수??
+			gridApi.setColumnVisible('LAST_PRJT', true) // 최종?�로?�트
 
-			// 컬럼명 변경
+			// 컬럼�?변�?
 			const columnApi = gridApi.getColumnDef('ENTR_DT')
 			if (columnApi) {
-				columnApi.headerName = '외주접수일'
+				columnApi.headerName = '?�주?�수??
 				gridApi.refreshHeader()
 			}
 		}
 
-		// 컬럼 크기를 컨테이너 너비에 맞게 자동 조정
+		// 컬럼 ?�기�?컨테?�너 ?�비??맞게 ?�동 조정
 		if (gridApi) {
-			// 컬럼 변경 후 크기 조정
+			// 컬럼 변�????�기 조정
 			setTimeout(() => {
-				// 먼저 모든 컬럼을 내용에 맞게 자동 조정
+				// 먼�? 모든 컬럼???�용??맞게 ?�동 조정
 				gridApi.autoSizeAllColumns()
-				// 그 후 전체 너비에 맞게 조정 (비고 컬럼이 남은 공간 차지)
+				// �????�체 ?�비??맞게 조정 (비고 컬럼???��? 공간 차�?)
 				gridApi.sizeColumnsToFit()
 			}, 10)
 		}
 	}
 
 	/**
-	 * AG Grid 이벤트 핸들러
-	 * 그리드 초기화 완료 시 호출
+	 * AG Grid ?�벤???�들??
+	 * 그리??초기???�료 ???�출
 	 */
 	const onGridReady = (params: GridReadyEvent) => {
 		setGridApi(params.api)
 	}
 
 	/**
-	 * AG Grid 이벤트 핸들러
-	 * 데이터가 처음 렌더링된 후 호출
+	 * AG Grid ?�벤???�들??
+	 * ?�이?��? 처음 ?�더링된 ???�출
 	 */
 	const onFirstDataRendered = (params: any) => {
-		// 먼저 모든 컬럼을 내용에 맞게 자동 조정
+		// 먼�? 모든 컬럼???�용??맞게 ?�동 조정
 		params.api.autoSizeAllColumns()
-		// 그 후 전체 너비에 맞게 조정 (비고 컬럼이 남은 공간 차지)
+		// �????�체 ?�비??맞게 조정 (비고 컬럼???��? 공간 차�?)
 		setTimeout(() => {
 			params.api.sizeColumnsToFit()
 		}, 10)
 	}
 
 	/**
-	 * AG Grid 행 클릭 이벤트
-	 * 사원 선택 시 호출
+	 * AG Grid ???�릭 ?�벤??
+	 * ?�원 ?�택 ???�출
 	 */
 	const onRowClicked = (event: any) => {
 		const employee = event.data
@@ -707,8 +707,8 @@ export default function EmployeeMainPage() {
 	}
 
 	/**
-	 * AG Grid 행 더블클릭 이벤트
-	 * 사원 선택 시 호출 (AS-IS OnDblClickGrdEmpInfoList)
+	 * AG Grid ???�블?�릭 ?�벤??
+	 * ?�원 ?�택 ???�출 (AS-IS OnDblClickGrdEmpInfoList)
 	 */
 	const onRowDoubleClicked = (event: any) => {
 		const employee = event.data
@@ -716,13 +716,13 @@ export default function EmployeeMainPage() {
 	}
 
 	/**
-	 * AS-IS 사원 선택 시 탭 변경 로직
-	 * 선택된 사원 정보를 하위 탭 컴포넌트에 전달
+	 * AS-IS ?�원 ?�택 ????변�?로직
+	 * ?�택???�원 ?�보�??�위 ??컴포?�트???�달
 	 */
 	const handleEmployeeSelect = (employee: EmployeeListData) => {
 		setSelectedEmployee(employee)
 
-		// 사원 선택 시 모든 탭 초기화
+		// ?�원 ?�택 ??모든 ??초기??
 		if (psm1020M00Ref.current) {
 			psm1020M00Ref.current.initialize()
 		}
@@ -731,44 +731,44 @@ export default function EmployeeMainPage() {
 			psm1030M00Ref.current.initialize()
 		}
 
-		// AS-IS와 동일한 탭별 처리 로직
+		// AS-IS?� ?�일????�� 처리 로직
 		if (activeTab === 0) {
-			// 사원정보등록및수정 탭
+			// ?�원?�보?�록및수????
 		} else if (activeTab === 1) {
-			// 인사발령내역(건별) 탭
+			// ?�사발령?�역(건별) ??
 		} else if (activeTab === 2) {
-			// 인사발령일괄등록 탭
+			// ?�사발령?�괄?�록 ??
 		} else if (activeTab === 3) {
-			// 프로필내역조회 탭
+			// ?�로?�내??��????
 		}
 	}
 
 	/**
-	 * selectedEmployee가 변경되고 사원정보등록및수정 탭일 때 handleSearch 호출
-	 * 타이밍 이슈 해결을 위한 지연 처리
+	 * selectedEmployee가 변경되�??�원?�보?�록및수????�� ??handleSearch ?�출
+	 * ?�?�밍 ?�슈 ?�결???�한 지??처리
 	 */
 	useEffect(() => {
 		if (selectedEmployee && activeTab === 0 && psm1020M00Ref.current) {
-			// employeeData 설정을 기다린 후 handleSearch 호출
+			// employeeData ?�정??기다�???handleSearch ?�출
 			const timer = setTimeout(() => {
 				if (psm1020M00Ref.current) {
 					psm1020M00Ref.current.handleSearch()
 				}
-			}, 100) // 100ms 지연으로 employeeData 설정 완료 보장
+			}, 100) // 100ms 지?�으�?employeeData ?�정 ?�료 보장
 
 			return () => clearTimeout(timer)
 		}
 	}, [selectedEmployee, activeTab])
 
-	// 윈도우 리사이즈 시에도 컬럼 크기 조정
+	// ?�도??리사?�즈 ?�에??컬럼 ?�기 조정
 	useEffect(() => {
 		const handleResize = () => {
 			if (gridApi) {
-				// 리사이즈 후 컬럼 크기 조정
+				// 리사?�즈 ??컬럼 ?�기 조정
 				setTimeout(() => {
-					// 먼저 모든 컬럼을 내용에 맞게 자동 조정
+					// 먼�? 모든 컬럼???�용??맞게 ?�동 조정
 					gridApi.autoSizeAllColumns()
-					// 그 후 전체 너비에 맞게 조정 (비고 컬럼이 남은 공간 차지)
+					// �????�체 ?�비??맞게 조정 (비고 컬럼???��? 공간 차�?)
 					gridApi.sizeColumnsToFit()
 				}, 10)
 			}
@@ -779,8 +779,8 @@ export default function EmployeeMainPage() {
 	}, [gridApi])
 
 	/**
-	 * AS-IS OnDblClickGrdEmpInfoList 함수의 enable/disable 처리 로직
-	 * 수정 불가능한 입력 항목 비활성화
+	 * AS-IS OnDblClickGrdEmpInfoList ?�수??enable/disable 처리 로직
+	 * ?�정 불�??�한 ?�력 ??�� 비활?�화
 	 */
 	const getFieldEnableState = (employee: EmployeeListData | null) => {
 		if (!employee)
@@ -793,41 +793,41 @@ export default function EmployeeMainPage() {
 				crpnNm: true,
 			}
 
-		// AS-IS와 동일한 로직: 수정 불가능 입력 항목 비활성화
+		// AS-IS?� ?�일??로직: ?�정 불�????�력 ??�� 비활?�화
 		return {
-			empNo: false, // 사원번호 - 수정 불가
-			ownOutsDiv: false, // 자사외주구분 - 수정 불가
-			hqDiv: false, // 본부 - 수정 불가 (인사발령 등록시에만 가능)
-			deptDiv: false, // 부서 - 수정 불가 (인사발령 등록시에만 가능)
-			duty: employee.OWN_OUTS_DIV_CD === '1' ? false : true, // 직책 - 자사는 수정 불가, 외주는 수정 가능
-			crpnNm: false, // 업체명 - 수정 불가
+			empNo: false, // ?�원번호 - ?�정 불�?
+			ownOutsDiv: false, // ?�사?�주구분 - ?�정 불�?
+			hqDiv: false, // 본�? - ?�정 불�? (?�사발령 ?�록?�에�?가??
+			deptDiv: false, // 부??- ?�정 불�? (?�사발령 ?�록?�에�?가??
+			duty: employee.OWN_OUTS_DIV_CD === '1' ? false : true, // 직책 - ?�사???�정 불�?, ?�주???�정 가??
+			crpnNm: false, // ?�체�?- ?�정 불�?
 		}
 	}
 
 	/**
-	 * AS-IS 투입현황조회 버튼 클릭
-	 * BSN_07_0150 팝업 호출 로직 (구현 예정)
+	 * AS-IS ?�입?�황조회 버튼 ?�릭
+	 * BSN_07_0150 ?�업 ?�출 로직 (구현 ?�정)
 	 */
 	const handleProjectInquiry = () => {
 		if (!selectedEmployee) {
 			showToast(
-				'사원(외주) 리스트에서 대상자를 선택 클릭해 주십시요.',
+				'?�원(?�주) 리스?�에???�?�자�??�택 ?�릭??주십?�요.',
 				'warning'
 			)
 			return
 		}
-		// AS-IS: BSN_07_0150 팝업 호출 로직
-		showToast('투입인력현황(BSN0660P00) 화면 개발중입니다.', 'info');
+		// AS-IS: BSN_07_0150 ?�업 ?�출 로직
+		showToast('?�입?�력?�황(BSN0660P00) ?�면 개발중입?�다.', 'info');
 	}
 
 	return (
 		<div className='mdi flex flex-col h-[calc(100vh-200px)] overflow-hidden min-w-[1400px]'>
-			{/* AS-IS 조회 영역 */}
+			{/* AS-IS 조회 ?�역 */}
 			<div className='search-div mb-4 shrink-0'>
 				<table className='search-table w-full'>
 					<tbody>
 						<tr>
-							<th className='search-th w-[100px]'>자사 외주 구분</th>
+							<th className='search-th w-[100px]'>?�사 ?�주 구분</th>
 							<td className='search-td w-[150px]'>
 								<div className='flex gap-2'>
 									<label className='flex items-center'>
@@ -838,7 +838,7 @@ export default function EmployeeMainPage() {
 											checked={searchConditions.ownOutsDiv === '1'}
 											onChange={(e) => handleOwnOutsDivChange(e.target.value)}
 										/>
-										<span className='ml-1'>자사</span>
+										<span className='ml-1'>?�사</span>
 									</label>
 									<label className='flex items-center'>
 										<input
@@ -848,11 +848,11 @@ export default function EmployeeMainPage() {
 											checked={searchConditions.ownOutsDiv === '2'}
 											onChange={(e) => handleOwnOutsDivChange(e.target.value)}
 										/>
-										<span className='ml-1'>외주</span>
+										<span className='ml-1'>?�주</span>
 									</label>
 								</div>
 							</td>
-							<th className='search-th w-[80px]'>사원성명</th>
+							<th className='search-th w-[80px]'>?�원?�명</th>
 							<td className='search-td w-[150px]'>
 								<input
 									type='text'
@@ -865,12 +865,12 @@ export default function EmployeeMainPage() {
 										}))
 									}
 									onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-									placeholder='사원명 입력'
-									title='사원명 입력'
+									placeholder='?�원�??�력'
+									title='?�원�??�력'
 								/>
 							</td>
 							<th className='search-th w-[60px]'>
-								{searchConditions.ownOutsDiv === '2' ? '외주업체' : '본부'}
+								{searchConditions.ownOutsDiv === '2' ? '?�주?�체' : '본�?'}
 							</th>
 							<td className='search-td w-[150px]'>
 								<select
@@ -879,8 +879,8 @@ export default function EmployeeMainPage() {
 									onChange={(e) => handleHqDivChange(e.target.value)}
 									title={
 										searchConditions.ownOutsDiv === '2'
-											? '외주업체 선택'
-											: '본부 선택'
+											? '?�주?�체 ?�택'
+											: '본�? ?�택'
 									}
 								>
 									{commonCodes.hqDiv.map((code, idx) => (
@@ -890,7 +890,7 @@ export default function EmployeeMainPage() {
 									))}
 								</select>
 							</td>
-							<th className='search-th w-[60px]'>부서</th>
+							<th className='search-th w-[60px]'>부??/th>
 							<td className='search-td w-[150px]'>
 								<select
 									className='combo-base w-full'
@@ -902,7 +902,7 @@ export default function EmployeeMainPage() {
 										}))
 									}
 									disabled={searchConditions.ownOutsDiv === '2'}
-									title='부서 선택'
+									title='부???�택'
 								>
 									{commonCodes.deptDiv.map((code, idx) => (
 										<option key={code.DATA || idx} value={code.DATA}>
@@ -922,7 +922,7 @@ export default function EmployeeMainPage() {
 											duty: e.target.value,
 										}))
 									}
-									title='직책 선택'
+									title='직책 ?�택'
 								>
 									{commonCodes.duty.map((code, idx) => (
 										<option key={code.codeId || idx} value={code.codeId}>
@@ -931,7 +931,7 @@ export default function EmployeeMainPage() {
 									))}
 								</select>
 							</td>
-							<th className='search-th w-[80px]'>퇴사자포함</th>
+							<th className='search-th w-[80px]'>?�사?�포??/th>
 							<td className='search-td w-[80px]'>
 								<input
 									type='checkbox'
@@ -942,7 +942,7 @@ export default function EmployeeMainPage() {
 											retirYn: e.target.checked ? 'Y' : 'N',
 										}))
 									}
-									title='퇴사자 포함'
+									title='?�사???�함'
 								/>
 							</td>
 							<td className='search-td text-right'>
@@ -951,7 +951,7 @@ export default function EmployeeMainPage() {
 									onClick={handleSearch}
 									disabled={isLoading}
 								>
-									{isLoading ? '조회중...' : '조회'}
+									{isLoading ? '조회�?..' : '조회'}
 								</button>
 							</td>
 						</tr>
@@ -959,12 +959,12 @@ export default function EmployeeMainPage() {
 				</table>
 			</div>
 
-			{/* AS-IS 리스트 타이틀 */}
+			{/* AS-IS 리스???�?��? */}
 			<div className='tit_area shrink-0'>
-				<h3>사원/외주 리스트</h3>
+				<h3>?�원/?�주 리스??/h3>
 				<div>
 					<button className='btn-base btn-etc' onClick={handleProjectInquiry}>
-						투입현황조회
+						?�입?�황조회
 					</button>
 				</div>
 			</div>
@@ -1000,9 +1000,9 @@ export default function EmployeeMainPage() {
 				/>
 			</div>
 
-			{/* AS-IS 탭 전체 영역 */}
+			{/* AS-IS ???�체 ?�역 */}
 			<div className='flex flex-col flex-1 min-h-0'>
-				{/* 탭 버튼 */}
+				{/* ??버튼 */}
 				<div className='tab-container shrink-0'>
 					{tabs.map((tab, idx) => (
 						<button
@@ -1014,7 +1014,7 @@ export default function EmployeeMainPage() {
 						</button>
 					))}
 				</div>
-				{/* 탭 콘텐츠 */}
+				{/* ??콘텐�?*/}
 				<div className='tab-panel flex-1 min-h-0 overflow-auto'>
 					{activeTab === 0 && (
 						<PSM1020M00
@@ -1042,8 +1042,10 @@ export default function EmployeeMainPage() {
 					)}
 				</div>
 			</div>
-			{/* 에러 메시지 */}
+			{/* ?�러 메시지 */}
 			{error && <div className='text-red-500 text-sm mt-2 px-1'>{error}</div>}
 		</div>
 	)
 }
+
+

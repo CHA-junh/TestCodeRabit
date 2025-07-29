@@ -1,8 +1,8 @@
 /**
- * SYS1010D00.test.tsx - 프로그램 검색 팝업 화면 테스트
+ * SYS1010D00.test.tsx - ?�로그램 검???�업 ?�면 ?�스??
  * 
- * 테스트 대상: SYS1010D00.tsx
- * 테스트 범위: 프로그램 검색 팝업의 모든 주요 기능
+ * ?�스???�?? SYS1010D00.tsx
+ * ?�스??범위: ?�로그램 검???�업??모든 주요 기능
  */
 
 import React from 'react';
@@ -57,11 +57,11 @@ jest.mock('ag-grid-react', () => ({
 // Mock fetch
 global.fetch = jest.fn();
 
-describe('SYS1010D00 - 프로그램 검색 팝업', () => {
+describe('SYS1010D00 - ?�로그램 검???�업', () => {
   const mockPrograms = [
     {
       PGM_ID: 'USR2010M00',
-      PGM_NM: '사용자관리',
+      PGM_NM: '?�용?��?�?,
       PGM_DIV_CD: '1',
       BIZ_DIV_CD: 'USR',
       USE_YN: 'Y',
@@ -69,7 +69,7 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
     },
     {
       PGM_ID: 'SYS1000M00',
-      PGM_NM: '프로그램관리',
+      PGM_NM: '?�로그램관�?,
       PGM_DIV_CD: '1',
       BIZ_DIV_CD: 'SYS',
       USE_YN: 'Y',
@@ -77,7 +77,7 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
     },
     {
       PGM_ID: 'SYS1001M00',
-      PGM_NM: '프로그램그룹관리',
+      PGM_NM: '?�로그램그룹관�?,
       PGM_DIV_CD: '1',
       BIZ_DIV_CD: 'SYS',
       USE_YN: 'Y',
@@ -104,21 +104,21 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
     });
   });
 
-  describe('화면 렌더링', () => {
-    test('프로그램 검색 팝업이 정상적으로 렌더링됩니다.', async () => {
+  describe('?�면 ?�더�?, () => {
+    test('?�로그램 검???�업???�상?�으�??�더링됩?�다.', async () => {
       render(<SYS1010D00 />);
-      expect(screen.getByText('프로그램목록')).toBeInTheDocument();
+      expect(screen.getByText('?�로그램목록')).toBeInTheDocument();
     });
 
-    test('검색 조건 입력 필드들이 정상적으로 렌더링됩니다.', () => {
+    test('검??조건 ?�력 ?�드?�이 ?�상?�으�??�더링됩?�다.', () => {
       render(<SYS1010D00 />);
-      expect(screen.getByText('프로그램 ID명')).toBeInTheDocument();
+      expect(screen.getByText('?�로그램 ID�?)).toBeInTheDocument();
       expect(screen.getByText('구분')).toBeInTheDocument();
-      expect(screen.getAllByText('업무')[0]).toBeInTheDocument(); // 첫 번째 '업무' 텍스트 사용
+      expect(screen.getAllByText('?�무')[0]).toBeInTheDocument(); // �?번째 '?�무' ?�스???�용
       expect(screen.getByText('조회')).toBeInTheDocument();
     });
 
-    test('프로그램 목록 그리드가 정상적으로 렌더링됩니다.', async () => {
+    test('?�로그램 목록 그리?��? ?�상?�으�??�더링됩?�다.', async () => {
       render(<SYS1010D00 />);
       await waitFor(() => {
         expect(screen.getByTestId('program-search-grid')).toBeInTheDocument();
@@ -126,8 +126,8 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
     });
   });
 
-  describe('프로그램 목록 조회', () => {
-    test('화면 로드 시 프로그램 목록이 자동으로 조회됩니다.', async () => {
+  describe('?�로그램 목록 조회', () => {
+    test('?�면 로드 ???�로그램 목록???�동?�로 조회?�니??', async () => {
       render(<SYS1010D00 />);
 
       await waitFor(() => {
@@ -135,13 +135,13 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
       }, { timeout: 3000 });
     });
 
-    test('검색 조건을 입력하고 조회 버튼을 클릭하면 해당 조건으로 조회됩니다.', async () => {
+    test('검??조건???�력?�고 조회 버튼???�릭?�면 ?�당 조건?�로 조회?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1010D00 />);
 
-      // 검색 조건 입력
+      // 검??조건 ?�력
       const searchInput = screen.getByDisplayValue('');
-      await user.type(searchInput, '사용자');
+      await user.type(searchInput, '?�용??);
 
       const searchButton = screen.getByText('조회');
       await user.click(searchButton);
@@ -151,12 +151,12 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
       }, { timeout: 3000 });
     });
 
-    test('엔터키를 누르면 자동으로 조회가 실행됩니다.', async () => {
+    test('?�터?��? ?�르�??�동?�로 조회가 ?�행?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1010D00 />);
 
       const searchInput = screen.getByDisplayValue('');
-      await user.type(searchInput, '시스템');
+      await user.type(searchInput, '?�스??);
       await user.keyboard('{Enter}');
 
       await waitFor(() => {
@@ -164,12 +164,12 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
       }, { timeout: 3000 });
     });
 
-    test('프로그램구분을 선택하면 해당 조건으로 조회됩니다.', async () => {
+    test('?�로그램구분???�택?�면 ?�당 조건?�로 조회?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1010D00 />);
 
       const divisionSelect = screen.getAllByRole('combobox')[0];
-      await user.selectOptions(divisionSelect, '화면');
+      await user.selectOptions(divisionSelect, '?�면');
 
       const searchButton = screen.getByText('조회');
       await user.click(searchButton);
@@ -179,12 +179,12 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
       }, { timeout: 3000 });
     });
 
-    test('업무구분을 선택하면 해당 조건으로 조회됩니다.', async () => {
+    test('?�무구분???�택?�면 ?�당 조건?�로 조회?�니??', async () => {
       const user = userEvent.setup();
       render(<SYS1010D00 />);
 
       const bizSelect = screen.getAllByRole('combobox')[1];
-      await user.selectOptions(bizSelect, '업무');
+      await user.selectOptions(bizSelect, '?�무');
 
       const searchButton = screen.getByText('조회');
       await user.click(searchButton);
@@ -195,8 +195,8 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
     });
   });
 
-  describe('프로그램 선택', () => {
-    test('다중 선택 모드에서 체크박스로 프로그램을 선택할 수 있습니다.', async () => {
+  describe('?�로그램 ?�택', () => {
+    test('?�중 ?�택 모드?�서 체크박스�??�로그램???�택?????�습?�다.', async () => {
       const user = userEvent.setup();
       const mockOnSelect = jest.fn();
       render(<SYS1010D00 multiple={true} onSelect={mockOnSelect} />);
@@ -206,8 +206,8 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
         fireEvent.click(gridRow);
       });
 
-      // 추가 버튼 클릭
-      const addButton = screen.getByText('추가');
+      // 추�? 버튼 ?�릭
+      const addButton = screen.getByText('추�?');
       await user.click(addButton);
 
       await waitFor(() => {
@@ -215,7 +215,7 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
       });
     });
 
-    test('단일 선택 모드에서 더블클릭으로 프로그램을 선택할 수 있습니다.', async () => {
+    test('?�일 ?�택 모드?�서 ?�블?�릭?�로 ?�로그램???�택?????�습?�다.', async () => {
       const user = userEvent.setup();
       const mockOnSelect = jest.fn();
       render(<SYS1010D00 multiple={false} onSelect={mockOnSelect} />);
@@ -230,12 +230,12 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
       });
     });
 
-    test('여러 프로그램을 선택하면 모든 선택된 프로그램이 전달됩니다.', async () => {
+    test('?�러 ?�로그램???�택?�면 모든 ?�택???�로그램???�달?�니??', async () => {
       const user = userEvent.setup();
       const mockOnSelect = jest.fn();
       render(<SYS1010D00 multiple={true} onSelect={mockOnSelect} />);
 
-      // 여러 프로그램 선택
+      // ?�러 ?�로그램 ?�택
       await waitFor(() => {
         const gridRow1 = screen.getByTestId('program-search-grid-row-0');
         const gridRow2 = screen.getByTestId('program-search-grid-row-1');
@@ -243,8 +243,8 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
         fireEvent.click(gridRow2);
       });
 
-      // 추가 버튼 클릭
-      const addButton = screen.getByText('추가');
+      // 추�? 버튼 ?�릭
+      const addButton = screen.getByText('추�?');
       await user.click(addButton);
 
       await waitFor(() => {
@@ -253,45 +253,45 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
     });
   });
 
-  describe('선택 취소', () => {
-    test('취소 버튼을 클릭하면 팝업이 닫힙니다.', async () => {
+  describe('?�택 취소', () => {
+    test('취소 버튼???�릭?�면 ?�업???�힙?�다.', async () => {
       const user = userEvent.setup();
       const mockOnSelect = jest.fn();
       render(<SYS1010D00 multiple={true} onSelect={mockOnSelect} />);
 
-      // 취소 버튼 클릭
+      // 취소 버튼 ?�릭
       const cancelButton = screen.getByText('취소');
       await user.click(cancelButton);
 
-      // 팝업이 닫히는지 확인 (window.close가 호출되는지)
+      // ?�업???�히?��? ?�인 (window.close가 ?�출?�는지)
       expect(window.close).toBeDefined();
     });
   });
 
-  describe('팝업 닫기', () => {
-    test('ESC 키를 누르면 팝업이 닫힙니다.', async () => {
+  describe('?�업 ?�기', () => {
+    test('ESC ?��? ?�르�??�업???�힙?�다.', async () => {
       const user = userEvent.setup();
       render(<SYS1010D00 />);
 
       await user.keyboard('{Escape}');
 
-      // ESC 키는 기본적으로 팝업을 닫지 않으므로, 실제 구현에 따라 테스트 수정 필요
+      // ESC ?�는 기본?�으�??�업???��? ?�으므�? ?�제 구현???�라 ?�스???�정 ?�요
       expect(true).toBe(true);
     });
   });
 
-  describe('URL 파라미터 처리', () => {
-    test('URL 파라미터에 PGM_ID가 있으면 해당 프로그램이 미리 선택됩니다.', async () => {
-      // URL 파라미터 시뮬레이션 - 간단한 테스트로 변경
+  describe('URL ?�라미터 처리', () => {
+    test('URL ?�라미터??PGM_ID가 ?�으�??�당 ?�로그램??미리 ?�택?�니??', async () => {
+      // URL ?�라미터 ?��??�이??- 간단???�스?�로 변�?
       render(<SYS1010D00 />);
 
-      // 컴포넌트가 정상적으로 렌더링되는지 확인
+      // 컴포?�트가 ?�상?�으�??�더링되?��? ?�인
       await waitFor(() => {
         expect(screen.getByTestId('program-search-grid')).toBeInTheDocument();
       });
     });
 
-    test('URL 파라미터에 PGM_GRP_ID가 있으면 해당 그룹의 프로그램들이 필터링됩니다.', async () => {
+    test('URL ?�라미터??PGM_GRP_ID가 ?�으�??�당 그룹???�로그램?�이 ?�터링됩?�다.', async () => {
       render(<SYS1010D00 />);
 
       await waitFor(() => {
@@ -300,8 +300,8 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
     });
   });
 
-  describe('검증 및 에러 처리', () => {
-    test('프로그램을 선택하지 않고 추가 버튼을 클릭하면 경고 메시지가 표시됩니다.', async () => {
+  describe('검�?�??�러 처리', () => {
+    test('?�로그램???�택?��? ?�고 추�? 버튼???�릭?�면 경고 메시지가 ?�시?�니??', async () => {
       const user = userEvent.setup();
       
       // alert 모킹
@@ -309,18 +309,18 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
       
       render(<SYS1010D00 multiple={true} />);
 
-      const addButton = screen.getByText('추가');
+      const addButton = screen.getByText('추�?');
       await user.click(addButton);
 
       await waitFor(() => {
-        expect(mockAlert).toHaveBeenCalledWith('추가할 프로그램을 선택해주세요.');
+        expect(mockAlert).toHaveBeenCalledWith('추�????�로그램???�택?�주?�요.');
       });
 
       mockAlert.mockRestore();
     });
 
-    test('API 호출 실패 시 에러 메시지가 표시됩니다.', async () => {
-      (global.fetch as jest.Mock).mockRejectedValue(new Error('API 오류'));
+    test('API ?�출 ?�패 ???�러 메시지가 ?�시?�니??', async () => {
+      (global.fetch as jest.Mock).mockRejectedValue(new Error('API ?�류'));
 
       // alert 모킹
       const mockAlert = jest.spyOn(window, 'alert').mockImplementation(() => {});
@@ -328,13 +328,13 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
       render(<SYS1010D00 />);
 
       await waitFor(() => {
-        expect(mockAlert).toHaveBeenCalledWith('프로그램 목록 로드 실패: API 오류');
+        expect(mockAlert).toHaveBeenCalledWith('?�로그램 목록 로드 ?�패: API ?�류');
       });
 
       mockAlert.mockRestore();
     });
 
-    test('네트워크 오류 시 적절한 에러 메시지가 표시됩니다.', async () => {
+    test('?�트?�크 ?�류 ???�절???�러 메시지가 ?�시?�니??', async () => {
       (global.fetch as jest.Mock).mockRejectedValue(new Error('Network Error'));
 
       // alert 모킹
@@ -343,52 +343,52 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
       render(<SYS1010D00 />);
 
       await waitFor(() => {
-        expect(mockAlert).toHaveBeenCalledWith('프로그램 목록 로드 실패: Network Error');
+        expect(mockAlert).toHaveBeenCalledWith('?�로그램 목록 로드 ?�패: Network Error');
       });
 
       mockAlert.mockRestore();
     });
   });
 
-  describe('접근성', () => {
-    test('모든 입력 필드에 적절한 aria-label이 설정되어 있습니다.', () => {
+  describe('?�근??, () => {
+    test('모든 ?�력 ?�드???�절??aria-label???�정?�어 ?�습?�다.', () => {
       render(<SYS1010D00 />);
 
-      expect(screen.getByLabelText('프로그램 ID명 입력')).toBeInTheDocument();
-      expect(screen.getByLabelText('구분 선택')).toBeInTheDocument();
-      expect(screen.getByLabelText('업무 선택')).toBeInTheDocument();
+      expect(screen.getByLabelText('?�로그램 ID�??�력')).toBeInTheDocument();
+      expect(screen.getByLabelText('구분 ?�택')).toBeInTheDocument();
+      expect(screen.getByLabelText('?�무 ?�택')).toBeInTheDocument();
     });
 
-    test('키보드로 모든 기능에 접근할 수 있습니다.', async () => {
+    test('?�보?�로 모든 기능???�근?????�습?�다.', async () => {
       const user = userEvent.setup();
       render(<SYS1010D00 />);
 
-      // Tab 키로 포커스 이동
+      // Tab ?�로 ?�커???�동
       await user.tab();
-      expect(screen.getByDisplayValue('')).toHaveFocus(); // 첫 번째 input
+      expect(screen.getByDisplayValue('')).toHaveFocus(); // �?번째 input
 
       await user.tab();
-      expect(screen.getAllByRole('combobox')[0]).toHaveFocus(); // 첫 번째 select
+      expect(screen.getAllByRole('combobox')[0]).toHaveFocus(); // �?번째 select
 
       await user.tab();
-      expect(screen.getAllByRole('combobox')[1]).toHaveFocus(); // 두 번째 select
+      expect(screen.getAllByRole('combobox')[1]).toHaveFocus(); // ??번째 select
 
       await user.tab();
       expect(screen.getByText('조회')).toHaveFocus(); // 조회 버튼
     });
 
-    test('스크린 리더 사용자를 위한 적절한 ARIA 속성이 설정되어 있습니다.', () => {
+    test('?�크�?리더 ?�용?��? ?�한 ?�절??ARIA ?�성???�정?�어 ?�습?�다.', () => {
       render(<SYS1010D00 />);
 
       expect(screen.getByTestId('program-search-grid')).toBeInTheDocument();
     });
   });
 
-  describe('성능 및 최적화', () => {
-    test('대량의 프로그램 데이터가 있어도 화면이 정상적으로 렌더링됩니다.', async () => {
+  describe('?�능 �?최적??, () => {
+    test('?�?�의 ?�로그램 ?�이?��? ?�어???�면???�상?�으�??�더링됩?�다.', async () => {
       const largeData = Array.from({ length: 1000 }, (_, i) => ({
         PGM_ID: `PGM${i.toString().padStart(3, '0')}`,
-        PGM_NM: `프로그램 ${i}`,
+        PGM_NM: `?�로그램 ${i}`,
         PGM_DIV_CD: '1',
         BIZ_DIV_CD: 'SYS',
         USE_YN: 'Y',
@@ -408,9 +408,9 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
     });
   });
 
-  describe('반응형 디자인', () => {
-    test('작은 화면에서도 모든 기능이 정상적으로 작동합니다.', () => {
-      // 작은 화면 크기 시뮬레이션
+  describe('반응???�자??, () => {
+    test('?��? ?�면?�서??모든 기능???�상?�으�??�동?�니??', () => {
+      // ?��? ?�면 ?�기 ?��??�이??
       Object.defineProperty(window, 'innerWidth', {
         writable: true,
         configurable: true,
@@ -419,25 +419,25 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
 
       render(<SYS1010D00 />);
 
-      expect(screen.getByText('프로그램목록')).toBeInTheDocument();
+      expect(screen.getByText('?�로그램목록')).toBeInTheDocument();
       expect(screen.getByTestId('program-search-grid')).toBeInTheDocument();
     });
   });
 
-  describe('국제화', () => {
-    test('한국어 텍스트가 정상적으로 표시됩니다.', () => {
+  describe('�?��??, () => {
+    test('?�국???�스?��? ?�상?�으�??�시?�니??', () => {
       render(<SYS1010D00 />);
 
-      expect(screen.getByText('프로그램목록')).toBeInTheDocument();
-      expect(screen.getByText('프로그램 ID명')).toBeInTheDocument();
+      expect(screen.getByText('?�로그램목록')).toBeInTheDocument();
+      expect(screen.getByText('?�로그램 ID�?)).toBeInTheDocument();
       expect(screen.getByText('구분')).toBeInTheDocument();
-      expect(screen.getAllByText('업무')[0]).toBeInTheDocument(); // 첫 번째 '업무' 텍스트 사용
+      expect(screen.getAllByText('?�무')[0]).toBeInTheDocument(); // �?번째 '?�무' ?�스???�용
       expect(screen.getByText('조회')).toBeInTheDocument();
-      expect(screen.getByText('추가')).toBeInTheDocument();
-      // 취소 버튼은 onSelect prop이 있을 때만 표시되므로 조건부로 확인
+      expect(screen.getByText('추�?')).toBeInTheDocument();
+      // 취소 버튼?� onSelect prop???�을 ?�만 ?�시?��?�?조건부�??�인
     });
 
-    test('onSelect prop이 있을 때 취소 버튼이 표시됩니다.', () => {
+    test('onSelect prop???�을 ??취소 버튼???�시?�니??', () => {
       const mockOnSelect = jest.fn();
       render(<SYS1010D00 onSelect={mockOnSelect} />);
 
@@ -445,3 +445,4 @@ describe('SYS1010D00 - 프로그램 검색 팝업', () => {
     });
   });
 }); 
+

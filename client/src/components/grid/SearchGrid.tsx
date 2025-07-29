@@ -23,13 +23,13 @@ export default function SearchGrid({
 	onGridReady,
 	height = '600px',
 	className = '',
-	searchPlaceholder = '검색어를 입력하세요...',
+	searchPlaceholder = '검?�어�??�력?�세??..',
 	enableExport = true,
 }: SearchGridProps) {
 	const [searchText, setSearchText] = useState('')
 	const [gridApi, setGridApi] = useState<GridApi | null>(null)
 
-	// 검색 필터링
+	// 검???�터�?
 	const filteredData = useCallback(() => {
 		if (!searchText) return rowData
 
@@ -40,7 +40,7 @@ export default function SearchGrid({
 		})
 	}, [rowData, searchText])
 
-	// 그리드 준비 이벤트
+	// 그리??준�??�벤??
 	const handleGridReady = useCallback(
 		(params: GridReadyEvent) => {
 			setGridApi(params.api)
@@ -51,7 +51,7 @@ export default function SearchGrid({
 		[onGridReady]
 	)
 
-	// 엑셀 내보내기
+	// ?��? ?�보?�기
 	const handleExport = useCallback(() => {
 		if (gridApi) {
 			gridApi.exportDataAsCsv({
@@ -65,7 +65,7 @@ export default function SearchGrid({
 
 	return (
 		<div className={`space-y-4 ${className}`}>
-			{/* 검색 및 도구 영역 */}
+			{/* 검??�??�구 ?�역 */}
 			<div className='flex justify-between items-center'>
 				<div className='flex-1 max-w-md'>
 					<input
@@ -83,13 +83,13 @@ export default function SearchGrid({
 							onClick={handleExport}
 							className='px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors'
 						>
-							엑셀 내보내기
+							?��? ?�보?�기
 						</button>
 					)}
 				</div>
 			</div>
 
-			{/* 그리드 */}
+			{/* 그리??*/}
 			<div style={{ height }}>
 				<DataGrid
 					rowData={filteredData()}
@@ -106,3 +106,5 @@ export default function SearchGrid({
 		</div>
 	)
 }
+
+

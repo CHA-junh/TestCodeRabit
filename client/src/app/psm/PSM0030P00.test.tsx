@@ -1,7 +1,7 @@
 /**
- * PSM0030P00 - 기술등급이력 조회 팝업 (간단 버전)
+ * PSM0030P00 - 기술?�급?�력 조회 ?�업 (간단 버전)
  * 
- * 핵심 기능만 테스트하는 표준적인 버전
+ * ?�심 기능�??�스?�하???��??�인 버전
  */
 
 import React from 'react';
@@ -21,11 +21,11 @@ const renderWithProviders = (ui: React.ReactElement) => {
 describe('PSM0030P00', () => {
   const mockProps = {
     empNo: '10001',
-    empNm: '홍길동',
-    ownOutsKb: '자사',
+    empNm: '?�길??,
+    ownOutsKb: '?�사',
     entrDt: '20200101',
-    lastAdbgDiv: '대졸',
-    ctql: '정보처리기사',
+    lastAdbgDiv: '?��?,
+    ctql: '?�보처리기사',
     ctqlPurDt: '20200201',
     adbgCarrMcnt: '48',
     ctqlCarrMcnt: '36',
@@ -39,7 +39,7 @@ describe('PSM0030P00', () => {
     mockFetch.mockClear();
   });
 
-  test('컴포넌트가 올바르게 렌더링된다', async () => {
+  test('컴포?�트가 ?�바르게 ?�더링된??, async () => {
     mockFetch.mockResolvedValueOnce({
       ok: true,
       json: async () => ({ success: true, data: [] })
@@ -49,12 +49,12 @@ describe('PSM0030P00', () => {
       renderWithProviders(<PSM0030P00 {...mockProps} onClose={jest.fn()} />);
     });
 
-    expect(screen.getByText('기술등급이력조회')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('홍길동')).toBeInTheDocument();
+    expect(screen.getByText('기술?�급?�력조회')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('?�길??)).toBeInTheDocument();
     expect(screen.getByDisplayValue('중급')).toBeInTheDocument();
   });
 
-  test('조회 버튼 클릭 시 API가 호출된다', async () => {
+  test('조회 버튼 ?�릭 ??API가 ?�출?�다', async () => {
     mockFetch.mockResolvedValueOnce({
       ok: true,
       json: async () => ({ success: true, data: [] })
@@ -64,12 +64,12 @@ describe('PSM0030P00', () => {
       renderWithProviders(<PSM0030P00 {...mockProps} onClose={jest.fn()} />);
     });
 
-    // 조회 버튼이 활성화될 때까지 대기
+    // 조회 버튼???�성?�될 ?�까지 ?��?
     await waitFor(() => {
       expect(screen.getByText('조회')).toBeInTheDocument();
     });
 
-    // 두 번째 API 호출을 위한 mock
+    // ??번째 API ?�출???�한 mock
     mockFetch.mockResolvedValueOnce({
       ok: true,
       json: async () => ({ success: true, data: [] })
@@ -89,7 +89,7 @@ describe('PSM0030P00', () => {
     });
   });
 
-  test('종료 버튼 클릭 시 onClose가 호출된다', async () => {
+  test('종료 버튼 ?�릭 ??onClose가 ?�출?�다', async () => {
     const mockOnClose = jest.fn();
     mockFetch.mockResolvedValueOnce({
       ok: true,
@@ -108,3 +108,4 @@ describe('PSM0030P00', () => {
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 }); 
+

@@ -1,17 +1,17 @@
 /**
  * PSM (Personnel System Management) DTO 모음
  * 
- * 인사관리 시스템에서 사용되는 모든 Data Transfer Object를 정의합니다.
- * 각 DTO는 API 요청/응답의 데이터 구조를 정의하며, Swagger 문서화와 유효성 검증을 지원합니다.
+ * ?�사관�??�스?�에???�용?�는 모든 Data Transfer Object�??�의?�니??
+ * �?DTO??API ?�청/?�답???�이??구조�??�의?�며, Swagger 문서?��? ?�효??검증을 지?�합?�다.
  * 
  * 주요 DTO 그룹:
- * - 사원 관리: SearchEmployeesDto, EmployeeDetailDto, UpdateEmployeeDto, DeleteEmployeeDto
- * - 경력 관리: CalculateCareerDto, UpdateCareerDto, ProfileCareerDto
- * - 인사발령: SaveAppointmentDto, DeleteAppointmentDto, BatchRegisterAppointmentDto
+ * - ?�원 관�? SearchEmployeesDto, EmployeeDetailDto, UpdateEmployeeDto, DeleteEmployeeDto
+ * - 경력 관�? CalculateCareerDto, UpdateCareerDto, ProfileCareerDto
+ * - ?�사발령: SaveAppointmentDto, DeleteAppointmentDto, BatchRegisterAppointmentDto
  * - 공통 기능: DeptByHqDto, TechnicalGradeHistoryDto
- * - 응답 형식: ApiResponseDto
+ * - ?�답 ?�식: ApiResponseDto
  * 
- * 모든 DTO는 class-validator를 사용한 유효성 검증과 Swagger 문서화를 포함합니다.
+ * 모든 DTO??class-validator�??�용???�효??검증과 Swagger 문서?��? ?�함?�니??
  * 
  * @author BIST Development Team
  * @since 2024
@@ -19,10 +19,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsOptional, IsEnum } from 'class-validator';
 
-// 사원 검색 요청 DTO
+// ?�원 검???�청 DTO
 export class SearchEmployeesDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: 'ALL',
     required: false 
   })
@@ -31,8 +31,8 @@ export class SearchEmployeesDto {
   empNo?: string;
 
   @ApiProperty({ 
-    description: '사원성명', 
-    example: '조병원',
+    description: '?�원?�명', 
+    example: '조병??,
     required: false 
   })
   @IsOptional()
@@ -40,7 +40,7 @@ export class SearchEmployeesDto {
   empNm?: string;
 
   @ApiProperty({ 
-    description: '자사/외주 구분 (1: 자사, 2: 외주)', 
+    description: '?�사/?�주 구분 (1: ?�사, 2: ?�주)', 
     example: '1',
     required: false 
   })
@@ -49,7 +49,7 @@ export class SearchEmployeesDto {
   ownOutsDiv?: string;
 
   @ApiProperty({ 
-    description: '본부 코드', 
+    description: '본�? 코드', 
     example: 'ALL',
     required: false 
   })
@@ -58,7 +58,7 @@ export class SearchEmployeesDto {
   hqDivCd?: string;
 
   @ApiProperty({ 
-    description: '부서 코드', 
+    description: '부??코드', 
     example: 'ALL',
     required: false 
   })
@@ -76,7 +76,7 @@ export class SearchEmployeesDto {
   dutyCd?: string;
 
   @ApiProperty({ 
-    description: '퇴사자 포함 여부 (Y/N)', 
+    description: '?�사???�함 ?��? (Y/N)', 
     example: 'N',
     required: false 
   })
@@ -85,7 +85,7 @@ export class SearchEmployeesDto {
   retirYn?: string;
 
   @ApiProperty({ 
-    description: '사용자 ID', 
+    description: '?�용??ID', 
     example: 'system',
     required: false 
   })
@@ -94,10 +94,10 @@ export class SearchEmployeesDto {
   userId?: string;
 }
 
-// 사원 상세 조회 요청 DTO
+// ?�원 ?�세 조회 ?�청 DTO
 export class EmployeeDetailDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -105,10 +105,10 @@ export class EmployeeDetailDto {
   empNo: string;
 }
 
-// 경력 계산 요청 DTO
+// 경력 계산 ?�청 DTO
 export class CalculateCareerDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -116,7 +116,7 @@ export class CalculateCareerDto {
   empNo: string;
 
   @ApiProperty({ 
-    description: '입사일자 (YYYYMMDD)', 
+    description: '?�사?�자 (YYYYMMDD)', 
     example: '19980110',
     required: false 
   })
@@ -125,7 +125,7 @@ export class CalculateCareerDto {
   entrDt?: string;
 
   @ApiProperty({ 
-    description: '최초투입일자 (YYYYMMDD)', 
+    description: '최초?�입?�자 (YYYYMMDD)', 
     example: '19980110',
     required: false 
   })
@@ -134,7 +134,7 @@ export class CalculateCareerDto {
   fstInDt?: string;
 
   @ApiProperty({ 
-    description: '최종철수일자 (YYYYMMDD)', 
+    description: '최종철수?�자 (YYYYMMDD)', 
     example: '20241231',
     required: false 
   })
@@ -143,7 +143,7 @@ export class CalculateCareerDto {
   lastEndDt?: string;
 
   @ApiProperty({ 
-    description: '최종학력구분코드', 
+    description: '최종?�력구분코드', 
     example: '1',
     required: false 
   })
@@ -152,7 +152,7 @@ export class CalculateCareerDto {
   lastAdbgDivCd?: string;
 
   @ApiProperty({ 
-    description: '자격증 코드', 
+    description: '?�격�?코드', 
     example: '1',
     required: false 
   })
@@ -161,7 +161,7 @@ export class CalculateCareerDto {
   ctqlCd?: string;
 
   @ApiProperty({ 
-    description: '자격증 취득일자 (YYYYMMDD)', 
+    description: '?�격�?취득?�자 (YYYYMMDD)', 
     example: '20200101',
     required: false 
   })
@@ -170,7 +170,7 @@ export class CalculateCareerDto {
   ctqlPurDt?: string;
 
   @ApiProperty({ 
-    description: '자사/외주 구분 (1: 자사, 2: 외주)', 
+    description: '?�사/?�주 구분 (1: ?�사, 2: ?�주)', 
     example: '1',
     required: false 
   })
@@ -179,10 +179,10 @@ export class CalculateCareerDto {
   ownOutsDiv?: string;
 }
 
-// 경력 업데이트 요청 DTO
+// 경력 ?�데?�트 ?�청 DTO
 export class UpdateCareerDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -190,7 +190,7 @@ export class UpdateCareerDto {
   empNo: string;
 
   @ApiProperty({ 
-    description: '자사/외주 구분 (1: 자사, 2: 외주)', 
+    description: '?�사/?�주 구분 (1: ?�사, 2: ?�주)', 
     example: '1',
     required: true 
   })
@@ -198,7 +198,7 @@ export class UpdateCareerDto {
   ownOutsDiv: string;
 
   @ApiProperty({ 
-    description: '자격증 코드', 
+    description: '?�격�?코드', 
     example: '1',
     required: false 
   })
@@ -207,7 +207,7 @@ export class UpdateCareerDto {
   ctqlCd?: string;
 
   @ApiProperty({ 
-    description: '자격증 취득일자 (YYYYMMDD)', 
+    description: '?�격�?취득?�자 (YYYYMMDD)', 
     example: '20200101',
     required: false 
   })
@@ -216,7 +216,7 @@ export class UpdateCareerDto {
   ctqlPurDt?: string;
 
   @ApiProperty({ 
-    description: '최초투입일자 (YYYYMMDD)', 
+    description: '최초?�입?�자 (YYYYMMDD)', 
     example: '19980110',
     required: false 
   })
@@ -225,7 +225,7 @@ export class UpdateCareerDto {
   fstInDt?: string;
 
   @ApiProperty({ 
-    description: '최종철수일자 (YYYYMMDD)', 
+    description: '최종철수?�자 (YYYYMMDD)', 
     example: '20241231',
     required: false 
   })
@@ -234,7 +234,7 @@ export class UpdateCareerDto {
   lastEndDt?: string;
 
   @ApiProperty({ 
-    description: '경력계산기준일자 (YYYYMMDD)', 
+    description: '경력계산기�??�자 (YYYYMMDD)', 
     example: '20240101',
     required: false 
   })
@@ -252,7 +252,7 @@ export class UpdateCareerDto {
   carrDivCd?: string;
 
   @ApiProperty({ 
-    description: '최종기술등급', 
+    description: '최종기술?�급', 
     example: '9',
     required: false 
   })
@@ -261,7 +261,7 @@ export class UpdateCareerDto {
   lastTcnGrd?: string;
 
   @ApiProperty({ 
-    description: '경력개월수', 
+    description: '경력개월??, 
     example: '300',
     required: false 
   })
@@ -270,7 +270,7 @@ export class UpdateCareerDto {
   carrMcnt?: string;
 
   @ApiProperty({ 
-    description: '학력경력개월수', 
+    description: '?�력경력개월??, 
     example: '120',
     required: false 
   })
@@ -279,7 +279,7 @@ export class UpdateCareerDto {
   adbgCarrMcnt?: string;
 
   @ApiProperty({ 
-    description: '자격경력개월수', 
+    description: '?�격경력개월??, 
     example: '60',
     required: false 
   })
@@ -288,7 +288,7 @@ export class UpdateCareerDto {
   ctqlCarrMcnt?: string;
 
   @ApiProperty({ 
-    description: '입사전자격경력개월수', 
+    description: '?�사?�자격경?�개?�수', 
     example: '0',
     required: false 
   })
@@ -297,7 +297,7 @@ export class UpdateCareerDto {
   entrBefCtqlCarr?: string;
 
   @ApiProperty({ 
-    description: '입사전학력경력개월수', 
+    description: '?�사?�학?�경?�개?�수', 
     example: '0',
     required: false 
   })
@@ -306,7 +306,7 @@ export class UpdateCareerDto {
   entrBefAdbgCarr?: string;
 
   @ApiProperty({ 
-    description: '사용자 ID', 
+    description: '?�용??ID', 
     example: 'system',
     required: false 
   })
@@ -319,10 +319,10 @@ export class UpdateCareerDto {
 
 
 
-// 인사발령 검색 요청 DTO
+// ?�사발령 검???�청 DTO
 export class SearchAppointmentDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -330,10 +330,10 @@ export class SearchAppointmentDto {
   empNo: string;
 }
 
-// 인사발령 저장 요청 DTO
+// ?�사발령 ?�???�청 DTO
 export class SaveAppointmentDto {
   @ApiProperty({ 
-    description: '모드 (NEW: 신규, MOD: 수정)', 
+    description: '모드 (NEW: ?�규, MOD: ?�정)', 
     example: 'NEW',
     enum: ['NEW', 'MOD'],
     required: true 
@@ -342,7 +342,7 @@ export class SaveAppointmentDto {
   mode: string;
 
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -350,7 +350,7 @@ export class SaveAppointmentDto {
   empNo: string;
 
   @ApiProperty({ 
-    description: '일련번호 (수정 시에만 필요)', 
+    description: '?�련번호 (?�정 ?�에�??�요)', 
     example: '1',
     required: false 
   })
@@ -359,7 +359,7 @@ export class SaveAppointmentDto {
   seqNo?: string;
 
   @ApiProperty({ 
-    description: '발령구분 (1: 입사, 2: 승진, 3: 이동, 4: 퇴사)', 
+    description: '발령구분 (1: ?�사, 2: ?�진, 3: ?�동, 4: ?�사)', 
     example: '2',
     required: true 
   })
@@ -367,7 +367,7 @@ export class SaveAppointmentDto {
   apntDiv: string;
 
   @ApiProperty({ 
-    description: '발령일자 (YYYYMMDD)', 
+    description: '발령?�자 (YYYYMMDD)', 
     example: '20250721',
     required: true 
   })
@@ -375,7 +375,7 @@ export class SaveAppointmentDto {
   apntDt: string;
 
   @ApiProperty({ 
-    description: '발령본부 코드', 
+    description: '발령본�? 코드', 
     example: '25',
     required: true 
   })
@@ -383,7 +383,7 @@ export class SaveAppointmentDto {
   hqDivCd: string;
 
   @ApiProperty({ 
-    description: '발령부서 코드', 
+    description: '발령부??코드', 
     example: '2501',
     required: true 
   })
@@ -400,7 +400,7 @@ export class SaveAppointmentDto {
 
   @ApiProperty({ 
     description: '비고', 
-    example: '정기인사발령',
+    example: '?�기?�사발령',
     required: false 
   })
   @IsOptional()
@@ -408,7 +408,7 @@ export class SaveAppointmentDto {
   rmk?: string;
 
   @ApiProperty({ 
-    description: '사용자 ID', 
+    description: '?�용??ID', 
     example: 'system',
     required: false 
   })
@@ -417,10 +417,10 @@ export class SaveAppointmentDto {
   userId?: string;
 }
 
-// 인사발령 삭제 요청 DTO
+// ?�사발령 ??�� ?�청 DTO
 export class DeleteAppointmentDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -428,7 +428,7 @@ export class DeleteAppointmentDto {
   empNo: string;
 
   @ApiProperty({ 
-    description: '일련번호', 
+    description: '?�련번호', 
     example: '1',
     required: false 
   })
@@ -437,7 +437,7 @@ export class DeleteAppointmentDto {
   seqNo?: string;
 
   @ApiProperty({ 
-    description: '사용자 ID', 
+    description: '?�용??ID', 
     example: 'system',
     required: false 
   })
@@ -446,10 +446,10 @@ export class DeleteAppointmentDto {
   userId?: string;
 }
 
-// 기술등급이력 조회 요청 DTO
+// 기술?�급?�력 조회 ?�청 DTO
 export class TechnicalGradeHistoryDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -457,10 +457,10 @@ export class TechnicalGradeHistoryDto {
   empNo: string;
 }
 
-// 프로필 경력 조회 요청 DTO
+// ?�로??경력 조회 ?�청 DTO
 export class ProfileCareerDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -468,18 +468,18 @@ export class ProfileCareerDto {
   empNo: string;
 }
 
-// 인사발령 일괄등록 요청 DTO
+// ?�사발령 ?�괄?�록 ?�청 DTO
 export class BatchRegisterAppointmentDto {
   @ApiProperty({ 
-    description: '인사발령 데이터 (구분^발령일자^사번^본부코드^부서코드^직책코드^비고|)', 
-    example: '2^2024/07/21^10005^25^2501^9^정기인사발령|',
+    description: '?�사발령 ?�이??(구분^발령?�자^?�번^본�?코드^부?�코??직책코드^비고|)', 
+    example: '2^2024/07/21^10005^25^2501^9^?�기?�사발령|',
     required: true 
   })
   @IsString()
   appointmentData: string;
 
   @ApiProperty({ 
-    description: '사용자 ID', 
+    description: '?�용??ID', 
     example: 'USER_ID',
     required: true 
   })
@@ -487,10 +487,10 @@ export class BatchRegisterAppointmentDto {
   userId: string;
 }
 
-// 사원 정보 업데이트 요청 DTO
+// ?�원 ?�보 ?�데?�트 ?�청 DTO
 export class UpdateEmployeeDto {
   @ApiProperty({ 
-    description: '모드 (NEW: 신규, MOD: 수정)', 
+    description: '모드 (NEW: ?�규, MOD: ?�정)', 
     example: 'NEW',
     enum: ['NEW', 'MOD'],
     required: true 
@@ -499,7 +499,7 @@ export class UpdateEmployeeDto {
   mode: string;
 
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -507,7 +507,7 @@ export class UpdateEmployeeDto {
   empNo: string;
 
   @ApiProperty({ 
-    description: '자사/외주 구분 (1: 자사, 2: 외주)', 
+    description: '?�사/?�주 구분 (1: ?�사, 2: ?�주)', 
     example: '1',
     required: true 
   })
@@ -515,8 +515,8 @@ export class UpdateEmployeeDto {
   ownOutsDiv: string;
 
   @ApiProperty({ 
-    description: '업체명', 
-    example: '비스트정보기술',
+    description: '?�체�?, 
+    example: '비스?�정보기??,
     required: false 
   })
   @IsOptional()
@@ -524,7 +524,7 @@ export class UpdateEmployeeDto {
   crpnNm?: string;
 
   @ApiProperty({ 
-    description: '업체번호', 
+    description: '?�체번호', 
     example: 'ENTR001',
     required: false 
   })
@@ -533,7 +533,7 @@ export class UpdateEmployeeDto {
   entrNo?: string;
 
   @ApiProperty({ 
-    description: '입사코드', 
+    description: '?�사코드', 
     example: '1',
     required: false 
   })
@@ -542,15 +542,15 @@ export class UpdateEmployeeDto {
   entrCd?: string;
 
   @ApiProperty({ 
-    description: '사원성명', 
-    example: '홍길동',
+    description: '?�원?�명', 
+    example: '?�길??,
     required: true 
   })
   @IsString()
   empNm: string;
 
   @ApiProperty({ 
-    description: '영문성명', 
+    description: '?�문?�명', 
     example: 'Hong Gil Dong',
     required: false 
   })
@@ -559,7 +559,7 @@ export class UpdateEmployeeDto {
   empEngNm?: string;
 
   @ApiProperty({ 
-    description: '주민등록번호', 
+    description: '주�??�록번호', 
     example: '123456-1234567',
     required: false 
   })
@@ -568,7 +568,7 @@ export class UpdateEmployeeDto {
   resRegNo?: string;
 
   @ApiProperty({ 
-    description: '생년월일', 
+    description: '?�년?�일', 
     example: '19800101',
     required: false 
   })
@@ -577,7 +577,7 @@ export class UpdateEmployeeDto {
   birYrMnDt?: string;
 
   @ApiProperty({ 
-    description: '성별구분코드', 
+    description: '?�별구분코드', 
     example: '1',
     required: false 
   })
@@ -586,7 +586,7 @@ export class UpdateEmployeeDto {
   sexDivCd?: string;
 
   @ApiProperty({ 
-    description: '국적구분코드', 
+    description: '�?��구분코드', 
     example: '1',
     required: false 
   })
@@ -595,7 +595,7 @@ export class UpdateEmployeeDto {
   ntltDivCd?: string;
 
   @ApiProperty({ 
-    description: '입사일자', 
+    description: '?�사?�자', 
     example: '20200101',
     required: false 
   })
@@ -604,7 +604,7 @@ export class UpdateEmployeeDto {
   entrDt?: string;
 
   @ApiProperty({ 
-    description: '퇴사일자', 
+    description: '?�사?�자', 
     example: '20241231',
     required: false 
   })
@@ -613,7 +613,7 @@ export class UpdateEmployeeDto {
   retirDt?: string;
 
   @ApiProperty({ 
-    description: '본부구분코드', 
+    description: '본�?구분코드', 
     example: '25',
     required: false 
   })
@@ -622,7 +622,7 @@ export class UpdateEmployeeDto {
   hqDivCd?: string;
 
   @ApiProperty({ 
-    description: '부서구분코드', 
+    description: '부?�구분코??, 
     example: '2501',
     required: false 
   })
@@ -640,7 +640,7 @@ export class UpdateEmployeeDto {
   dutyCd?: string;
 
   @ApiProperty({ 
-    description: '최종기술등급', 
+    description: '최종기술?�급', 
     example: '9',
     required: false 
   })
@@ -649,7 +649,7 @@ export class UpdateEmployeeDto {
   lastTcnGrd?: string;
 
   @ApiProperty({ 
-    description: '이메일주소', 
+    description: '?�메?�주??, 
     example: 'hong@bist.co.kr',
     required: false 
   })
@@ -658,7 +658,7 @@ export class UpdateEmployeeDto {
   emailAddr?: string;
 
   @ApiProperty({ 
-    description: '휴대폰번호', 
+    description: '?��??�번??, 
     example: '010-1234-5678',
     required: false 
   })
@@ -667,7 +667,7 @@ export class UpdateEmployeeDto {
   mobPhnNo?: string;
 
   @ApiProperty({ 
-    description: '집전화번호', 
+    description: '집전?�번??, 
     example: '02-1234-5678',
     required: false 
   })
@@ -676,7 +676,7 @@ export class UpdateEmployeeDto {
   homeTel?: string;
 
   @ApiProperty({ 
-    description: '우편번호', 
+    description: '?�편번호', 
     example: '12345',
     required: false 
   })
@@ -686,7 +686,7 @@ export class UpdateEmployeeDto {
 
   @ApiProperty({ 
     description: '주소', 
-    example: '서울시 강남구',
+    example: '?�울??강남�?,
     required: false 
   })
   @IsOptional()
@@ -694,8 +694,8 @@ export class UpdateEmployeeDto {
   homeAddr?: string;
 
   @ApiProperty({ 
-    description: '상세주소', 
-    example: '테헤란로 123',
+    description: '?�세주소', 
+    example: '?�헤?��?123',
     required: false 
   })
   @IsOptional()
@@ -703,7 +703,7 @@ export class UpdateEmployeeDto {
   homeDetAddr?: string;
 
   @ApiProperty({ 
-    description: '최종투입일자', 
+    description: '최종?�입?�자', 
     example: '20200101',
     required: false 
   })
@@ -712,7 +712,7 @@ export class UpdateEmployeeDto {
   lastInDt?: string;
 
   @ApiProperty({ 
-    description: '최종철수일자', 
+    description: '최종철수?�자', 
     example: '20241231',
     required: false 
   })
@@ -721,7 +721,7 @@ export class UpdateEmployeeDto {
   lastEndDt?: string;
 
   @ApiProperty({ 
-    description: '투입횟수', 
+    description: '?�입?�수', 
     example: '5',
     required: false 
   })
@@ -730,7 +730,7 @@ export class UpdateEmployeeDto {
   inTcnt?: string;
 
   @ApiProperty({ 
-    description: '최종학력구분', 
+    description: '최종?�력구분', 
     example: '1',
     required: false 
   })
@@ -739,8 +739,8 @@ export class UpdateEmployeeDto {
   lastAdbgDiv?: string;
 
   @ApiProperty({ 
-    description: '최종학교', 
-    example: '서울대학교',
+    description: '최종?�교', 
+    example: '?�울?�?�교',
     required: false 
   })
   @IsOptional()
@@ -748,8 +748,8 @@ export class UpdateEmployeeDto {
   lastSchl?: string;
 
   @ApiProperty({ 
-    description: '전공', 
-    example: '컴퓨터공학',
+    description: '?�공', 
+    example: '컴퓨?�공??,
     required: false 
   })
   @IsOptional()
@@ -757,7 +757,7 @@ export class UpdateEmployeeDto {
   majr?: string;
 
   @ApiProperty({ 
-    description: '최종졸업일자', 
+    description: '최종졸업?�자', 
     example: '20100101',
     required: false 
   })
@@ -766,7 +766,7 @@ export class UpdateEmployeeDto {
   lastGradDt?: string;
 
   @ApiProperty({ 
-    description: '자격증코드', 
+    description: '?�격증코??, 
     example: '1',
     required: false 
   })
@@ -775,7 +775,7 @@ export class UpdateEmployeeDto {
   ctqlCd?: string;
 
   @ApiProperty({ 
-    description: '자격증취득일자', 
+    description: '?�격증취?�일??, 
     example: '20200101',
     required: false 
   })
@@ -784,7 +784,7 @@ export class UpdateEmployeeDto {
   ctqlPurDt?: string;
 
   @ApiProperty({ 
-    description: '경력개월수', 
+    description: '경력개월??, 
     example: '120',
     required: false 
   })
@@ -793,8 +793,8 @@ export class UpdateEmployeeDto {
   carrMcnt?: string;
 
   @ApiProperty({ 
-    description: '경력년월', 
-    example: '10년 0개월',
+    description: '경력?�월', 
+    example: '10??0개월',
     required: false 
   })
   @IsOptional()
@@ -802,7 +802,7 @@ export class UpdateEmployeeDto {
   carrYm?: string;
 
   @ApiProperty({ 
-    description: '근무상태구분코드', 
+    description: '근무?�태구분코드', 
     example: '1',
     required: false 
   })
@@ -811,7 +811,7 @@ export class UpdateEmployeeDto {
   wkgStDivCd?: string;
 
   @ApiProperty({ 
-    description: 'KOSA등록여부', 
+    description: 'KOSA?�록?��?', 
     example: 'Y',
     required: false 
   })
@@ -820,7 +820,7 @@ export class UpdateEmployeeDto {
   kosaRegYn?: string;
 
   @ApiProperty({ 
-    description: 'KOSA갱신일자', 
+    description: 'KOSA갱신?�자', 
     example: '20240101',
     required: false 
   })
@@ -829,7 +829,7 @@ export class UpdateEmployeeDto {
   kosaRnwDt?: string;
 
   @ApiProperty({ 
-    description: '최초투입일자', 
+    description: '최초?�입?�자', 
     example: '20200101',
     required: false 
   })
@@ -838,7 +838,7 @@ export class UpdateEmployeeDto {
   fstInDt?: string;
 
   @ApiProperty({ 
-    description: '입사전경력', 
+    description: '?�사?�경??, 
     example: '60',
     required: false 
   })
@@ -847,7 +847,7 @@ export class UpdateEmployeeDto {
   entrBefCarr?: string;
 
   @ApiProperty({ 
-    description: '입사전학력경력', 
+    description: '?�사?�학?�경??, 
     example: '30',
     required: false 
   })
@@ -856,7 +856,7 @@ export class UpdateEmployeeDto {
   entrBefAdbgCarr?: string;
 
   @ApiProperty({ 
-    description: '입사전자격경력', 
+    description: '?�사?�자격경??, 
     example: '30',
     required: false 
   })
@@ -874,7 +874,7 @@ export class UpdateEmployeeDto {
   carrDivCd?: string;
 
   @ApiProperty({ 
-    description: '학력경력개월수', 
+    description: '?�력경력개월??, 
     example: '60',
     required: false 
   })
@@ -883,7 +883,7 @@ export class UpdateEmployeeDto {
   adbgCarrMcnt?: string;
 
   @ApiProperty({ 
-    description: '자격경력개월수', 
+    description: '?�격경력개월??, 
     example: '30',
     required: false 
   })
@@ -892,7 +892,7 @@ export class UpdateEmployeeDto {
   ctqlCarrMcnt?: string;
 
   @ApiProperty({ 
-    description: '경력계산기준일자', 
+    description: '경력계산기�??�자', 
     example: '20240101',
     required: false 
   })
@@ -901,7 +901,7 @@ export class UpdateEmployeeDto {
   carrCalcStndDt?: string;
 
   @ApiProperty({ 
-    description: '입사후학력경력', 
+    description: '?�사?�학?�경??, 
     example: '120',
     required: false 
   })
@@ -910,7 +910,7 @@ export class UpdateEmployeeDto {
   entrAftAdbgCarr?: string;
 
   @ApiProperty({ 
-    description: '입사후자격경력', 
+    description: '?�사?�자격경??, 
     example: '60',
     required: false 
   })
@@ -920,7 +920,7 @@ export class UpdateEmployeeDto {
 
   @ApiProperty({ 
     description: '비고', 
-    example: '특이사항 없음',
+    example: '?�이?�항 ?�음',
     required: false 
   })
   @IsOptional()
@@ -928,7 +928,7 @@ export class UpdateEmployeeDto {
   rmk?: string;
 
   @ApiProperty({ 
-    description: '사용자 ID', 
+    description: '?�용??ID', 
     example: 'USER_ID',
     required: true 
   })
@@ -936,32 +936,32 @@ export class UpdateEmployeeDto {
   userId: string;
 }
 
-// API 응답 DTO
+// API ?�답 DTO
 export class ApiResponseDto<T = any> {
   @ApiProperty({ 
-    description: '성공 여부', 
+    description: '?�공 ?��?', 
     example: true 
   })
   success: boolean;
 
   @ApiProperty({ 
-    description: '응답 데이터', 
+    description: '?�답 ?�이??, 
     required: false 
   })
   data?: T;
 
   @ApiProperty({ 
-    description: '오류 메시지', 
-    example: '처리 중 오류가 발생했습니다.',
+    description: '?�류 메시지', 
+    example: '처리 �??�류가 발생?�습?�다.',
     required: false 
   })
   message?: string;
 }
 
-// 사원 정보 삭제 요청 DTO
+// ?�원 ?�보 ??�� ?�청 DTO
 export class DeleteEmployeeDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: 'EMP001',
     required: true 
   })
@@ -969,7 +969,7 @@ export class DeleteEmployeeDto {
   empNo: string;
 
   @ApiProperty({ 
-    description: '로그인 사용자 ID', 
+    description: '로그???�용??ID', 
     example: 'USER001',
     required: false 
   })
@@ -978,10 +978,10 @@ export class DeleteEmployeeDto {
   userId?: string;
 }
 
-// 프로필 리스트 조회 요청 DTO
+// ?�로??리스??조회 ?�청 DTO
 export class ProfileListDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -989,7 +989,7 @@ export class ProfileListDto {
   empNo: string;
 
   @ApiProperty({ 
-    description: '사용자 ID', 
+    description: '?�용??ID', 
     example: 'system',
     required: false 
   })
@@ -998,10 +998,10 @@ export class ProfileListDto {
   userId?: string;
 }
 
-// 프로필 등록 요청 DTO
+// ?�로???�록 ?�청 DTO
 export class ProfileInsertDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -1009,7 +1009,7 @@ export class ProfileInsertDto {
   empNo: string;
 
   @ApiProperty({ 
-    description: '사업번호', 
+    description: '?�업번호', 
     example: 'BSN001',
     required: false 
   })
@@ -1018,7 +1018,7 @@ export class ProfileInsertDto {
   bsnNo?: string;
 
   @ApiProperty({ 
-    description: '시작일자 (YYYYMMDD)', 
+    description: '?�작?�자 (YYYYMMDD)', 
     example: '20250101',
     required: true 
   })
@@ -1026,7 +1026,7 @@ export class ProfileInsertDto {
   strtDate: string;
 
   @ApiProperty({ 
-    description: '종료일자 (YYYYMMDD)', 
+    description: '종료?�자 (YYYYMMDD)', 
     example: '20250731',
     required: true 
   })
@@ -1034,16 +1034,16 @@ export class ProfileInsertDto {
   endDate: string;
 
   @ApiProperty({ 
-    description: '프로젝트명', 
-    example: '통신장비 재설정 리뉴얼',
+    description: '?�로?�트�?, 
+    example: '?�신?�비 ?�설??리뉴??,
     required: true 
   })
   @IsString()
   prjtNm: string;
 
   @ApiProperty({ 
-    description: '고객사', 
-    example: 'KB국민은행',
+    description: '고객??, 
+    example: 'KB�???�??,
     required: false 
   })
   @IsOptional()
@@ -1051,7 +1051,7 @@ export class ProfileInsertDto {
   mmbrCo?: string;
 
   @ApiProperty({ 
-    description: '개발환경/DBMS/언어', 
+    description: '개발?�경/DBMS/?�어', 
     example: 'Java, Spring, Oracle',
     required: false 
   })
@@ -1060,8 +1060,8 @@ export class ProfileInsertDto {
   delpEnvr?: string;
 
   @ApiProperty({ 
-    description: '역할', 
-    example: '개발자',
+    description: '??��', 
+    example: '개발??,
     required: false 
   })
   @IsOptional()
@@ -1069,8 +1069,8 @@ export class ProfileInsertDto {
   roleNm?: string;
 
   @ApiProperty({ 
-    description: '업무', 
-    example: '백엔드 개발',
+    description: '?�무', 
+    example: '백엔??개발',
     required: false 
   })
   @IsOptional()
@@ -1079,7 +1079,7 @@ export class ProfileInsertDto {
 
   @ApiProperty({ 
     description: '비고', 
-    example: '특이사항 없음',
+    example: '?�이?�항 ?�음',
     required: false 
   })
   @IsOptional()
@@ -1087,7 +1087,7 @@ export class ProfileInsertDto {
   rmk?: string;
 
   @ApiProperty({ 
-    description: '사용자 ID', 
+    description: '?�용??ID', 
     example: 'system',
     required: false 
   })
@@ -1096,10 +1096,10 @@ export class ProfileInsertDto {
   userId?: string;
 }
 
-// 프로필 수정 요청 DTO
+// ?�로???�정 ?�청 DTO
 export class ProfileUpdateDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -1107,7 +1107,7 @@ export class ProfileUpdateDto {
   empNo: string;
 
   @ApiProperty({ 
-    description: '일련번호', 
+    description: '?�련번호', 
     example: '1',
     required: true 
   })
@@ -1115,7 +1115,7 @@ export class ProfileUpdateDto {
   seqNo: string;
 
   @ApiProperty({ 
-    description: '사업번호', 
+    description: '?�업번호', 
     example: 'BSN001',
     required: false 
   })
@@ -1124,7 +1124,7 @@ export class ProfileUpdateDto {
   bsnNo?: string;
 
   @ApiProperty({ 
-    description: '시작일자 (YYYYMMDD)', 
+    description: '?�작?�자 (YYYYMMDD)', 
     example: '20250101',
     required: true 
   })
@@ -1132,7 +1132,7 @@ export class ProfileUpdateDto {
   strtDate: string;
 
   @ApiProperty({ 
-    description: '종료일자 (YYYYMMDD)', 
+    description: '종료?�자 (YYYYMMDD)', 
     example: '20250731',
     required: true 
   })
@@ -1140,16 +1140,16 @@ export class ProfileUpdateDto {
   endDate: string;
 
   @ApiProperty({ 
-    description: '프로젝트명', 
-    example: '통신장비 재설정 리뉴얼',
+    description: '?�로?�트�?, 
+    example: '?�신?�비 ?�설??리뉴??,
     required: true 
   })
   @IsString()
   prjtNm: string;
 
   @ApiProperty({ 
-    description: '고객사', 
-    example: 'KB국민은행',
+    description: '고객??, 
+    example: 'KB�???�??,
     required: false 
   })
   @IsOptional()
@@ -1157,7 +1157,7 @@ export class ProfileUpdateDto {
   mmbrCo?: string;
 
   @ApiProperty({ 
-    description: '개발환경/DBMS/언어', 
+    description: '개발?�경/DBMS/?�어', 
     example: 'Java, Spring, Oracle',
     required: false 
   })
@@ -1166,8 +1166,8 @@ export class ProfileUpdateDto {
   delpEnvr?: string;
 
   @ApiProperty({ 
-    description: '역할', 
-    example: '개발자',
+    description: '??��', 
+    example: '개발??,
     required: false 
   })
   @IsOptional()
@@ -1175,8 +1175,8 @@ export class ProfileUpdateDto {
   roleNm?: string;
 
   @ApiProperty({ 
-    description: '업무', 
-    example: '백엔드 개발',
+    description: '?�무', 
+    example: '백엔??개발',
     required: false 
   })
   @IsOptional()
@@ -1185,7 +1185,7 @@ export class ProfileUpdateDto {
 
   @ApiProperty({ 
     description: '비고', 
-    example: '특이사항 없음',
+    example: '?�이?�항 ?�음',
     required: false 
   })
   @IsOptional()
@@ -1193,7 +1193,7 @@ export class ProfileUpdateDto {
   rmk?: string;
 
   @ApiProperty({ 
-    description: '사용자 ID', 
+    description: '?�용??ID', 
     example: 'system',
     required: false 
   })
@@ -1202,10 +1202,10 @@ export class ProfileUpdateDto {
   userId?: string;
 }
 
-// 프로필 삭제 요청 DTO
+// ?�로????�� ?�청 DTO
 export class ProfileDeleteDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -1213,7 +1213,7 @@ export class ProfileDeleteDto {
   empNo: string;
 
   @ApiProperty({ 
-    description: '일련번호', 
+    description: '?�련번호', 
     example: '1',
     required: true 
   })
@@ -1221,7 +1221,7 @@ export class ProfileDeleteDto {
   seqNo: string;
 
   @ApiProperty({ 
-    description: '사용자 ID', 
+    description: '?�용??ID', 
     example: 'system',
     required: false 
   })
@@ -1230,10 +1230,10 @@ export class ProfileDeleteDto {
   userId?: string;
 }
 
-// 프로필 경력 계산 데이터 조회 요청 DTO
+// ?�로??경력 계산 ?�이??조회 ?�청 DTO
 export class ProfileCarrCalcDto {
   @ApiProperty({ 
-    description: '사원번호', 
+    description: '?�원번호', 
     example: '10010',
     required: true 
   })
@@ -1241,7 +1241,7 @@ export class ProfileCarrCalcDto {
   empNo: string;
 
   @ApiProperty({ 
-    description: '사용자 ID', 
+    description: '?�용??ID', 
     example: 'system',
     required: false 
   })
@@ -1249,5 +1249,7 @@ export class ProfileCarrCalcDto {
   @IsString()
   userId?: string;
 }
+
+
 
 

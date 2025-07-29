@@ -8,21 +8,21 @@ jest.mock('../../utils/environment', () => ({
 	getSystemName: () => 'BIST_NEW'
 }))
 
-describe('TopFrame - 상단 헤더 컴포넌트', () => {
+describe('TopFrame - ?�단 ?�더 컴포?�트', () => {
 	const defaultProps = {
-		userName: '김부뜰',
-		userTeam: 'SI 3팀',
-		userPosition: '대리',
+		userName: '김부??,
+		userTeam: 'SI 3?�',
+		userPosition: '?��?,
 		userEmpNo: '25',
-		notice: '공지사항내용이 표시됩니다.'
+		notice: '공�??�항?�용???�시?�니??'
 	}
 
 	beforeEach(() => {
 		jest.clearAllMocks()
 	})
 
-	describe('렌더링 테스트', () => {
-		it('TopFrame이 올바르게 렌더링되어야 한다', () => {
+	describe('?�더�??�스??, () => {
+		it('TopFrame???�바르게 ?�더링되?�야 ?�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
 			expect(screen.getByAltText('Logo')).toBeInTheDocument()
@@ -30,63 +30,63 @@ describe('TopFrame - 상단 헤더 컴포넌트', () => {
 			expect(screen.getByAltText('notice')).toBeInTheDocument()
 		})
 
-		it('사용자 정보가 올바르게 표시되어야 한다', () => {
+		it('?�용???�보가 ?�바르게 ?�시?�어???�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
-			expect(screen.getByText('SI 3팀(25) 김부뜰 대리')).toBeInTheDocument()
+			expect(screen.getByText('SI 3?�(25) 김부???��?)).toBeInTheDocument()
 		})
 
-		it('공지사항이 올바르게 표시되어야 한다', () => {
+		it('공�??�항???�바르게 ?�시?�어???�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
-			expect(screen.getByText('공지사항내용이 표시됩니다.')).toBeInTheDocument()
+			expect(screen.getByText('공�??�항?�용???�시?�니??')).toBeInTheDocument()
 		})
 
-		it('검색 입력 필드가 올바르게 표시되어야 한다', () => {
+		it('검???�력 ?�드가 ?�바르게 ?�시?�어???�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
-			const searchInput = screen.getByPlaceholderText('검색어를 입력하세요')
+			const searchInput = screen.getByPlaceholderText('검?�어�??�력?�세??)
 			expect(searchInput).toBeInTheDocument()
 		})
 
-		it('버튼들이 올바르게 표시되어야 한다', () => {
+		it('버튼?�이 ?�바르게 ?�시?�어???�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
-			expect(screen.getByText('부뜰 홈페이지 바로가기')).toBeInTheDocument()
-			expect(screen.getByText('그룹웨어로 바로가기')).toBeInTheDocument()
+			expect(screen.getByText('부???�페?��? 바로가�?)).toBeInTheDocument()
+			expect(screen.getByText('그룹?�어�?바로가�?)).toBeInTheDocument()
 		})
 	})
 
-	describe('사용자 정보 표시 테스트', () => {
-		it('사용자 정보가 일부 없을 때 기본값으로 표시되어야 한다', () => {
-			render(<TopFrame userName="김부뜰" />)
+	describe('?�용???�보 ?�시 ?�스??, () => {
+		it('?�용???�보가 ?��? ?�을 ??기본값으�??�시?�어???�다', () => {
+			render(<TopFrame userName="김부?? />)
 			
-			expect(screen.getByText(/김부뜰/)).toBeInTheDocument()
+			expect(screen.getByText(/김부??)).toBeInTheDocument()
 		})
 
-		it('사용자 정보가 모두 없을 때 기본값으로 표시되어야 한다', () => {
+		it('?�용???�보가 모두 ?�을 ??기본값으�??�시?�어???�다', () => {
 			render(<TopFrame />)
 			
-			// 실제 렌더링된 텍스트 확인
-			expect(screen.getByText(/SI 3팀\(25\) 김부뜰 대리/)).toBeInTheDocument()
+			// ?�제 ?�더링된 ?�스???�인
+			expect(screen.getByText(/SI 3?�\(25\) 김부???��?)).toBeInTheDocument()
 		})
 
-		it('팀 정보만 없을 때 올바른 형식으로 표시되어야 한다', () => {
-			render(<TopFrame userName="김부뜰" userPosition="대리" userEmpNo="25" />)
+		it('?� ?�보�??�을 ???�바�??�식?�로 ?�시?�어???�다', () => {
+			render(<TopFrame userName="김부?? userPosition="?��? userEmpNo="25" />)
 			
-			expect(screen.getByText(/\(25\) 김부뜰 대리/)).toBeInTheDocument()
+			expect(screen.getByText(/\(25\) 김부???��?)).toBeInTheDocument()
 		})
 
-		it('사원번호만 없을 때 올바른 형식으로 표시되어야 한다', () => {
-			render(<TopFrame userName="김부뜰" userTeam="SI 3팀" userPosition="대리" />)
+		it('?�원번호�??�을 ???�바�??�식?�로 ?�시?�어???�다', () => {
+			render(<TopFrame userName="김부?? userTeam="SI 3?�" userPosition="?��? />)
 			
-			// 실제 렌더링된 텍스트 확인
-			expect(screen.getByText(/SI 3팀\(25\) 김부뜰 대리/)).toBeInTheDocument()
+			// ?�제 ?�더링된 ?�스???�인
+			expect(screen.getByText(/SI 3?�\(25\) 김부???��?)).toBeInTheDocument()
 		})
 	})
 
-	describe('버튼 클릭 테스트', () => {
-		it('부뜰 홈페이지 버튼 클릭 시 새 창이 열려야 한다', () => {
+	describe('버튼 ?�릭 ?�스??, () => {
+		it('부???�페?��? 버튼 ?�릭 ????창이 ?�려???�다', () => {
 			const mockOpen = jest.fn()
 			Object.defineProperty(window, 'open', {
 				value: mockOpen,
@@ -95,13 +95,13 @@ describe('TopFrame - 상단 헤더 컴포넌트', () => {
 
 			render(<TopFrame {...defaultProps} />)
 			
-			const homeButton = screen.getByText('부뜰 홈페이지 바로가기')
+			const homeButton = screen.getByText('부???�페?��? 바로가�?)
 			fireEvent.click(homeButton)
 			
 			expect(mockOpen).toHaveBeenCalledWith('https://www.buttle.co.kr/', '_blank')
 		})
 
-		it('그룹웨어 버튼 클릭 시 새 창이 열려야 한다', () => {
+		it('그룹?�어 버튼 ?�릭 ????창이 ?�려???�다', () => {
 			const mockOpen = jest.fn()
 			Object.defineProperty(window, 'open', {
 				value: mockOpen,
@@ -110,50 +110,50 @@ describe('TopFrame - 상단 헤더 컴포넌트', () => {
 
 			render(<TopFrame {...defaultProps} />)
 			
-			const groupwareButton = screen.getByText('그룹웨어로 바로가기')
+			const groupwareButton = screen.getByText('그룹?�어�?바로가�?)
 			fireEvent.click(groupwareButton)
 			
 			expect(mockOpen).toHaveBeenCalledWith('https://buttle.daouoffice.com/login', '_blank')
 		})
 	})
 
-	describe('검색 기능 테스트', () => {
-		it('검색 입력 필드에 텍스트를 입력할 수 있어야 한다', () => {
+	describe('검??기능 ?�스??, () => {
+		it('검???�력 ?�드???�스?��? ?�력?????�어???�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
-			const searchInput = screen.getByPlaceholderText('검색어를 입력하세요')
-			fireEvent.change(searchInput, { target: { value: '테스트 검색어' } })
+			const searchInput = screen.getByPlaceholderText('검?�어�??�력?�세??)
+			fireEvent.change(searchInput, { target: { value: '?�스??검?�어' } })
 			
-			expect(searchInput).toHaveValue('테스트 검색어')
+			expect(searchInput).toHaveValue('?�스??검?�어')
 		})
 
-		it('검색 입력 필드가 포커스 가능해야 한다', () => {
+		it('검???�력 ?�드가 ?�커??가?�해???�다', () => {
 			render(<TopFrame />)
 			
-			const searchInput = screen.getByPlaceholderText('검색어를 입력하세요')
+			const searchInput = screen.getByPlaceholderText('검?�어�??�력?�세??)
 			fireEvent.focus(searchInput)
 			
-			// 포커스 확인 대신 입력 필드가 존재하는지 확인
+			// ?�커???�인 ?�???�력 ?�드가 존재?�는지 ?�인
 			expect(searchInput).toBeInTheDocument()
 		})
 	})
 
-	describe('아이콘 및 이미지 테스트', () => {
-		it('로고 이미지가 올바른 src를 가져야 한다', () => {
+	describe('?�이�?�??��?지 ?�스??, () => {
+		it('로고 ?��?지가 ?�바�?src�?가?�야 ?�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
 			const logo = screen.getByAltText('Logo')
 			expect(logo).toHaveAttribute('src', '/logo-top-wh.svg')
 		})
 
-		it('사용자 아이콘이 올바른 src를 가져야 한다', () => {
+		it('?�용???�이콘이 ?�바�?src�?가?�야 ?�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
 			const userIcon = screen.getByAltText('user')
 			expect(userIcon).toHaveAttribute('src', '/icon_user.svg')
 		})
 
-		it('공지사항 아이콘이 올바른 src를 가져야 한다', () => {
+		it('공�??�항 ?�이콘이 ?�바�?src�?가?�야 ?�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
 			const noticeIcon = screen.getByAltText('notice')
@@ -161,31 +161,31 @@ describe('TopFrame - 상단 헤더 컴포넌트', () => {
 		})
 	})
 
-	describe('스타일링 테스트', () => {
-		it('헤더가 올바른 클래스를 가져야 한다', () => {
+	describe('?��??�링 ?�스??, () => {
+		it('?�더가 ?�바�??�래?��? 가?�야 ?�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
 			const header = screen.getByRole('banner')
 			expect(header).toHaveClass('w-full', 'h-16', 'bg-[#374151]', 'px-4', 'flex', 'items-center', 'text-white', 'text-sm', 'min-w-[900px]', 'whitespace-nowrap')
 		})
 
-		it('검색창이 올바른 클래스를 가져야 한다', () => {
+		it('검?�창???�바�??�래?��? 가?�야 ?�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
-			const searchContainer = screen.getByPlaceholderText('검색어를 입력하세요').closest('div')
+			const searchContainer = screen.getByPlaceholderText('검?�어�??�력?�세??).closest('div')
 			expect(searchContainer).toHaveClass('flex', 'items-center', 'ml-auto', 'bg-[#3f4a5a]', 'rounded', 'px-3', 'py-1', 'w-[240px]')
 		})
 
-		it('버튼들이 올바른 클래스를 가져야 한다', () => {
+		it('버튼?�이 ?�바�??�래?��? 가?�야 ?�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
-			const homeButton = screen.getByText('부뜰 홈페이지 바로가기')
+			const homeButton = screen.getByText('부???�페?��? 바로가�?)
 			expect(homeButton).toHaveClass('bg-[#4b5563]', 'px-3', 'py-2', 'rounded', 'text-sm', 'hover:brightness-110', 'transition-colors')
 		})
 	})
 
-	describe('접근성 테스트', () => {
-		it('이미지들이 적절한 alt 텍스트를 가져야 한다', () => {
+	describe('?�근???�스??, () => {
+		it('?��?지?�이 ?�절??alt ?�스?��? 가?�야 ?�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
 			expect(screen.getByAltText('Logo')).toBeInTheDocument()
@@ -193,33 +193,33 @@ describe('TopFrame - 상단 헤더 컴포넌트', () => {
 			expect(screen.getByAltText('notice')).toBeInTheDocument()
 		})
 
-		it('검색 입력 필드에 적절한 placeholder가 있어야 한다', () => {
+		it('검???�력 ?�드???�절??placeholder가 ?�어???�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
-			const searchInput = screen.getByPlaceholderText('검색어를 입력하세요')
+			const searchInput = screen.getByPlaceholderText('검?�어�??�력?�세??)
 			expect(searchInput).toBeInTheDocument()
 		})
 
-		it('버튼들이 클릭 가능해야 한다', () => {
+		it('버튼?�이 ?�릭 가?�해???�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
-			const homeButton = screen.getByText('부뜰 홈페이지 바로가기')
-			const groupwareButton = screen.getByText('그룹웨어로 바로가기')
+			const homeButton = screen.getByText('부???�페?��? 바로가�?)
+			const groupwareButton = screen.getByText('그룹?�어�?바로가�?)
 			
 			expect(homeButton).toBeEnabled()
 			expect(groupwareButton).toBeEnabled()
 		})
 	})
 
-	describe('반응형 테스트', () => {
-		it('최소 너비가 설정되어 있어야 한다', () => {
+	describe('반응???�스??, () => {
+		it('최소 ?�비가 ?�정?�어 ?�어???�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
 			const header = screen.getByRole('banner')
 			expect(header).toHaveClass('min-w-[900px]')
 		})
 
-		it('텍스트가 줄바꿈되지 않아야 한다', () => {
+		it('?�스?��? 줄바꿈되지 ?�아???�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
 			const header = screen.getByRole('banner')
@@ -227,13 +227,13 @@ describe('TopFrame - 상단 헤더 컴포넌트', () => {
 		})
 	})
 
-	describe('키보드 네비게이션 테스트', () => {
-		it('Tab 키로 모든 요소에 접근할 수 있어야 한다', () => {
+	describe('?�보???�비게이???�스??, () => {
+		it('Tab ?�로 모든 ?�소???�근?????�어???�다', () => {
 			render(<TopFrame {...defaultProps} />)
 			
-			const searchInput = screen.getByPlaceholderText('검색어를 입력하세요')
-			const homeButton = screen.getByText('부뜰 홈페이지 바로가기')
-			const groupwareButton = screen.getByText('그룹웨어로 바로가기')
+			const searchInput = screen.getByPlaceholderText('검?�어�??�력?�세??)
+			const homeButton = screen.getByText('부???�페?��? 바로가�?)
+			const groupwareButton = screen.getByText('그룹?�어�?바로가�?)
 			
 			searchInput.focus()
 			expect(searchInput).toHaveFocus()
@@ -245,14 +245,15 @@ describe('TopFrame - 상단 헤더 컴포넌트', () => {
 			expect(groupwareButton).toHaveFocus()
 		})
 
-		it('Enter 키로 버튼을 활성화할 수 있어야 한다', () => {
+		it('Enter ?�로 버튼???�성?�할 ???�어???�다', () => {
 			render(<TopFrame />)
 			
-			const homeButton = screen.getByText('부뜰 홈페이지 바로가기')
+			const homeButton = screen.getByText('부???�페?��? 바로가�?)
 			fireEvent.keyDown(homeButton, { key: 'Enter', code: 'Enter' })
 			
-			// window.open 호출 대신 버튼이 존재하는지 확인
+			// window.open ?�출 ?�??버튼??존재?�는지 ?�인
 			expect(homeButton).toBeInTheDocument()
 		})
 	})
 }) 
+

@@ -13,40 +13,41 @@ export class COMZ050P00Service {
     try {
       
       if (!sp) {
-        this.logger.error('필수 파라미터(sp)가 누락되었습니다.');
-        throw new InternalServerErrorException('필수 파라미터(sp)가 누락되었습니다.');
+        this.logger.error('?�수 ?�라미터(sp)가 ?�락?�었?�니??');
+        throw new InternalServerErrorException('?�수 ?�라미터(sp)가 ?�락?�었?�니??');
       }
 
-      // param이 JSON 문자열인 경우 파싱
+      // param??JSON 문자?�인 경우 ?�싱
       let parsedParam: any;
       try {
         parsedParam = typeof param === 'string' ? JSON.parse(param) : param;
       } catch (parseError) {
-        this.logger.error('파라미터 파싱 오류:', parseError);
-        throw new InternalServerErrorException('파라미터 형식이 올바르지 않습니다.');
+        this.logger.error('?�라미터 ?�싱 ?�류:', parseError);
+        throw new InternalServerErrorException('?�라미터 ?�식???�바르�? ?�습?�다.');
       }
 
-      // COM_02_0201_S 프로시저 파라미터 순서에 맞게 변환
+      // COM_02_0201_S ?�로?��? ?�라미터 ?�서??맞게 변??
       // I_BSN_NM, I_STRT_YEAR, I_PGRS_ST_DIV, I_LOGIN_ID
       const procedureParams = [
-        parsedParam.bsnNm || '',           // 사업명
-        parsedParam.startYear || 'ALL',    // 시작년도
-        parsedParam.progressStateDiv || 'ALL', // 진행상태구분
-        parsedParam.loginId || null        // 로그인사용자ID
+        parsedParam.bsnNm || '',           // ?�업�?
+        parsedParam.startYear || 'ALL',    // ?�작?�도
+        parsedParam.progressStateDiv || 'ALL', // 진행?�태구분
+        parsedParam.loginId || null        // 로그?�사?�자ID
       ];
 
-      this.logger.log(`프로시저 파라미터: ${JSON.stringify(procedureParams)}`);
+      this.logger.log(`?�로?��? ?�라미터: ${JSON.stringify(procedureParams)}`);
 
       const spName = sp.replace(/\(.*\)/, '');
       
-      // OracleService의 executeProcedure 메서드 사용
+      // OracleService??executeProcedure 메서???�용
       const result = await this.oracleService.executeProcedure(spName, procedureParams);
       
-      // 결과를 카멜케이스로 변환하여 반환
+      // 결과�?카멜케?�스�?변?�하??반환
       return toCamelCase(result);
     } catch (error) {
-      this.logger.error('사업명 검색 중 오류', error);
-      throw new InternalServerErrorException('사업명 검색 중 오류가 발생했습니다.');
+      this.logger.error('?�업�?검??�??�류', error);
+      throw new InternalServerErrorException('?�업�?검??�??�류가 발생?�습?�다.');
     }
   }
 } 
+

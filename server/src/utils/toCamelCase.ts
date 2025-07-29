@@ -1,5 +1,5 @@
 /**
- * snake_case, UPPER_CASE, PascalCase 등 모든 객체 key를 camelCase로 변환 (재귀 지원)
+ * snake_case, UPPER_CASE, PascalCase ??모든 객체 key�?camelCase�?변??(?��? 지??
  */
 export function toCamelCase(obj: any): any {
   if (Array.isArray(obj)) {
@@ -17,3 +17,5 @@ export function toCamelCase(obj: any): any {
   }
   return obj;
 }
+
+

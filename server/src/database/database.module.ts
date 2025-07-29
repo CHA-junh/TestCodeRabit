@@ -15,8 +15,8 @@ import { OracleService } from './database.provider';
         connectString: `(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=${configService.get<string>('DB_HOST')})(PORT=${configService.get<number>('DB_PORT')}))(CONNECT_DATA=(SERVICE_NAME=${configService.get<string>('DB_SERVICE')})))`,
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: false, //  configService.get<string>('NODE_ENV') !== 'production',
-        logging: true, // SQL 쿼리 로깅 활성화
-        logger: 'advanced-console', // 상세한 로깅
+        logging: true, // SQL 쿼리 로깅 ?�성??
+        logger: 'advanced-console', // ?�세??로깅
       }),
       inject: [ConfigService],
     }),
@@ -25,3 +25,5 @@ import { OracleService } from './database.provider';
   exports: [OracleService, TypeOrmModule],
 })
 export class DatabaseModule {}
+
+

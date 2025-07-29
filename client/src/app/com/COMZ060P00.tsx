@@ -10,17 +10,17 @@ import { useToast } from '@/contexts/ToastContext'
 import '@/app/common/common.css'
 
 /**
- * COMZ060P00 - (팝)부서번호검색화면
+ * COMZ060P00 - (??부?�번?��??�화�?
  * 
  * 주요 기능:
- * - 부서번호 검색 및 선택
- * - 부서구분별 필터링
- * - 연도별 부서 조회
- * - 부모창 데이터 전달
+ * - 부?�번??검??�??�택
+ * - 부?�구분별 ?�터�?
+ * - ?�도�?부??조회
+ * - 부모창 ?�이???�달
  * 
- * 연관 테이블:
- * - TBL_DEPT (부서 정보)
- * - TBL_DEPT_NO (부서번호)
+ * ?��? ?�이�?
+ * - TBL_DEPT (부???�보)
+ * - TBL_DEPT_NO (부?�번??
  */
 
 interface DeptNoSearchResult {
@@ -48,10 +48,10 @@ export default function DeptNumberSearchPopup() {
 	// AG-Grid ref
 	const deptGridRef = useRef<AgGridReact<DeptNoSearchResult>>(null);
 
-	// AG-Grid 컬럼 정의
+	// AG-Grid 컬럼 ?�의
 	const [deptColDefs] = useState<ColDef[]>([
 		{
-			headerName: '부서번호',
+			headerName: '부?�번??,
 			field: 'deptNo',
 			width: 120,
 			flex: 0.5,
@@ -60,7 +60,7 @@ export default function DeptNumberSearchPopup() {
 			tooltipField: 'deptNo',
 		},
 		{
-			headerName: '부서명',
+			headerName: '부?�명',
 			field: 'deptNm',
 			width: 150,
 			flex: 0.5,
@@ -69,7 +69,7 @@ export default function DeptNumberSearchPopup() {
 			tooltipField: 'deptNm',
 		},
 		{
-			headerName: '시작일자',
+			headerName: '?�작?�자',
 			field: 'strtDt',
 			width: 120,
 			flex: 0,
@@ -78,7 +78,7 @@ export default function DeptNumberSearchPopup() {
 			tooltipField: 'strtDt',
 		},
 		{
-			headerName: '종료일자',
+			headerName: '종료?�자',
 			field: 'endDt',
 			width: 120,
 			flex: 0,
@@ -87,7 +87,7 @@ export default function DeptNumberSearchPopup() {
 			tooltipField: 'endDt',
 		},
 		{
-			headerName: '본부구분',
+			headerName: '본�?구분',
 			field: 'hqDivNm',
 			width: 120,
 			flex: 0.5,
@@ -96,7 +96,7 @@ export default function DeptNumberSearchPopup() {
 			tooltipField: 'hqDivNm',
 		},
 		{
-			headerName: '부서구분',
+			headerName: '부?�구�?,
 			field: 'deptDivNm',
 			width: 120,
 			flex: 0.5,
@@ -134,11 +134,11 @@ export default function DeptNumberSearchPopup() {
 		setResults([])
 		try {
 			const requestBody = {
-				sp: 'COM_02_0301_S', // 프로시저명
+				sp: 'COM_02_0301_S', // ?�로?��?�?
 				param: [
-					form.deptNo,      // 부서번호
-					form.year,        // 년도
-					form.deptDivCd || '', // 부서구분코드
+					form.deptNo,      // 부?�번??
+					form.year,        // ?�도
+					form.deptDivCd || '', // 부?�구분코??
 				]
 			}
 			
@@ -160,7 +160,7 @@ export default function DeptNumberSearchPopup() {
 			const results = Array.isArray(data) ? data : (data.data ?? [])
 			setResults(results)
 		} catch (err: any) {
-			const errorMessage = err.message || '오류 발생'
+			const errorMessage = err.message || '?�류 발생'
 			setError(errorMessage)
 			console.log('showToast called', errorMessage)
 			showToast(errorMessage, 'error')
@@ -169,7 +169,7 @@ export default function DeptNumberSearchPopup() {
 		}
 	}
 
-	// 그리드 행 더블클릭 시 부모창에 값 전달
+	// 그리?????�블?�릭 ??부모창??�??�달
 	const handleRowDoubleClick = (row: DeptNoSearchResult) => {
 		if (window.opener) {
 			window.opener.postMessage({ type: 'DEPT_SELECT', payload: row }, '*')
@@ -177,25 +177,25 @@ export default function DeptNumberSearchPopup() {
 		window.close()
 	}
 
-	// AG-Grid 준비 완료 이벤트
+	// AG-Grid 준�??�료 ?�벤??
 	const onDeptGridReady = (params: any) => {
 		params.api.sizeColumnsToFit();
 	};
 
 	return (
 		<div className='popup-wrapper'>
-			{/* 상단 헤더 */}
+			{/* ?�단 ?�더 */}
 			<div className='popup-header'>
-				<h3 className='popup-title'>부서번호 검색</h3>
-				{/* 닫기 버튼은 실제 팝업이 아니므로 생략 또는 필요시 구현 */}
+				<h3 className='popup-title'>부?�번??검??/h3>
+				{/* ?�기 버튼?� ?�제 ?�업???�니므�??�략 ?�는 ?�요??구현 */}
 			</div>
 			<div className='popup-body'>
-				{/* 조회영역 */}
+				{/* 조회?�역 */}
 				<div className='search-div mb-4'>
 					<table className='search-table'>
 						<tbody>
 							<tr className='search-tr'>
-								<th className='search-th w-[70px]'>년도</th>
+								<th className='search-th w-[70px]'>?�도</th>
 								<td className='search-td w-[120px]'>
 									<input
 										type='text'
@@ -203,11 +203,11 @@ export default function DeptNumberSearchPopup() {
 										className='input-base input-default w-full'
 										value={form.year}
 										onChange={handleChange}
-										aria-label='년도'
+										aria-label='?�도'
 										onKeyDown={handleKeyDown}
 									/>
 								</td>
-								<th className='search-th w-[92px]'>부서번호</th>
+								<th className='search-th w-[92px]'>부?�번??/th>
 								<td className='search-td w-[180px]'>
 									<input
 										type='text'
@@ -215,23 +215,23 @@ export default function DeptNumberSearchPopup() {
 										className='input-base input-default w-full'
 										value={form.deptNo}
 										onChange={handleChange}
-										aria-label='부서번호'
+										aria-label='부?�번??
 										onKeyDown={handleKeyDown}
 									/>
 								</td>
-								<th className='search-th w-[92px]'>부서구분</th>
+								<th className='search-th w-[92px]'>부?�구�?/th>
 								<td className='search-td w-[180px]'>
 									<select
 										name='deptDivCd'
 										className='combo-base w-full'
 										value={form.deptDivCd}
 										onChange={handleChange}
-										aria-label='부서구분'
+										aria-label='부?�구�?
 										onKeyDown={handleKeyDown}
 									>
-										<option value=''>전체</option>
+										<option value=''>?�체</option>
 										{deptDivCodes.map((item, idx) => {
-											// @ts-ignore: DB 응답이 대문자 속성일 수 있음
+											// @ts-ignore: DB ?�답???�문자 ?�성?????�음
 											const code = item.code || item.CODE
 											// @ts-ignore
 											const name = item.name || item.NAME
@@ -253,16 +253,16 @@ export default function DeptNumberSearchPopup() {
 											if (e.key === 'Enter') handleSearch()
 										}}
 									>
-										{loading ? '조회중...' : '조회'}
+										{loading ? '조회�?..' : '조회'}
 									</button>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-				{/* 에러 메시지 */}
+				{/* ?�러 메시지 */}
 				{error && <div className='text-red-600 mb-2'>{error}</div>}
-				{/* 그리드 영역 */}
+				{/* 그리???�역 */}
 				<div className='ag-theme-alpine' style={{ height: 400, width: "100%" }}>
 					<AgGridReact
 						ref={deptGridRef}
@@ -286,7 +286,7 @@ export default function DeptNumberSearchPopup() {
 						}}
 					/>
 				</div>
-				{/* 종료 버튼 (우측 정렬) */}
+				{/* 종료 버튼 (?�측 ?�렬) */}
 				<div className='flex justify-end'>
 					<button
 						className='btn-base btn-delete'
@@ -301,3 +301,5 @@ export default function DeptNumberSearchPopup() {
 		</div>
 	)
 }
+
+

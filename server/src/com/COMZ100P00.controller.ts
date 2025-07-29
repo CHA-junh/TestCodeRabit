@@ -4,36 +4,36 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { COMZ100P00Service } from './COMZ100P00.service';
 import { UserSearchParams, UserSearchResponseDto } from './dto/COMZ100P00.dto';
 
-// express-session 타입 확장
+// express-session ?�???�장
 interface RequestWithSession extends Request {
   session: any;
 }
 
-@ApiTags('사용자 관리')
+@ApiTags('?�용??관�?)
 @Controller('COMZ100P00')
 export class COMZ100P00Controller {
   constructor(private readonly usersService: COMZ100P00Service) {}
 
   @Post('search')
   @ApiOperation({ 
-    summary: '사용자 검색',
-    description: '사용자명으로 사용자를 검색합니다.'
+    summary: '?�용??검??,
+    description: '?�용?�명?�로 ?�용?��? 검?�합?�다.'
   })
   @ApiResponse({ 
     status: 200, 
-    description: '사용자 검색 성공',
+    description: '?�용??검???�공',
     type: UserSearchResponseDto
   })
-  @ApiResponse({ status: 401, description: '세션이 유효하지 않습니다.' })
-  @ApiResponse({ status: 500, description: '사용자 조회 중 오류가 발생했습니다.' })
+  @ApiResponse({ status: 401, description: '?�션???�효?��? ?�습?�다.' })
+  @ApiResponse({ status: 500, description: '?�용??조회 �??�류가 발생?�습?�다.' })
   async searchUsers(@Req() req: RequestWithSession, @Res() res: Response, @Body() body: UserSearchParams) {
-    // 세션 체크 주석 처리 (Swagger UI 테스트용)
+    // ?�션 체크 주석 처리 (Swagger UI ?�스?�용)
     /*
     const userInfo = req.session.user;
     if (!userInfo) {
       return res
         .status(401)
-        .json({ success: false, message: '세션이 유효하지 않습니다.' });
+        .json({ success: false, message: '?�션???�효?��? ?�습?�다.' });
     }
     */
     
@@ -48,7 +48,8 @@ export class COMZ100P00Controller {
     } catch (err) {
       return res
         .status(500)
-        .json({ success: false, message: '사용자 조회 중 오류가 발생했습니다.', error: err });
+        .json({ success: false, message: '?�용??조회 �??�류가 발생?�습?�다.', error: err });
     }
   }
 } 
+

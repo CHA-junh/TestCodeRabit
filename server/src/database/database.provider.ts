@@ -7,9 +7,9 @@ dotenv.config();
 @Injectable()
 export class OracleService implements OnModuleInit, OnModuleDestroy {
   private pool: oracledb.Pool | null = null;
-  private static isInitialized = false; // 중복 초기화 방지
+  private static isInitialized = false; // 중복 초기??방�?
 
-  // 🟡 환경변수 확인
+  // ?�� ?�경변???�인
   private checkEnvironmentVariables(): { valid: boolean; missing: string[] } {
     const requiredVars = [
       'DB_USER',
@@ -32,11 +32,11 @@ export class OracleService implements OnModuleInit, OnModuleDestroy {
     };
   }
 
-  // ✅ NestJS가 시작될 때 자동으로 실행됨
+  // ??NestJS가 ?�작?????�동?�로 ?�행??
   async onModuleInit() {
-    // 중복 초기화 방지
+    // 중복 초기??방�?
     if (OracleService.isInitialized) {
-      console.log('ℹ️ Oracle 커넥션 풀이 이미 초기화되었습니다.');
+      console.log('?�️ Oracle 커넥???�???��? 초기?�되?�습?�다.');
       return;
     }
 
@@ -44,7 +44,7 @@ export class OracleService implements OnModuleInit, OnModuleDestroy {
       const envCheck = this.checkEnvironmentVariables();
       if (!envCheck.valid) {
         throw new Error(
-          `환경 변수가 누락되었습니다: ${envCheck.missing.join(', ')}`,
+          `?�경 변?��? ?�락?�었?�니?? ${envCheck.missing.join(', ')}`,
         );
       }
 
@@ -58,35 +58,35 @@ export class OracleService implements OnModuleInit, OnModuleDestroy {
       });
 
       OracleService.isInitialized = true;
-      console.log('✅ Oracle 커넥션 풀 생성 완료');
+      console.log('??Oracle 커넥???� ?�성 ?�료');
     } catch (error) {
-      console.error('❌ 커넥션 풀 생성 실패:', error);
+      console.error('??커넥???� ?�성 ?�패:', error);
       throw error;
     }
   }
 
-  // 🔄 커넥션 가져오기
+  // ?�� 커넥??가?�오�?
   async getConnection(): Promise<oracledb.Connection> {
     if (!this.pool) {
-      throw new Error('❗ 커넥션 풀이 아직 생성되지 않았습니다.');
+      throw new Error('??커넥???�???�직 ?�성?��? ?�았?�니??');
     }
 
     return await this.pool.getConnection();
   }
 
-  // 🔍 커넥션 풀 생성 여부 확인
+  // ?�� 커넥???� ?�성 ?��? ?�인
   isConnected(): boolean {
     return this.pool !== null;
   }
 
-  // 📋 프로시저 실행
+  // ?�� ?�로?��? ?�행
   async executeProcedure(
     procedureName: string,
     params: any[] = [],
   ): Promise<any> {
     const connection = await this.getConnection();
 
-    // OUT 파라미터 타입 분기: 조회(_S)면 CURSOR, 아니면 STRING
+    // OUT ?�라미터 ?�??분기: 조회(_S)�?CURSOR, ?�니�?STRING
     const isSelectProc = procedureName.endsWith('_S');
 
     try {
@@ -110,7 +110,7 @@ export class OracleService implements OnModuleInit, OnModuleDestroy {
       const outBinds = result.outBinds as any;
       if (outBinds?.o_result) {
         if (isSelectProc) {
-          // 조회 프로시저: CURSOR 반환 (대용량 안전, getRow 루프)
+          // 조회 ?�로?��?: CURSOR 반환 (?�?�량 ?�전, getRow 루프)
           const cursor = outBinds.o_result;
           let rows: any[] = [];
           let row;
@@ -120,25 +120,25 @@ export class OracleService implements OnModuleInit, OnModuleDestroy {
           await cursor.close();
           return { data: rows, totalCount: rows.length };
         } else {
-          // 일반 프로시저: STRING 반환 + COMMIT 처리
+          // ?�반 ?�로?��?: STRING 반환 + COMMIT 처리
           await connection.commit();
           return { result: outBinds.o_result };
         }
       }
 
-      // 결과가 없는 경우에도 C/U/D 프로시저는 COMMIT 처리
+      // 결과가 ?�는 경우?�도 C/U/D ?�로?��???COMMIT 처리
       if (!isSelectProc) {
         await connection.commit();
       }
 
       return isSelectProc ? { data: [], totalCount: 0 } : { result: null };
     } catch (error) {
-      // 프로시저 실행 실패 시 ROLLBACK 처리
+      // ?�로?��? ?�행 ?�패 ??ROLLBACK 처리
       if (!isSelectProc) {
         try {
           await connection.rollback();
         } catch (rollbackError) {
-          console.error('ROLLBACK 실패:', rollbackError);
+          console.error('ROLLBACK ?�패:', rollbackError);
         }
       }
       throw error;
@@ -147,17 +147,19 @@ export class OracleService implements OnModuleInit, OnModuleDestroy {
     }
   }
 
-  // 🔌 NestJS 종료 시 자동 호출
+  // ?�� NestJS 종료 ???�동 ?�출
   async onModuleDestroy() {
     try {
       if (this.pool && OracleService.isInitialized) {
-        await this.pool.close(10); // 10초 안에 안전하게 종료
+        await this.pool.close(10); // 10�??�에 ?�전?�게 종료
         OracleService.isInitialized = false;
-        console.log('🔌 Oracle 커넥션 풀 종료 완료');
+        console.log('?�� Oracle 커넥???� 종료 ?�료');
       }
     } catch (error) {
-      console.error('❌ 커넥션 풀 종료 실패:', error);
+      console.error('??커넥???� 종료 ?�패:', error);
       throw error;
     }
   }
 }
+
+

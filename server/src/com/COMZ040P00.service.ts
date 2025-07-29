@@ -19,8 +19,8 @@ export class COMZ040P00Service {
 
   async searchBusiness(params: BusinessSearchParams) {
     try {
-      console.log('🔍 사업번호 검색 서비스 실행');
-      console.log('📋 파라미터:', params);
+      console.log('?�� ?�업번호 검???�비???�행');
+      console.log('?�� ?�라미터:', params);
 
       const {
         bsnNo,
@@ -38,37 +38,38 @@ export class COMZ040P00Service {
         startYear === 'ALL' ? null : startYear,
         progressStateDiv || null,
         searchDiv || null,
-        hqCd, // ALL 값을 그대로 전달
-        deptCd, // ALL 값을 그대로 전달
+        hqCd, // ALL 값을 그�?�??�달
+        deptCd, // ALL 값을 그�?�??�달
         userNm === 'ALL' ? null : userNm,
         loginId || null,
       ];
 
-      console.log('🔍 프로시저 파라미터:', procedureParams);
-      console.log('🔍 검색구분:', searchDiv, '본부:', hqCd, '부서:', deptCd, '사용자:', userNm);
+      console.log('?�� ?�로?��? ?�라미터:', procedureParams);
+      console.log('?�� 검?�구�?', searchDiv, '본�?:', hqCd, '부??', deptCd, '?�용??', userNm);
 
-      // PROCNAME: COM_02_0101_S (사업번호 검색)
+      // PROCNAME: COM_02_0101_S (?�업번호 검??
       const result = await this.oracleService.executeProcedure('COM_02_0101_S', procedureParams);
 
-      console.log('✅ 사업번호 검색 결과:', result);
+      console.log('???�업번호 검??결과:', result);
 
-      // 결과를 카멜케이스로 변환하여 반환
+      // 결과�?카멜케?�스�?변?�하??반환
       const camelCaseResult = toCamelCase(result.data || []);
       
       return {
         success: true,
         data: camelCaseResult,
         totalCount: result.totalCount || 0,
-        message: '검색이 완료되었습니다.'
+        message: '검?�이 ?�료?�었?�니??'
       };
     } catch (error) {
-      console.error('❌ 사업번호 검색 서비스 오류:', error);
+      console.error('???�업번호 검???�비???�류:', error);
       return {
         success: false,
         data: [],
         totalCount: 0,
-        message: error.message || '검색 중 오류가 발생했습니다.'
+        message: error.message || '검??�??�류가 발생?�습?�다.'
       };
     }
   }
 } 
+

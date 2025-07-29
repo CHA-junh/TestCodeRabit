@@ -20,7 +20,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { Roles } from './decorators/roles.decorator';
 
-// express-session 타입 확장
+// express-session ?�???�장
 interface RequestWithSession extends Request {
   session: session.Session & { user?: any };
 }
@@ -39,25 +39,25 @@ export class AuthController {
   ) {}
 
   /**
-   * 로그인 시도 제한 확인
+   * 로그???�도 ?�한 ?�인
    */
   private checkLoginAttempts(empNo: string): boolean {
     const attempts = this.loginAttempts.get(empNo);
     const now = Date.now();
-    const windowMs = 15 * 60 * 1000; // 15분
+    const windowMs = 15 * 60 * 1000; // 15�?
 
     if (!attempts) {
       this.loginAttempts.set(empNo, { count: 1, lastAttempt: now });
       return true;
     }
 
-    // 시간 창이 지났으면 초기화
+    // ?�간 창이 지?�으�?초기??
     if (now - attempts.lastAttempt > windowMs) {
       this.loginAttempts.set(empNo, { count: 1, lastAttempt: now });
       return true;
     }
 
-    // 5회 이상 시도 시 차단
+    // 5???�상 ?�도 ??차단
     if (attempts.count >= 5) {
       return false;
     }
@@ -75,46 +75,46 @@ export class AuthController {
     try {
       const { empNo, password } = body;
 
-      // 입력 검증
+      // ?�력 검�?
       if (!empNo || !password) {
-        throw new BadRequestException('사원번호와 비밀번호를 입력해주세요.');
+        throw new BadRequestException('?�원번호?� 비�?번호�??�력?�주?�요.');
       }
 
-      // 로그인 시도 제한 확인
+      // 로그???�도 ?�한 ?�인
       if (!this.checkLoginAttempts(empNo)) {
         throw new UnauthorizedException(
-          '로그인 시도가 너무 많습니다. 15분 후 다시 시도해주세요.',
+          '로그???�도가 ?�무 많습?�다. 15�????�시 ?�도?�주?�요.',
         );
       }
 
-      // 1. 사용자 존재 여부 확인
+      // 1. ?�용??존재 ?��? ?�인
       const userExists = await this.userService.userExists(empNo);
       if (!userExists) {
-        throw new UnauthorizedException('존재하지 않는 사용자입니다.');
+        throw new UnauthorizedException('존재?��? ?�는 ?�용?�입?�다.');
       }
 
-      // 2. DB를 이용한 비밀번호 검증
+      // 2. DB�??�용??비�?번호 검�?
       const isPasswordValid = await this.userService.validateUserPassword(
         empNo,
         password,
       );
       if (!isPasswordValid) {
-        throw new UnauthorizedException('비밀번호가 일치하지 않습니다.');
+        throw new UnauthorizedException('비�?번호가 ?�치?��? ?�습?�다.');
       }
 
-      // 3. 사용자 정보 조회 (부서명 포함)
+      // 3. ?�용???�보 조회 (부?�명 ?�함)
       const userInfo = await this.userService.findUserWithDept(empNo);
       if (!userInfo) {
-        throw new BadRequestException('사용자 정보 조회에 실패했습니다.');
+        throw new BadRequestException('?�용???�보 조회???�패?�습?�다.');
       }
 
       if (!userInfo.usrRoleId) {
         throw new BadRequestException(
-          '권한 정보가 없습니다. 관리자에게 문의하세요.',
+          '권한 ?�보가 ?�습?�다. 관리자?�게 문의?�세??',
         );
       }
 
-      // 비밀번호가 사번과 동일한지 확인
+      // 비�?번호가 ?�번�??�일?��? ?�인
       const needsPasswordChange = password === empNo;
 
       if (needsPasswordChange) {
@@ -123,31 +123,31 @@ export class AuthController {
           needsPasswordChange: true,
           user: { needsPasswordChange: true },
           message:
-            '초기 비밀번호입니다. 비밀번호를 변경해야 로그인할 수 있습니다.',
+            '초기 비�?번호?�니?? 비�?번호�?변경해??로그?�할 ???�습?�다.',
         };
       }
 
-      // 🔒 세션 보안 강화: 로그인 성공 시 세션 재생성
+      // ?�� ?�션 보안 강화: 로그???�공 ???�션 ?�생??
       await new Promise<void>((resolve, reject) => {
         req.session.regenerate((err) => {
           if (err) {
             reject(
-              new BadRequestException('세션 생성 중 오류가 발생했습니다.'),
+              new BadRequestException('?�션 ?�성 �??�류가 발생?�습?�다.'),
             );
             return;
           }
 
-          // 세션에 사용자 정보 저장
+          // ?�션???�용???�보 ?�??
           req.session.user = { ...userInfo, needsPasswordChange };
 
-          // 로그인 시도 기록 초기화
+          // 로그???�도 기록 초기??
           this.loginAttempts.delete(empNo);
 
           resolve();
         });
       });
 
-      // 메뉴와 프로그램 데이터 로드
+      // 메뉴?� ?�로그램 ?�이??로드
       let menuList: any[] = [];
       let programList: any[] = [];
 
@@ -161,12 +161,12 @@ export class AuthController {
           );
         }
       } catch (error) {
-        console.warn('메뉴/프로그램 데이터 로드 실패:', error.message);
+        console.warn('메뉴/?�로그램 ?�이??로드 ?�패:', error.message);
       }
 
       return {
         success: true,
-        message: '로그인 성공',
+        message: '로그???�공',
         user: {
           ...userInfo,
           needsPasswordChange,
@@ -181,7 +181,7 @@ export class AuthController {
       ) {
         throw error;
       }
-      throw new BadRequestException('로그인 중 오류가 발생했습니다.');
+      throw new BadRequestException('로그??�??�류가 발생?�습?�다.');
     }
   }
 
@@ -195,12 +195,12 @@ export class AuthController {
 
       const userInfo = req.session.user;
 
-      // needsPasswordChange가 true인 경우 세션을 유효하지 않음으로 처리
+      // needsPasswordChange가 true??경우 ?�션???�효?��? ?�음?�로 처리
       if (userInfo.needsPasswordChange) {
         return { success: false, user: null, needsPasswordChange: true };
       }
 
-      // 메뉴와 프로그램 데이터 로드
+      // 메뉴?� ?�로그램 ?�이??로드
       let menuList: any[] = [];
       let programList: any[] = [];
 
@@ -215,7 +215,7 @@ export class AuthController {
         }
       } catch (error) {
         console.warn(
-          '세션 체크 시 메뉴/프로그램 데이터 로드 실패:',
+          '?�션 체크 ??메뉴/?�로그램 ?�이??로드 ?�패:',
           error.message,
         );
       }
@@ -242,10 +242,10 @@ export class AuthController {
       const { userId, newPassword } = body;
       const currentUser = req.session.user;
 
-      // 세션이 있는 경우 현재 로그인한 사용자만 비밀번호 변경 가능
+      // ?�션???�는 경우 ?�재 로그?�한 ?�용?�만 비�?번호 변�?가??
       if (currentUser && currentUser.userId !== userId) {
         throw new UnauthorizedException(
-          '자신의 비밀번호만 변경할 수 있습니다.',
+          '?�신??비�?번호�?변경할 ???�습?�다.',
         );
       }
 
@@ -255,17 +255,17 @@ export class AuthController {
       );
 
       if (isSuccess) {
-        // 비밀번호 변경 성공 시 세션이 있으면 needsPasswordChange 제거
+        // 비�?번호 변�??�공 ???�션???�으�?needsPasswordChange ?�거
         if (currentUser) {
           req.session.user = { ...currentUser, needsPasswordChange: false };
         }
 
         return {
           success: true,
-          message: '비밀번호가 성공적으로 변경되었습니다.',
+          message: '비�?번호가 ?�공?�으�?변경되?�습?�다.',
         };
       } else {
-        throw new BadRequestException('비밀번호 변경에 실패했습니다.');
+        throw new BadRequestException('비�?번호 변경에 ?�패?�습?�다.');
       }
     } catch (error) {
       if (
@@ -274,7 +274,7 @@ export class AuthController {
       ) {
         throw error;
       }
-      throw new BadRequestException('비밀번호 변경 중 오류가 발생했습니다.');
+      throw new BadRequestException('비�?번호 변�?�??�류가 발생?�습?�다.');
     }
   }
 
@@ -285,28 +285,28 @@ export class AuthController {
   ): Promise<any> {
     try {
       return new Promise((resolve) => {
-        // 세션 데이터 완전 초기화
+        // ?�션 ?�이???�전 초기??
         req.session.user = null;
 
-        // 세션 완전 삭제
+        // ?�션 ?�전 ??��
         req.session.destroy((err) => {
           if (err) {
-            console.error('세션 삭제 오류:', err);
-            // 쿠키 삭제 (path 명시)
+            console.error('?�션 ??�� ?�류:', err);
+            // 쿠키 ??�� (path 명시)
             res.clearCookie('bist-session', { path: '/' });
             res.clearCookie('connect.sid', { path: '/' });
             res.clearCookie('sessionId', { path: '/' });
             resolve({
               success: false,
-              message: '로그아웃 중 오류가 발생했습니다.',
+              message: '로그?�웃 �??�류가 발생?�습?�다.',
             });
           } else {
-            // 모든 쿠키 완전 삭제 (path 명시)
+            // 모든 쿠키 ?�전 ??�� (path 명시)
             res.clearCookie('bist-session', { path: '/' });
             res.clearCookie('connect.sid', { path: '/' });
             res.clearCookie('sessionId', { path: '/' });
 
-            // 캐시 방지 헤더 설정
+            // 캐시 방�? ?�더 ?�정
             res.setHeader(
               'Cache-Control',
               'no-cache, no-store, must-revalidate, private',
@@ -314,18 +314,18 @@ export class AuthController {
             res.setHeader('Pragma', 'no-cache');
             res.setHeader('Expires', '0');
 
-            console.log('🔒 로그아웃 완료: 세션 및 쿠키 완전 삭제됨');
-            resolve({ success: true, message: '로그아웃되었습니다.' });
+            console.log('?�� 로그?�웃 ?�료: ?�션 �?쿠키 ?�전 ??��??);
+            resolve({ success: true, message: '로그?�웃?�었?�니??' });
           }
         });
       });
     } catch (error) {
-      console.error('로그아웃 처리 오류:', error);
-      // 에러가 발생해도 모든 쿠키 삭제 (path 명시)
+      console.error('로그?�웃 처리 ?�류:', error);
+      // ?�러가 발생?�도 모든 쿠키 ??�� (path 명시)
       res.clearCookie('bist-session', { path: '/' });
       res.clearCookie('connect.sid', { path: '/' });
       res.clearCookie('sessionId', { path: '/' });
-      return { success: false, message: '로그아웃 중 오류가 발생했습니다.' };
+      return { success: false, message: '로그?�웃 �??�류가 발생?�습?�다.' };
     }
   }
 
@@ -340,24 +340,24 @@ export class AuthController {
       const { empNo } = body;
       const currentUser = req.session.user;
 
-      // 관리자 권한 확인
+      // 관리자 권한 ?�인
       if (currentUser.authCd !== '30') {
-        throw new UnauthorizedException('관리자 권한이 필요합니다.');
+        throw new UnauthorizedException('관리자 권한???�요?�니??');
       }
 
-      // 테스트 로그인 대상 사용자 정보 조회
+      // ?�스??로그???�???�용???�보 조회
       const userInfo = await this.userService.findUserWithDept(empNo);
       if (!userInfo) {
-        throw new BadRequestException('존재하지 않는 사용자입니다.');
+        throw new BadRequestException('존재?��? ?�는 ?�용?�입?�다.');
       }
 
-      // 테스트 로그인을 위한 임시 세션 생성
-      const originalUser = currentUser; // 원래 사용자 정보 보존
+      // ?�스??로그?�을 ?�한 ?�시 ?�션 ?�성
+      const originalUser = currentUser; // ?�래 ?�용???�보 보존
       req.session.user = { ...userInfo, isTestLogin: true, originalUser };
 
       return {
         success: true,
-        message: `테스트 로그인 성공: ${empNo} (${userInfo.userName})`,
+        message: `?�스??로그???�공: ${empNo} (${userInfo.userName})`,
         user: userInfo,
       };
     } catch (error) {
@@ -367,7 +367,9 @@ export class AuthController {
       ) {
         throw error;
       }
-      throw new BadRequestException('테스트 로그인 중 오류가 발생했습니다.');
+      throw new BadRequestException('?�스??로그??�??�류가 발생?�습?�다.');
     }
   }
 }
+
+

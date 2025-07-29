@@ -5,26 +5,26 @@ import { useToast } from '@/contexts/ToastContext';
 import '../common/common.css';
 
 /**
- * 등급별 단가 데이터 인터페이스
- * ASIS: AdvancedDataGrid의 dataField와 대응
+ * ?�급�??��? ?�이???�터?�이??
+ * ASIS: AdvancedDataGrid??dataField?� ?�??
  */
 interface GradeUnitPriceData {
-  TCN_GRD_NM: string; // 등급 (ASIS: dataField="TCN_GRD_NM")
+  TCN_GRD_NM: string; // ?�급 (ASIS: dataField="TCN_GRD_NM")
   DUTY_NM: string;     // 직책 (ASIS: dataField=DUTY_NM)
-  UPRC: string;        // 단가 (ASIS: dataField="UPRC")
+  UPRC: string;        // ?��? (ASIS: dataField="UPRC")
 }
 
 /**
- * 더블클릭시 반환할 최소 정보 타입
- * ASIS: EvtDblClick 이벤트의 txtData 구조와 동일
- * 형식: "단가"
+ * ?�블?�릭??반환??최소 ?�보 ?�??
+ * ASIS: EvtDblClick ?�벤?�의 txtData 구조?� ?�일
+ * ?�식: "?��?"
  */
 interface PriceSelectInfo {
-  price: string;       // 단가 (ASIS: UPRC)
+  price: string;       // ?��? (ASIS: UPRC)
 }
 
 /**
- * postMessage로 받을 데이터 타입
+ * postMessage�?받을 ?�이???�??
  */
 interface PostMessageData {
   type: 'CHOICE_PRICE_INIT';
@@ -34,71 +34,71 @@ interface PostMessageData {
 }
 
 /**
- * 등급별 단가 조회 팝업
- * ASIS: COM_01_0300.mxml → TOBE: COMZ030P00.tsx
+ * ?�급�??��? 조회 ?�업
+ * ASIS: COM_01_0300.mxml ??TOBE: COMZ030P00.tsx
  * 
  * 주요 기능:
- * 1. 부모창에서 단가 목록 데이터 수신 (postMessage)
- * 2. 등급별 단가 조회 (USP_UNTPRC_SEL) 
- * 3. 자사/외주 구분 선택 (rdIODiv)
- * 4. 년도 선택 (txtYrNm)
- * 5. 더블클릭 시 단가 선택 (onDoubleClick)
- * 6. 팝업 닫기 (PopUpManager.removePopUp)
- * 7. 키보드 이벤트 처리 (Enter 키 조회, Escape 키 닫기)
- * 8. postMessage로 부모창과 통신
+ * 1. 부모창?�서 ?��? 목록 ?�이???�신 (postMessage)
+ * 2. ?�급�??��? 조회 (USP_UNTPRC_SEL) 
+ * 3. ?�사/?�주 구분 ?�택 (rdIODiv)
+ * 4. ?�도 ?�택 (txtYrNm)
+ * 5. ?�블?�릭 ???��? ?�택 (onDoubleClick)
+ * 6. ?�업 ?�기 (PopUpManager.removePopUp)
+ * 7. ?�보???�벤??처리 (Enter ??조회, Escape ???�기)
+ * 8. postMessage�?부모창�??�신
  * 
- * ASIS 대응 관계:
- * - TitleWindow → popup-wrapper
- * - AdvancedDataGrid → table
- * - RadioButtonGroup → radio buttons
- * - FInputNumber → select
- * - CurrencyFormatter → formatCurrency
+ * ASIS ?�??관�?
+ * - TitleWindow ??popup-wrapper
+ * - AdvancedDataGrid ??table
+ * - RadioButtonGroup ??radio buttons
+ * - FInputNumber ??select
+ * - CurrencyFormatter ??formatCurrency
  */
 const COMZ030P00 = () => {
   const { showToast } = useToast();
   /**
-   * 자사/외주 구분 상태 관리
+   * ?�사/?�주 구분 ?�태 관�?
    * ASIS: rdIODiv.selectedValue
    */
   const [radioValue, setRadioValue] = useState('1');
   
   /**
-   * 년도 상태 관리
+   * ?�도 ?�태 관�?
    * ASIS: txtYrNm.text
    */
   const [year, setYear] = useState(new Date().getFullYear().toString());
   
   /**
-   * 그리드 데이터 상태 관리
+   * 그리???�이???�태 관�?
    * ASIS: initDG (ArrayCollection)
    */
   const [gridData, setGridData] = useState<GradeUnitPriceData[]>([]);
   
   /**
-   * 로딩 상태 관리
+   * 로딩 ?�태 관�?
    * ASIS: showBusyCursor="true"
    */
   const [loading, setLoading] = useState(false);
   
   /**
-   * 선택된 행 인덱스
+   * ?�택?????�덱??
    * ASIS: grdUntPrc.selectedIndex
    */
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
 
   /**
-   * 입력 필드 참조 (ASIS: txtYrNm)
+   * ?�력 ?�드 참조 (ASIS: txtYrNm)
    */
   const selectRef = useRef<HTMLSelectElement>(null)
 
   /**
-   * 메시지 수신 상태 관리
+   * 메시지 ?�신 ?�태 관�?
    */
   const [messageReceived, setMessageReceived] = useState(false)
 
   /**
-   * postMessage 이벤트 핸들러
-   * 부모 창에서 전송된 choicePriceInit 데이터를 처리
+   * postMessage ?�벤???�들??
+   * 부�?창에???�송??choicePriceInit ?�이?��? 처리
    */
   const handlePostMessage = (event: MessageEvent) => {
     const data = event.data;
@@ -109,9 +109,9 @@ const COMZ030P00 = () => {
   }
 
   /**
-   * init_Complete 함수
-   * ASIS: init_Complete() 함수와 동일한 역할
-   * 모달이 처음 로드될 때 초기화 작업을 수행
+   * init_Complete ?�수
+   * ASIS: init_Complete() ?�수?� ?�일????��
+   * 모달??처음 로드????초기???�업???�행
    */
   const init_Complete = () => {
     setRadioValue('1')
@@ -119,7 +119,7 @@ const COMZ030P00 = () => {
     setGridData([])
     setLoading(false)
     setSelectedRow(null)
-    // 년도 선택창에 포커스 (ASIS: txtYrNm.focus())
+    // ?�도 ?�택창에 ?�커??(ASIS: txtYrNm.focus())
     setTimeout(() => {
       selectRef.current?.focus()
     }, 0)
@@ -127,30 +127,30 @@ const COMZ030P00 = () => {
 
   /**
    * setUntPrcInfo
-   * ASIS: setUntPrcInfo(gubun:String, bsnStrtYy:String) 함수와 동일한 로직
-   * 자사구분, 프로젝트 시작년도를 param data로 받아서 셋팅할 수 있게 함
+   * ASIS: setUntPrcInfo(gubun:String, bsnStrtYy:String) ?�수?� ?�일??로직
+   * ?�사구분, ?�로?�트 ?�작?�도�?param data�?받아???�팅?????�게 ??
    * @param param { ownOutsDiv: string, year: string }
    */
   const setUntPrcInfo = (param: { ownOutsDiv: string; year: string }) => {
     setRadioValue(param.ownOutsDiv);
     setYear(param.year);
-    // 부모창에서 데이터를 받은 후 자동 조회 실행
+    // 부모창?�서 ?�이?��? 받�? ???�동 조회 ?�행
     setTimeout(() => {
       handleSearch();
     }, 50);
   };
 
   /**
-   * 단가 검색 함수
-   * ASIS: onSearchClick() 함수와 동일한 로직
+   * ?��? 검???�수
+   * ASIS: onSearchClick() ?�수?� ?�일??로직
    * 
-   * 프로시저: USP_UNTPRC_SEL(?, ?, ?)
-   * 파라미터: 자사/외주구분, 년도
+   * ?�로?��?: USP_UNTPRC_SEL(?, ?, ?)
+   * ?�라미터: ?�사/?�주구분, ?�도
    */
   const handleSearch = async () => {
     // ASIS: validation check
     if (!year.trim()) {
-      showToast('년도를 입력하세요.', 'info');
+      showToast('?�도�??�력?�세??', 'info');
       return;
     }
 
@@ -171,13 +171,13 @@ const COMZ030P00 = () => {
         setGridData(Array.isArray(result.data) ? result.data : []);
       } else {
         const errorData = await res.json();
-        const errorMessage = errorData.message || '등급별 단가 조회 중 오류가 발생했습니다.';
+        const errorMessage = errorData.message || '?�급�??��? 조회 �??�류가 발생?�습?�다.';
         showToast(errorMessage, 'warning');
         setGridData([]);
       }
     } catch (error) {
-      console.error('등급별 단가 조회 오류:', error);
-      showToast('등급별 단가 조회 중 오류가 발생했습니다.', 'error');
+      console.error('?�급�??��? 조회 ?�류:', error);
+      showToast('?�급�??��? 조회 �??�류가 발생?�습?�다.', 'error');
       setGridData([]);
     } finally {
       setLoading(false);
@@ -185,10 +185,10 @@ const COMZ030P00 = () => {
   };
 
   /**
-   * 더블클릭 이벤트 처리
-   * ASIS: onDoubleClick() 함수와 동일한 로직
+   * ?�블?�릭 ?�벤??처리
+   * ASIS: onDoubleClick() ?�수?� ?�일??로직
    * 
-   * 더블클릭 시 선택된 단가를 부모창으로 전달하고 팝업 닫기
+   * ?�블?�릭 ???�택???��?�?부모창?�로 ?�달?�고 ?�업 ?�기
    */
   const handleRowDoubleClick = (index: number) => {
     if (gridData && gridData[index]) {
@@ -197,10 +197,10 @@ const COMZ030P00 = () => {
         price: selectedItem.UPRC
       }
 
-      // 팝업 창인 경우 부모 창으로 결과 전송
+      // ?�업 창인 경우 부�?창으�?결과 ?�송
       if (window.opener && !window.opener.closed) {
         try {
-          // 부모 창의 handlePriceSelect 함수 호출
+          // 부�?창의 handlePriceSelect ?�수 ?�출
           const messageData = {
             type: 'PRICE_SELECTED',
             data: selectInfo,
@@ -210,28 +210,28 @@ const COMZ030P00 = () => {
           
           window.opener.postMessage(messageData, '*');
           
-          // 팝업 창 닫기
+          // ?�업 �??�기
           window.close();
         } catch (error) {
-          console.error('부모창 통신 오류:', error);
+          console.error('부모창 ?�신 ?�류:', error);
         }
       }
     }
   };
 
   /**
-   * 행 클릭 시 선택 상태 관리
-   * ASIS: grdUntPrc.selectedIndex 관리
+   * ???�릭 ???�택 ?�태 관�?
+   * ASIS: grdUntPrc.selectedIndex 관�?
    */
   const handleRowClick = (index: number) => {
     setSelectedRow(index);
   };
 
   /**
-   * 키보드 이벤트 처리 함수
-   * ASIS: 키보드 이벤트 처리와 동일
-   * Enter: 검색 실행
-   * Escape: 팝업 닫기
+   * ?�보???�벤??처리 ?�수
+   * ASIS: ?�보???�벤??처리?� ?�일
+   * Enter: 검???�행
+   * Escape: ?�업 ?�기
    */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>) => {
     if (e.key === 'Enter') {
@@ -244,51 +244,51 @@ const COMZ030P00 = () => {
   };
 
   /**
-   * 포커스 시 전체 선택
-   * ASIS: FInputNumber 컴포넌트의 포커스 시 전체 선택 기능과 동일
+   * ?�커?????�체 ?�택
+   * ASIS: FInputNumber 컴포?�트???�커?????�체 ?�택 기능�??�일
    */
   const handleFocus = (e: React.FocusEvent<HTMLSelectElement>) => {
-    // select 요소는 select() 메서드가 없으므로 제거
+    // select ?�소??select() 메서?��? ?�으므�??�거
     // e.target.select()
   }
 
   /**
-   * 숫자 포맷팅 (ASIS의 CurrencyFormatter 대체)
+   * ?�자 ?�맷??(ASIS??CurrencyFormatter ?��?
    * ASIS: moneyFormat currencySymbol=""
    */
   const formatCurrency = (value: string) => {
     try {
-      // 빈 값이나 null 체크
+      // �?값이??null 체크
       if (!value || value === '') return '0';
       
-      // 문자열에서 콤마 제거 후 숫자로 변환
+      // 문자?�에??콤마 ?�거 ???�자�?변??
       const cleanValue = value.toString().replace(/[^\d.-]/g, '');
       const numValue = parseFloat(cleanValue) || 0;
       
-      // 음수 체크
+      // ?�수 체크
       if (numValue < 0) return '0';
       
-      // 천 단위 콤마 포맷팅
+      // �??�위 콤마 ?�맷??
       return numValue.toLocaleString('ko-KR');
     } catch (error) {
-      console.error('숫자 포맷팅 오류:', error, 'value:', value);
+      console.error('?�자 ?�맷???�류:', error, 'value:', value);
       return '0';
     }
   };
 
   /**
-   * 컴포넌트 초기화 및 메시지 수신 처리
+   * 컴포?�트 초기??�?메시지 ?�신 처리
    */
   const messageListenerRef = useRef<((event: MessageEvent) => void) | null>(null);
   const isInitializedRef = useRef(false);
   
   useEffect(() => {
-    // 이미 초기화되었는지 확인
+    // ?��? 초기?�되?�는지 ?�인
     if (isInitializedRef.current) return;
     isInitializedRef.current = true;
     init_Complete();
     
-    // 초기화 완료 후 자동 조회 실행
+    // 초기???�료 ???�동 조회 ?�행
     setTimeout(() => {
       handleSearch();
     }, 100);
@@ -322,9 +322,9 @@ const COMZ030P00 = () => {
 
   return (
     <div className="popup-wrapper min-w-[500px]">
-      {/* 팝업 헤더 - ASIS: TitleWindow title */}
+      {/* ?�업 ?�더 - ASIS: TitleWindow title */}
       <div className="popup-header">
-        <h3 className="popup-title">등급별 단가 조회</h3>
+        <h3 className="popup-title">?�급�??��? 조회</h3>
         <button 
           className="popup-close" 
           type="button" 
@@ -339,21 +339,21 @@ const COMZ030P00 = () => {
       </div>
 
       <div className="popup-body scroll-area">
-        {/* 조회 조건 영역 - ASIS: 상단 검색 조건 영역 */}
+        {/* 조회 조건 ?�역 - ASIS: ?�단 검??조건 ?�역 */}
         <div className="search-div mb-4">
           <table className="search-table w-full">
             <tbody>
               <tr>
-                {/* 자사/외주 구분 - ASIS: rdIODiv (RadioButtonGroup) */}
-                <th className="search-th w-[100px]">자사/외주 구분</th>
+                {/* ?�사/?�주 구분 - ASIS: rdIODiv (RadioButtonGroup) */}
+                <th className="search-th w-[100px]">?�사/?�주 구분</th>
                 <td className="search-td w-[120px]">
                   <div className="flex items-center gap-4 text-sm">
-                    <label><input type="radio" name="gubun" value="1" checked={radioValue === '1'} onChange={e => setRadioValue(e.target.value)} /> 자사</label>
-                    <label><input type="radio" name="gubun" value="2" checked={radioValue === '2'} onChange={e => setRadioValue(e.target.value)} /> 외주</label>
+                    <label><input type="radio" name="gubun" value="1" checked={radioValue === '1'} onChange={e => setRadioValue(e.target.value)} /> ?�사</label>
+                    <label><input type="radio" name="gubun" value="2" checked={radioValue === '2'} onChange={e => setRadioValue(e.target.value)} /> ?�주</label>
                   </div>
                 </td>
-                {/* 년도 입력 - ASIS: txtYrNm (FInputNumber) */}
-                <th className="search-th w-[70px]">년도</th>
+                {/* ?�도 ?�력 - ASIS: txtYrNm (FInputNumber) */}
+                <th className="search-th w-[70px]">?�도</th>
                 <td className="search-td w-[100px]">
                   <select
                     ref={selectRef}
@@ -381,7 +381,7 @@ const COMZ030P00 = () => {
                     onClick={handleSearch}
                     disabled={loading}
                   >
-                    {loading ? '조회중...' : '조회'}
+                    {loading ? '조회�?..' : '조회'}
                   </button>
                 </td>
               </tr>
@@ -389,17 +389,17 @@ const COMZ030P00 = () => {
           </table>
         </div>
 
-        {/* 그리드 영역 - ASIS: grdUntPrc (AdvancedDataGrid) */}
+        {/* 그리???�역 - ASIS: grdUntPrc (AdvancedDataGrid) */}
         <div className="gridbox-div mb-4">
           <table className="grid-table">
             <thead>
               <tr>
-                {/* ASIS: AdvancedDataGridColumn headerText="등급" dataField="TCN_GRD_NM" */}
-                <th className="grid-th">등급</th>
+                {/* ASIS: AdvancedDataGridColumn headerText="?�급" dataField="TCN_GRD_NM" */}
+                <th className="grid-th">?�급</th>
                 {/* ASIS: AdvancedDataGridColumn headerText="직책" dataField="DUTY_NM" */}
                 <th className="grid-th">직책</th>
-                {/* ASIS: AdvancedDataGridColumn headerText="단가 dataField="UPRC" formatter="{moneyFormat}" */}
-                <th className="grid-th text-right">단가</th>
+                {/* ASIS: AdvancedDataGridColumn headerText="?��? dataField="UPRC" formatter="{moneyFormat}" */}
+                <th className="grid-th text-right">?��?</th>
               </tr>
             </thead>
             <tbody>
@@ -419,7 +419,7 @@ const COMZ030P00 = () => {
               ) : (
                 <tr>
                   <td colSpan={3} className="grid-td text-center text-gray-500">
-                    {loading ? '조회중...' : '조회된 데이터가 없습니다.'}
+                    {loading ? '조회�?..' : '조회???�이?��? ?�습?�다.'}
                   </td>
                 </tr>
               )}
@@ -427,7 +427,7 @@ const COMZ030P00 = () => {
           </table>
         </div>
 
-        {/* 하단 버튼 - ASIS: btnClose */}
+        {/* ?�단 버튼 - ASIS: btnClose */}
         <div className="flex justify-end">
           <button 
             className="btn-base btn-delete" 
@@ -446,3 +446,5 @@ const COMZ030P00 = () => {
 };
 
 export default COMZ030P00;
+
+

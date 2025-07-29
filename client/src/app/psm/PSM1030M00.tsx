@@ -79,23 +79,23 @@ interface CommonCode {
 }
 
 /**
- * PSM1030M00 - 인사발령내역 관리 화면
+ * PSM1030M00 - ?�사발령?�역 관�??�면
  * 
- * 사원의 인사발령 내역을 조회하고 관리하는 화면입니다.
- * 인사발령 등록, 수정, 삭제 기능을 제공하며 AG Grid를 사용하여 목록을 표시합니다.
+ * ?�원???�사발령 ?�역??조회?�고 관리하???�면?�니??
+ * ?�사발령 ?�록, ?�정, ??�� 기능???�공?�며 AG Grid�??�용?�여 목록???�시?�니??
  * 
  * 주요 기능:
- * - 인사발령내역 조회 및 검색
- * - 인사발령 등록/수정/삭제
- * - 본부별 부서 조회
- * - AG Grid를 활용한 발령내역 목록 표시
+ * - ?�사발령?�역 조회 �?검??
+ * - ?�사발령 ?�록/?�정/??��
+ * - 본�?�?부??조회
+ * - AG Grid�??�용??발령?�역 목록 ?�시
  * 
- * AS-IS: PSM_01_0130.mxml (인사발령내역 관리)
- * TO-BE: React 기반 인사발령 관리 화면
+ * AS-IS: PSM_01_0130.mxml (?�사발령?�역 관�?
+ * TO-BE: React 기반 ?�사발령 관�??�면
  * 
- * 사용 예시:
+ * ?�용 ?�시:
  * ```tsx
- * // PSM1010M00의 탭으로 사용
+ * // PSM1010M00????���??�용
  * <PSM1030M00 
  *   selectedEmployee={selectedEmployee}
  *   isTab={true}
@@ -107,9 +107,9 @@ interface CommonCode {
  */
 
 interface PSM1030M00Props {
-  /** 선택된 사원 정보 (PSM1010M00에서 전달) */
+  /** ?�택???�원 ?�보 (PSM1010M00?�서 ?�달) */
   selectedEmployee?: EmployeeListData | null;
-  /** 탭 모드 여부 */
+  /** ??모드 ?��? */
   isTab?: boolean;
 }
 
@@ -128,7 +128,7 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
   const [newFlag, setNewFlag] = useState(true);
   const [saveApntDiv, setSaveApntDiv] = useState('');
 
-  // AS-IS 공통 코드 상태
+  // AS-IS 공통 코드 ?�태
   const [commonCodes, setCommonCodes] = useState<{
     apntDiv: CommonCode[];
     hqDiv: CommonCode[];
@@ -141,15 +141,15 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
     duty: []
   });
 
-  // AS-IS 입력 데이터 상태
+  // AS-IS ?�력 ?�이???�태
   const [inputData, setInputData] = useState({
-    apntDiv: '2', // 발령구분 (기본값: 승진)
-    apntDt: '', // 발령일자
-    hqDiv: '', // 발령본부
-    deptDiv: '', // 발령부서
+    apntDiv: '2', // 발령구분 (기본�? ?�진)
+    apntDt: '', // 발령?�자
+    hqDiv: '', // 발령본�?
+    deptDiv: '', // 발령부??
     duty: '', // 발령직위
     rmk: '', // 비고
-    seqNo: '' // 일련번호
+    seqNo: '' // ?�련번호
   });
 
 
@@ -166,7 +166,7 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
       const apntDivResult = await apntDivResponse.json();
       const apntDivData = apntDivResult.data || [];
 
-      // 본부 코드 로드 (AS-IS: cbHqDiv.setLargeCode('113', '00'))
+      // 본�? 코드 로드 (AS-IS: cbHqDiv.setLargeCode('113', '00'))
       const hqResponse = await fetch('/api/common/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -191,13 +191,13 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
         duty: dutyData
       });
     } catch (error) {
-      console.error('공통 코드 로드 중 오류:', error);
+      console.error('공통 코드 로드 �??�류:', error);
     }
   };
 
-  // AS-IS 인사발령내역 조회 (PSM_01_0131_S 프로시저 호출)
+  // AS-IS ?�사발령?�역 조회 (PSM_01_0131_S ?�로?��? ?�출)
   const searchAppointmentList = useCallback(async () => {
-    // employeeInfo 대신 selectedEmployee를 직접 사용하여 타이밍 문제 해결
+    // employeeInfo ?�??selectedEmployee�?직접 ?�용?�여 ?�?�밍 문제 ?�결
     const currentEmpNo = selectedEmployee?.EMP_NO || employeeInfo?.EMP_NO;
     if (!currentEmpNo) return;
 
@@ -221,23 +221,23 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
           setAppointmentList(result.data || []);
           setAppointmentBasicInfo();
         } else {
-          setError(result.message || '조회에 실패했습니다.');
+          setError(result.message || '조회???�패?�습?�다.');
         }
       } else {
-        throw new Error('조회에 실패했습니다.');
+        throw new Error('조회???�패?�습?�다.');
       }
     } catch (error) {
-      console.error('인사발령내역 조회 중 오류:', error);
-      setError(error instanceof Error ? error.message : '조회 중 오류가 발생했습니다.');
+      console.error('?�사발령?�역 조회 �??�류:', error);
+      setError(error instanceof Error ? error.message : '조회 �??�류가 발생?�습?�다.');
     } finally {
       setIsLoading(false);
     }
   }, [selectedEmployee?.EMP_NO, employeeInfo?.EMP_NO]);
 
-  // 외부에서 호출할 수 있는 함수들을 ref로 노출
+  // ?��??�서 ?�출?????�는 ?�수?�을 ref�??�출
   useImperativeHandle(ref, () => ({
     initialize: () => {
-      // PSM1030M00 초기화
+      // PSM1030M00 초기??
       setEmployeeInfo(null);
       setAppointmentList([]);
       setSelectedAppointment(null);
@@ -257,7 +257,7 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
     }
   }));
 
-  // AS-IS 초기화 로직
+  // AS-IS 초기??로직
   useEffect(() => {
     if (selectedEmployee) {
       setEmployeeInfo(selectedEmployee);
@@ -265,62 +265,62 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
       searchAppointmentList();
       initAppointmentInput();
     }
-  }, [selectedEmployee?.EMP_NO, searchAppointmentList]); // EMP_NO가 변경될 때만 실행
+  }, [selectedEmployee?.EMP_NO, searchAppointmentList]); // EMP_NO가 변경될 ?�만 ?�행
 
-  // AS-IS 인사발령내역 저장 후 기본정보 재조회
+  // AS-IS ?�사발령?�역 ?�????기본?�보 ?�조??
   const setAppointmentBasicInfo = () => {
-    // PSM1010M00에서 선택한 사원의 원본 정보는 유지하고, 
-    // 인사발령내역의 최신 정보는 별도로 관리
-    // 상단의 본부, 부서는 원본 사원 정보를 그대로 사용
+    // PSM1010M00?�서 ?�택???�원???�본 ?�보???��??�고, 
+    // ?�사발령?�역??최신 ?�보??별도�?관�?
+    // ?�단??본�?, 부?�는 ?�본 ?�원 ?�보�?그�?�??�용
   };
 
-  // AS-IS 인사발령등록 입력 항목 초기화
+  // AS-IS ?�사발령?�록 ?�력 ??�� 초기??
   const initAppointmentInput = () => {
-    // PSM1010M00에서 선택한 사원의 원본 정보 사용
+    // PSM1010M00?�서 ?�택???�원???�본 ?�보 ?�용
     const currentEmployee = selectedEmployee || employeeInfo;
     if (!currentEmployee) return;
 
     setInputData({
-      apntDiv: '2', // 발령구분 (기본값: 승진)
-      apntDt: '', // 발령일자
+      apntDiv: '2', // 발령구분 (기본�? ?�진)
+      apntDt: '', // 발령?�자
       hqDiv: currentEmployee.HQ_DIV_CD || '',
       deptDiv: currentEmployee.DEPT_DIV_CD || '',
       duty: currentEmployee.DUTY_CD || '',
       rmk: '', // 비고
-      seqNo: '' // 일련번호
+      seqNo: '' // ?�련번호
     });
 
     setSaveApntDiv('2');
     setNewFlag(true);
   };
 
-  // AS-IS 발령구분 변경 시
+  // AS-IS 발령구분 변�???
   const handleApntDivChange = (apntDiv: string) => {
     setInputData(prev => ({ ...prev, apntDiv }));
     setSaveApntDiv(apntDiv);
 
-    // AS-IS와 동일한 로직: 발령구분에 따른 입력 필드 활성화/비활성화
+    // AS-IS?� ?�일??로직: 발령구분???�른 ?�력 ?�드 ?�성??비활?�화
     if (apntDiv === '1') {
-      // 입사 발령 등록은 모두 입력 가능
+      // ?�사 발령 ?�록?� 모두 ?�력 가??
     } else if (apntDiv === '2') {
-      // 승진을 선택하면 발령직위만 입력 가능
+      // ?�진???�택?�면 발령직위�??�력 가??
     } else if (apntDiv === '3') {
-      // 이동을 선택하면 본부/부서만 입력 가능
+      // ?�동???�택?�면 본�?/부?�만 ?�력 가??
     } else if (apntDiv === '4') {
-      // 퇴사를 선택하면 입력 불가능
+      // ?�사�??�택?�면 ?�력 불�???
     }
 
-    // 발령구분 변경 후 비고 설정 (새로운 발령구분 값 사용)
+    // 발령구분 변�???비고 ?�정 (?�로??발령구분 �??�용)
     setAppointmentRemarkWithDiv(apntDiv);
   };
 
-  // AS-IS 발령구분 선택에 의해 비고 내용 자동 설정
+  // AS-IS 발령구분 ?�택???�해 비고 ?�용 ?�동 ?�정
   const setAppointmentRemark = () => {
     if (inputData.apntDiv === '3') {
       if (inputData.hqDiv === employeeInfo?.HQ_DIV_CD) {
         setInputData(prev => ({ ...prev, rmk: newFlag ? '' : prev.rmk }));
       } else {
-        const newRemark = `면:${employeeInfo?.HQ_DIV} 명:${commonCodes.hqDiv.find(code => code.codeId === inputData.hqDiv)?.codeNm}`;
+        const newRemark = `�?${employeeInfo?.HQ_DIV} �?${commonCodes.hqDiv.find(code => code.codeId === inputData.hqDiv)?.codeNm}`;
         setInputData(prev => ({ ...prev, rmk: newRemark }));
       }
     } else {
@@ -328,13 +328,13 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
     }
   };
 
-  // 발령구분 변경 시 비고 설정 (발령구분 파라미터 받음)
+  // 발령구분 변�???비고 ?�정 (발령구분 ?�라미터 받음)
   const setAppointmentRemarkWithDiv = (apntDiv: string) => {
     if (apntDiv === '3') {
       if (inputData.hqDiv === employeeInfo?.HQ_DIV_CD) {
         setInputData(prev => ({ ...prev, rmk: newFlag ? '' : prev.rmk }));
       } else {
-        const newRemark = `면:${employeeInfo?.HQ_DIV} 명:${commonCodes.hqDiv.find(code => code.codeId === inputData.hqDiv)?.codeNm}`;
+        const newRemark = `�?${employeeInfo?.HQ_DIV} �?${commonCodes.hqDiv.find(code => code.codeId === inputData.hqDiv)?.codeNm}`;
         setInputData(prev => ({ ...prev, rmk: newRemark }));
       }
     } else {
@@ -342,10 +342,10 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
     }
   };
 
-  // AS-IS 본부 변경 시 부서 로드
+  // AS-IS 본�? 변�???부??로드
   const handleHqDivChange = async (hqDiv: string) => {
-    const currentDeptDiv = inputData.deptDiv; // 현재 선택된 부서 저장
-    setInputData(prev => ({ ...prev, hqDiv, deptDiv: '' })); // 부서 초기화
+    const currentDeptDiv = inputData.deptDiv; // ?�재 ?�택??부???�??
+    setInputData(prev => ({ ...prev, hqDiv, deptDiv: '' })); // 부??초기??
 
     try {
       // AS-IS: cbDeptDiv.setDeptCode3("",cbHqDiv.value.toString(),"N")
@@ -366,7 +366,7 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
         deptDiv: deptData
       }));
 
-      // 부서 목록 로드 후 기존 부서가 새 목록에 있으면 선택, 없으면 빈 값
+      // 부??목록 로드 ??기존 부?��? ??목록???�으�??�택, ?�으�?�?�?
       if (deptData && Array.isArray(deptData)) {
         const deptExists = deptData.some(dept => dept.data === currentDeptDiv);
         if (deptExists) {
@@ -374,43 +374,43 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
         }
       }
 
-      // 발령구분이 "3" (이동)일 때 비고 바로 설정
+      // 발령구분??"3" (?�동)????비고 바로 ?�정
       if (inputData.apntDiv === '3') {
         if (hqDiv === employeeInfo?.HQ_DIV_CD) {
           setInputData(prev => ({ ...prev, rmk: newFlag ? '' : prev.rmk }));
         } else {
-          const newRemark = `면:${employeeInfo?.HQ_DIV} 명:${commonCodes.hqDiv.find(code => code.codeId === hqDiv)?.codeNm}`;
+          const newRemark = `�?${employeeInfo?.HQ_DIV} �?${commonCodes.hqDiv.find(code => code.codeId === hqDiv)?.codeNm}`;
           setInputData(prev => ({ ...prev, rmk: newRemark }));
         }
       } else {
         setAppointmentRemark();
       }
     } catch (error) {
-      console.error('부서 로드 중 오류:', error);
+      console.error('부??로드 �??�류:', error);
     }
   };
 
-  // AS-IS 입력 데이터 검증
+  // AS-IS ?�력 ?�이??검�?
   const validateInput = (): boolean => {
-    // 발령일자 입력 체크
+    // 발령?�자 ?�력 체크
     if (!inputData.apntDt) {
-      showToast('발령일자를 입력해 주십시요.', 'warning');
+      showToast('발령?�자�??�력??주십?�요.', 'warning');
       return false;
     }
 
-    // AS-IS 주석 처리된 검증 로직들 (과거 인사 발령내용을 등록이 가능하므로 Check를 하지 않아도 된다)
-    // 승진일 경우 발령직책이 발령전 직책보다 높아야 한다.
+    // AS-IS 주석 처리??검�?로직??(과거 ?�사 발령?�용???�록??가?�하므�?Check�??��? ?�아???�다)
+    // ?�진??경우 발령직책??발령??직책보다 ?�아???�다.
     // if (inputData.apntDiv === '2') {
     //   if (Number(inputData.duty) >= Number(employeeInfo?.DUTY_CD || 0)) {
-    //     showToast('승진 대상이 아닙니다.', 'warning');
+    //     showToast('?�진 ?�?�이 ?�닙?�다.', 'warning');
     //     return false;
     //   }
     // }
     
-    // 이동일 경우 발령본부/부서가 발령전 본부/부서와 달라야 한다.
+    // ?�동??경우 발령본�?/부?��? 발령??본�?/부?��? ?�라???�다.
     // if (inputData.apntDiv === '3') {
     //   if (inputData.hqDiv === employeeInfo?.HQ_DIV_CD && inputData.deptDiv === employeeInfo?.DEPT_DIV_CD) {
-    //     showToast('발령본부(부서)가 같으면 부서 이동 대상이 아닙니다.', 'warning');
+    //     showToast('발령본�?(부??가 같으�?부???�동 ?�?�이 ?�닙?�다.', 'warning');
     //     return false;
     //   }
     // }
@@ -418,12 +418,12 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
     return true;
   };
 
-  // AS-IS 저장 버튼 클릭
+  // AS-IS ?�??버튼 ?�릭
   const handleSave = async () => {
     if (!validateInput()) return;
 
     showConfirm({
-      message: newFlag ? '새로운 인사발령을 등록하시겠습니까?' : '인사발령을 수정하시겠습니까?',
+      message: newFlag ? '?�로???�사발령???�록?�시겠습?�까?' : '?�사발령???�정?�시겠습?�까?',
       type: 'info',
       onConfirm: async () => {
         setIsLoading(true);
@@ -431,23 +431,23 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
 
         try {
           
-          // AS-IS MXML과 동일한 발령일자 형식 변환
+          // AS-IS MXML�??�일??발령?�자 ?�식 변??
           const formatDateForProc = (dateStr: string) => {
             if (!dateStr) return '';
-            return dateStr.replace(/[\/-]/g, ''); // YYYY/MM/DD → YYYYMMDD
+            return dateStr.replace(/[\/-]/g, ''); // YYYY/MM/DD ??YYYYMMDD
           };
           
           const params = [
-            newFlag ? 'NEW' : 'MOD', // 일괄등록 데이터
-            employeeInfo?.EMP_NO, // 사원번호
-            newFlag ? '' : inputData.seqNo, // 일련번호 (NEW일 때는 빈 값, MOD일 때는 기존 일련번호)
+            newFlag ? 'NEW' : 'MOD', // ?�괄?�록 ?�이??
+            employeeInfo?.EMP_NO, // ?�원번호
+            newFlag ? '' : inputData.seqNo, // ?�련번호 (NEW???�는 �?�? MOD???�는 기존 ?�련번호)
             inputData.apntDiv, // 발령구분
-            formatDateForProc(inputData.apntDt), // 발령일자 (YYYYMMDD 형식)
-            inputData.hqDiv, // 사업본부구분코드 (113)
-            inputData.deptDiv, // 부서구분코드 (112)
+            formatDateForProc(inputData.apntDt), // 발령?�자 (YYYYMMDD ?�식)
+            inputData.hqDiv, // ?�업본�?구분코드 (113)
+            inputData.deptDiv, // 부?�구분코??(112)
             inputData.duty, // 직책코드(116)
             inputData.rmk, // 비고
-            user?.userId || 'system' // 로그인사용자 (실제 세션에서 가져옴)
+            user?.userId || 'system' // 로그?�사?�자 (?�제 ?�션?�서 가?�옴)
           ].join('|');
 
 
@@ -465,31 +465,31 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
               deptDivCd: inputData.deptDiv,
               dutyCd: inputData.duty,
               rmk: inputData.rmk,
-              userId: user?.userId || 'system' // 로그인사용자 ID 추가
+              userId: user?.userId || 'system' // 로그?�사?�자 ID 추�?
             })
           });
 
           if (response.ok) {
             const result = await response.json();
             if (result.success) {
-              showToast('저장되었습니다.', 'info');
+              showToast('?�?�되?�습?�다.', 'info');
               
-              // AS-IS: 사원리스트 재조회 및 현재 사원번호 설정
+              // AS-IS: ?�원리스???�조??�??�재 ?�원번호 ?�정
               // parentDocument.prf_PsmSearch("psm_01_0130.apntSpecSaveHandler()....");
               // parentDocument.curEmpNo = txtEmpNo.text;
               
               searchAppointmentList();
               handleNew();
             } else {
-              setError(result.message || '저장에 실패했습니다.');
-              showToast(result.message || '저장에 실패했습니다.', 'error');
+              setError(result.message || '?�?�에 ?�패?�습?�다.');
+              showToast(result.message || '?�?�에 ?�패?�습?�다.', 'error');
             }
           } else {
-            throw new Error('저장에 실패했습니다.');
+            throw new Error('?�?�에 ?�패?�습?�다.');
           }
         } catch (error) {
-          console.error('인사발령내역 저장 중 오류:', error);
-          const errorMessage = error instanceof Error ? error.message : '저장 중 오류가 발생했습니다.';
+          console.error('?�사발령?�역 ?�??�??�류:', error);
+          const errorMessage = error instanceof Error ? error.message : '?�??�??�류가 발생?�습?�다.';
           setError(errorMessage);
           showToast(errorMessage, 'error');
         } finally {
@@ -497,20 +497,20 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
         }
       },
       onCancel: () => {
-        // 인사발령 저장 취소
+        // ?�사발령 ?�??취소
       }
     });
   };
 
-  // AS-IS 삭제 버튼 클릭
+  // AS-IS ??�� 버튼 ?�릭
   const handleDelete = async () => {
     if (!inputData.seqNo) {
-      showToast('삭제할 인사발령내역을 선택해 주십시요.', 'warning');
+      showToast('??��???�사발령?�역???�택??주십?�요.', 'warning');
       return;
     }
 
     showConfirm({
-      message: '정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.',
+      message: '?�말 ??��?�시겠습?�까? ???�업?� ?�돌�????�습?�다.',
       type: 'warning',
       onConfirm: async () => {
         setIsLoading(true);
@@ -525,27 +525,27 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
             body: JSON.stringify({
               empNo: employeeInfo?.EMP_NO,
               seqNo: inputData.seqNo ? String(inputData.seqNo) : '',
-              userId: user?.userId || 'system' // 로그인사용자 ID 추가
+              userId: user?.userId || 'system' // 로그?�사?�자 ID 추�?
             })
           });
 
           if (response.ok) {
             const result = await response.json();
             if (result.success) {
-              showToast('삭제되었습니다.', 'info');
+              showToast('??��?�었?�니??', 'info');
               searchAppointmentList();
               handleNew();
               // AS-IS: btnDel.enabled = false
             } else {
-              setError(result.message || '삭제에 실패했습니다.');
-              showToast(result.message || '삭제에 실패했습니다.', 'error');
+              setError(result.message || '??��???�패?�습?�다.');
+              showToast(result.message || '??��???�패?�습?�다.', 'error');
             }
           } else {
-            throw new Error('삭제에 실패했습니다.');
+            throw new Error('??��???�패?�습?�다.');
           }
             } catch (error) {
-          console.error('인사발령내역 삭제 중 오류:', error);
-          const errorMessage = error instanceof Error ? error.message : '삭제 중 오류가 발생했습니다.';
+          console.error('?�사발령?�역 ??�� �??�류:', error);
+          const errorMessage = error instanceof Error ? error.message : '??�� �??�류가 발생?�습?�다.';
           setError(errorMessage);
           showToast(errorMessage, 'error');
         } finally {
@@ -553,12 +553,12 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
         }
       },
               onCancel: () => {
-          // 인사발령 삭제 취소
+          // ?�사발령 ??�� 취소
         }
     });
   };
 
-  // AS-IS 신규 버튼 클릭
+  // AS-IS ?�규 버튼 ?�릭
   const handleNew = () => {
     setNewFlag(true);
     initAppointmentInput();
@@ -566,17 +566,17 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
     setSelectedAppointment(null);
   };
 
-  // AS-IS 날짜 표시 형식 변환 함수
+  // AS-IS ?�짜 ?�시 ?�식 변???�수
   const formatDateForDisplay = (dateStr: string | undefined) => {
     if (!dateStr) return '';
-    // YYYYMMDD → YYYY/MM/DD 형식으로 변환
+    // YYYYMMDD ??YYYY/MM/DD ?�식?�로 변??
     if (dateStr.length === 8) {
       return `${dateStr.substring(0, 4)}/${dateStr.substring(4, 6)}/${dateStr.substring(6, 8)}`;
     }
     return dateStr;
   };
 
-  // AS-IS 인사발령내역 더블클릭
+  // AS-IS ?�사발령?�역 ?�블?�릭
   const handleAppointmentDoubleClick = async (event: RowDoubleClickedEvent) => {
     const appointment = event.data as AppointmentData;
     if (!appointment) return;
@@ -584,13 +584,13 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
     setSelectedAppointment(appointment);
     setNewFlag(false);
 
-    // 발령일자 형식 변환: "2024/09/01" → "2024-09-01"
+    // 발령?�자 ?�식 변?? "2024/09/01" ??"2024-09-01"
     const formatDateForInput = (dateStr: string) => {
       if (!dateStr) return '';
       return dateStr.replace(/\//g, '-');
     };
 
-    // 발령부서 목록 로드
+    // 발령부??목록 로드
     if (appointment.HQ_DIV_CD) {
       try {
         const response = await fetch('/api/psm/dept-by-hq', {
@@ -610,7 +610,7 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
           deptDiv: deptData || []
         }));
       } catch (error) {
-        console.error('부서 로드 중 오류:', error);
+        console.error('부??로드 �??�류:', error);
       }
     }
 
@@ -629,43 +629,43 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
     // AS-IS: this.btnSave.enabled = true, this.btnDel.enabled = true
   };
 
-  // PSM1010M00에서 선택한 사원의 원본 정보 사용
+  // PSM1010M00?�서 ?�택???�원???�본 ?�보 ?�용
   const currentEmployee = selectedEmployee || employeeInfo;
 
   return (
     <div className={`flex flex-col ${isTab ? 'flex-1 min-h-0' : 'h-full'} overflow-auto`}>
-      {/* AS-IS 개인 회사 정보 */}
+      {/* AS-IS 개인 ?�사 ?�보 */}
       <div className="search-div mb-4">
         <table className="search-table w-full">
           <tbody>
             <tr className="search-tr">
-              <th className="search-th w-[80px]">업체명</th>
+              <th className="search-th w-[80px]">?�체�?/th>
               <td className="search-td w-[160px]">
                 <input type="text" className="input-base input-default w-full" value={currentEmployee?.CRPN_NM || ''} readOnly />
               </td>
-              <th className="search-th w-[80px]">사원번호</th>
+              <th className="search-th w-[80px]">?�원번호</th>
               <td className="search-td w-[160px]">
                 <input type="text" className="input-base input-default w-full" value={currentEmployee?.EMP_NO || ''} readOnly />
               </td>
-              <th className="search-th w-[80px]">사원명</th>
+              <th className="search-th w-[80px]">?�원�?/th>
               <td className="search-td w-[160px]">
                 <input type="text" className="input-base input-default w-full" value={currentEmployee?.EMP_NM || ''} readOnly />
               </td>
-              <th className="search-th w-[80px]">입사일자</th>
+              <th className="search-th w-[80px]">?�사?�자</th>
               <td className="search-td w-[160px]">
                 <input type="text" className="input-base input-default w-full" value={formatDateForDisplay(currentEmployee?.ENTR_DT)} readOnly />
               </td>
-              <th className="search-th w-[80px]">퇴사일자</th>
+              <th className="search-th w-[80px]">?�사?�자</th>
               <td className="search-td w-[160px]">
                 <input type="text" className="input-base input-default w-full" value={formatDateForDisplay(currentEmployee?.RETIR_DT)} readOnly />
               </td>
             </tr>
             <tr className="search-tr">
-              <th className="search-th w-[80px]">본부</th>
+              <th className="search-th w-[80px]">본�?</th>
               <td className="search-td w-[160px]">
                 <input type="text" className="input-base input-default w-full" value={currentEmployee?.HQ_DIV || ''} readOnly />
               </td>
-              <th className="search-th w-[80px]">부서</th>
+              <th className="search-th w-[80px]">부??/th>
               <td className="search-td w-[160px]">
                 <input type="text" className="input-base input-default w-full" value={currentEmployee?.DEPT_DIV || ''} readOnly />
               </td>
@@ -673,7 +673,7 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
               <td className="search-td w-[160px]">
                 <input type="text" className="input-base input-default w-full" value={currentEmployee?.DUTY || ''} readOnly />
               </td>
-              <th className="search-th w-[80px]">근무상태</th>
+              <th className="search-th w-[80px]">근무?�태</th>
               <td className="search-td">
                 <input type="text" className="input-base input-default !w-[150px]" value={currentEmployee?.WKG_ST_DIV || ''} readOnly />
               </td>
@@ -683,10 +683,10 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
       </div>
 
       <div className="flex gap-4 flex-1 min-h-0">
-        {/* AS-IS 인사발령내역 */}
+        {/* AS-IS ?�사발령?�역 */}
         <div className="w-1/2 flex flex-col">
           <div className="tit_area">
-            <h3>인사발령내역</h3>
+            <h3>?�사발령?�역</h3>
           </div>
           <div>
             <DataGrid
@@ -694,9 +694,9 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
               columnDefs={[
                 { headerName: 'No', valueGetter: (params: any) => params.node.rowIndex + 1, width: 70 },
                 { headerName: '구분', field: 'APNT_DIV_NM', width: 100 },
-                { headerName: '발령일자', field: 'APNT_DT', width: 120 },
-                { headerName: '본부', field: 'HQ_DIV_NM', width: 120 },
-                { headerName: '부서', field: 'DEPT_DIV_NM', width: 120 },
+                { headerName: '발령?�자', field: 'APNT_DT', width: 120 },
+                { headerName: '본�?', field: 'HQ_DIV_NM', width: 120 },
+                { headerName: '부??, field: 'DEPT_DIV_NM', width: 120 },
                 { headerName: '직책', field: 'DUTY_NM', width: 120 },
                 { headerName: '비고', field: 'RMK', flex: 1 },
               ]}
@@ -713,14 +713,14 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
             />
           </div>
           <p className="text-[13px] text-[#00509A] py-1">
-            ※ 2010년 이전 발령건은 발령내용 등 포함여부 차이로 사실과 다릅니다.
+            ??2010???�전 발령건�? 발령?�용 ???�함?��? 차이�??�실�??�릅?�다.
           </p>
         </div>
 
-        {/* AS-IS 인사발령등록 */}
+        {/* AS-IS ?�사발령?�록 */}
         <div className="w-1/2 flex flex-col">
           <div className="tit_area">
-            <h3>인사발령등록</h3>
+            <h3>?�사발령?�록</h3>
           </div>
           <div className="flex-1">
             <table className="form-table">
@@ -738,7 +738,7 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
                       ))}
                     </select>
                   </td>
-                  <th className="form-th w-[100px]">발령일자</th>
+                  <th className="form-th w-[100px]">발령?�자</th>
                   <td className="form-td">
                     <input 
                       type="date" 
@@ -750,7 +750,7 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
                   </td>
                 </tr>
                 <tr className="form-tr">
-                  <th className="form-th">발령본부</th>
+                  <th className="form-th">발령본�?</th>
                   <td className="form-td">
                     <select 
                       className="combo-base w-full"
@@ -763,7 +763,7 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
                       ))}
                     </select>
                   </td>
-                  <th className="form-th">발령부서</th>
+                  <th className="form-th">발령부??/th>
                   <td className="form-td">
                     <select 
                       className="combo-base w-full"
@@ -771,7 +771,7 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
                       onChange={(e) => setInputData(prev => ({ ...prev, deptDiv: e.target.value }))}
                       disabled={inputData.apntDiv === '2' || inputData.apntDiv === '4'}
                     >
-                      <option value="">선택하세요</option>
+                      <option value="">?�택?�세??/option>
                       {commonCodes.deptDiv.map(code => (
                         <option key={code.DATA} value={code.DATA}>
                           {code.LABEL}
@@ -803,13 +803,13 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
                       value={inputData.rmk}
                       onChange={(e) => {
                         const newValue = e.target.value;
-                        // UTF-8 바이트 수 계산
+                        // UTF-8 바이????계산
                         const byteLength = new TextEncoder().encode(newValue).length;
                         
                         if (byteLength <= 500) {
                           setInputData(prev => ({ ...prev, rmk: newValue }));
                         } else {
-                          showToast(`비고는 500바이트까지 입력 가능합니다. (현재: ${byteLength}바이트)`, 'warning');
+                          showToast(`비고??500바이?�까지 ?�력 가?�합?�다. (?�재: ${byteLength}바이??`, 'warning');
                         }
                       }}
                     />
@@ -824,28 +824,28 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
                 onClick={handleNew}
                 disabled={!currentEmployee?.EMP_NO}
               >
-                신규
+                ?�규
               </button>
               <button 
                 className="btn-base btn-act"
                 onClick={handleSave}
                 disabled={isLoading || !currentEmployee?.EMP_NO}
               >
-                {isLoading ? '저장중...' : '저장'}
+                {isLoading ? '?�?�중...' : '?�??}
               </button>
               <button 
                 className="btn-base btn-delete"
                 onClick={handleDelete}
                 disabled={isLoading || !inputData.seqNo}
               >
-                삭제
+                ??��
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 에러 메시지 */}
+      {/* ?�러 메시지 */}
       {error && (
         <div className="text-red-500 text-sm mt-2 px-1">
           {error}
@@ -856,3 +856,4 @@ const PSM1030M00 = forwardRef<PSM1030M00Ref, PSM1030M00Props>(({ selectedEmploye
 });
 
 export default PSM1030M00;
+

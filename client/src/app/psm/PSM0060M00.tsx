@@ -4,27 +4,27 @@ import React, { useState } from 'react';
 import { useToast } from '@/contexts/ToastContext';
 
 /**
- * PSM0060M00 - 개발환경 선택 팝업
+ * PSM0060M00 - 개발?�경 ?�택 ?�업
  * 
- * 개발자의 기술 스택과 개발환경을 선택하는 팝업 화면입니다.
- * 프로필 등록 시 개발환경 정보를 입력하기 위한 모달 팝업으로 사용됩니다.
+ * 개발?�의 기술 ?�택�?개발?�경???�택?�는 ?�업 ?�면?�니??
+ * ?�로???�록 ??개발?�경 ?�보�??�력?�기 ?�한 모달 ?�업?�로 ?�용?�니??
  * 
  * 주요 기능:
- * - 운영체제(OS) 선택 (UNIX, WINDOW, LINUX, 기타)
- * - DBMS 선택 (ORACLE, MS-SQL, DB2, Sybase, Informix, 기타)
- * - 프레임웍 선택 (Corebase, ProFrame, AnyFrame, Digital, 기타)
- * - WAS/미들웨어 선택 (JEUS, WebLogic, WebSphere, MTS, Tmax, Tuxedo, 기타)
- * - 언어/개발환경 선택 (Java, EJB, ASP, Proc, C, Ajax, Struts, iBatis, Spring, jQuery, HTML5, VB, PB, VC, Delphi, 기타)
- * - TOOL 선택 (Miplatform, Xplatform, NCRM, XFrame, Gause, RD, OZ, CR, 기타)
- * - 모바일 선택 (Android, iOS, 기타)
- * - 기타 텍스트 입력
+ * - ?�영체제(OS) ?�택 (UNIX, WINDOW, LINUX, 기�?)
+ * - DBMS ?�택 (ORACLE, MS-SQL, DB2, Sybase, Informix, 기�?)
+ * - ?�레?�웍 ?�택 (Corebase, ProFrame, AnyFrame, Digital, 기�?)
+ * - WAS/미들?�어 ?�택 (JEUS, WebLogic, WebSphere, MTS, Tmax, Tuxedo, 기�?)
+ * - ?�어/개발?�경 ?�택 (Java, EJB, ASP, Proc, C, Ajax, Struts, iBatis, Spring, jQuery, HTML5, VB, PB, VC, Delphi, 기�?)
+ * - TOOL ?�택 (Miplatform, Xplatform, NCRM, XFrame, Gause, RD, OZ, CR, 기�?)
+ * - 모바???�택 (Android, iOS, 기�?)
+ * - 기�? ?�스???�력
  * 
- * AS-IS: 개발환경 선택 팝업 (MXML)
- * TO-BE: React 기반 팝업 컴포넌트
+ * AS-IS: 개발?�경 ?�택 ?�업 (MXML)
+ * TO-BE: React 기반 ?�업 컴포?�트
  * 
- * 사용 예시:
+ * ?�용 ?�시:
  * ```tsx
- * // PSM0050M00에서 호출
+ * // PSM0050M00?�서 ?�출
  * <PSM0060M00 
  *   onConfirm={(data) => setDevEnv(data)}
  *   onClose={() => setShowPopup(false)}
@@ -36,22 +36,22 @@ import { useToast } from '@/contexts/ToastContext';
  */
 
 interface PSM0060M00Props {
-  /** 선택 완료 시 호출될 콜백 (선택된 개발환경 문자열 전달) */
+  /** ?�택 ?�료 ???�출??콜백 (?�택??개발?�경 문자???�달) */
   onConfirm?: (data: string) => void;
-  /** 팝업 닫기 시 호출될 콜백 */
+  /** ?�업 ?�기 ???�출??콜백 */
   onClose?: () => void;
 }
 
 export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
   const { showToast, showConfirm } = useToast();
-  // 운영체제(OS) 상태
+  // ?�영체제(OS) ?�태
   const [osUnix, setOsUnix] = useState(false);
   const [osWindow, setOsWindow] = useState(false);
   const [osLinux, setOsLinux] = useState(false);
   const [osEtc, setOsEtc] = useState(false);
   const [osEtcText, setOsEtcText] = useState('');
 
-  // DBMS 상태
+  // DBMS ?�태
   const [dbOracle, setDbOracle] = useState(false);
   const [dbMssql, setDbMssql] = useState(false);
   const [dbDb2, setDbDb2] = useState(false);
@@ -60,7 +60,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
   const [dbEtc, setDbEtc] = useState(false);
   const [dbEtcText, setDbEtcText] = useState('');
 
-  // 프레임웍 상태
+  // ?�레?�웍 ?�태
   const [frameCorebase, setFrameCorebase] = useState(false);
   const [frameProFrame, setFrameProFrame] = useState(false);
   const [frameAnyFrame, setFrameAnyFrame] = useState(false);
@@ -68,7 +68,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
   const [frameEtc, setFrameEtc] = useState(false);
   const [frameEtcText, setFrameEtcText] = useState('');
 
-  // WAS/미들웨어 상태
+  // WAS/미들?�어 ?�태
   const [wasJeus, setWasJeus] = useState(false);
   const [wasWeblogic, setWasWeblogic] = useState(false);
   const [wasWebSphere, setWasWebSphere] = useState(false);
@@ -78,7 +78,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
   const [wasEtc, setWasEtc] = useState(false);
   const [wasEtcText, setWasEtcText] = useState('');
 
-  // 언어/개발환경 상태
+  // ?�어/개발?�경 ?�태
   const [langJava, setLangJava] = useState(false);
   const [langEjb, setLangEjb] = useState(false);
   const [langAsp, setLangAsp] = useState(false);
@@ -97,7 +97,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
   const [langEtc, setLangEtc] = useState(false);
   const [langEtcText, setLangEtcText] = useState('');
 
-  // TOOL 상태
+  // TOOL ?�태
   const [toolMiplatform, setToolMiplatform] = useState(false);
   const [toolXplatform, setToolXplatform] = useState(false);
   const [toolNcrm, setToolNcrm] = useState(false);
@@ -109,20 +109,20 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
   const [toolEtc, setToolEtc] = useState(false);
   const [toolEtcText, setToolEtcText] = useState('');
 
-  // 모바일 상태
+  // 모바???�태
   const [mobileAndroid, setMobileAndroid] = useState(false);
   const [mobileIos, setMobileIos] = useState(false);
   const [mobileEtc, setMobileEtc] = useState(false);
   const [mobileEtcText, setMobileEtcText] = useState('');
 
-  // 기타
+  // 기�?
   const [etcText, setEtcText] = useState('');
 
-  // 확인 버튼 클릭 시 데이터 수집 및 전달
+  // ?�인 버튼 ?�릭 ???�이???�집 �??�달
   const handleConfirm = () => {
     const data: string[] = [];
 
-    // 운영체제(OS)
+    // ?�영체제(OS)
     if (osUnix) data.push('UNIX');
     if (osWindow) data.push('WINDOW');
     if (osLinux) data.push('LINUX');
@@ -136,14 +136,14 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
     if (dbInformix) data.push('Informix');
     if (dbEtc && dbEtcText) data.push(dbEtcText);
 
-    // 프레임웍
+    // ?�레?�웍
     if (frameCorebase) data.push('Corebase');
     if (frameProFrame) data.push('ProFrame');
     if (frameAnyFrame) data.push('AnyFrame');
-    if (frameDigital) data.push('전자정부');
+    if (frameDigital) data.push('?�자?��?');
     if (frameEtc && frameEtcText) data.push(frameEtcText);
 
-    // WAS/미들웨어
+    // WAS/미들?�어
     if (wasJeus) data.push('JEUS');
     if (wasWeblogic) data.push('Weblogic');
     if (wasWebSphere) data.push('WebSphere');
@@ -152,7 +152,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
     if (wasTuxedo) data.push('Tuxedo');
     if (wasEtc && wasEtcText) data.push(wasEtcText);
 
-    // 언어/개발환경
+    // ?�어/개발?�경
     if (langJava) data.push('JAVA,JSP');
     if (langEjb) data.push('EJB');
     if (langAsp) data.push('.NET,C#,ASP');
@@ -181,12 +181,12 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
     if (toolCr) data.push('Crystal Report');
     if (toolEtc && toolEtcText) data.push(toolEtcText);
 
-    // 모바일
+    // 모바??
     if (mobileAndroid) data.push('Android');
     if (mobileIos) data.push('IO/S');
     if (mobileEtc && mobileEtcText) data.push(mobileEtcText);
 
-    // 기타
+    // 기�?
     if (etcText) data.push(etcText);
 
     const result = data.join(', ');
@@ -197,9 +197,9 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-xl w-[772px] h-[420px] flex flex-col">
-        {/* 헤더 */}
+        {/* ?�더 */}
         <div className="flex items-center justify-between p-4 border-b bg-blue-600 text-white rounded-t-lg">
-          <h2 className="text-lg font-semibold">개발환경/DBMS/언어 내용 입력</h2>
+          <h2 className="text-lg font-semibold">개발?�경/DBMS/?�어 ?�용 ?�력</h2>
           <button
             onClick={onClose}
             className="text-white hover:text-gray-200 text-xl font-bold"
@@ -208,12 +208,12 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
           </button>
         </div>
 
-        {/* 컨텐츠 */}
+        {/* 컨텐�?*/}
         <div className="flex-1 p-4 overflow-y-auto">
           <div className="space-y-2">
-            {/* 운영체제(OS) */}
+            {/* ?�영체제(OS) */}
             <div className="flex items-center border p-2">
-              <div className="w-24 font-semibold text-sm">운영체제(OS)</div>
+              <div className="w-24 font-semibold text-sm">?�영체제(OS)</div>
               <div className="flex-1 flex items-center space-x-4">
                 <label className="flex items-center">
                   <input
@@ -251,7 +251,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
                     onChange={(e) => setOsEtc(e.target.checked)}
                     className="w-4 h-4 mr-1 flex-shrink-0"
                   />
-                  <span className="text-sm leading-none mt-1">기타</span>
+                  <span className="text-sm leading-none mt-1">기�?</span>
                 </label>
                 <input
                   type="text"
@@ -321,7 +321,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
                     onChange={(e) => setDbEtc(e.target.checked)}
                     className="w-4 h-4 mr-1 flex-shrink-0"
                   />
-                  <span className="text-sm leading-none mt-1">기타</span>
+                  <span className="text-sm leading-none mt-1">기�?</span>
                 </label>
                 <input
                   type="text"
@@ -333,9 +333,9 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
               </div>
             </div>
 
-            {/* 프레임웍 */}
+            {/* ?�레?�웍 */}
             <div className="flex items-center border p-2">
-              <div className="w-24 font-semibold text-sm">프레임웍</div>
+              <div className="w-24 font-semibold text-sm">?�레?�웍</div>
               <div className="flex-1 flex items-center space-x-4">
                 <label className="flex items-center">
                   <input
@@ -371,7 +371,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
                     onChange={(e) => setFrameDigital(e.target.checked)}
                     className="w-4 h-4 mr-1 flex-shrink-0"
                   />
-                  <span className="text-sm leading-none mt-1">전자정부</span>
+                  <span className="text-sm leading-none mt-1">?�자?��?</span>
                 </label>
               </div>
               <div className="flex items-center space-x-2">
@@ -382,7 +382,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
                     onChange={(e) => setFrameEtc(e.target.checked)}
                     className="w-4 h-4 mr-1 flex-shrink-0"
                   />
-                  <span className="text-sm leading-none mt-1">기타</span>
+                  <span className="text-sm leading-none mt-1">기�?</span>
                 </label>
                 <input
                   type="text"
@@ -394,9 +394,9 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
               </div>
             </div>
 
-            {/* WAS/미들웨어 */}
+            {/* WAS/미들?�어 */}
             <div className="flex items-start border p-2">
-              <div className="w-24 font-semibold text-sm pt-1">WAS/미들웨어</div>
+              <div className="w-24 font-semibold text-sm pt-1">WAS/미들?�어</div>
               <div className="flex-1 space-y-1">
                 <div className="flex items-center space-x-4">
                   <label className="flex items-center">
@@ -465,7 +465,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
                     onChange={(e) => setWasEtc(e.target.checked)}
                     className="w-4 h-4 mr-1 flex-shrink-0"
                   />
-                  <span className="text-sm leading-none mt-1">기타</span>
+                  <span className="text-sm leading-none mt-1">기�?</span>
                 </label>
                 <input
                   type="text"
@@ -477,9 +477,9 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
               </div>
             </div>
 
-            {/* 언어/개발환경 */}
+            {/* ?�어/개발?�경 */}
             <div className="flex items-start border p-2">
-              <div className="w-24 font-semibold text-sm pt-1">언어/개발환경</div>
+              <div className="w-24 font-semibold text-sm pt-1">?�어/개발?�경</div>
               <div className="flex-1 space-y-1">
                 <div className="flex items-center space-x-4">
                   <label className="flex items-center">
@@ -631,7 +631,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
                     onChange={(e) => setLangEtc(e.target.checked)}
                     className="w-4 h-4 mr-1 flex-shrink-0"
                   />
-                  <span className="text-sm leading-none mt-1">기타</span>
+                  <span className="text-sm leading-none mt-1">기�?</span>
                 </label>
                 <input
                   type="text"
@@ -732,7 +732,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
                     onChange={(e) => setToolEtc(e.target.checked)}
                     className="w-4 h-4 mr-1 flex-shrink-0"
                   />
-                  <span className="text-sm leading-none mt-1">기타</span>
+                  <span className="text-sm leading-none mt-1">기�?</span>
                 </label>
                 <input
                   type="text"
@@ -744,9 +744,9 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
               </div>
             </div>
 
-            {/* 모바일 */}
+            {/* 모바??*/}
             <div className="flex items-center border p-2">
-              <div className="w-24 font-semibold text-sm">모바일</div>
+              <div className="w-24 font-semibold text-sm">모바??/div>
               <div className="flex-1 flex items-center space-x-4">
                 <label className="flex items-center">
                   <input
@@ -775,7 +775,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
                     onChange={(e) => setMobileEtc(e.target.checked)}
                     className="w-4 h-4 mr-1 flex-shrink-0"
                   />
-                  <span className="text-sm leading-none mt-1">기타</span>
+                  <span className="text-sm leading-none mt-1">기�?</span>
                 </label>
                 <input
                   type="text"
@@ -787,16 +787,16 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
               </div>
             </div>
 
-            {/* 기타 */}
+            {/* 기�? */}
             <div className="flex items-center border p-2">
-              <div className="w-24 font-semibold text-sm">기타</div>
+              <div className="w-24 font-semibold text-sm">기�?</div>
               <div className="flex-1">
                 <input
                   type="text"
                   value={etcText}
                   onChange={(e) => setEtcText(e.target.value)}
                   className="border px-2 py-1 text-sm w-full"
-                  placeholder="기타 내용을 입력하세요"
+                  placeholder="기�? ?�용???�력?�세??
                 />
               </div>
             </div>
@@ -809,7 +809,7 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
             onClick={handleConfirm}
             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
           >
-            확인
+            ?�인
           </button>
           <button
             onClick={onClose}
@@ -822,3 +822,4 @@ export default function PSM0060M00({ onConfirm, onClose }: PSM0060M00Props) {
     </div>
   );
 } 
+

@@ -27,18 +27,18 @@ jest.mock('@/contexts/ToastContext', () => ({
   })
 }));
 
-describe('COMZ010M00 - 시스템코드관리 화면 테스트', () => {
+describe('COMZ010M00 - ?�스?�코?��?�??�면 ?�스??, () => {
   beforeEach(() => {
-    // Mock fetch 응답 설정
+    // Mock fetch ?�답 ?�정
     (fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: async () => ({
         data: [
           {
             lrgCsfCd: '1001',
-            lrgCsfNm: '부서구분',
+            lrgCsfNm: '부?�구�?,
             useYn: 'Y',
-            expl: '부서 구분 코드'
+            expl: '부??구분 코드'
           },
           {
             lrgCsfCd: '1002',
@@ -55,28 +55,28 @@ describe('COMZ010M00 - 시스템코드관리 화면 테스트', () => {
     jest.clearAllMocks();
   });
 
-  test('사용자가 시스템코드관리 화면에 접속하면 모든 주요 기능이 표시된다', async () => {
+  test('?�용?��? ?�스?�코?��?�??�면???�속?�면 모든 주요 기능???�시?�다', async () => {
     render(<COMZ010M00Page />);
 
-    // 조회 영역 확인
+    // 조회 ?�역 ?�인
     await waitFor(() => {
-      expect(screen.getByText('대분류 코드')).toBeInTheDocument();
+      expect(screen.getByText('?�분류 코드')).toBeInTheDocument();
     });
 
-    expect(screen.getAllByText('대분류명')).toHaveLength(3); // 검색, 그리드 헤더, 폼
+    expect(screen.getAllByText('?�분류�?)).toHaveLength(3); // 검?? 그리???�더, ??
     expect(screen.getByText('조회')).toBeInTheDocument();
 
-    // 대분류 코드 등록 영역 확인
-    expect(screen.getByText('대분류코드 등록')).toBeInTheDocument();
-    expect(screen.getAllByText('신규')).toHaveLength(2);
-    expect(screen.getAllByText('저장')).toHaveLength(2);
-    expect(screen.getAllByText('삭제')).toHaveLength(2);
+    // ?�분류 코드 ?�록 ?�역 ?�인
+    expect(screen.getByText('?�분류코드 ?�록')).toBeInTheDocument();
+    expect(screen.getAllByText('?�규')).toHaveLength(2);
+    expect(screen.getAllByText('?�??)).toHaveLength(2);
+    expect(screen.getAllByText('??��')).toHaveLength(2);
 
-    // 소분류 코드 등록 영역 확인
-    expect(screen.getByText('소분류코드 등록')).toBeInTheDocument();
+    // ?�분�?코드 ?�록 ?�역 ?�인
+    expect(screen.getByText('?�분류코???�록')).toBeInTheDocument();
   });
 
-  test('사용자가 조회 버튼을 클릭하면 대분류 코드 목록이 화면에 표시된다', async () => {
+  test('?�용?��? 조회 버튼???�릭?�면 ?�분류 코드 목록???�면???�시?�다', async () => {
     render(<COMZ010M00Page />);
 
     await waitFor(() => {
@@ -86,7 +86,7 @@ describe('COMZ010M00 - 시스템코드관리 화면 테스트', () => {
     const searchButton = screen.getByText('조회');
     fireEvent.click(searchButton);
 
-    // API 호출 확인
+    // API ?�출 ?�인
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining('/api/COMZ010M00/search'),
@@ -101,24 +101,24 @@ describe('COMZ010M00 - 시스템코드관리 화면 테스트', () => {
     });
   });
 
-  test('사용자가 대분류코드 검색 조건을 입력하고 조회하면 해당 조건으로 검색된다', async () => {
+  test('?�용?��? ?�분류코드 검??조건???�력?�고 조회?�면 ?�당 조건?�로 검?�된??, async () => {
     render(<COMZ010M00Page />);
 
     await waitFor(() => {
-      expect(screen.getByLabelText('대분류코드 검색')).toBeInTheDocument();
+      expect(screen.getByLabelText('?�분류코드 검??)).toBeInTheDocument();
     });
 
-    // 검색 조건 입력
-    const codeInput = screen.getByLabelText('대분류코드 검색');
-    const nameInput = screen.getByLabelText('대분류명 검색');
+    // 검??조건 ?�력
+    const codeInput = screen.getByLabelText('?�분류코드 검??);
+    const nameInput = screen.getByLabelText('?�분류�?검??);
 
     fireEvent.change(codeInput, { target: { value: '1001' } });
-    fireEvent.change(nameInput, { target: { value: '부서' } });
+    fireEvent.change(nameInput, { target: { value: '부?? } });
 
-    // 조회 버튼 클릭
+    // 조회 버튼 ?�릭
     fireEvent.click(screen.getByText('조회'));
 
-    // API 호출 확인
+    // API ?�출 ?�인
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining('/api/COMZ010M00/search'),
@@ -126,33 +126,33 @@ describe('COMZ010M00 - 시스템코드관리 화면 테스트', () => {
           method: 'POST',
           body: JSON.stringify({
             SP: 'COM_01_0101_S(?,?)',
-            PARAM: '1001|부서'
+            PARAM: '1001|부??
           })
         })
       );
     });
   });
 
-  test('사용자가 대분류코드 등록 폼에서 필수 항목을 입력하고 저장할 수 있다', async () => {
+  test('?�용?��? ?�분류코드 ?�록 ?�에???�수 ??��???�력?�고 ?�?�할 ???�다', async () => {
     render(<COMZ010M00Page />);
 
     await waitFor(() => {
-      expect(screen.getAllByLabelText('대분류코드 입력')).toHaveLength(2);
+      expect(screen.getAllByLabelText('?�분류코드 ?�력')).toHaveLength(2);
     });
 
-    // 대분류코드 입력 (첫 번째 입력 필드)
-    const codeInputs = screen.getAllByLabelText('대분류코드 입력');
-    const codeInput = codeInputs[0]; // 대분류 등록 폼의 입력 필드
-    const nameInput = screen.getByLabelText('대분류명 입력');
+    // ?�분류코드 ?�력 (�?번째 ?�력 ?�드)
+    const codeInputs = screen.getAllByLabelText('?�분류코드 ?�력');
+    const codeInput = codeInputs[0]; // ?�분류 ?�록 ?�의 ?�력 ?�드
+    const nameInput = screen.getByLabelText('?�분류�??�력');
 
     fireEvent.change(codeInput, { target: { value: '1003' } });
-    fireEvent.change(nameInput, { target: { value: '테스트코드' } });
+    fireEvent.change(nameInput, { target: { value: '?�스?�코?? } });
 
-    // 저장 버튼 클릭 (첫 번째 저장 버튼)
-    const saveButtons = screen.getAllByText('저장');
+    // ?�??버튼 ?�릭 (�?번째 ?�??버튼)
+    const saveButtons = screen.getAllByText('?�??);
     fireEvent.click(saveButtons[0]);
 
-    // API 호출 확인
+    // API ?�출 ?�인
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining('/api/COMZ010M00/save'),
@@ -160,25 +160,25 @@ describe('COMZ010M00 - 시스템코드관리 화면 테스트', () => {
           method: 'POST',
           body: JSON.stringify({
             SP: 'COM_01_0102_T(?,?,?,?,?,?)',
-            PARAM: '1003|테스트코드|Y||TEST_USER'
+            PARAM: '1003|?�스?�코??Y||TEST_USER'
           })
         })
       );
     });
   });
 
-  test('사용자가 대분류코드 등록 시 필수 항목이 비어있으면 저장되지 않는다', async () => {
+  test('?�용?��? ?�분류코드 ?�록 ???�수 ??��??비어?�으�??�?�되지 ?�는??, async () => {
     render(<COMZ010M00Page />);
 
     await waitFor(() => {
-      expect(screen.getAllByText('저장')).toHaveLength(2);
+      expect(screen.getAllByText('?�??)).toHaveLength(2);
     });
 
-    // 필수 항목 없이 저장 버튼 클릭
-    const saveButtons = screen.getAllByText('저장');
+    // ?�수 ??�� ?�이 ?�??버튼 ?�릭
+    const saveButtons = screen.getAllByText('?�??);
     fireEvent.click(saveButtons[0]);
 
-    // API 호출이 되지 않았는지 확인
+    // API ?�출???��? ?�았?��? ?�인
     await waitFor(() => {
       expect(fetch).not.toHaveBeenCalledWith(
         expect.stringContaining('/api/COMZ010M00/save'),
@@ -187,17 +187,17 @@ describe('COMZ010M00 - 시스템코드관리 화면 테스트', () => {
     });
   });
 
-  test('사용자가 대분류코드를 선택하면 해당 소분류 코드 목록이 표시된다', async () => {
+  test('?�용?��? ?�분류코드�??�택?�면 ?�당 ?�분�?코드 목록???�시?�다', async () => {
     render(<COMZ010M00Page />);
 
     await waitFor(() => {
       expect(screen.getByText('조회')).toBeInTheDocument();
     });
 
-    // 조회 버튼 클릭하여 대분류 목록 로드
+    // 조회 버튼 ?�릭?�여 ?�분류 목록 로드
     fireEvent.click(screen.getByText('조회'));
 
-    // 대분류 코드 조회 API 호출 확인
+    // ?�분류 코드 조회 API ?�출 ?�인
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining('/api/COMZ010M00/search'),
@@ -212,30 +212,30 @@ describe('COMZ010M00 - 시스템코드관리 화면 테스트', () => {
     });
   });
 
-  test('사용자가 소분류코드 등록 폼에서 필수 항목을 입력하고 저장할 수 있다', async () => {
+  test('?�용?��? ?�분류코???�록 ?�에???�수 ??��???�력?�고 ?�?�할 ???�다', async () => {
     render(<COMZ010M00Page />);
 
     await waitFor(() => {
-      expect(screen.getByLabelText('소분류코드 입력')).toBeInTheDocument();
+      expect(screen.getByLabelText('?�분류코???�력')).toBeInTheDocument();
     });
 
-    // 대분류코드 입력 (소분류 등록을 위해 필요) - 두 번째 입력 필드
-    const largeCodeInputs = screen.getAllByLabelText('대분류코드 입력');
-    const largeCodeInput = largeCodeInputs[1]; // 소분류 등록 폼의 대분류코드 입력 필드
+    // ?�분류코드 ?�력 (?�분�??�록???�해 ?�요) - ??번째 ?�력 ?�드
+    const largeCodeInputs = screen.getAllByLabelText('?�분류코드 ?�력');
+    const largeCodeInput = largeCodeInputs[1]; // ?�분�??�록 ?�의 ?�분류코드 ?�력 ?�드
     fireEvent.change(largeCodeInput, { target: { value: '1001' } });
 
-    // 소분류코드 입력
-    const smallCodeInput = screen.getByLabelText('소분류코드 입력');
-    const smallNameInput = screen.getByLabelText('소분류명 입력');
+    // ?�분류코???�력
+    const smallCodeInput = screen.getByLabelText('?�분류코???�력');
+    const smallNameInput = screen.getByLabelText('?�분류명 ?�력');
 
     fireEvent.change(smallCodeInput, { target: { value: '1001' } });
-    fireEvent.change(smallNameInput, { target: { value: '테스트소분류' } });
+    fireEvent.change(smallNameInput, { target: { value: '?�스?�소분류' } });
 
-    // 저장 버튼 클릭 (두 번째 저장 버튼)
-    const saveButtons = screen.getAllByText('저장');
+    // ?�??버튼 ?�릭 (??번째 ?�??버튼)
+    const saveButtons = screen.getAllByText('?�??);
     fireEvent.click(saveButtons[1]);
 
-    // API 호출 확인
+    // API ?�출 ?�인
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining('/api/COMZ010M00/save'),
@@ -243,78 +243,78 @@ describe('COMZ010M00 - 시스템코드관리 화면 테스트', () => {
           method: 'POST',
           body: JSON.stringify({
             SP: 'COM_01_0105_T(?,?,?,?,?,?,?,?,?,?,?)',
-            PARAM: '1001|1001|테스트소분류||||1|Y||TEST_USER'
+            PARAM: '1001|1001|?�스?�소분류||||1|Y||TEST_USER'
           })
         })
       );
     });
   });
 
-  test('사용자가 대분류코드를 삭제할 수 있다', async () => {
+  test('?�용?��? ?�분류코드�???��?????�다', async () => {
     render(<COMZ010M00Page />);
 
     await waitFor(() => {
-      expect(screen.getAllByText('삭제')).toHaveLength(2);
+      expect(screen.getAllByText('??��')).toHaveLength(2);
     });
 
-    // 삭제 버튼 클릭 (첫 번째 삭제 버튼 - 대분류)
-    const deleteButtons = screen.getAllByText('삭제');
+    // ??�� 버튼 ?�릭 (�?번째 ??�� 버튼 - ?�분류)
+    const deleteButtons = screen.getAllByText('??��');
     fireEvent.click(deleteButtons[0]);
 
-    // 삭제 버튼이 클릭되었는지 확인
+    // ??�� 버튼???�릭?�었?��? ?�인
     expect(deleteButtons[0]).toBeInTheDocument();
   });
 
-  test('사용자가 소분류코드를 삭제할 수 있다', async () => {
+  test('?�용?��? ?�분류코?��? ??��?????�다', async () => {
     render(<COMZ010M00Page />);
 
     await waitFor(() => {
-      expect(screen.getAllByText('삭제')).toHaveLength(2);
+      expect(screen.getAllByText('??��')).toHaveLength(2);
     });
 
-    // 삭제 버튼 클릭 (두 번째 삭제 버튼 - 소분류)
-    const deleteButtons = screen.getAllByText('삭제');
+    // ??�� 버튼 ?�릭 (??번째 ??�� 버튼 - ?�분�?
+    const deleteButtons = screen.getAllByText('??��');
     fireEvent.click(deleteButtons[1]);
 
-    // 삭제 버튼이 클릭되었는지 확인
+    // ??�� 버튼???�릭?�었?��? ?�인
     expect(deleteButtons[1]).toBeInTheDocument();
   });
 
-  test('사용자가 신규 버튼을 클릭하면 등록 폼이 초기화된다', async () => {
+  test('?�용?��? ?�규 버튼???�릭?�면 ?�록 ?�이 초기?�된??, async () => {
     render(<COMZ010M00Page />);
 
     await waitFor(() => {
-      expect(screen.getAllByText('신규')).toHaveLength(2);
+      expect(screen.getAllByText('?�규')).toHaveLength(2);
     });
 
-    // 대분류코드 입력
-    const codeInputs = screen.getAllByLabelText('대분류코드 입력');
-    const codeInput = codeInputs[0]; // 대분류 등록 폼의 입력 필드
+    // ?�분류코드 ?�력
+    const codeInputs = screen.getAllByLabelText('?�분류코드 ?�력');
+    const codeInput = codeInputs[0]; // ?�분류 ?�록 ?�의 ?�력 ?�드
     fireEvent.change(codeInput, { target: { value: '1003' } });
 
-    // 신규 버튼 클릭 (첫 번째 신규 버튼 - 대분류)
-    const newButtons = screen.getAllByText('신규');
+    // ?�규 버튼 ?�릭 (�?번째 ?�규 버튼 - ?�분류)
+    const newButtons = screen.getAllByText('?�규');
     fireEvent.click(newButtons[0]);
 
-    // 폼이 초기화되었는지 확인
+    // ?�이 초기?�되?�는지 ?�인
     await waitFor(() => {
       expect(codeInput).toHaveValue('');
     });
   });
 
-  test('사용자가 엔터키를 누르면 검색이 실행된다', async () => {
+  test('?�용?��? ?�터?��? ?�르�?검?�이 ?�행?�다', async () => {
     render(<COMZ010M00Page />);
 
     await waitFor(() => {
-      expect(screen.getByLabelText('대분류코드 검색')).toBeInTheDocument();
+      expect(screen.getByLabelText('?�분류코드 검??)).toBeInTheDocument();
     });
 
-    // 검색 조건 입력 후 엔터키
-    const codeInput = screen.getByLabelText('대분류코드 검색');
+    // 검??조건 ?�력 ???�터??
+    const codeInput = screen.getByLabelText('?�분류코드 검??);
     fireEvent.change(codeInput, { target: { value: '1001' } });
     fireEvent.keyDown(codeInput, { key: 'Enter' });
 
-    // API 호출 확인
+    // API ?�출 ?�인
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining('/api/COMZ010M00/search'),
@@ -329,25 +329,25 @@ describe('COMZ010M00 - 시스템코드관리 화면 테스트', () => {
     });
   });
 
-  test('사용자가 대분류코드 등록 폼에서 엔터키를 누르면 저장이 실행된다', async () => {
+  test('?�용?��? ?�분류코드 ?�록 ?�에???�터?��? ?�르�??�?�이 ?�행?�다', async () => {
     render(<COMZ010M00Page />);
 
     await waitFor(() => {
-      expect(screen.getAllByLabelText('대분류코드 입력')).toHaveLength(2);
+      expect(screen.getAllByLabelText('?�분류코드 ?�력')).toHaveLength(2);
     });
 
-    // 필수 항목 입력
-    const codeInputs = screen.getAllByLabelText('대분류코드 입력');
-    const codeInput = codeInputs[0]; // 대분류 등록 폼의 입력 필드
-    const nameInput = screen.getByLabelText('대분류명 입력');
+    // ?�수 ??�� ?�력
+    const codeInputs = screen.getAllByLabelText('?�분류코드 ?�력');
+    const codeInput = codeInputs[0]; // ?�분류 ?�록 ?�의 ?�력 ?�드
+    const nameInput = screen.getByLabelText('?�분류�??�력');
 
     fireEvent.change(codeInput, { target: { value: '1003' } });
-    fireEvent.change(nameInput, { target: { value: '테스트코드' } });
+    fireEvent.change(nameInput, { target: { value: '?�스?�코?? } });
 
-    // 엔터키 입력
+    // ?�터???�력
     fireEvent.keyDown(codeInput, { key: 'Enter' });
 
-    // API 호출 확인
+    // API ?�출 ?�인
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining('/api/COMZ010M00/save'),
@@ -358,27 +358,27 @@ describe('COMZ010M00 - 시스템코드관리 화면 테스트', () => {
     });
   });
 
-  test('사용자가 소분류코드 등록 폼에서 엔터키를 누르면 저장이 실행된다', async () => {
+  test('?�용?��? ?�분류코???�록 ?�에???�터?��? ?�르�??�?�이 ?�행?�다', async () => {
     render(<COMZ010M00Page />);
 
     await waitFor(() => {
-      expect(screen.getByLabelText('소분류코드 입력')).toBeInTheDocument();
+      expect(screen.getByLabelText('?�분류코???�력')).toBeInTheDocument();
     });
 
-    // 필수 항목 입력
-    const largeCodeInputs = screen.getAllByLabelText('대분류코드 입력');
-    const largeCodeInput = largeCodeInputs[1]; // 소분류 등록 폼의 대분류코드 입력 필드
-    const smallCodeInput = screen.getByLabelText('소분류코드 입력');
-    const smallNameInput = screen.getByLabelText('소분류명 입력');
+    // ?�수 ??�� ?�력
+    const largeCodeInputs = screen.getAllByLabelText('?�분류코드 ?�력');
+    const largeCodeInput = largeCodeInputs[1]; // ?�분�??�록 ?�의 ?�분류코드 ?�력 ?�드
+    const smallCodeInput = screen.getByLabelText('?�분류코???�력');
+    const smallNameInput = screen.getByLabelText('?�분류명 ?�력');
 
     fireEvent.change(largeCodeInput, { target: { value: '1001' } });
     fireEvent.change(smallCodeInput, { target: { value: '1001' } });
-    fireEvent.change(smallNameInput, { target: { value: '테스트소분류' } });
+    fireEvent.change(smallNameInput, { target: { value: '?�스?�소분류' } });
 
-    // 엔터키 입력
+    // ?�터???�력
     fireEvent.keyDown(smallCodeInput, { key: 'Enter' });
 
-    // API 호출 확인
+    // API ?�출 ?�인
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledWith(
         expect.stringContaining('/api/COMZ010M00/save'),
@@ -389,3 +389,4 @@ describe('COMZ010M00 - 시스템코드관리 화면 테스트', () => {
     });
   });
 }); 
+

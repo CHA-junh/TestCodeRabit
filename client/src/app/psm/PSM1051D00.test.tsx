@@ -5,47 +5,47 @@ import PSM1051D00 from "./PSM1051D00";
 // Mock fetch
 global.fetch = jest.fn();
 
-// PSM1050M00과의 연동 테스트
-describe("PSM1050M00과의 연동 테스트", () => {
-  test("PSM1050M00에서 수정 모드(newFlag=false)일 때 PSM1051D00이 호출된다", () => {
-    // PSM1050M00의 조건부 렌더링 로직 테스트
+// PSM1050M00과의 ?�동 ?�스??
+describe("PSM1050M00과의 ?�동 ?�스??, () => {
+  test("PSM1050M00?�서 ?�정 모드(newFlag=false)????PSM1051D00???�출?�다", () => {
+    // PSM1050M00??조건부 ?�더�?로직 ?�스??
     const newFlag = false;
     const empNo = "EMP001";
     
-    // PSM1050M00의 조건부 렌더링 로직을 시뮬레이션
+    // PSM1050M00??조건부 ?�더�?로직???��??�이??
     const shouldRenderPSM1051D00 = !newFlag && empNo;
     expect(shouldRenderPSM1051D00).toBeTruthy();
     
-    // PSM1051D00이 정상적으로 렌더링되는지 확인
+    // PSM1051D00???�상?�으�??�더링되?��? ?�인
     render(<PSM1051D00 empNo={empNo} />);
-    expect(screen.getByText("프로필경력")).toBeInTheDocument();
+    expect(screen.getByText("?�로?�경??)).toBeInTheDocument();
   });
 
-  test("PSM1050M00에서 신규 모드(newFlag=true)일 때는 PSM1051D00이 호출되지 않는다", () => {
-    // PSM1050M00의 조건부 렌더링 로직 테스트
+  test("PSM1050M00?�서 ?�규 모드(newFlag=true)???�는 PSM1051D00???�출?��? ?�는??, () => {
+    // PSM1050M00??조건부 ?�더�?로직 ?�스??
     const newFlag = true;
     const empNo = "EMP001";
     
-    // PSM1050M00의 조건부 렌더링 로직을 시뮬레이션
+    // PSM1050M00??조건부 ?�더�?로직???��??�이??
     const shouldRenderPSM1051D00 = !newFlag && 
     empNo;
     expect(shouldRenderPSM1051D00).toBeFalsy();
   });
 
-  test("PSM1050M00에서 전달받은 empNo가 PSM1051D00에 정상적으로 전달된다", async () => {
-    // PSM1050M00에서 전달하는 데이터 구조 시뮬레이션
+  test("PSM1050M00?�서 ?�달받�? empNo가 PSM1051D00???�상?�으�??�달?�다", async () => {
+    // PSM1050M00?�서 ?�달?�는 ?�이??구조 ?��??�이??
     const mockEmployeeData = {
       empNo: "EMP001",
-      empNm: "홍길동",
+      empNm: "?�길??,
       ownOutsDiv: "1"
     };
 
-    // PSM1050M00에서 PSM1051D00으로 전달되는 방식
+    // PSM1050M00?�서 PSM1051D00?�로 ?�달?�는 방식
     const passedEmpNo = mockEmployeeData.empNo;
     
     render(<PSM1051D00 empNo={passedEmpNo} />);
 
-    // empNo가 정상적으로 전달되어 API 호출이 이루어지는지 확인
+    // empNo가 ?�상?�으�??�달?�어 API ?�출???�루?��??��? ?�인
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith('/api/psm/career/profile', {
         method: 'POST',
@@ -55,8 +55,8 @@ describe("PSM1050M00과의 연동 테스트", () => {
     });
   });
 
-  test("PSM1050M00의 carrData.empNo가 PSM1051D00의 empNo prop으로 전달된다", async () => {
-    // PSM1050M00의 carrData 구조 시뮬레이션
+  test("PSM1050M00??carrData.empNo가 PSM1051D00??empNo prop?�로 ?�달?�다", async () => {
+    // PSM1050M00??carrData 구조 ?��??�이??
     const mockCarrData = {
       empNo: "EMP002",
       empNm: "김철수",
@@ -64,12 +64,12 @@ describe("PSM1050M00과의 연동 테스트", () => {
       entrDt: "2020/01/01"
     };
 
-    // PSM1050M00에서 PSM1051D00으로 전달되는 방식
+    // PSM1050M00?�서 PSM1051D00?�로 ?�달?�는 방식
     const { empNo } = mockCarrData;
     
     render(<PSM1051D00 empNo={empNo} />);
 
-    // carrData.empNo가 정상적으로 전달되어 API 호출이 이루어지는지 확인
+    // carrData.empNo가 ?�상?�으�??�달?�어 API ?�출???�루?��??��? ?�인
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith('/api/psm/career/profile', {
         method: 'POST',
@@ -80,20 +80,20 @@ describe("PSM1050M00과의 연동 테스트", () => {
   });
 });
 
-// 호출 조건 및 컨텍스트 테스트
-describe("호출 조건 및 컨텍스트 테스트", () => {
-  test("수정 모드에서만 호출되므로 기존 사원의 경력 정보를 조회한다", async () => {
-    // 수정 모드 시뮬레이션 (기존 사원 정보가 있는 상태)
+// ?�출 조건 �?컨텍?�트 ?�스??
+describe("?�출 조건 �?컨텍?�트 ?�스??, () => {
+  test("?�정 모드?�서�??�출?��?�?기존 ?�원??경력 ?�보�?조회?�다", async () => {
+    // ?�정 모드 ?��??�이??(기존 ?�원 ?�보가 ?�는 ?�태)
     const existingEmployeeData = {
       empNo: "EMP001",
-      empNm: "홍길동",
+      empNm: "?�길??,
       entrDt: "2020/01/01",
-      // 기존 경력 정보가 있는 사원
+      // 기존 경력 ?�보가 ?�는 ?�원
     };
 
     render(<PSM1051D00 empNo={existingEmployeeData.empNo} />);
 
-    // 기존 사원의 경력 정보를 조회하는 API가 호출되는지 확인
+    // 기존 ?�원??경력 ?�보�?조회?�는 API가 ?�출?�는지 ?�인
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith('/api/psm/career/profile', {
         method: 'POST',
@@ -102,18 +102,18 @@ describe("호출 조건 및 컨텍스트 테스트", () => {
       });
     });
 
-    // 기존 사원의 경력 정보가 표시되는지 확인
+    // 기존 ?�원??경력 ?�보가 ?�시?�는지 ?�인
     await waitFor(() => {
-      expect(screen.getByText("프로필경력")).toBeInTheDocument();
+      expect(screen.getByText("?�로?�경??)).toBeInTheDocument();
     });
   });
 
-      test("신규 모드에서는 호출되지 않으므로 PSM1052D00이 대신 호출된다", () => {
-      // 신규 모드 시뮬레이션
+      test("?�규 모드?�서???�출?��? ?�으므�?PSM1052D00???�???�출?�다", () => {
+      // ?�규 모드 ?��??�이??
       const newFlag = true;
       const empNo = "EMP001";
       
-      // PSM1050M00의 조건부 렌더링 로직
+      // PSM1050M00??조건부 ?�더�?로직
       const shouldRenderPSM1051D00 = !newFlag && empNo;
       const shouldRenderPSM1052D00 = newFlag;
       
@@ -121,22 +121,22 @@ describe("호출 조건 및 컨텍스트 테스트", () => {
       expect(shouldRenderPSM1052D00).toBeTruthy();
     });
 
-  test("PSM1050M00의 Portal 렌더링 환경에서 정상 동작한다", () => {
-    // PSM1050M00이 createPortal을 사용하여 body에 직접 렌더링하는 환경 시뮬레이션
+  test("PSM1050M00??Portal ?�더�??�경?�서 ?�상 ?�작?�다", () => {
+    // PSM1050M00??createPortal???�용?�여 body??직접 ?�더링하???�경 ?��??�이??
     const mockDocumentBody = document.createElement('div');
     document.body.appendChild(mockDocumentBody);
 
-    // Portal 환경에서 PSM1051D00이 정상적으로 렌더링되는지 확인
+    // Portal ?�경?�서 PSM1051D00???�상?�으�??�더링되?��? ?�인
     render(<PSM1051D00 empNo="EMP001" />);
     
-    expect(screen.getByText("프로필경력")).toBeInTheDocument();
+    expect(screen.getByText("?�로?�경??)).toBeInTheDocument();
     
-    // 정리
+    // ?�리
     document.body.removeChild(mockDocumentBody);
   });
 
-  test("PSM1050M00의 모달 컨텍스트에서 정상 동작한다", () => {
-    // PSM1050M00이 모달로 표시되는 환경에서 PSM1051D00이 정상 동작하는지 확인
+  test("PSM1050M00??모달 컨텍?�트?�서 ?�상 ?�작?�다", () => {
+    // PSM1050M00??모달�??�시?�는 ?�경?�서 PSM1051D00???�상 ?�작?�는지 ?�인
     const mockModalContext = {
       isModal: true,
       zIndex: 1000
@@ -144,29 +144,29 @@ describe("호출 조건 및 컨텍스트 테스트", () => {
 
     render(<PSM1051D00 empNo="EMP001" />);
     
-    // 모달 환경에서도 정상적으로 렌더링되는지 확인
-    expect(screen.getByText("프로필경력")).toBeInTheDocument();
-    expect(screen.getByText("학력기준")).toBeInTheDocument();
-    expect(screen.getByText("기술자격기준")).toBeInTheDocument();
+    // 모달 ?�경?�서???�상?�으�??�더링되?��? ?�인
+    expect(screen.getByText("?�로?�경??)).toBeInTheDocument();
+    expect(screen.getByText("?�력기�?")).toBeInTheDocument();
+    expect(screen.getByText("기술?�격기�?")).toBeInTheDocument();
   });
 });
 
-// PSM1050M00과의 데이터 연동 테스트
-describe("PSM1050M00과의 데이터 연동 테스트", () => {
-  test("PSM1050M00에서 전달받은 사원 정보로 경력 데이터를 조회한다", async () => {
-    // PSM1050M00에서 전달하는 employeeData 구조
+// PSM1050M00과의 ?�이???�동 ?�스??
+describe("PSM1050M00과의 ?�이???�동 ?�스??, () => {
+  test("PSM1050M00?�서 ?�달받�? ?�원 ?�보�?경력 ?�이?��? 조회?�다", async () => {
+    // PSM1050M00?�서 ?�달?�는 employeeData 구조
     const mockEmployeeData = {
       empNo: "EMP001",
-      empNm: "홍길동",
+      empNm: "?�길??,
       ownOutsDiv: "1",
       entrDt: "2020/01/01",
-      lastAdbgDiv: "대졸",
-      ctqlCd: "정보처리기사"
+      lastAdbgDiv: "?��?,
+      ctqlCd: "?�보처리기사"
     };
 
     render(<PSM1051D00 empNo={mockEmployeeData.empNo} />);
 
-    // PSM1050M00에서 전달받은 empNo로 경력 데이터를 조회하는지 확인
+    // PSM1050M00?�서 ?�달받�? empNo�?경력 ?�이?��? 조회?�는지 ?�인
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith('/api/psm/career/profile', {
         method: 'POST',
@@ -176,8 +176,8 @@ describe("PSM1050M00과의 데이터 연동 테스트", () => {
     });
   });
 
-  test("PSM1050M00의 경력 계산 결과와 PSM1051D00의 경력 조회 결과가 일치한다", async () => {
-    // PSM1050M00에서 계산된 경력 데이터
+  test("PSM1050M00??경력 계산 결과?� PSM1051D00??경력 조회 결과가 ?�치?�다", async () => {
+    // PSM1050M00?�서 계산??경력 ?�이??
     const psm1050CarrData = {
       empNo: "EMP001",
       entrBefInYcnt: "2",
@@ -189,15 +189,15 @@ describe("PSM1050M00과의 데이터 연동 테스트", () => {
       tcnGrd: "중급"
     };
 
-    // PSM1051D00에서 조회하는 경력 데이터 (동일한 결과)
+    // PSM1051D00?�서 조회?�는 경력 ?�이??(?�일??결과)
     (global.fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: async () => ({
         success: true,
         data: [{
           CALC_STAD_DT: "2025/07/31",
-          BEF_M_CNT: "24", // 2년
-          AFT_M_CNT: "36", // 3년
+          BEF_M_CNT: "24", // 2??
+          AFT_M_CNT: "36", // 3??
           TCN_GRD_NM: "중급"
         }]
       })
@@ -205,23 +205,23 @@ describe("PSM1050M00과의 데이터 연동 테스트", () => {
 
     render(<PSM1051D00 empNo={psm1050CarrData.empNo} />);
 
-          // PSM1050M00의 계산 결과와 PSM1051D00의 조회 결과가 일치하는지 확인
+          // PSM1050M00??계산 결과?� PSM1051D00??조회 결과가 ?�치?�는지 ?�인
       await waitFor(() => {
         const twoInputs = screen.getAllByDisplayValue("2");
         const threeInputs = screen.getAllByDisplayValue("3");
         const fiveInputs = screen.getAllByDisplayValue("5");
         
-        expect(twoInputs.length).toBeGreaterThan(0); // 입사전 경력 년수
-        expect(threeInputs.length).toBeGreaterThan(0); // 입사후 경력 년수
-        expect(fiveInputs.length).toBeGreaterThan(0); // 합계 경력 년수
-        expect(screen.getByDisplayValue("중급")).toBeInTheDocument(); // 기술등급
+        expect(twoInputs.length).toBeGreaterThan(0); // ?�사??경력 ?�수
+        expect(threeInputs.length).toBeGreaterThan(0); // ?�사??경력 ?�수
+        expect(fiveInputs.length).toBeGreaterThan(0); // ?�계 경력 ?�수
+        expect(screen.getByDisplayValue("중급")).toBeInTheDocument(); // 기술?�급
       });
   });
 });
 
-describe("PSM1051D00 - 경력 상세 다이얼로그", () => {
+describe("PSM1051D00 - 경력 ?�세 ?�이?�로�?, () => {
   beforeEach(() => {
-    // Mock fetch 기본 응답 설정
+    // Mock fetch 기본 ?�답 ?�정
     (global.fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: async () => ({
@@ -245,12 +245,12 @@ describe("PSM1051D00 - 경력 상세 다이얼로그", () => {
     jest.clearAllMocks();
   });
 
-  test("컴포넌트가 정상적으로 렌더링된다", () => {
+  test("컴포?�트가 ?�상?�으�??�더링된??, () => {
     render(<PSM1051D00 empNo="EMP001" />);
-    expect(screen.getByText("프로필경력")).toBeInTheDocument();
+    expect(screen.getByText("?�로?�경??)).toBeInTheDocument();
   });
 
-  test("사원번호가 전달되면 API를 호출하여 경력 데이터를 로드한다", async () => {
+  test("?�원번호가 ?�달?�면 API�??�출?�여 경력 ?�이?��? 로드?�다", async () => {
     render(<PSM1051D00 empNo="EMP001" />);
 
     await waitFor(() => {
@@ -262,97 +262,97 @@ describe("PSM1051D00 - 경력 상세 다이얼로그", () => {
     });
   });
 
-  test("API 응답 데이터가 정상적으로 경력 계산에 반영된다", async () => {
+  test("API ?�답 ?�이?��? ?�상?�으�?경력 계산??반영?�다", async () => {
     render(<PSM1051D00 empNo="EMP001" />);
 
-    // API 응답 데이터가 로드될 때까지 대기
+    // API ?�답 ?�이?��? 로드???�까지 ?��?
     await waitFor(() => {
-      // 학력기준 섹션의 입사전 경력 년수 확인 (24개월 = 2년)
+      // ?�력기�? ?�션???�사??경력 ?�수 ?�인 (24개월 = 2??
       const inputs = screen.getAllByDisplayValue("2");
       expect(inputs.length).toBeGreaterThan(0);
     });
 
-    // 학력기준 경력 계산 결과 확인
+    // ?�력기�? 경력 계산 결과 ?�인
     const inputs = screen.getAllByDisplayValue("2");
     const zeroInputs = screen.getAllByDisplayValue("0");
     const threeInputs = screen.getAllByDisplayValue("3");
     const fiveInputs = screen.getAllByDisplayValue("5");
 
-    // 학력기준 섹션에 해당 값들이 존재하는지 확인
-    expect(inputs.length).toBeGreaterThan(0); // 입사전 경력 년수 (24개월 = 2년)
-    expect(zeroInputs.length).toBeGreaterThan(0); // 입사전 경력 개월수 (24 - (2*12) = 0)
-    expect(threeInputs.length).toBeGreaterThan(0); // 입사후 경력 년수 (36개월 = 3년)
-    expect(fiveInputs.length).toBeGreaterThan(0); // 합계 경력 년수 (60개월 = 5년)
+    // ?�력기�? ?�션???�당 값들??존재?�는지 ?�인
+    expect(inputs.length).toBeGreaterThan(0); // ?�사??경력 ?�수 (24개월 = 2??
+    expect(zeroInputs.length).toBeGreaterThan(0); // ?�사??경력 개월??(24 - (2*12) = 0)
+    expect(threeInputs.length).toBeGreaterThan(0); // ?�사??경력 ?�수 (36개월 = 3??
+    expect(fiveInputs.length).toBeGreaterThan(0); // ?�계 경력 ?�수 (60개월 = 5??
 
-    // 기술등급 확인
+    // 기술?�급 ?�인
     expect(screen.getByDisplayValue("중급")).toBeInTheDocument();
   });
 
-  test("기술자격기준 경력이 정상적으로 계산되어 표시된다", async () => {
+  test("기술?�격기�? 경력???�상?�으�?계산?�어 ?�시?�다", async () => {
     render(<PSM1051D00 empNo="EMP001" />);
 
     await waitFor(() => {
-      // 기술자격기준 경력 계산 결과 확인
+      // 기술?�격기�? 경력 계산 결과 ?�인
       const oneInputs = screen.getAllByDisplayValue("1");
       const zeroInputs = screen.getAllByDisplayValue("0");
       const sixInputs = screen.getAllByDisplayValue("6");
       const twoInputs = screen.getAllByDisplayValue("2");
 
-      // 기술자격기준 섹션에 해당 값들이 존재하는지 확인
-      expect(oneInputs.length).toBeGreaterThan(0); // 입사전 자격경력 년수 (12개월 = 1년)
-      expect(zeroInputs.length).toBeGreaterThan(0); // 입사전 자격경력 개월수 (12 - (1*12) = 0)
-      expect(sixInputs.length).toBeGreaterThan(0); // 입사후 자격경력 개월수 (18 - (1*12) = 6)
-      expect(twoInputs.length).toBeGreaterThan(0); // 합계 자격경력 년수 (30개월 = 2년)
+      // 기술?�격기�? ?�션???�당 값들??존재?�는지 ?�인
+      expect(oneInputs.length).toBeGreaterThan(0); // ?�사???�격경력 ?�수 (12개월 = 1??
+      expect(zeroInputs.length).toBeGreaterThan(0); // ?�사???�격경력 개월??(12 - (1*12) = 0)
+      expect(sixInputs.length).toBeGreaterThan(0); // ?�사???�격경력 개월??(18 - (1*12) = 6)
+      expect(twoInputs.length).toBeGreaterThan(0); // ?�계 ?�격경력 ?�수 (30개월 = 2??
 
-      // 자격기술등급 확인
+      // ?�격기술?�급 ?�인
       expect(screen.getByDisplayValue("초급")).toBeInTheDocument();
     });
   });
 
-  test("기준일이 정상적으로 표시된다", async () => {
+  test("기�??�이 ?�상?�으�??�시?�다", async () => {
     render(<PSM1051D00 empNo="EMP001" />);
 
     await waitFor(() => {
-      // 기준일 입력 필드가 존재하는지 확인
+      // 기�????�력 ?�드가 존재?�는지 ?�인
       const dateInput = screen.getByDisplayValue("2025-07-31");
       expect(dateInput).toBeInTheDocument();
     });
   });
 
-  test("API 호출 실패 시 적절한 처리가 이루어진다", async () => {
-    // API 실패 시뮬레이션 - response.ok = false인 경우
+  test("API ?�출 ?�패 ???�절??처리가 ?�루?�진??, async () => {
+    // API ?�패 ?��??�이??- response.ok = false??경우
     (global.fetch as jest.Mock).mockResolvedValue({
       ok: false,
-      json: async () => ({ success: false, message: "조회 실패" })
+      json: async () => ({ success: false, message: "조회 ?�패" })
     });
 
     render(<PSM1051D00 empNo="EMP001" />);
 
-    // response.ok = false인 경우에는 hasProfileData가 변경되지 않으므로
-    // 초기 상태인 true가 유지되어 메시지가 표시되지 않음
-    // 이는 PSM1051D00의 실제 동작과 일치함
+    // response.ok = false??경우?�는 hasProfileData가 변경되지 ?�으므�?
+    // 초기 ?�태??true가 ?��??�어 메시지가 ?�시?��? ?�음
+    // ?�는 PSM1051D00???�제 ?�작�??�치??
     await waitFor(() => {
-      expect(screen.queryByText("(등록된 프로필 내역이 없습니다.)")).not.toBeInTheDocument();
+      expect(screen.queryByText("(?�록???�로???�역???�습?�다.)")).not.toBeInTheDocument();
     });
   });
 
-  test("API 응답이 success=false인 경우 적절한 처리가 이루어진다", async () => {
-    // API 응답은 성공했지만 success=false인 경우
+  test("API ?�답??success=false??경우 ?�절??처리가 ?�루?�진??, async () => {
+    // API ?�답?� ?�공?��?�?success=false??경우
     (global.fetch as jest.Mock).mockResolvedValue({
       ok: true,
-      json: async () => ({ success: false, message: "데이터 없음" })
+      json: async () => ({ success: false, message: "?�이???�음" })
     });
 
     render(<PSM1051D00 empNo="EMP001" />);
 
     await waitFor(() => {
-      // success=false인 경우 "등록된 프로필 내역이 없습니다" 메시지가 표시되는지 확인
-      expect(screen.getByText("(등록된 프로필 내역이 없습니다.)")).toBeInTheDocument();
+      // success=false??경우 "?�록???�로???�역???�습?�다" 메시지가 ?�시?�는지 ?�인
+      expect(screen.getByText("(?�록???�로???�역???�습?�다.)")).toBeInTheDocument();
     });
   });
 
-  test("API 응답에 data가 없는 경우 적절한 처리가 이루어진다", async () => {
-    // API 응답은 성공했지만 data가 없는 경우
+  test("API ?�답??data가 ?�는 경우 ?�절??처리가 ?�루?�진??, async () => {
+    // API ?�답?� ?�공?��?�?data가 ?�는 경우
     (global.fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: async () => ({ success: true, data: null })
@@ -361,42 +361,42 @@ describe("PSM1051D00 - 경력 상세 다이얼로그", () => {
     render(<PSM1051D00 empNo="EMP001" />);
 
     await waitFor(() => {
-      // data가 없는 경우 "등록된 프로필 내역이 없습니다" 메시지가 표시되는지 확인
-      expect(screen.getByText("(등록된 프로필 내역이 없습니다.)")).toBeInTheDocument();
+      // data가 ?�는 경우 "?�록???�로???�역???�습?�다" 메시지가 ?�시?�는지 ?�인
+      expect(screen.getByText("(?�록???�로???�역???�습?�다.)")).toBeInTheDocument();
     });
   });
 
-  test("API 호출 중 네트워크 오류가 발생한 경우 적절한 처리가 이루어진다", async () => {
-    // 네트워크 오류 시뮬레이션
+  test("API ?�출 �??�트?�크 ?�류가 발생??경우 ?�절??처리가 ?�루?�진??, async () => {
+    // ?�트?�크 ?�류 ?��??�이??
     (global.fetch as jest.Mock).mockRejectedValue(new Error("Network error"));
 
     render(<PSM1051D00 empNo="EMP001" />);
 
     await waitFor(() => {
-      // 네트워크 오류 시 "등록된 프로필 내역이 없습니다" 메시지가 표시되는지 확인
-      expect(screen.getByText("(등록된 프로필 내역이 없습니다.)")).toBeInTheDocument();
+      // ?�트?�크 ?�류 ??"?�록???�로???�역???�습?�다" 메시지가 ?�시?�는지 ?�인
+      expect(screen.getByText("(?�록???�로???�역???�습?�다.)")).toBeInTheDocument();
     });
   });
 
-  test("사원번호가 없으면 API를 호출하지 않는다", () => {
+  test("?�원번호가 ?�으�?API�??�출?��? ?�는??, () => {
     render(<PSM1051D00 />);
 
-    // PSM1051D00의 career/profile API가 호출되지 않았는지 확인
+    // PSM1051D00??career/profile API가 ?�출?��? ?�았?��? ?�인
     expect(global.fetch).not.toHaveBeenCalledWith('/api/psm/career/profile', expect.any(Object));
   });
 
-  test("경력 계산 로직이 정확히 동작한다", async () => {
-    // 복잡한 경력 데이터로 테스트
+  test("경력 계산 로직???�확???�작?�다", async () => {
+    // 복잡??경력 ?�이?�로 ?�스??
     (global.fetch as jest.Mock).mockResolvedValue({
       ok: true,
       json: async () => ({
         success: true,
         data: [{
           CALC_STAD_DT: "2025/12/31",
-          BEF_M_CNT: "35", // 2년 11개월
-          AFT_M_CNT: "47", // 3년 11개월
-          BEF_CTQL_M_CNT: "18", // 1년 6개월
-          AFT_CTQL_M_CNT: "25", // 2년 1개월
+          BEF_M_CNT: "35", // 2??11개월
+          AFT_M_CNT: "47", // 3??11개월
+          BEF_CTQL_M_CNT: "18", // 1??6개월
+          AFT_CTQL_M_CNT: "25", // 2??1개월
           TCN_GRD_NM: "고급",
           TCN_GRD: "2",
           CTQL_TCN_GRD_NM: "중급",
@@ -408,45 +408,45 @@ describe("PSM1051D00 - 경력 상세 다이얼로그", () => {
     render(<PSM1051D00 empNo="EMP001" />);
 
     await waitFor(() => {
-      // 학력기준 경력 계산 (35개월 = 2년 11개월)
+      // ?�력기�? 경력 계산 (35개월 = 2??11개월)
       const twoInputs = screen.getAllByDisplayValue("2");
       const elevenInputs = screen.getAllByDisplayValue("11");
       const threeInputs = screen.getAllByDisplayValue("3");
       const sixInputs = screen.getAllByDisplayValue("6");
       const tenInputs = screen.getAllByDisplayValue("10");
 
-      // 해당 값들이 존재하는지 확인
-      expect(twoInputs.length).toBeGreaterThan(0); // 입사전 경력 년수
-      expect(elevenInputs.length).toBeGreaterThan(0); // 입사전 경력 개월수
-      expect(threeInputs.length).toBeGreaterThan(0); // 입사후 경력 년수
-      expect(elevenInputs.length).toBeGreaterThan(0); // 입사후 경력 개월수
-      expect(sixInputs.length).toBeGreaterThan(0); // 합계 경력 년수
-      expect(tenInputs.length).toBeGreaterThan(0); // 합계 경력 개월수
+      // ?�당 값들??존재?�는지 ?�인
+      expect(twoInputs.length).toBeGreaterThan(0); // ?�사??경력 ?�수
+      expect(elevenInputs.length).toBeGreaterThan(0); // ?�사??경력 개월??
+      expect(threeInputs.length).toBeGreaterThan(0); // ?�사??경력 ?�수
+      expect(elevenInputs.length).toBeGreaterThan(0); // ?�사??경력 개월??
+      expect(sixInputs.length).toBeGreaterThan(0); // ?�계 경력 ?�수
+      expect(tenInputs.length).toBeGreaterThan(0); // ?�계 경력 개월??
     });
   });
 
-  test("안내 메시지가 정상적으로 표시된다", () => {
+  test("?�내 메시지가 ?�상?�으�??�시?�다", () => {
     render(<PSM1051D00 empNo="EMP001" />);
 
-    expect(screen.getByText(/입사전 경력은 프로필의 입사전 경력보다 클 수 없습니다/)).toBeInTheDocument();
+    expect(screen.getByText(/?�사??경력?� ?�로?�의 ?�사??경력보다 ?????�습?�다/)).toBeInTheDocument();
   });
 
-  test("테이블 헤더가 정상적으로 표시된다", () => {
+  test("?�이�??�더가 ?�상?�으�??�시?�다", () => {
     render(<PSM1051D00 empNo="EMP001" />);
 
-    expect(screen.getByText("입사전 경력")).toBeInTheDocument();
-    expect(screen.getByText("입사후 경력")).toBeInTheDocument();
-    expect(screen.getByText("합계")).toBeInTheDocument();
-    expect(screen.getByText("기술등급")).toBeInTheDocument();
-    expect(screen.getByText("학력기준")).toBeInTheDocument();
-    expect(screen.getByText("기술자격기준")).toBeInTheDocument();
+    expect(screen.getByText("?�사??경력")).toBeInTheDocument();
+    expect(screen.getByText("?�사??경력")).toBeInTheDocument();
+    expect(screen.getByText("?�계")).toBeInTheDocument();
+    expect(screen.getByText("기술?�급")).toBeInTheDocument();
+    expect(screen.getByText("?�력기�?")).toBeInTheDocument();
+    expect(screen.getByText("기술?�격기�?")).toBeInTheDocument();
   });
 
-  test("모든 입력 필드가 읽기 전용으로 설정되어 있다", async () => {
+  test("모든 ?�력 ?�드가 ?�기 ?�용?�로 ?�정?�어 ?�다", async () => {
     render(<PSM1051D00 empNo="EMP001" />);
 
     await waitFor(() => {
-      // 모든 input 필드가 readonly 속성을 가지고 있는지 확인
+      // 모든 input ?�드가 readonly ?�성??가지�??�는지 ?�인
       const inputs = screen.getAllByRole('textbox');
       inputs.forEach(input => {
         expect(input).toHaveAttribute('readonly');
@@ -455,3 +455,4 @@ describe("PSM1051D00 - 경력 상세 다이얼로그", () => {
   });
   
 }); 
+

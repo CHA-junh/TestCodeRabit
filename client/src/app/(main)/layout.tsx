@@ -24,7 +24,7 @@ export default function MainLayout({
 }: {
 	children: React.ReactNode
 }) {
-	// 메뉴 데이터 fetch
+	// 메뉴 ?�이??fetch
 	const [menuData, setMenuData] = useState<MenuGroup[]>([])
 	useEffect(() => {
 		fetch('/api/menu/tree')
@@ -33,19 +33,19 @@ export default function MainLayout({
 				if (data.success) {
 					setMenuData(data.data)
 				} else {
-					console.error('메뉴 데이터 로드 실패:', data.message)
+					console.error('메뉴 ?�이??로드 ?�패:', data.message)
 				}
 			})
 			.catch((error) => {
-				console.error('메뉴 API 호출 오류:', error)
+				console.error('메뉴 API ?�출 ?�류:', error)
 			})
 	}, [])
 
-	// 탭 상태 관리
+	// ???�태 관�?
 	const [tabs, setTabs] = useState<TabInfo[]>([])
 	const [activeTab, setActiveTab] = useState<string>('')
 
-	// 메뉴 클릭 시 탭 추가/선택
+	// 메뉴 ?�릭 ????추�?/?�택
 	const handleMenuClick = (programId: string, title: string) => {
 		setTabs((prev) => {
 			if (prev.find((t) => t.programId === programId)) return prev
@@ -54,12 +54,12 @@ export default function MainLayout({
 		setActiveTab(programId)
 	}
 
-	// 탭 클릭
+	// ???�릭
 	const handleTabClick = (programId: string) => {
 		setActiveTab(programId)
 	}
 
-	// 탭 닫기
+	// ???�기
 	const handleTabClose = (programId: string) => {
 		setTabs((prev) => {
 			const filtered = prev.filter((t) => t.programId !== programId)
@@ -72,7 +72,7 @@ export default function MainLayout({
 		})
 	}
 
-	// 현재 활성 탭 정보
+	// ?�재 ?�성 ???�보
 	const currentTab = tabs.find((t) => t.programId === activeTab)
 	const ContentComponent = currentTab
 		? getDynamicProgramComponent(currentTab.programId)
@@ -83,10 +83,10 @@ export default function MainLayout({
 			<div className='flex flex-col min-h-screen h-screen'>
 				<TopBar />
 				<div className='flex flex-1 h-full min-h-0'>
-					{/* 메뉴트리 */}
+					{/* 메뉴?�리 */}
 					<SideMenu isOpen={true} onClose={() => {}} />
 					<div className='flex-1 flex flex-col h-full min-h-0'>
-						{/* 메인탭 */}
+						{/* 메인??*/}
 						<MainTab
 							tabs={tabs.map((tab) => ({
 								id: tab.programId,
@@ -96,14 +96,14 @@ export default function MainLayout({
 							onTabClick={handleTabClick}
 							onTabClose={handleTabClose}
 						/>
-						{/* 페이지 타이틀 */}
+						{/* ?�이지 ?�?��? */}
 						{currentTab && (
 							<PageTitle
 								programId={currentTab.programId}
 								title={currentTab.title}
 							/>
 						)}
-						{/* 콘텐츠 영역 */}
+						{/* 콘텐�??�역 */}
 						<div className='flex-1 p-6 bg-gray-50 rounded-b shadow-inner border border-blue-100 border-t-0 overflow-auto'>
 							{currentTab && ContentComponent && (
 								<ContentComponent title={currentTab.title} />
@@ -115,3 +115,5 @@ export default function MainLayout({
 		</AuthGuard>
 	)
 }
+
+

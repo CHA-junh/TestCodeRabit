@@ -1,44 +1,44 @@
 /**
- * UsrModule - 사용자 관리 모듈
+ * UsrModule - ?�용??관�?모듈
  *
  * 주요 기능:
- * - 사용자 목록 조회 및 검색
- * - 사용자 정보 저장 (신규/수정)
- * - 사용자 업무권한 관리
- * - 비밀번호 초기화
- * - 승인결재자 검색
- * - 사용자 역할 관리
+ * - ?�용??목록 조회 �?검??
+ * - ?�용???�보 ?�??(?�규/?�정)
+ * - ?�용???�무권한 관�?
+ * - 비�?번호 초기??
+ * - ?�인결재??검??
+ * - ?�용????�� 관�?
  *
- * 포함된 컴포넌트:
- * - UsrController: 사용자 관리 API 컨트롤러
- * - UsrService: 사용자 관리 비즈니스 로직
- * - CodeService: 공통 코드 관리 서비스
- * - OracleService: Oracle DB 연결 관리
- * - ProcedureDbParser: 프로시저 정보 파싱
+ * ?�함??컴포?�트:
+ * - UsrController: ?�용??관�?API 컨트롤러
+ * - UsrService: ?�용??관�?비즈?�스 로직
+ * - CodeService: 공통 코드 관�??�비??
+ * - OracleService: Oracle DB ?�결 관�?
+ * - ProcedureDbParser: ?�로?��? ?�보 ?�싱
  *
- * 연관 엔티티:
- * - User: 사용자 기본 정보 (로그인, 비밀번호 등)
- * - TblEmpInf: 직원 정보 (사용자 기본 정보)
- * - TblWrkbyUseAuth: 업무별 사용권한
- * - TblUserRole: 사용자 역할
- * - TblSmlCsfCd: 소분류코드 (본부, 부서, 권한, 직책 등)
+ * ?��? ?�티??
+ * - User: ?�용??기본 ?�보 (로그?? 비�?번호 ??
+ * - TblEmpInf: 직원 ?�보 (?�용??기본 ?�보)
+ * - TblWrkbyUseAuth: ?�무�??�용권한
+ * - TblUserRole: ?�용????��
+ * - TblSmlCsfCd: ?�분류코??(본�?, 부?? 권한, 직책 ??
  *
- * API 엔드포인트:
- * - GET /api/usr/list - 사용자 목록 조회
- * - GET /api/usr/work-auth/:userId - 사용자 업무권한 조회
- * - POST /api/usr/save - 사용자 정보 저장
- * - POST /api/usr/password-init - 비밀번호 초기화
- * - GET /api/usr/approver-search - 승인결재자 검색
- * - GET /api/usr/roles - 사용자 역할 목록 조회
+ * API ?�드?�인??
+ * - GET /api/usr/list - ?�용??목록 조회
+ * - GET /api/usr/work-auth/:userId - ?�용???�무권한 조회
+ * - POST /api/usr/save - ?�용???�보 ?�??
+ * - POST /api/usr/password-init - 비�?번호 초기??
+ * - GET /api/usr/approver-search - ?�인결재??검??
+ * - GET /api/usr/roles - ?�용????�� 목록 조회
  *
- * 사용 화면:
- * - USR2010M00: 사용자 관리 화면
+ * ?�용 ?�면:
+ * - USR2010M00: ?�용??관�??�면
  *
- * 의존성:
- * - TypeORM: 데이터베이스 ORM
+ * ?�존??
+ * - TypeORM: ?�이?�베?�스 ORM
  * - NestJS Common: 기본 NestJS 기능
- * - Oracle DB: Oracle 데이터베이스 연결
- * - 프로시저 파싱: Oracle 프로시저 정보 추출
+ * - Oracle DB: Oracle ?�이?�베?�스 ?�결
+ * - ?�로?��? ?�싱: Oracle ?�로?��? ?�보 추출
  */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -55,21 +55,23 @@ import { ProcedureDbParser } from '../utils/procedure-db-parser.util';
 
 @Module({
   imports: [
-    // TypeORM 엔티티 등록
+    // TypeORM ?�티???�록
     TypeOrmModule.forFeature([
-      User, // 사용자 기본 정보 (로그인, 비밀번호 등)
-      TblEmpInf, // 직원 정보 (사용자 기본 정보)
-      TblWrkbyUseAuth, // 업무별 사용권한
-      TblUserRole, // 사용자 역할
-      TblSmlCsfCd, // 소분류코드 (본부, 부서, 권한, 직책 등)
+      User, // ?�용??기본 ?�보 (로그?? 비�?번호 ??
+      TblEmpInf, // 직원 ?�보 (?�용??기본 ?�보)
+      TblWrkbyUseAuth, // ?�무�??�용권한
+      TblUserRole, // ?�용????��
+      TblSmlCsfCd, // ?�분류코??(본�?, 부?? 권한, 직책 ??
     ]),
   ],
-  controllers: [UsrController], // API 컨트롤러 등록
+  controllers: [UsrController], // API 컨트롤러 ?�록
   providers: [
-    UsrService, // 사용자 관리 비즈니스 로직
-    CodeService, // 공통 코드 관리 서비스
-    ProcedureDbParser, // 프로시저 정보 파싱
+    UsrService, // ?�용??관�?비즈?�스 로직
+    CodeService, // 공통 코드 관�??�비??
+    ProcedureDbParser, // ?�로?��? ?�보 ?�싱
   ],
-  exports: [UsrService], // 다른 모듈에서 UsrService 사용 가능하도록 export
+  exports: [UsrService], // ?�른 모듈?�서 UsrService ?�용 가?�하?�록 export
 })
 export class UsrModule {}
+
+

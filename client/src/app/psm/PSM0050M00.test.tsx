@@ -1,17 +1,17 @@
 /**
- * PSM0050M00 - 프로필 관리 화면 테스트
+ * PSM0050M00 - ?�로??관�??�면 ?�스??
  *
- * 테스트 목표:
- * - 프로필 관리 화면의 모든 주요 기능이 정상적으로 동작하는지 검증
- * - 두 가지 방식을 사용합니다:
- *   1. UI 테스트: Mock을 사용한 컴포넌트 렌더링 테스트
- *   2. API 테스트: 실제 HTTP 클라이언트를 사용한 서버 통신 테스트 (서버 실행 시)
+ * ?�스??목표:
+ * - ?�로??관�??�면??모든 주요 기능???�상?�으�??�작?�는지 검�?
+ * - ??가지 방식???�용?�니??
+ *   1. UI ?�스?? Mock???�용??컴포?�트 ?�더�??�스??
+ *   2. API ?�스?? ?�제 HTTP ?�라?�언?��? ?�용???�버 ?�신 ?�스??(?�버 ?�행 ??
  *
  * 주요 기능:
- * - 사원 정보 조회
- * - 프로필 등록/수정/삭제
+ * - ?�원 ?�보 조회
+ * - ?�로???�록/?�정/??��
  * - 경력 계산
- * - 엑셀 다운로드
+ * - ?��? ?�운로드
  */
 
 import React from "react";
@@ -26,12 +26,12 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 // Mock fetch for API calls
 global.fetch = jest.fn();
 
-// 실제 HTTP 클라이언트 사용 (서버 실행 시)
+// ?�제 HTTP ?�라?�언???�용 (?�버 ?�행 ??
 const baseURL = "http://localhost:8080";
 
-describe("PSM0050M00 - 프로필 관리 화면 - UI 테스트 (Mock 사용)", () => {
+describe("PSM0050M00 - ?�로??관�??�면 - UI ?�스??(Mock ?�용)", () => {
 	beforeEach(() => {
-		// Mock 기본 응답 설정
+		// Mock 기본 ?�답 ?�정
 		mockedAxios.get.mockResolvedValue({
 			status: 200,
 			statusText: "OK",
@@ -67,91 +67,91 @@ describe("PSM0050M00 - 프로필 관리 화면 - UI 테스트 (Mock 사용)", ()
 		jest.clearAllMocks();
 	});
 
-	test("프로필 관리 화면에 접속하면 모든 주요 기능이 표시된다", async () => {
+	test("?�로??관�??�면???�속?�면 모든 주요 기능???�시?�다", async () => {
 		render(<PSM0050M00 />);
 
 		await waitFor(() => {
-			expect(screen.getByText("사원명")).toBeInTheDocument();
+			expect(screen.getByText("?�원�?)).toBeInTheDocument();
 		});
 
-		// 주요 기능 버튼들 확인 (실제 화면에 표시되는 것들만)
+		// 주요 기능 버튼???�인 (?�제 ?�면???�시?�는 것들�?
 		expect(screen.getByText("조회")).toBeInTheDocument();
-		expect(screen.getByText("저장")).toBeInTheDocument();
-		expect(screen.getByText("삭제")).toBeInTheDocument();
-		expect(screen.getByText("신규")).toBeInTheDocument();
-		// 엑셀과 경력계산 버튼은 조건부로 표시될 수 있으므로 제거
+		expect(screen.getByText("?�??)).toBeInTheDocument();
+		expect(screen.getByText("??��")).toBeInTheDocument();
+		expect(screen.getByText("?�규")).toBeInTheDocument();
+		// ?��?�?경력계산 버튼?� 조건부�??�시?????�으므�??�거
 	});
 
-	test("사용자가 사원번호를 입력하고 조회 버튼을 클릭하면 사원 정보가 조회된다", async () => {
+	test("?�용?��? ?�원번호�??�력?�고 조회 버튼???�릭?�면 ?�원 ?�보가 조회?�다", async () => {
 		render(<PSM0050M00 />);
 
 		await waitFor(() => {
 			expect(screen.getByText("조회")).toBeInTheDocument();
 		});
 
-		// 조회 버튼 클릭
+		// 조회 버튼 ?�릭
 		const searchButton = screen.getByText("조회");
 		fireEvent.click(searchButton);
 
-		// 조회 버튼이 존재하는지 확인
+		// 조회 버튼??존재?�는지 ?�인
 		expect(searchButton).toBeInTheDocument();
 	});
 
-	test("사용자가 프로필 정보를 입력하고 저장 버튼을 클릭하면 저장 처리가 진행된다", async () => {
+	test("?�용?��? ?�로???�보�??�력?�고 ?�??버튼???�릭?�면 ?�??처리가 진행?�다", async () => {
 		render(<PSM0050M00 />);
 
 		await waitFor(() => {
-			expect(screen.getByText("저장")).toBeInTheDocument();
+			expect(screen.getByText("?�??)).toBeInTheDocument();
 		});
 
-		// 저장 버튼 클릭
-		const saveButton = screen.getByText("저장");
+		// ?�??버튼 ?�릭
+		const saveButton = screen.getByText("?�??);
 		fireEvent.click(saveButton);
 
-		// 저장 버튼이 존재하는지 확인
+		// ?�??버튼??존재?�는지 ?�인
 		expect(saveButton).toBeInTheDocument();
 	});
 
-	test("사용자가 신규 버튼을 클릭하면 입력 필드가 초기화된다", async () => {
+	test("?�용?��? ?�규 버튼???�릭?�면 ?�력 ?�드가 초기?�된??, async () => {
 		render(<PSM0050M00 />);
 
 		await waitFor(() => {
-			expect(screen.getByText("신규")).toBeInTheDocument();
+			expect(screen.getByText("?�규")).toBeInTheDocument();
 		});
 
-		// 신규 버튼 클릭
-		const newButton = screen.getByText("신규");
+		// ?�규 버튼 ?�릭
+		const newButton = screen.getByText("?�규");
 		fireEvent.click(newButton);
 
-		// 신규 버튼이 존재하는지 확인
+		// ?�규 버튼??존재?�는지 ?�인
 		expect(newButton).toBeInTheDocument();
 	});
 
-	test("사용자가 삭제 버튼을 클릭하면 삭제 확인 다이얼로그가 표시된다", async () => {
+	test("?�용?��? ??�� 버튼???�릭?�면 ??�� ?�인 ?�이?�로그�? ?�시?�다", async () => {
 		render(<PSM0050M00 />);
 
 		await waitFor(() => {
-			expect(screen.getByText("삭제")).toBeInTheDocument();
+			expect(screen.getByText("??��")).toBeInTheDocument();
 		});
 
-		// 삭제 버튼 클릭
-		const deleteButton = screen.getByText("삭제");
+		// ??�� 버튼 ?�릭
+		const deleteButton = screen.getByText("??��");
 		fireEvent.click(deleteButton);
 
-		// 삭제 버튼이 존재하는지 확인
+		// ??�� 버튼??존재?�는지 ?�인
 		expect(deleteButton).toBeInTheDocument();
 	});
 });
 
-// 실제 거래 호출 테스트 - 서버 실행 시에만 실행
-describe("PSM0050M00 - 프로필 관리 API - 실제 거래 호출 테스트 (서버 실행 시)", () => {
-	// 서버가 실행 중인지 확인하는 헬퍼 함수
+// ?�제 거래 ?�출 ?�스??- ?�버 ?�행 ?�에�??�행
+describe("PSM0050M00 - ?�로??관�?API - ?�제 거래 ?�출 ?�스??(?�버 ?�행 ??", () => {
+	// ?�버가 ?�행 중인지 ?�인?�는 ?�퍼 ?�수
 	const isServerRunning = async (): Promise<boolean> => {
 		try {
 			await axios.get(`${baseURL}/api/health`, { timeout: 3000 });
 			return true;
 		} catch (error) {
-			console.log("서버 연결 실패:", error instanceof Error ? error.message : String(error));
+			console.log("?�버 ?�결 ?�패:", error instanceof Error ? error.message : String(error));
 			return false;
 		}
 	};
@@ -159,83 +159,83 @@ describe("PSM0050M00 - 프로필 관리 API - 실제 거래 호출 테스트 (�
 	beforeAll(async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⚠️ 서버가 실행되지 않았습니다. API 테스트를 건너뜁니다.");
+			console.log("?�️ ?�버가 ?�행?��? ?�았?�니?? API ?�스?��? 건너?�니??");
 		}
 	});
 
-	test("사원 정보 조회 API가 정상적으로 동작한다", async () => {
+	test("?�원 ?�보 조회 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		try {
-			console.log("🔍 사원 정보 조회 API 호출 시작");
+			console.log("?�� ?�원 ?�보 조회 API ?�출 ?�작");
 			
 			const empNo = "EMP001";
 			const response = await axios.post(`${baseURL}/api/psm/employee/search`, {
 				empNo: empNo
 			});
 
-			console.log("📊 사원 정보 조회 응답:", response.data);
+			console.log("?�� ?�원 ?�보 조회 ?�답:", response.data);
 
 			expect(response.status).toBe(200);
 			
 			if (!(response.data as any).success) {
-				console.log("❌ 사원 정보 조회 실패 - 응답:", response.data);
-				console.log("❌ 에러 메시지:", (response.data as any).message);
+				console.log("???�원 ?�보 조회 ?�패 - ?�답:", response.data);
+				console.log("???�러 메시지:", (response.data as any).message);
 			}
 			
 			expect((response.data as any).success).toBe(true);
 
-			// 실제 DB 데이터 검증
+			// ?�제 DB ?�이??검�?
 			const responseData = (response.data as any).data;
 			if (responseData && Array.isArray(responseData) && responseData.length > 0) {
 				const employee = responseData[0];
 				expect(employee).toHaveProperty("EMP_NO");
 				expect(employee).toHaveProperty("EMP_NM");
 			} else {
-				console.log("ℹ️ 조회된 사원 정보가 없습니다.");
-				console.log("ℹ️ 사원번호 'EMP001'이 존재하지 않을 수 있습니다.");
+				console.log("?�️ 조회???�원 ?�보가 ?�습?�다.");
+				console.log("?�️ ?�원번호 'EMP001'??존재?��? ?�을 ???�습?�다.");
 			}
 		} catch (error) {
-			console.log("❌ 사원 정보 조회 API 호출 실패:", error instanceof Error ? error.message : String(error));
+			console.log("???�원 ?�보 조회 API ?�출 ?�패:", error instanceof Error ? error.message : String(error));
 			if (axios.isAxiosError(error)) {
-				console.log("❌ 응답 상태:", error.response?.status);
-				console.log("❌ 응답 데이터:", error.response?.data);
+				console.log("???�답 ?�태:", error.response?.status);
+				console.log("???�답 ?�이??", error.response?.data);
 			}
 			throw error;
 		}
 	});
 
-	test("프로필 목록 조회 API가 정상적으로 동작한다", async () => {
+	test("?�로??목록 조회 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		try {
-			console.log("🔍 프로필 목록 조회 API 호출 시작");
+			console.log("?�� ?�로??목록 조회 API ?�출 ?�작");
 			
 			const empNo = "EMP001";
 			const response = await axios.post(`${baseURL}/api/psm/profile/search`, {
 				empNo: empNo
 			});
 
-			console.log("📊 프로필 목록 조회 응답:", response.data);
+			console.log("?�� ?�로??목록 조회 ?�답:", response.data);
 
 			expect(response.status).toBe(200);
 			
 			if (!(response.data as any).success) {
-				console.log("❌ 프로필 목록 조회 실패 - 응답:", response.data);
-				console.log("❌ 에러 메시지:", (response.data as any).message);
+				console.log("???�로??목록 조회 ?�패 - ?�답:", response.data);
+				console.log("???�러 메시지:", (response.data as any).message);
 			}
 			
 			expect((response.data as any).success).toBe(true);
 
-			// 실제 DB 데이터 검증
+			// ?�제 DB ?�이??검�?
 			const responseData = (response.data as any).data;
 			if (responseData && Array.isArray(responseData) && responseData.length > 0) {
 				const profile = responseData[0];
@@ -244,77 +244,77 @@ describe("PSM0050M00 - 프로필 관리 API - 실제 거래 호출 테스트 (�
 				expect(profile).toHaveProperty("STRT_DT");
 				expect(profile).toHaveProperty("END_DT");
 			} else {
-				console.log("ℹ️ 조회된 프로필이 없습니다.");
-				console.log("ℹ️ 사원번호 'EMP001'이 존재하지 않을 수 있습니다.");
+				console.log("?�️ 조회???�로?�이 ?�습?�다.");
+				console.log("?�️ ?�원번호 'EMP001'??존재?��? ?�을 ???�습?�다.");
 			}
 		} catch (error) {
-			console.log("❌ 프로필 목록 조회 API 호출 실패:", error instanceof Error ? error.message : String(error));
+			console.log("???�로??목록 조회 API ?�출 ?�패:", error instanceof Error ? error.message : String(error));
 			if (axios.isAxiosError(error)) {
-				console.log("❌ 응답 상태:", error.response?.status);
-				console.log("❌ 응답 데이터:", error.response?.data);
+				console.log("???�답 ?�태:", error.response?.status);
+				console.log("???�답 ?�이??", error.response?.data);
 			}
 			throw error;
 		}
 	});
 
-	test("프로필 저장 API가 정상적으로 동작한다", async () => {
+	test("?�로???�??API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		try {
-			console.log("🔍 프로필 저장 API 호출 시작");
+			console.log("?�� ?�로???�??API ?�출 ?�작");
 			
 			const profileData = {
 				mode: 'NEW',
 				empNo: 'EMP001',
 				bsnNo: 'BSN001',
 				seqNo: '1',
-				prjtNm: '테스트 프로젝트',
+				prjtNm: '?�스???�로?�트',
 				strtDt: '20240101',
 				endDt: '20241231',
-				mmbrCo: '테스트 회사',
+				mmbrCo: '?�스???�사',
 				delpEnvr: 'Java, Spring',
-				roleNm: '개발자',
-				chrgWrk: '백엔드 개발',
+				roleNm: '개발??,
+				chrgWrk: '백엔??개발',
 				taskNm: 'API 개발',
-				rmk: '테스트 프로필',
+				rmk: '?�스???�로??,
 				userId: 'system'
 			};
 
 			const response = await axios.post(`${baseURL}/api/psm/profile/save`, profileData);
 
-			console.log("📊 프로필 저장 응답:", response.data);
+			console.log("?�� ?�로???�???�답:", response.data);
 
 			expect(response.status).toBe(200);
 			
 			if (!(response.data as any).success) {
-				console.log("❌ 프로필 저장 실패 - 응답:", response.data);
-				console.log("❌ 에러 메시지:", (response.data as any).message);
+				console.log("???�로???�???�패 - ?�답:", response.data);
+				console.log("???�러 메시지:", (response.data as any).message);
 			}
 			
 			expect((response.data as any).success).toBe(true);
 		} catch (error) {
-			console.log("❌ 프로필 저장 API 호출 실패:", error instanceof Error ? error.message : String(error));
+			console.log("???�로???�??API ?�출 ?�패:", error instanceof Error ? error.message : String(error));
 			if (axios.isAxiosError(error)) {
-				console.log("❌ 응답 상태:", error.response?.status);
-				console.log("❌ 응답 데이터:", error.response?.data);
+				console.log("???�답 ?�태:", error.response?.status);
+				console.log("???�답 ?�이??", error.response?.data);
 			}
 			throw error;
 		}
 	});
 
-	test("프로필 삭제 API가 정상적으로 동작한다", async () => {
+	test("?�로????�� API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		try {
-			console.log("🔍 프로필 삭제 API 호출 시작");
+			console.log("?�� ?�로????�� API ?�출 ?�작");
 			
 			const deleteProfile = {
 				empNo: 'EMP001',
@@ -325,35 +325,35 @@ describe("PSM0050M00 - 프로필 관리 API - 실제 거래 호출 테스트 (�
 
 			const response = await axios.post(`${baseURL}/api/psm/profile/delete`, deleteProfile);
 
-			console.log("📊 프로필 삭제 응답:", response.data);
+			console.log("?�� ?�로????�� ?�답:", response.data);
 
 			expect(response.status).toBe(200);
 			
 			if (!(response.data as any).success) {
-				console.log("❌ 프로필 삭제 실패 - 응답:", response.data);
-				console.log("❌ 에러 메시지:", (response.data as any).message);
+				console.log("???�로????�� ?�패 - ?�답:", response.data);
+				console.log("???�러 메시지:", (response.data as any).message);
 			}
 			
 			expect((response.data as any).success).toBe(true);
 		} catch (error) {
-			console.log("❌ 프로필 삭제 API 호출 실패:", error instanceof Error ? error.message : String(error));
+			console.log("???�로????�� API ?�출 ?�패:", error instanceof Error ? error.message : String(error));
 			if (axios.isAxiosError(error)) {
-				console.log("❌ 응답 상태:", error.response?.status);
-				console.log("❌ 응답 데이터:", error.response?.data);
+				console.log("???�답 ?�태:", error.response?.status);
+				console.log("???�답 ?�이??", error.response?.data);
 			}
 			throw error;
 		}
 	});
 
-	test("경력 계산 API가 정상적으로 동작한다", async () => {
+	test("경력 계산 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		try {
-			console.log("🔍 경력 계산 API 호출 시작");
+			console.log("?�� 경력 계산 API ?�출 ?�작");
 			
 			const careerCalcData = {
 				empNo: 'EMP001',
@@ -369,48 +369,48 @@ describe("PSM0050M00 - 프로필 관리 API - 실제 거래 호출 테스트 (�
 
 			const response = await axios.post(`${baseURL}/api/psm/career/calculate`, careerCalcData);
 
-			console.log("📊 경력 계산 응답:", response.data);
+			console.log("?�� 경력 계산 ?�답:", response.data);
 
 			expect(response.status).toBe(200);
 			
 			if (!(response.data as any).success) {
-				console.log("❌ 경력 계산 실패 - 응답:", response.data);
-				console.log("❌ 에러 메시지:", (response.data as any).message);
+				console.log("??경력 계산 ?�패 - ?�답:", response.data);
+				console.log("???�러 메시지:", (response.data as any).message);
 			}
 			
 			expect((response.data as any).success).toBe(true);
 
-			// 실제 DB 데이터 검증
+			// ?�제 DB ?�이??검�?
 			const responseData = (response.data as any).data;
 			if (responseData && typeof responseData === 'object' && Object.keys(responseData).length > 0) {
 				expect(responseData).toHaveProperty("CARR_YCNT");
 				expect(responseData).toHaveProperty("CARR_MCNT");
 				expect(responseData).toHaveProperty("TCN_GRD");
 			} else {
-				console.log("ℹ️ 경력 계산 결과가 없습니다.");
-				console.log("ℹ️ 사원번호 'EMP001'이 존재하지 않거나 경력 데이터가 없을 수 있습니다.");
-				// 빈 응답이어도 API 호출 자체는 성공으로 간주
+				console.log("?�️ 경력 계산 결과가 ?�습?�다.");
+				console.log("?�️ ?�원번호 'EMP001'??존재?��? ?�거??경력 ?�이?��? ?�을 ???�습?�다.");
+				// �??�답?�어??API ?�출 ?�체???�공?�로 간주
 				expect(responseData).toBeDefined();
 			}
 		} catch (error) {
-			console.log("❌ 경력 계산 API 호출 실패:", error instanceof Error ? error.message : String(error));
+			console.log("??경력 계산 API ?�출 ?�패:", error instanceof Error ? error.message : String(error));
 			if (axios.isAxiosError(error)) {
-				console.log("❌ 응답 상태:", error.response?.status);
-				console.log("❌ 응답 데이터:", error.response?.data);
+				console.log("???�답 ?�태:", error.response?.status);
+				console.log("???�답 ?�이??", error.response?.data);
 			}
 			throw error;
 		}
 	});
 
-	test("프로필 엑셀 다운로드 API가 정상적으로 동작한다", async () => {
+	test("?�로???��? ?�운로드 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		try {
-			console.log("🔍 프로필 엑셀 다운로드 API 호출 시작");
+			console.log("?�� ?�로???��? ?�운로드 API ?�출 ?�작");
 			
 			const empNo = "EMP001";
 			const response = await axios.post(`${baseURL}/api/psm/profile/excel`, {
@@ -419,25 +419,26 @@ describe("PSM0050M00 - 프로필 관리 API - 실제 거래 호출 테스트 (�
 				responseType: 'blob'
 			});
 
-			console.log("📊 프로필 엑셀 다운로드 응답:", response.data);
+			console.log("?�� ?�로???��? ?�운로드 ?�답:", response.data);
 
 			expect(response.status).toBe(200);
 			
-			// content-type 헤더가 있는 경우에만 확인
+			// content-type ?�더가 ?�는 경우?�만 ?�인
 			if (response.headers['content-type']) {
 				expect(response.headers['content-type']).toContain('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			} else {
-				console.log("ℹ️ content-type 헤더가 설정되지 않았습니다.");
-				// 헤더가 없어도 API 호출 자체는 성공으로 간주
+				console.log("?�️ content-type ?�더가 ?�정?��? ?�았?�니??");
+				// ?�더가 ?�어??API ?�출 ?�체???�공?�로 간주
 				expect(response.data).toBeDefined();
 			}
 		} catch (error) {
-			console.log("❌ 프로필 엑셀 다운로드 API 호출 실패:", error instanceof Error ? error.message : String(error));
+			console.log("???�로???��? ?�운로드 API ?�출 ?�패:", error instanceof Error ? error.message : String(error));
 			if (axios.isAxiosError(error)) {
-				console.log("❌ 응답 상태:", error.response?.status);
-				console.log("❌ 응답 데이터:", error.response?.data);
+				console.log("???�답 ?�태:", error.response?.status);
+				console.log("???�답 ?�이??", error.response?.data);
 			}
 			throw error;
 		}
 	});
 }); 
+

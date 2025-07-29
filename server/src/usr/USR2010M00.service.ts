@@ -1,29 +1,29 @@
 /**
- * USR2010M00Service - 사용자 관리 서비스
+ * USR2010M00Service - ?�용??관�??�비??
  *
  * 주요 기능:
- * - 사용자 목록 조회 및 검색
- * - 사용자 정보 저장 (신규/수정)
- * - 사용자 업무권한 관리
- * - 비밀번호 초기화
- * - 승인결재자 검색
- * - 사용자 역할 관리
+ * - ?�용??목록 조회 �?검??
+ * - ?�용???�보 ?�??(?�규/?�정)
+ * - ?�용???�무권한 관�?
+ * - 비�?번호 초기??
+ * - ?�인결재??검??
+ * - ?�용????�� 관�?
  *
- * 연관 테이블:
- * - TBL_EMP_INF: 직원 정보 (사용자 기본 정보)
- * - TBL_USER_INF: 사용자 정보 (권한, 승인결재자 등)
- * - TBL_WRKBY_USE_AUTH: 업무별 사용권한
- * - TBL_USER_ROLE: 사용자 역할
- * - TBL_SML_CSF_CD: 소분류코드 (본부, 부서, 권한, 직책 등)
+ * ?��? ?�이�?
+ * - TBL_EMP_INF: 직원 ?�보 (?�용??기본 ?�보)
+ * - TBL_USER_INF: ?�용???�보 (권한, ?�인결재????
+ * - TBL_WRKBY_USE_AUTH: ?�무�??�용권한
+ * - TBL_USER_ROLE: ?�용????��
+ * - TBL_SML_CSF_CD: ?�분류코??(본�?, 부?? 권한, 직책 ??
  *
- * 연관 프로시저:
- * - USR_01_0201_S: 사용자 목록 조회 (TypeORM 쿼리로 대체)
- * - USR_01_0202_S: 업무별 사용권한 목록 조회
- * - USR_01_0204_T: 사용자 정보 저장 (신규/수정)
- * - USR_01_0104_T: 비밀번호 초기화
+ * ?��? ?�로?��?:
+ * - USR_01_0201_S: ?�용??목록 조회 (TypeORM 쿼리�??��?
+ * - USR_01_0202_S: ?�무�??�용권한 목록 조회
+ * - USR_01_0204_T: ?�용???�보 ?�??(?�규/?�정)
+ * - USR_01_0104_T: 비�?번호 초기??
  *
- * 사용 화면:
- * - USR2010M00: 사용자 관리 화면
+ * ?�용 ?�면:
+ * - USR2010M00: ?�용??관�??�면
  */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -39,61 +39,61 @@ import { CodeService } from '../com/code.service';
 import { OracleService } from '../database/database.provider';
 
 /**
- * 사용자 데이터 인터페이스
+ * ?�용???�이???�터?�이??
  *
  * @description
- * 사용자 목록 조회 시 반환되는 사용자 정보 구조
+ * ?�용??목록 조회 ??반환?�는 ?�용???�보 구조
  */
 export interface UserData {
-  empNo: string; // 사원번호
-  ownOutsDiv: string; // 자사외주구분
-  entrNo: string; // 업체번호
-  empNm: string; // 사원성명
-  entrDt: string; // 입사일자
-  retirDt: string; // 퇴사일자
-  hqDivCd: string; // 본부구분코드
-  hqDivNm: string; // 본부명
-  deptDivCd: string; // 부서구분코드
-  deptDivNm: string; // 부서명
+  empNo: string; // ?�원번호
+  ownOutsDiv: string; // ?�사?�주구분
+  entrNo: string; // ?�체번호
+  empNm: string; // ?�원?�명
+  entrDt: string; // ?�사?�자
+  retirDt: string; // ?�사?�자
+  hqDivCd: string; // 본�?구분코드
+  hqDivNm: string; // 본�?�?
+  deptDivCd: string; // 부?�구분코??
+  deptDivNm: string; // 부?�명
   dutyCd: string; // 직책코드
-  dutyNm: string; // 직책명
-  wmailYn: string; // 웹메일등록여부
+  dutyNm: string; // 직책�?
+  wmailYn: string; // ?�메?�등록여부
   authCd: string; // 권한코드
-  authCdNm: string; // 권한명
+  authCdNm: string; // 권한�?
   dutyDivCd: string; // 직책구분코드
-  dutyDivCdNm: string; // 직책구분명
-  apvApofId: string; // 승인결재자ID
-  apvApofNm: string; // 승인결재자명
-  wrkCnt: string; // 사용권한업무갯수
-  lastWrk: string; // 최종등록된업무
-  bsnUseYn: string; // 사업/프로젝트 사용유무
-  wpcUseYn: string; // 업무추진비 사용유무
-  psmUseYn: string; // 인사/복리 사용유무
-  emailAddr: string; // 이메일주소
-  usrRoleId: string; // 사용자역할ID
-  usrRoleNm: string; // 사용자역할명
+  dutyDivCdNm: string; // 직책구분�?
+  apvApofId: string; // ?�인결재?�ID
+  apvApofNm: string; // ?�인결재?�명
+  wrkCnt: string; // ?�용권한?�무�?��
+  lastWrk: string; // 최종?�록?�업�?
+  bsnUseYn: string; // ?�업/?�로?�트 ?�용?�무
+  wpcUseYn: string; // ?�무추진�??�용?�무
+  psmUseYn: string; // ?�사/복리 ?�용?�무
+  emailAddr: string; // ?�메?�주??
+  usrRoleId: string; // ?�용?�역?�ID
+  usrRoleNm: string; // ?�용?�역?�명
 }
 
 /**
- * 업무권한 데이터 인터페이스
+ * ?�무권한 ?�이???�터?�이??
  *
  * @description
- * 사용자별 업무권한 정보 구조
+ * ?�용?�별 ?�무권한 ?�보 구조
  */
 export interface WorkAuthData {
-  smlCsfCd: string; // 업무구분코드
-  smlCsfNm: string; // 업무구분명
-  wrkUseYn: string; // 사용권한여부
+  smlCsfCd: string; // ?�무구분코드
+  smlCsfNm: string; // ?�무구분�?
+  wrkUseYn: string; // ?�용권한?��?
   rmk?: string; // 비고
-  regDttm?: string; // 등록일시
+  regDttm?: string; // ?�록?�시
   chngrId?: string; // 변경자ID
 }
 
 /**
- * 사용자 저장 데이터 인터페이스
+ * ?�용???�???�이???�터?�이??
  *
  * @description
- * 사용자 정보 저장 시 사용되는 데이터 구조
+ * ?�용???�보 ?�?????�용?�는 ?�이??구조
  */
 export interface UserSaveData {
   empNo: string;
@@ -107,7 +107,7 @@ export interface UserSaveData {
   emailAddr: string;
   workAuthList: WorkAuthData[];
   regUserId: string;
-  usrRoleId?: string; // 사용자역할ID (선택적, 기본값: 'A250715001')
+  usrRoleId?: string; // ?�용?�역?�ID (?�택?? 기본�? 'A250715001')
 }
 
 @Injectable()
@@ -128,30 +128,30 @@ export class UsrService {
   ) {}
 
   /**
-   * 사용자 목록 조회 (TypeORM 쿼리로 변경)
+   * ?�용??목록 조회 (TypeORM 쿼리�?변�?
    *
    * @description
-   * 기존 USR_01_0201_S 프로시저를 TypeORM 쿼리로 대체한 이유:
-   * 1. 프로시저 의존성 제거로 유지보수성 향상
-   * 2. TypeORM의 타입 안전성과 쿼리 빌더 활용
-   * 3. 사용자역할(USR_ROLE_ID) 정보 추가로 새로운 요구사항 반영
-   * 4. 테스트 용이성 및 디버깅 편의성 증대
-   * 5. 마이크로서비스 아키텍처에 적합한 구조로 전환
+   * 기존 USR_01_0201_S ?�로?��?�?TypeORM 쿼리�??�체한 ?�유:
+   * 1. ?�로?��? ?�존???�거�??��?보수???�상
+   * 2. TypeORM???�???�전?�과 쿼리 빌더 ?�용
+   * 3. ?�용?�역??USR_ROLE_ID) ?�보 추�?�??�로???�구?�항 반영
+   * 4. ?�스???�이??�??�버�??�의??증�?
+   * 5. 마이?�로?�비???�키?�처???�합??구조�??�환
    *
    * 조회 조건:
-   * - 본부구분코드 (hqDiv)
-   * - 부서구분코드 (deptDiv)
-   * - 사용자명 (userNm, 부분 검색)
+   * - 본�?구분코드 (hqDiv)
+   * - 부?�구분코??(deptDiv)
+   * - ?�용?�명 (userNm, 부�?검??
    *
-   * @param hqDiv - 본부구분코드 (ALL=전체)
-   * @param deptDiv - 부서구분코드 (ALL=전체)
-   * @param userNm - 사용자명 (부분 검색)
-   * @returns Promise<UserData[]> - 사용자 목록
+   * @param hqDiv - 본�?구분코드 (ALL=?�체)
+   * @param deptDiv - 부?�구분코??(ALL=?�체)
+   * @param userNm - ?�용?�명 (부�?검??
+   * @returns Promise<UserData[]> - ?�용??목록
    * @example
-   * const users = await usrService.getUserList('1000', '1100', '홍길동');
-   * // 결과: [{ empNo: "E001", empNm: "홍길동", hqDivNm: "디지털영업본부" }]
+   * const users = await usrService.getUserList('1000', '1100', '?�길??);
+   * // 결과: [{ empNo: "E001", empNm: "?�길??, hqDivNm: "?��??�영?�본부" }]
    *
-   * @throws Error - DB 조회 실패 시
+   * @throws Error - DB 조회 ?�패 ??
    */
   async getUserList(
     hqDiv?: string,
@@ -159,14 +159,14 @@ export class UsrService {
     userNm?: string,
   ): Promise<UserData[]> {
     try {
-      console.log('⚡️ Executing raw SQL query for user list...');
-      console.log('🔍 Query params:', { hqDiv, deptDiv, userNm });
+      console.log('?�️ Executing raw SQL query for user list...');
+      console.log('?�� Query params:', { hqDiv, deptDiv, userNm });
 
-      // 동적 WHERE 조건 구성
+      // ?�적 WHERE 조건 구성
       let whereConditions: string[] = [];
       let queryParams: any = {};
 
-      // 프로시저 로직에 맞게 WHERE 조건 구성 (모든 조건을 동시에 적용)
+      // ?�로?��? 로직??맞게 WHERE 조건 구성 (모든 조건???�시???�용)
       if (hqDiv && hqDiv.trim() && hqDiv !== 'ALL') {
         whereConditions.push('A.HQ_DIV_CD = :hqDiv');
         queryParams['hqDiv'] = hqDiv;
@@ -182,10 +182,10 @@ export class UsrService {
         queryParams['userNm'] = `%${userNm}%`;
       }
 
-      console.log('🔍 Where conditions:', whereConditions);
-      console.log('🔍 Query parameters object:', queryParams);
+      console.log('?�� Where conditions:', whereConditions);
+      console.log('?�� Query parameters object:', queryParams);
 
-      // 복잡한 JOIN 쿼리로 사용자 정보와 권한 정보를 함께 조회
+      // 복잡??JOIN 쿼리�??�용???�보?� 권한 ?�보�??�께 조회
       const query = `
         SELECT 
           A.EMP_NO as "empNo",
@@ -263,16 +263,16 @@ export class UsrService {
         ORDER BY A.DUTY_CD, A.EMP_NM
       `;
 
-      console.log('🔍 Final SQL Query:', query);
-      console.log('🔍 Query Parameters:', queryParams);
+      console.log('?�� Final SQL Query:', query);
+      console.log('?�� Query Parameters:', queryParams);
 
       const result = await this.empRepository.query(
         query,
         Object.values(queryParams),
       );
-      console.log('✅ Raw query result count:', result.length);
+      console.log('??Raw query result count:', result.length);
 
-      // 결과를 UserData 인터페이스에 맞게 변환
+      // 결과�?UserData ?�터?�이?�에 맞게 변??
       const userDataList: UserData[] = result.map((row: any) => ({
         empNo: row.empNo || '',
         ownOutsDiv: row.ownOutsDiv || '',
@@ -303,49 +303,49 @@ export class UsrService {
         usrRoleNm: row.usrRoleNm || '',
       }));
 
-      console.log('✅ Transformed user data count:', userDataList.length);
+      console.log('??Transformed user data count:', userDataList.length);
       return userDataList;
     } catch (error) {
-      console.error('❌ Error in getUserList:', error);
+      console.error('??Error in getUserList:', error);
       const errorMessage =
         error instanceof Error ? error.message : String(error);
       throw new Error(
-        `사용자 목록 조회 중 오류가 발생했습니다: ${errorMessage}`,
+        `?�용??목록 조회 �??�류가 발생?�습?�다: ${errorMessage}`,
       );
     }
   }
 
   /**
-   * 사용자 업무권한 목록 조회
+   * ?�용???�무권한 목록 조회
    *
    * @description
-   * - USR_01_0202_S 프로시저를 호출하여 특정 사용자의 업무권한 목록을 조회합니다.
-   * - 업무구분코드, 업무구분명, 사용권한여부 등을 반환합니다.
-   * - 최대 100개까지 조회 가능합니다.
+   * - USR_01_0202_S ?�로?��?�??�출?�여 ?�정 ?�용?�의 ?�무권한 목록??조회?�니??
+   * - ?�무구분코드, ?�무구분�? ?�용권한?��? ?�을 반환?�니??
+   * - 최�? 100개까지 조회 가?�합?�다.
    *
-   * @param userId - 사용자 ID (사번)
-   * @returns Promise<WorkAuthData[]> - 업무권한 목록
+   * @param userId - ?�용??ID (?�번)
+   * @returns Promise<WorkAuthData[]> - ?�무권한 목록
    * @example
    * const workAuths = await usrService.getWorkAuthList('E001');
-   * // 결과: [{ smlCsfCd: "01", smlCsfNm: "사업관리", wrkUseYn: "1" }]
+   * // 결과: [{ smlCsfCd: "01", smlCsfNm: "?�업관�?, wrkUseYn: "1" }]
    *
-   * @throws Error - 프로시저 호출 실패 시
+   * @throws Error - ?�로?��? ?�출 ?�패 ??
    */
   async getWorkAuthList(userId: string): Promise<WorkAuthData[]> {
     try {
-      console.log('🔍 사용자 업무권한 조회 시작:', userId);
+      console.log('?�� ?�용???�무권한 조회 ?�작:', userId);
 
-      // Oracle 프로시저 호출을 위한 커넥션
+      // Oracle ?�로?��? ?�출???�한 커넥??
       const conn = await this.oracle.getConnection();
 
       try {
-        // USR_01_0202_S 프로시저 호출
+        // USR_01_0202_S ?�로?��? ?�출
         const result = (await conn.execute(
           `
           BEGIN
             USR_01_0202_S(
               :cursor,           -- OUT: 결과 커서
-              :I_USER_ID         -- IN: 사용자ID
+              :I_USER_ID         -- IN: ?�용?�ID
             );
           END;
           `,
@@ -358,12 +358,12 @@ export class UsrService {
           },
         )) as { outBinds: { cursor: oracledb.ResultSet<any> } };
 
-        // 결과 커서에서 데이터 추출
+        // 결과 커서?�서 ?�이??추출
         const rs = result.outBinds.cursor;
-        const rows = await rs.getRows(100); // 최대 100개까지 조회
+        const rows = await rs.getRows(100); // 최�? 100개까지 조회
         await rs.close();
 
-        console.log('✅ 업무권한 조회 결과:', rows.length + '건');
+        console.log('???�무권한 조회 결과:', rows.length + '�?);
 
         return rows.map((row: any) => ({
           smlCsfCd: row.SML_CSF_CD || '',
@@ -374,64 +374,64 @@ export class UsrService {
           chngrId: row.CHNGR_ID || '',
         }));
       } finally {
-        // 데이터베이스 연결 해제
+        // ?�이?�베?�스 ?�결 ?�제
         await conn.close();
       }
     } catch (error) {
-      console.error('❌ 업무권한 조회 오류:', error);
+      console.error('???�무권한 조회 ?�류:', error);
       const errorMessage =
         error instanceof Error ? error.message : String(error);
-      throw new Error(`업무권한 조회 중 오류가 발생했습니다: ${errorMessage}`);
+      throw new Error(`?�무권한 조회 �??�류가 발생?�습?�다: ${errorMessage}`);
     }
   }
 
   /**
-   * 사용자 정보 저장 (신규/수정)
+   * ?�용???�보 ?�??(?�규/?�정)
    *
    * @description
-   * 기존 USR_01_0203_T 프로시저에서 사용자역할 관리가 추가된 USR_01_0204_T 프로시저로 변경
+   * 기존 USR_01_0203_T ?�로?��??�서 ?�용?�역??관리�? 추�???USR_01_0204_T ?�로?��?�?변�?
    *
-   * 프로시저 파라미터:
-   * - I_USER_ID: 사용자ID
-   * - I_USER_NM: 사용자이름
-   * - I_HQ_DIV_CD: 본부구분코드
-   * - I_DEPT_DIV_CD: 부서구분코드
+   * ?�로?��? ?�라미터:
+   * - I_USER_ID: ?�용?�ID
+   * - I_USER_NM: ?�용?�이�?
+   * - I_HQ_DIV_CD: 본�?구분코드
+   * - I_DEPT_DIV_CD: 부?�구분코??
    * - I_DUTY_CD: 직책코드
-   * - I_DUTY_DIV_CD: 직책구분코드 (대분류코드:114)
+   * - I_DUTY_DIV_CD: 직책구분코드 (?�분류코드:114)
    * - I_AUTH_CD: 권한코드
-   * - I_APV_APOF_ID: 승인 결재자 ID
-   * - I_EMAIL_ADDR: 이메일주소
-   * - I_WORK_USE_AUTH: 사용권한 부여받은 업무코드 (파이프(|)로 구분)
-   * - I_REG_USER_ID: 등록사용자ID (현재 세션의 로그인 사용자)
-   * - I_USR_ROLE_ID: 사용자역할ID (기본값: 일반사용자 'A250715001')
+   * - I_APV_APOF_ID: ?�인 결재??ID
+   * - I_EMAIL_ADDR: ?�메?�주??
+   * - I_WORK_USE_AUTH: ?�용권한 부?�받?� ?�무코드 (?�이??|)�?구분)
+   * - I_REG_USER_ID: ?�록?�용?�ID (?�재 ?�션??로그???�용??
+   * - I_USR_ROLE_ID: ?�용?�역?�ID (기본�? ?�반?�용??'A250715001')
    *
-   * @param userData - 저장할 사용자 정보
-   * @param currentUserId - 현재 로그인한 사용자 ID (세션에서 전달)
-   * @returns Promise<string> - 저장 결과 메시지
+   * @param userData - ?�?�할 ?�용???�보
+   * @param currentUserId - ?�재 로그?�한 ?�용??ID (?�션?�서 ?�달)
+   * @returns Promise<string> - ?�??결과 메시지
    * @example
    * const result = await usrService.saveUser({
    *   empNo: "E001",
-   *   empNm: "홍길동",
+   *   empNm: "?�길??,
    *   hqDivCd: "1000",
    *   deptDivCd: "1100",
    *   workAuthList: [{ smlCsfCd: "01", wrkUseYn: "1" }]
    * }, "E001");
    *
-   * @throws Error - 프로시저 호출 실패 시
+   * @throws Error - ?�로?��? ?�출 ?�패 ??
    */
   async saveUser(
     userData: UserSaveData,
     currentUserId: string,
   ): Promise<string> {
     try {
-      console.log('💾 사용자 정보 저장 시작:', userData);
+      console.log('?�� ?�용???�보 ?�???�작:', userData);
 
-      // Oracle 프로시저 호출을 위한 커넥션
+      // Oracle ?�로?��? ?�출???�한 커넥??
       const conn = await this.oracle.getConnection();
 
       try {
-        // 저장 전 현재 사용자 정보 조회
-        console.log('🔍 저장 전 사용자 정보 조회...');
+        // ?�?????�재 ?�용???�보 조회
+        console.log('?�� ?�?????�용???�보 조회...');
         const currentUser = await this.getUserList(
           'ALL',
           'ALL',
@@ -440,7 +440,7 @@ export class UsrService {
         if (currentUser.length > 0) {
           const user = currentUser.find((u) => u.empNo === userData.empNo);
           if (user) {
-            console.log('🔍 저장 전 사용자 정보:', {
+            console.log('?�� ?�?????�용???�보:', {
               empNo: user.empNo,
               usrRoleId: user.usrRoleId,
               usrRoleNm: user.usrRoleNm,
@@ -448,20 +448,20 @@ export class UsrService {
           }
         }
 
-        // 업무권한 코드 문자열 생성 (파이프(|)로 구분, 맨 마지막에도 파이프 추가)
+        // ?�무권한 코드 문자???�성 (?�이??|)�?구분, �?마�?막에???�이??추�?)
         const workAuthCodes = userData.workAuthList
           .filter((auth) => auth.wrkUseYn === '1' || auth.wrkUseYn === 'Y')
           .map((auth) => auth.smlCsfCd);
 
         const workAuthString =
           workAuthCodes.length > 0
-            ? workAuthCodes.join('|') + '|' // 맨 마지막에도 파이프 추가
+            ? workAuthCodes.join('|') + '|' // �?마�?막에???�이??추�?
             : '';
 
-        console.log('🔍 업무권한 코드:', workAuthString);
+        console.log('?�� ?�무권한 코드:', workAuthString);
 
-        // 프로시저 호출 전 파라미터 로그
-        console.log('🔍 프로시저 파라미터:');
+        // ?�로?��? ?�출 ???�라미터 로그
+        console.log('?�� ?�로?��? ?�라미터:');
         console.log('  - I_USER_ID:', userData.empNo);
         console.log('  - I_USER_NM:', userData.empNm);
         console.log('  - I_HQ_DIV_CD:', userData.hqDivCd);
@@ -475,28 +475,28 @@ export class UsrService {
         console.log('  - I_REG_USER_ID:', currentUserId);
         console.log('  - I_USR_ROLE_ID:', userData.usrRoleId || 'A250715001');
 
-        // 프로시저 존재 여부 확인 (더 자세한 정보)
-        console.log('🔍 프로시저 존재 여부 확인...');
+        // ?�로?��? 존재 ?��? ?�인 (???�세???�보)
+        console.log('?�� ?�로?��? 존재 ?��? ?�인...');
 
-        // USR_01_0204_T 프로시저 호출
-        console.log('🔍 프로시저 호출 시작...');
+        // USR_01_0204_T ?�로?��? ?�출
+        console.log('?�� ?�로?��? ?�출 ?�작...');
         const result = (await conn.execute(
           `
           BEGIN
             USR_01_0204_T(
-              :O_RTN,              -- OUT: 결과값 (1: 성공, 에러메시지: 실패)
-              :I_USER_ID,          -- IN: 사용자ID
-              :I_USER_NM,          -- IN: 사용자이름
-              :I_HQ_DIV_CD,        -- IN: 본부구분코드
-              :I_DEPT_DIV_CD,      -- IN: 부서구분코드
+              :O_RTN,              -- OUT: 결과�?(1: ?�공, ?�러메시지: ?�패)
+              :I_USER_ID,          -- IN: ?�용?�ID
+              :I_USER_NM,          -- IN: ?�용?�이�?
+              :I_HQ_DIV_CD,        -- IN: 본�?구분코드
+              :I_DEPT_DIV_CD,      -- IN: 부?�구분코??
               :I_DUTY_CD,          -- IN: 직책코드
-              :I_DUTY_DIV_CD,      -- IN: 직책구분코드 (대분류코드:114)
+              :I_DUTY_DIV_CD,      -- IN: 직책구분코드 (?�분류코드:114)
               :I_AUTH_CD,          -- IN: 권한코드
-              :I_APV_APOF_ID,      -- IN: 승인 결재자 ID
-              :I_EMAIL_ADDR,       -- IN: 이메일주소
-              :I_WORK_USE_AUTH,    -- IN: 사용권한 부여받은 업무코드 (파이프(|)로 구분)
-              :I_REG_USER_ID,      -- IN: 등록사용자ID
-              :I_USR_ROLE_ID       -- IN: 사용자역할ID
+              :I_APV_APOF_ID,      -- IN: ?�인 결재??ID
+              :I_EMAIL_ADDR,       -- IN: ?�메?�주??
+              :I_WORK_USE_AUTH,    -- IN: ?�용권한 부?�받?� ?�무코드 (?�이??|)�?구분)
+              :I_REG_USER_ID,      -- IN: ?�록?�용?�ID
+              :I_USR_ROLE_ID       -- IN: ?�용?�역?�ID
             );
           END;
           `,
@@ -517,67 +517,67 @@ export class UsrService {
             I_EMAIL_ADDR: userData.emailAddr,
             I_WORK_USE_AUTH: workAuthString,
             I_REG_USER_ID: currentUserId,
-            I_USR_ROLE_ID: userData.usrRoleId || 'A250715001', // 기본값: 일반사용자,
+            I_USR_ROLE_ID: userData.usrRoleId || 'A250715001', // 기본�? ?�반?�용??
           },
         )) as { outBinds: { O_RTN: string } };
 
-        console.log('🔍 프로시저 호출 완료');
-        console.log('🔍 프로시저 결과:', result);
-        console.log('🔍 outBinds:', result.outBinds);
+        console.log('?�� ?�로?��? ?�출 ?�료');
+        console.log('?�� ?�로?��? 결과:', result);
+        console.log('?�� outBinds:', result.outBinds);
 
         const rtn = result.outBinds.O_RTN;
-        console.log('🔍 반환값 (O_RTN):', rtn);
+        console.log('?�� 반환�?(O_RTN):', rtn);
 
         if (rtn === '1') {
-          // 프로시저 호출 성공 시 커밋 수행
-          console.log('🔍 트랜잭션 커밋 시작...');
+          // ?�로?��? ?�출 ?�공 ??커밋 ?�행
+          console.log('?�� ?�랜??�� 커밋 ?�작...');
           await conn.commit();
-          console.log('✅ 트랜잭션 커밋 완료');
+          console.log('???�랜??�� 커밋 ?�료');
 
-          console.log('✅ 사용자 정보 저장 완료');
+          console.log('???�용???�보 ?�???�료');
 
-          // 실제 DB에 저장되었는지 확인하기 위해 사용자 정보를 다시 조회
+          // ?�제 DB???�?�되?�는지 ?�인?�기 ?�해 ?�용???�보�??�시 조회
           try {
             const savedUser = await this.getUserList(
               'ALL',
               'ALL',
               userData.empNm,
             );
-            console.log('🔍 저장 후 사용자 조회 결과:', savedUser);
+            console.log('?�� ?�?????�용??조회 결과:', savedUser);
 
             if (savedUser.length > 0) {
               const user = savedUser.find((u) => u.empNo === userData.empNo);
               if (user) {
-                console.log('✅ DB에 실제로 저장됨 확인:', {
+                console.log('??DB???�제�??�?�됨 ?�인:', {
                   empNo: user.empNo,
                   usrRoleId: user.usrRoleId,
                   usrRoleNm: user.usrRoleNm,
                 });
               } else {
-                console.warn('⚠️ 저장된 사용자를 찾을 수 없음');
+                console.warn('?�️ ?�?�된 ?�용?��? 찾을 ???�음');
               }
             }
           } catch (error) {
-            console.error('❌ 저장 후 사용자 조회 실패:', error);
+            console.error('???�?????�용??조회 ?�패:', error);
           }
 
-          return '저장되었습니다.';
+          return '?�?�되?�습?�다.';
         } else {
-          // 프로시저 호출 실패 시 롤백 수행
-          console.log('🔍 트랜잭션 롤백 시작...');
+          // ?�로?��? ?�출 ?�패 ??롤백 ?�행
+          console.log('?�� ?�랜??�� 롤백 ?�작...');
           await conn.rollback();
-          console.log('✅ 트랜잭션 롤백 완료');
+          console.log('???�랜??�� 롤백 ?�료');
 
-          console.error('❌ 사용자 정보 저장 실패:', rtn);
-          throw new Error(`저장 실패: ${rtn}`);
+          console.error('???�용???�보 ?�???�패:', rtn);
+          throw new Error(`?�???�패: ${rtn}`);
         }
       } finally {
-        // 데이터베이스 연결 해제
+        // ?�이?�베?�스 ?�결 ?�제
         await conn.close();
       }
     } catch (error) {
-      console.error('❌ 사용자 정보 저장 오류:', error);
-      console.error('❌ 오류 상세 정보:', {
+      console.error('???�용???�보 ?�???�류:', error);
+      console.error('???�류 ?�세 ?�보:', {
         name: error instanceof Error ? error.name : 'Unknown',
         message: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
@@ -587,46 +587,46 @@ export class UsrService {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
       throw new Error(
-        `사용자 정보 저장 중 오류가 발생했습니다: ${errorMessage}`,
+        `?�용???�보 ?�??�??�류가 발생?�습?�다: ${errorMessage}`,
       );
     }
   }
 
   /**
-   * 비밀번호 초기화
+   * 비�?번호 초기??
    *
    * @description
-   * - 사용자의 비밀번호를 사용자ID로 초기화합니다 (기존 Flex 방식과 동일).
-   * - SH1512 해시를 사용하여 비밀번호를 암호화합니다.
-   * - 비밀번호 변경일시를 현재 시간으로 설정합니다.
+   * - ?�용?�의 비�?번호�??�용?�ID�?초기?�합?�다 (기존 Flex 방식�??�일).
+   * - SH1512 ?�시�??�용?�여 비�?번호�??�호?�합?�다.
+   * - 비�?번호 변경일?��? ?�재 ?�간?�로 ?�정?�니??
    *
-   * 기존 Flex 프로시저:
-   * - USR_01_0104_T: 비밀번호 초기화 프로시저
-   * - 파라미터: I_USER_ID (사용자ID), O_RTN (결과값)
-   * - 응답: 1=성공, 에러메시지=실패
-   * - 초기화 비밀번호: 사용자ID (사번)
+   * 기존 Flex ?�로?��?:
+   * - USR_01_0104_T: 비�?번호 초기???�로?��?
+   * - ?�라미터: I_USER_ID (?�용?�ID), O_RTN (결과�?
+   * - ?�답: 1=?�공, ?�러메시지=?�패
+   * - 초기??비�?번호: ?�용?�ID (?�번)
    *
-   * @param userId - 사용자 ID (사번)
-   * @returns Promise<string> - 초기화 결과 메시지
+   * @param userId - ?�용??ID (?�번)
+   * @returns Promise<string> - 초기??결과 메시지
    * @example
    * const result = await usrService.initPassword('E001');
-   * // 결과: "비밀번호가 초기화되었습니다."
+   * // 결과: "비�?번호가 초기?�되?�습?�다."
    *
-   * @throws Error - 비밀번호 초기화 실패 시
+   * @throws Error - 비�?번호 초기???�패 ??
    */
   async initPassword(userId: string): Promise<string> {
     try {
-      console.log('🔑 비밀번호 초기화 시작:', userId);
+      console.log('?�� 비�?번호 초기???�작:', userId);
 
-      // 기존 Flex 방식과 동일하게 사용자ID를 비밀번호로 설정
-      // TO-BE SHE512 암호화 적용용
-      const defaultPassword = userId; // 사용자ID (사번)를 비밀번호로 사용
+      // 기존 Flex 방식�??�일?�게 ?�용?�ID�?비�?번호�??�정
+      // TO-BE SHE512 ?�호???�용??
+      const defaultPassword = userId; // ?�용?�ID (?�번)�?비�?번호�??�용
       const hashedPassword = crypto
         .createHash('sha512')
         .update(defaultPassword)
         .digest('hex');
 
-      // 현재 시간을 14자리 문자열로 변환 (YYYYMMDDHHMMSS)
+      // ?�재 ?�간??14?�리 문자?�로 변??(YYYYMMDDHHMMSS)
       const now = new Date();
       const pwdChngDttm =
         now.getFullYear().toString() +
@@ -636,10 +636,10 @@ export class UsrService {
         String(now.getMinutes()).padStart(2, '0') +
         String(now.getSeconds()).padStart(2, '0');
 
-      console.log('🔍 비밀번호 변경일시 (14자리):', pwdChngDttm);
-      console.log('🔍 초기화 비밀번호:', defaultPassword);
+      console.log('?�� 비�?번호 변경일??(14?�리):', pwdChngDttm);
+      console.log('?�� 초기??비�?번호:', defaultPassword);
 
-      // 사용자 테이블에 비밀번호 업데이트
+      // ?�용???�이블에 비�?번호 ?�데?�트
       await this.userRepository.update(
         { userId: userId },
         {
@@ -648,51 +648,51 @@ export class UsrService {
         },
       );
 
-      console.log('✅ 비밀번호 초기화 완료');
-      return '비밀번호가 초기화되었습니다.';
+      console.log('??비�?번호 초기???�료');
+      return '비�?번호가 초기?�되?�습?�다.';
     } catch (error) {
-      console.error('❌ 비밀번호 초기화 오류:', error);
+      console.error('??비�?번호 초기???�류:', error);
       const errorMessage =
         error instanceof Error ? error.message : String(error);
       throw new Error(
-        `비밀번호 초기화 중 오류가 발생했습니다: ${errorMessage}`,
+        `비�?번호 초기??�??�류가 발생?�습?�다: ${errorMessage}`,
       );
     }
   }
 
   /**
-   * 승인결재자 검색
+   * ?�인결재??검??
    *
    * @description
-   * - USR_01_0201_S 프로시저를 호출하여 승인결재자를 검색합니다.
-   * - 사용자명으로 부분 검색이 가능합니다.
-   * - 최대 100개까지 조회 가능합니다.
+   * - USR_01_0201_S ?�로?��?�??�출?�여 ?�인결재?��? 검?�합?�다.
+   * - ?�용?�명?�로 부�?검?�이 가?�합?�다.
+   * - 최�? 100개까지 조회 가?�합?�다.
    *
-   * @param approverNm - 승인결재자명 (부분 검색)
-   * @returns Promise<UserData[]> - 승인결재자 목록
+   * @param approverNm - ?�인결재?�명 (부�?검??
+   * @returns Promise<UserData[]> - ?�인결재??목록
    * @example
-   * const approvers = await usrService.searchApprover('홍길동');
-   * // 결과: [{ empNo: "E001", empNm: "홍길동", authCd: "10" }]
+   * const approvers = await usrService.searchApprover('?�길??);
+   * // 결과: [{ empNo: "E001", empNm: "?�길??, authCd: "10" }]
    *
-   * @throws Error - 프로시저 호출 실패 시
+   * @throws Error - ?�로?��? ?�출 ?�패 ??
    */
   async searchApprover(approverNm: string): Promise<UserData[]> {
     try {
-      console.log('🔍 승인결재자 검색 시작:', approverNm);
+      console.log('?�� ?�인결재??검???�작:', approverNm);
 
-      // Oracle 프로시저 호출을 위한 커넥션
+      // Oracle ?�로?��? ?�출???�한 커넥??
       const conn = await this.oracle.getConnection();
 
       try {
-        // USR_01_0201_S 프로시저 호출 (승인결재자 검색용)
+        // USR_01_0201_S ?�로?��? ?�출 (?�인결재??검?�용)
         const result = (await conn.execute(
           `
           BEGIN
             USR_01_0201_S(
               :cursor,           -- OUT: 결과 커서
-              :I_HQ_DIV_CD,      -- IN: 본부구분코드 (빈값)
-              :I_DEPT_DIV_CD,    -- IN: 부서구분코드 (빈값)
-              :I_USER_NM         -- IN: 사용자명 (승인결재자명)
+              :I_HQ_DIV_CD,      -- IN: 본�?구분코드 (빈값)
+              :I_DEPT_DIV_CD,    -- IN: 부?�구분코??(빈값)
+              :I_USER_NM         -- IN: ?�용?�명 (?�인결재?�명)
             );
           END;
           `,
@@ -707,12 +707,12 @@ export class UsrService {
           },
         )) as { outBinds: { cursor: oracledb.ResultSet<any> } };
 
-        // 결과 커서에서 데이터 추출
+        // 결과 커서?�서 ?�이??추출
         const rs = result.outBinds.cursor;
-        const rows = await rs.getRows(100); // 최대 100개까지 조회
+        const rows = await rs.getRows(100); // 최�? 100개까지 조회
         await rs.close();
 
-        console.log('✅ 승인결재자 검색 결과:', rows.length + '건');
+        console.log('???�인결재??검??결과:', rows.length + '�?);
 
         return rows.map((row: any) => ({
           empNo: row.EMP_NO || '',
@@ -727,7 +727,7 @@ export class UsrService {
           authCd: row.AUTH_CD || '',
           authCdNm: row.AUTH_CD_NM || '',
           emailAddr: row.EMAIL_ADDR || '',
-          // 필수 필드들에 기본값 설정
+          // ?�수 ?�드?�에 기본�??�정
           ownOutsDiv: row.OWN_OUTS_DIV || '',
           entrNo: row.ENTR_NO || '',
           entrDt: row.ENTR_DT || '',
@@ -745,51 +745,53 @@ export class UsrService {
           usrRoleNm: row.USR_ROLE_NM || '',
         }));
       } finally {
-        // 데이터베이스 연결 해제
+        // ?�이?�베?�스 ?�결 ?�제
         await conn.close();
       }
     } catch (error) {
-      console.error('❌ 승인결재자 검색 오류:', error);
+      console.error('???�인결재??검???�류:', error);
       const errorMessage =
         error instanceof Error ? error.message : String(error);
       throw new Error(
-        `승인결재자 검색 중 오류가 발생했습니다: ${errorMessage}`,
+        `?�인결재??검??�??�류가 발생?�습?�다: ${errorMessage}`,
       );
     }
   }
 
   /**
-   * 사용자 역할 목록 조회
+   * ?�용????�� 목록 조회
    *
    * @description
-   * - 사용여부가 'Y'인 사용자 역할 목록을 조회합니다.
-   * - 역할명 순으로 정렬하여 반환합니다.
+   * - ?�용?��?가 'Y'???�용????�� 목록??조회?�니??
+   * - ??���??�으�??�렬?�여 반환?�니??
    *
-   * @returns Promise<TblUserRole[]> - 사용자 역할 목록
+   * @returns Promise<TblUserRole[]> - ?�용????�� 목록
    * @example
    * const roles = await usrService.getUserRoles();
-   * // 결과: [{ usrRoleId: "A250715001", usrRoleNm: "일반사용자" }]
+   * // 결과: [{ usrRoleId: "A250715001", usrRoleNm: "?�반?�용?? }]
    *
-   * @throws Error - DB 조회 실패 시
+   * @throws Error - DB 조회 ?�패 ??
    */
   async getUserRoles(): Promise<TblUserRole[]> {
     try {
-      console.log('🔍 사용자 역할 목록 조회 시작');
+      console.log('?�� ?�용????�� 목록 조회 ?�작');
 
       const roles = await this.userRoleRepository.find({
         where: { useYn: 'Y' },
         order: { usrRoleNm: 'ASC' },
       });
 
-      console.log('✅ 사용자 역할 목록 조회 결과:', roles.length + '건');
+      console.log('???�용????�� 목록 조회 결과:', roles.length + '�?);
       return roles;
     } catch (error) {
-      console.error('❌ 사용자 역할 목록 조회 오류:', error);
+      console.error('???�용????�� 목록 조회 ?�류:', error);
       const errorMessage =
         error instanceof Error ? error.message : String(error);
       throw new Error(
-        `사용자 역할 목록 조회 중 오류가 발생했습니다: ${errorMessage}`,
+        `?�용????�� 목록 조회 �??�류가 발생?�습?�다: ${errorMessage}`,
       );
     }
   }
 }
+
+

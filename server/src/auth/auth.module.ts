@@ -8,3 +8,5 @@ import { MenuModule } from '../menu/menu.module';
   controllers: [AuthController],
 })
 export class AuthModule {}
+
+

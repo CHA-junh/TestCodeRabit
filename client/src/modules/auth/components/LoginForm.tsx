@@ -6,7 +6,7 @@ import { PasswordChangePopup } from './PasswordChangePopup'
 import { useAuth } from '../hooks/useAuth'
 
 export default function LoginForm() {
-	// 보안: 민감한 정보 로그 제거
+	// 보안: 민감???�보 로그 ?�거
 	const [rightPanelActive, setRightPanelActive] = useState(false)
 	const containerRef = useRef<HTMLDivElement>(null)
 	const [signUpId, setSignUpId] = useState('')
@@ -32,7 +32,7 @@ export default function LoginForm() {
 		setRightPanelActive(false)
 	}
 
-	// 숫자만 입력되도록 처리
+	// ?�자�??�력?�도�?처리
 	const handleIdInput =
 		(setter: (v: string) => void) =>
 		(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,13 +40,13 @@ export default function LoginForm() {
 			setter(value)
 		}
 
-	// 로그인 폼 onSubmit 핸들러
+	// 로그????onSubmit ?�들??
 	const handleSignInSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 		setLoginError(null)
 		try {
 			const result = await login(signInId, signInPw)
-			// 보안: 민감한 정보 로그 제거
+			// 보안: 민감???�보 로그 ?�거
 			if (result.success) {
 				window.location.reload()
 			} else if (result.needsPasswordChange) {
@@ -55,21 +55,21 @@ export default function LoginForm() {
 				setPendingNeedsPwdChange(true)
 				setLoginError(
 					result.message ||
-						'초기 비밀번호입니다. 비밀번호를 변경해야 로그인할 수 있습니다.'
+						'초기 비�?번호?�니?? 비�?번호�?변경해??로그?�할 ???�습?�다.'
 				)
 			} else {
-				setLoginError(result.message || '로그인 실패')
+				setLoginError(result.message || '로그???�패')
 			}
 		} catch (err) {
-			// 사용자 친화적 오류 메시지 처리
+			// ?�용??친화???�류 메시지 처리
 			const errorMessage =
-				(err as any)?.message || '로그인 중 오류가 발생했습니다.'
+				(err as any)?.message || '로그??�??�류가 발생?�습?�다.'
 			setLoginError(errorMessage)
 		}
 	}
 
 	useEffect(() => {
-		// 보안: 민감한 정보 로그 제거
+		// 보안: 민감???�보 로그 ?�거
 		if (pendingNeedsPwdChange && !showPwdChange) {
 			setShowPwdChange(true)
 			setPendingNeedsPwdChange(false)
@@ -80,7 +80,7 @@ export default function LoginForm() {
 		setPwdChangeLoading(true)
 		setPwdChangeMsg(null)
 		try {
-			// API URL 환경변수 기반 설정
+			// API URL ?�경변??기반 ?�정
 			const apiUrl =
 				typeof window !== 'undefined' && process.env.NODE_ENV === 'development'
 					? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/api/auth/change-password`
@@ -94,20 +94,20 @@ export default function LoginForm() {
 			const data = await res.json()
 			if (data.success) {
 				setPwdChangeMsg(
-					'비밀번호가 성공적으로 변경되었습니다. 다시 로그인해주세요.'
+					'비�?번호가 ?�공?�으�?변경되?�습?�다. ?�시 로그?�해주세??'
 				)
 				setTimeout(() => {
 					setShowPwdChange(false)
 					setPwdChangeMsg(null)
 					setPendingLogin(null)
-					// 로그인 화면으로 돌아가기
+					// 로그???�면?�로 ?�아가�?
 					window.location.reload()
 				}, 1200)
 			} else {
-				setPwdChangeMsg(data.message || '비밀번호 변경 실패')
+				setPwdChangeMsg(data.message || '비�?번호 변�??�패')
 			}
 		} catch (err) {
-			setPwdChangeMsg('서버 오류')
+			setPwdChangeMsg('?�버 ?�류')
 		} finally {
 			setPwdChangeLoading(false)
 		}
@@ -120,7 +120,7 @@ export default function LoginForm() {
 
 	return (
 		<>
-			{/* 보안: 민감한 정보 로그 제거 */}
+			{/* 보안: 민감???�보 로그 ?�거 */}
 			<PasswordChangePopup
 				isOpen={showPwdChange}
 				onClose={handlePwdChangeClose}
@@ -144,7 +144,7 @@ export default function LoginForm() {
 					<div className={styles['sign-up-container']}>
 						<form className={styles.form}>
 							<h1>Create Account</h1>
-							{/* 소셜 아이콘 삭제 */}
+							{/* ?�셜 ?�이�???�� */}
 							{/* <div className={styles['social-links']}>
 								<div>
 									<a href='#'>
@@ -179,14 +179,14 @@ export default function LoginForm() {
 								placeholder='Password'
 								className={styles.input}
 							/>
-							{/* SIGN UP 버튼 삭제 */}
+							{/* SIGN UP 버튼 ??�� */}
 							{/* <button className={styles.form_btn}>Sign Up</button> */}
 						</form>
 					</div>
 					<div className={styles['sign-in-container']}>
 						<form className={styles.form} onSubmit={handleSignInSubmit}>
 							<h1>Sign In</h1>
-							{/* 소셜 아이콘 삭제 */}
+							{/* ?�셜 ?�이�???�� */}
 							{/* <div className={styles['social-links']}>
 								<div>
 									<a href='#'>
@@ -204,7 +204,7 @@ export default function LoginForm() {
 									</a>
 								</div>
 							</div> */}
-							{/* 'or use your account' 문구 삭제 */}
+							{/* 'or use your account' 문구 ??�� */}
 							<input
 								type='text'
 								placeholder='ID'
@@ -225,7 +225,7 @@ export default function LoginForm() {
 							<button
 								className={styles.form_btn}
 								type='submit'
-								onClick={() => alert('로그인 버튼 클릭됨')}
+								onClick={() => alert('로그??버튼 ?�릭??)}
 							>
 								Sign In
 							</button>
@@ -262,3 +262,5 @@ export default function LoginForm() {
 		</>
 	)
 }
+
+

@@ -1,36 +1,36 @@
 /**
- * 범용 팝업 관리 훅 (window.open 기반)
+ * 범용 ?�업 관�???(window.open 기반)
  *
- * 이 모듈은 React 컴포넌트에서 팝업 창을 안전하고 효율적으로 관리할 수 있는
- * 완전한 팝업 관리 시스템을 제공합니다.
+ * ??모듈?� React 컴포?�트?�서 ?�업 창을 ?�전?�고 ?�율?�으�?관리할 ???�는
+ * ?�전???�업 관�??�스?�을 ?�공?�니??
  *
  * 주요 기능:
- * - 팝업 열기/닫기/포커스 관리
- * - 다양한 위치와 크기 옵션
- * - 자동 닫힘 감지
- * - postMessage 통신 지원
- * - 에러 처리 및 메모리 누수 방지
- * - POPUP_READY/CHOICE_EMP_INIT 자동화 지원
+ * - ?�업 ?�기/?�기/?�커??관�?
+ * - ?�양???�치?� ?�기 ?�션
+ * - ?�동 ?�힘 감�?
+ * - postMessage ?�신 지??
+ * - ?�러 처리 �?메모�??�수 방�?
+ * - POPUP_READY/CHOICE_EMP_INIT ?�동??지??
  *
- * 사용 예시:
+ * ?�용 ?�시:
  * ```typescript
- * // 부모 컴포넌트에서 팝업 열기
+ * // 부�?컴포?�트?�서 ?�업 ?�기
  * const { openPopup } = usePopup();
  * openPopup({
  *   url: '/popup/com/COMZ100P00',
  *   size: 'medium',
  *   position: 'center',
- *   waitForReady: true, // 팝업에서 POPUP_READY 메시지 수신 후 데이터 전송
+ *   waitForReady: true, // ?�업?�서 POPUP_READY 메시지 ?�신 ???�이???�송
  *   readyResponseData: {
  *     type: 'CHOICE_EMP_INIT',
  *     data: {
- *       empNm: '홍길동',
+ *       empNm: '?�길??,
  *       empList: [...],
  *     },
  *   },
  * });
  *
- * // 팝업(자식)에서는 useEffect에서 POPUP_READY 메시지 전송
+ * // ?�업(?�식)?�서??useEffect?�서 POPUP_READY 메시지 ?�송
  * useEffect(() => {
  *   if (window.opener && !window.opener.closed) {
  *     window.opener.postMessage({
@@ -41,11 +41,11 @@
  *   }
  * }, []);
  *
- * // 팝업(자식)에서는 CHOICE_EMP_INIT 메시지 수신 후 데이터 처리
+ * // ?�업(?�식)?�서??CHOICE_EMP_INIT 메시지 ?�신 ???�이??처리
  * useEffect(() => {
  *   const handleMessage = (event: MessageEvent) => {
  *     if (event.data?.type === 'CHOICE_EMP_INIT') {
- *       // 데이터 처리
+ *       // ?�이??처리
  *     }
  *   };
  *   window.addEventListener('message', handleMessage);
@@ -57,7 +57,7 @@
 import React from 'react'
 
 /**
- * 팝업 창의 기본 옵션 설정
+ * ?�업 창의 기본 ?�션 ?�정
  */
 export type PopupOptions = {
 	width?: number
@@ -77,7 +77,7 @@ export type PopupOptions = {
 }
 
 /**
- * 팝업 창의 위치 옵션
+ * ?�업 창의 ?�치 ?�션
  */
 export type PopupPosition =
 	| 'center'
@@ -88,12 +88,12 @@ export type PopupPosition =
 	| 'custom'
 
 /**
- * 팝업 창의 크기 옵션
+ * ?�업 창의 ?�기 ?�션
  */
 export type PopupSize = 'small' | 'medium' | 'large' | 'fullscreen' | 'custom'
 
 /**
- * 팝업 창 설정을 위한 완전한 설정 객체
+ * ?�업 �??�정???�한 ?�전???�정 객체
  */
 export interface PopupConfig {
 	url: string
@@ -105,12 +105,12 @@ export interface PopupConfig {
 	onError?: (error: Error) => void
 	onMessage?: (event: MessageEvent) => void
 	checkClosedInterval?: number
-	waitForReady?: boolean // 팝업의 준비 완료 메시지를 기다린 후 데이터 전송 여부 (기본값: true)
-	readyResponseData?: any // 준비 완료 메시지 응답으로 보낼 데이터
+	waitForReady?: boolean // ?�업??준�??�료 메시지�?기다�????�이???�송 ?��? (기본�? true)
+	readyResponseData?: any // 준�??�료 메시지 ?�답?�로 보낼 ?�이??
 }
 
 /**
- * 팝업 인스턴스 객체
+ * ?�업 ?�스?�스 객체
  */
 export interface PopupInstance {
 	window: Window | null
@@ -121,7 +121,7 @@ export interface PopupInstance {
 }
 
 /**
- * 팝업 크기별 기본 치수
+ * ?�업 ?�기�?기본 치수
  */
 const POPUP_SIZES = {
 	small: { width: 400, height: 300 },
@@ -132,25 +132,25 @@ const POPUP_SIZES = {
 }
 
 /**
- * 현재 활성 창이 있는 모니터의 중앙 위치 계산 (듀얼 모니터 환경 최적화)
+ * ?�재 ?�성 창이 ?�는 모니?�의 중앙 ?�치 계산 (?�??모니???�경 최적??
  */
 function getCurrentMonitorCenter(
 	width: number,
 	height: number
 ): { left: number; top: number } {
-	// 현재 창의 위치와 크기 정보
+	// ?�재 창의 ?�치?� ?�기 ?�보
 	const currentWindow = window
 
-	// 현재 창의 중앙점 계산 (창의 실제 중앙)
+	// ?�재 창의 중앙??계산 (창의 ?�제 중앙)
 	const currentCenterX = currentWindow.screenX + currentWindow.outerWidth / 2
 	const currentCenterY = currentWindow.screenY + currentWindow.outerHeight / 2
 
-	// 팝업을 현재 창의 중앙에 배치
+	// ?�업???�재 창의 중앙??배치
 	let left = currentCenterX - width / 2
 	let top = currentCenterY - height / 2
 
-	// 듀얼 모니터 환경에서 현재 모니터의 경계 확인
-	// 현재 창이 위치한 모니터의 경계를 계산
+	// ?�??모니???�경?�서 ?�재 모니?�의 경계 ?�인
+	// ?�재 창이 ?�치??모니?�의 경계�?계산
 	const currentMonitorLeft = currentWindow.screenX
 	const currentMonitorTop = currentWindow.screenY
 	const currentMonitorRight =
@@ -158,7 +158,7 @@ function getCurrentMonitorCenter(
 	const currentMonitorBottom =
 		currentMonitorTop + currentWindow.screen.availHeight
 
-	// 팝업이 현재 모니터를 벗어나지 않도록 조정
+	// ?�업???�재 모니?��? 벗어?��? ?�도�?조정
 	left = Math.max(
 		currentMonitorLeft,
 		Math.min(left, currentMonitorRight - width)
@@ -168,9 +168,9 @@ function getCurrentMonitorCenter(
 		Math.min(top, currentMonitorBottom - height)
 	)
 
-	// 디버깅용 로그 (개발 환경에서만)
+	// ?�버깅용 로그 (개발 ?�경?�서�?
 	if (process.env.NODE_ENV === 'development') {
-		console.log('🔍 팝업 위치 계산:', {
+		console.log('?�� ?�업 ?�치 계산:', {
 			windowScreenX: currentWindow.screenX,
 			windowScreenY: currentWindow.screenY,
 			windowOuterWidth: currentWindow.outerWidth,
@@ -194,7 +194,7 @@ function getCurrentMonitorCenter(
 }
 
 /**
- * 팝업 위치 계산 함수
+ * ?�업 ?�치 계산 ?�수
  */
 function calculatePopupPosition(
 	position: PopupPosition,
@@ -205,7 +205,7 @@ function calculatePopupPosition(
 
 	switch (position) {
 		case 'center':
-			// 듀얼 모니터 환경을 고려한 현재 모니터 중앙 계산
+			// ?�??모니???�경??고려???�재 모니??중앙 계산
 			return getCurrentMonitorCenter(width, height)
 		case 'top-left':
 			return { left: 0, top: 0 }
@@ -229,7 +229,7 @@ function calculatePopupPosition(
 }
 
 /**
- * 팝업 features 문자열 생성 함수
+ * ?�업 features 문자???�성 ?�수
  */
 function buildPopupFeatures(
 	size: PopupSize,
@@ -262,12 +262,12 @@ function buildPopupFeatures(
 }
 
 /**
- * 범용 팝업 관리 훅
+ * 범용 ?�업 관�???
  *
- * 팝업 창의 생명주기를 관리하고, postMessage 통신을 지원합니다.
- * 기본적으로 모든 팝업에 대해 준비 완료 메시지를 기다립니다.
+ * ?�업 창의 ?�명주기�?관리하�? postMessage ?�신??지?�합?�다.
+ * 기본?�으�?모든 ?�업???�??준�??�료 메시지�?기다립니??
  *
- * @returns 팝업 관리 함수들과 상태 객체
+ * @returns ?�업 관�??�수?�과 ?�태 객체
  */
 export function usePopup() {
 	const [popupInstance, setPopupInstance] =
@@ -279,7 +279,7 @@ export function usePopup() {
 	>(null)
 
 	/**
-	 * 팝업 창이 닫혔는지 확인하는 함수
+	 * ?�업 창이 ?�혔?��? ?�인?�는 ?�수
 	 */
 	const checkPopupClosed = React.useCallback((popup: Window) => {
 		try {
@@ -307,7 +307,7 @@ export function usePopup() {
 	}, [])
 
 	/**
-	 * 팝업 창을 여는 함수
+	 * ?�업 창을 ?�는 ?�수
 	 */
 	const openPopup = React.useCallback(
 		(config: PopupConfig): PopupInstance | null => {
@@ -322,11 +322,11 @@ export function usePopup() {
 					onError,
 					onMessage,
 					checkClosedInterval = 500,
-					waitForReady = true, // 기본값: 준비 완료 메시지를 기다림
+					waitForReady = true, // 기본�? 준�??�료 메시지�?기다�?
 					readyResponseData,
 				} = config
 
-				// 기존 팝업이 열려있으면 닫기
+				// 기존 ?�업???�려?�으�??�기
 				if (popupInstance?.window && !popupInstance.window.closed) {
 					popupInstance.close()
 				}
@@ -335,16 +335,16 @@ export function usePopup() {
 					options.features || buildPopupFeatures(size, position, options)
 				const popupName = options.name || `popup_${Date.now()}`
 
-				// 팝업 창 열기
+				// ?�업 �??�기
 				const popup = window.open(url, popupName, features)
 
 				if (!popup) {
 					throw new Error(
-						'팝업 창을 열 수 없습니다. 팝업 차단이 활성화되어 있을 수 있습니다.'
+						'?�업 창을 ?????�습?�다. ?�업 차단???�성?�되???�을 ???�습?�다.'
 					)
 				}
 
-				// 팝업 인스턴스 생성
+				// ?�업 ?�스?�스 ?�성
 				const instance: PopupInstance = {
 					window: popup,
 					isOpen: true,
@@ -352,86 +352,86 @@ export function usePopup() {
 						try {
 							popup.close()
 						} catch (error) {
-							console.warn('팝업 닫기 실패:', error)
+							console.warn('?�업 ?�기 ?�패:', error)
 						}
 					},
 					focus: () => {
 						try {
 							popup.focus()
 						} catch (error) {
-							console.warn('팝업 포커스 실패:', error)
+							console.warn('?�업 ?�커???�패:', error)
 						}
 					},
 					postMessage: (message: any, targetOrigin: string = '*') => {
 						try {
 							popup.postMessage(message, targetOrigin)
 						} catch (error) {
-							console.warn('메시지 전송 실패:', error)
+							console.warn('메시지 ?�송 ?�패:', error)
 						}
 					},
 				}
 
-				// 상태 업데이트
+				// ?�태 ?�데?�트
 				setPopupInstance(instance)
 				setIsOpen(true)
 
-				// 기본적으로 준비 완료 메시지를 기다리는 로직
+				// 기본?�으�?준�??�료 메시지�?기다리는 로직
 				if (waitForReady && readyResponseData) {
-					console.log('🔄 usePopup - 준비 완료 메시지 대기 시작:', {
+					console.log('?�� usePopup - 준�??�료 메시지 ?��??�작:', {
 						waitForReady,
 						readyResponseData,
 						popupUrl: url,
 					})
 
 					const handleReadyMessage = (event: MessageEvent) => {
-						console.log('📨 usePopup - 메시지 수신:', {
+						console.log('?�� usePopup - 메시지 ?�신:', {
 							type: event.data?.type,
 							source: event.data?.source,
 							data: event.data,
 							origin: event.origin,
 						})
 
-						// POPUP_READY 메시지 감지
+						// POPUP_READY 메시지 감�?
 						const isReadyMessage =
 							event.data?.type === 'POPUP_READY' &&
 							event.data?.source === 'CHILD'
 
-						console.log('🔍 usePopup - 준비 완료 메시지 체크:', {
+						console.log('?�� usePopup - 준�??�료 메시지 체크:', {
 							isReadyMessage,
 							messageType: event.data?.type,
 							messageSource: event.data?.source,
 						})
 
 						if (isReadyMessage) {
-							console.log('✅ usePopup - POPUP_READY 수신, 데이터 전송:', {
+							console.log('??usePopup - POPUP_READY ?�신, ?�이???�송:', {
 								receivedType: event.data.type,
 								receivedSource: event.data.source,
 								responseData: readyResponseData,
 							})
 							try {
 								popup.postMessage(readyResponseData, '*')
-								console.log('✅ usePopup - 데이터 전송 성공')
+								console.log('??usePopup - ?�이???�송 ?�공')
 							} catch (error) {
-								console.error('❌ usePopup - 데이터 전송 실패:', error)
+								console.error('??usePopup - ?�이???�송 ?�패:', error)
 							}
 							window.removeEventListener('message', handleReadyMessage)
 						}
 					}
 					window.addEventListener('message', handleReadyMessage)
 				} else {
-					console.log('⚠️ usePopup - 준비 완료 메시지 대기 비활성화:', {
+					console.log('?�️ usePopup - 준�??�료 메시지 ?��?비활?�화:', {
 						waitForReady,
 						hasReadyResponseData: !!readyResponseData,
 					})
 				}
 
-				// 성공 콜백 호출
+				// ?�공 콜백 ?�출
 				onOpen?.(popup)
 
 				return instance
 			} catch (error) {
 				const errorObj =
-					error instanceof Error ? error : new Error('팝업 열기 실패')
+					error instanceof Error ? error : new Error('?�업 ?�기 ?�패')
 				config.onError?.(errorObj)
 				return null
 			}
@@ -440,7 +440,7 @@ export function usePopup() {
 	)
 
 	/**
-	 * 현재 열린 팝업 창을 닫는 함수
+	 * ?�재 ?�린 ?�업 창을 ?�는 ?�수
 	 */
 	const closePopup = React.useCallback(() => {
 		if (popupInstance?.window) {
@@ -449,7 +449,7 @@ export function usePopup() {
 	}, [popupInstance])
 
 	/**
-	 * 현재 열린 팝업 창에 포커스를 주는 함수
+	 * ?�재 ?�린 ?�업 창에 ?�커?��? 주는 ?�수
 	 */
 	const focusPopup = React.useCallback(() => {
 		if (popupInstance?.window) {
@@ -458,7 +458,7 @@ export function usePopup() {
 	}, [popupInstance])
 
 	/**
-	 * 현재 열린 팝업 창으로 메시지를 전송하는 함수
+	 * ?�재 ?�린 ?�업 창으�?메시지�??�송?�는 ?�수
 	 */
 	const postMessage = React.useCallback(
 		(message: any, targetOrigin: string = '*') => {
@@ -470,7 +470,7 @@ export function usePopup() {
 	)
 
 	/**
-	 * 컴포넌트 언마운트 시 정리 작업
+	 * 컴포?�트 ?�마?�트 ???�리 ?�업
 	 */
 	React.useEffect(() => {
 		return () => {
@@ -495,7 +495,7 @@ export function usePopup() {
 }
 
 /**
- * 단순 팝업 열기 함수 (usePopup 훅 없이 사용)
+ * ?�순 ?�업 ?�기 ?�수 (usePopup ???�이 ?�용)
  */
 export function openPopup(
 	url: string,
@@ -514,70 +514,72 @@ export function openPopup(
 }
 
 /**
- * 팝업 관련 유틸리티 함수들을 모아놓은 객체
+ * ?�업 관???�틸리티 ?�수?�을 모아?��? 객체
  *
- * 팝업 관리와 관련된 다양한 헬퍼 함수들을 제공합니다.
+ * ?�업 관리�? 관?�된 ?�양???�퍼 ?�수?�을 ?�공?�니??
  */
 export const popupUtils = {
 	/**
-	 * 팝업이 브라우저에 의해 차단되었는지 확인하는 함수
+	 * ?�업??브라?��????�해 차단?�었?��? ?�인?�는 ?�수
 	 *
-	 * 테스트 팝업을 열어서 차단 여부를 확인합니다.
+	 * ?�스???�업???�어??차단 ?��?�??�인?�니??
 	 *
-	 * @returns 팝업이 차단되었으면 true, 아니면 false
+	 * @returns ?�업??차단?�었?�면 true, ?�니�?false
 	 */
 	isPopupBlocked: (): boolean => {
 		try {
-			// 1x1 크기의 테스트 팝업 열기
+			// 1x1 ?�기???�스???�업 ?�기
 			const testPopup = window.open('', '_blank', 'width=1,height=1')
 			if (testPopup) {
-				// 성공적으로 열렸으면 즉시 닫기
+				// ?�공?�으�??�렸?�면 즉시 ?�기
 				testPopup.close()
 				return false
 			}
 			return true
 		} catch {
-			// 에러 발생 시 차단된 것으로 간주
+			// ?�러 발생 ??차단??것으�?간주
 			return true
 		}
 	},
 
 	/**
-	 * 팝업 차단 안내 메시지를 표시하는 함수
+	 * ?�업 차단 ?�내 메시지�??�시?�는 ?�수
 	 *
-	 * 사용자에게 팝업 차단 해제 방법을 안내합니다.
+	 * ?�용?�에�??�업 차단 ?�제 방법???�내?�니??
 	 */
 	showBlockedMessage: (): void => {
-		alert('팝업이 차단되었습니다. 브라우저 설정에서 팝업 차단을 해제해주세요.')
+		alert('?�업??차단?�었?�니?? 브라?��? ?�정?�서 ?�업 차단???�제?�주?�요.')
 	},
 
 	/**
-	 * 열린 팝업 창의 크기를 조정하는 함수
+	 * ?�린 ?�업 창의 ?�기�?조정?�는 ?�수
 	 *
-	 * @param popup - 크기를 조정할 팝업 창
-	 * @param width - 새로운 너비
-	 * @param height - 새로운 높이
+	 * @param popup - ?�기�?조정???�업 �?
+	 * @param width - ?�로???�비
+	 * @param height - ?�로???�이
 	 */
 	resizePopup: (popup: Window, width: number, height: number): void => {
 		try {
 			popup.resizeTo(width, height)
 		} catch (error) {
-			console.warn('팝업 크기 조정 실패:', error)
+			console.warn('?�업 ?�기 조정 ?�패:', error)
 		}
 	},
 
 	/**
-	 * 열린 팝업 창의 위치를 이동하는 함수
+	 * ?�린 ?�업 창의 ?�치�??�동?�는 ?�수
 	 *
-	 * @param popup - 위치를 이동할 팝업 창
-	 * @param left - 새로운 X 좌표
-	 * @param top - 새로운 Y 좌표
+	 * @param popup - ?�치�??�동???�업 �?
+	 * @param left - ?�로??X 좌표
+	 * @param top - ?�로??Y 좌표
 	 */
 	movePopup: (popup: Window, left: number, top: number): void => {
 		try {
 			popup.moveTo(left, top)
 		} catch (error) {
-			console.warn('팝업 위치 이동 실패:', error)
+			console.warn('?�업 ?�치 ?�동 ?�패:', error)
 		}
 	},
 }
+
+

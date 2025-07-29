@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
 	try {
-		// Next.js API 프록시를 활용하여 상대 경로 사용
-		// next.config.mjs의 rewrites 설정에 의해 자동으로 백엔드로 프록시됨
+		// Next.js API ?�록?��? ?�용?�여 ?��? 경로 ?�용
+		// next.config.mjs??rewrites ?�정???�해 ?�동?�로 백엔?�로 ?�록?�됨
 		const backendResponse = await fetch(`http://localhost:8080/api/sys/menus`, {
 			method: 'GET',
 			headers: request.headers,
@@ -31,3 +31,5 @@ export async function GET(request: NextRequest) {
 		)
 	}
 }
+
+

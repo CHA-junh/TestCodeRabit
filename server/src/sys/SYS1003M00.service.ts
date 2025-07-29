@@ -1,24 +1,24 @@
 /**
- * SYS1003M00Service - 사용자 역할 관리 서비스
+ * SYS1003M00Service - ?�용????�� 관�??�비??
  *
  * 주요 기능:
- * - 사용자 역할 목록 조회 및 관리
- * - 프로그램 그룹별 사용자 역할 연결 관리
- * - 메뉴 정보 조회
- * - 사용자 역할 복사 기능
+ * - ?�용????�� 목록 조회 �?관�?
+ * - ?�로그램 그룹�??�용????�� ?�결 관�?
+ * - 메뉴 ?�보 조회
+ * - ?�용????�� 복사 기능
  *
- * 연관 테이블:
- * - TBL_USER_ROLE: 사용자 역할 정보
- * - TBL_USER_ROLE_PGM_GRP: 사용자 역할별 프로그램 그룹 연결
- * - TBL_PGM_GRP_INF: 프로그램 그룹 정보
- * - TBL_MENU_INF: 메뉴 정보
- * - TBL_USER_INF: 사용자 정보 (사용자 수 카운트용)
+ * ?��? ?�이�?
+ * - TBL_USER_ROLE: ?�용????�� ?�보
+ * - TBL_USER_ROLE_PGM_GRP: ?�용????���??�로그램 그룹 ?�결
+ * - TBL_PGM_GRP_INF: ?�로그램 그룹 ?�보
+ * - TBL_MENU_INF: 메뉴 ?�보
+ * - TBL_USER_INF: ?�용???�보 (?�용????카운?�용)
  *
- * 연관 프로시저:
- * - 없음 (TypeORM 쿼리로 대체)
+ * ?��? ?�로?��?:
+ * - ?�음 (TypeORM 쿼리�??��?
  *
- * 사용 화면:
- * - SYS1003M00: 사용자 역할 관리 화면
+ * ?�용 ?�면:
+ * - SYS1003M00: ?�용????�� 관�??�면
  */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -31,12 +31,12 @@ import { TblPgmGrpInf } from '../entities/tbl-pgm-grp-inf.entity';
 import { toCamelCase } from '../utils/toCamelCase';
 
 /**
- * 사용자 역할 저장용 페이로드 인터페이스
+ * ?�용????�� ?�?�용 ?�이로드 ?�터?�이??
  *
  * @description
- * - createdRows: 신규 생성할 사용자 역할 목록
- * - updatedRows: 수정할 사용자 역할 목록
- * - deletedRows: 삭제할 사용자 역할 목록
+ * - createdRows: ?�규 ?�성???�용????�� 목록
+ * - updatedRows: ?�정???�용????�� 목록
+ * - deletedRows: ??��???�용????�� 목록
  */
 interface SaveUserRolesPayload {
   createdRows: TblUserRole[];
@@ -56,18 +56,18 @@ export class UserRoleService {
   ) {}
 
   /**
-   * 모든 메뉴 정보 조회
+   * 모든 메뉴 ?�보 조회
    *
    * @description
-   * - 사용여부가 'Y'인 메뉴만 조회합니다.
-   * - 메뉴ID 순으로 정렬하여 반환합니다.
+   * - ?�용?��?가 'Y'??메뉴�?조회?�니??
+   * - 메뉴ID ?�으�??�렬?�여 반환?�니??
    *
-   * @returns Promise<TblMenuInf[]> - 메뉴 정보 목록
+   * @returns Promise<TblMenuInf[]> - 메뉴 ?�보 목록
    * @example
    * const menus = await sysService.findAllMenus();
-   * // 결과: [{ menuId: "M001", menuNm: "사용자 관리", useYn: "Y" }]
+   * // 결과: [{ menuId: "M001", menuNm: "?�용??관�?, useYn: "Y" }]
    *
-   * @throws Error - DB 조회 실패 시
+   * @throws Error - DB 조회 ?�패 ??
    */
   async findAllMenus(): Promise<TblMenuInf[]> {
     try {
@@ -84,34 +84,34 @@ export class UserRoleService {
   }
 
   /**
-   * 사용자 역할 목록 조회 (사용자 수 포함)
+   * ?�용????�� 목록 조회 (?�용?????�함)
    *
    * @description
-   * - 사용자 역할별로 해당 역할을 가진 사용자 수를 함께 조회합니다.
-   * - 메뉴 정보와 사용자 정보를 LEFT JOIN하여 조회합니다.
-   * - 검색 조건(usrRoleId, useYn)을 적용할 수 있습니다.
-   * - 결과는 camelCase로 변환하여 반환합니다.
+   * - ?�용????��별로 ?�당 ??��??가�??�용???��? ?�께 조회?�니??
+   * - 메뉴 ?�보?� ?�용???�보�?LEFT JOIN?�여 조회?�니??
+   * - 검??조건(usrRoleId, useYn)???�용?????�습?�다.
+   * - 결과??camelCase�?변?�하??반환?�니??
    *
-   * @param usrRoleId - 사용자 역할 ID (부분 검색 가능)
-   * @param useYn - 사용여부 ('Y'/'N')
-   * @returns Promise<TblUserRole[]> - 사용자 역할 목록 (사용자 수 포함)
+   * @param usrRoleId - ?�용????�� ID (부�?검??가??
+   * @param useYn - ?�용?��? ('Y'/'N')
+   * @returns Promise<TblUserRole[]> - ?�용????�� 목록 (?�용?????�함)
    * @example
    * const roles = await sysService.findAllUserRoles('A25', 'Y');
-   * // 결과: [{ usrRoleId: "A250715001", usrRoleNm: "일반사용자", cnt: 5 }]
+   * // 결과: [{ usrRoleId: "A250715001", usrRoleNm: "?�반?�용??, cnt: 5 }]
    *
-   * @throws Error - DB 조회 실패 시
+   * @throws Error - DB 조회 ?�패 ??
    */
   async findAllUserRoles(
     usrRoleId?: string,
     useYn?: string,
   ): Promise<TblUserRole[]> {
     try {
-      console.log('=== 사용자역할 조회 시작 ===');
-      console.log('입력 파라미터:', { usrRoleId, useYn });
-      console.log('usrRoleId 타입:', typeof usrRoleId, '값:', usrRoleId);
-      console.log('useYn 타입:', typeof useYn, '값:', useYn);
+      console.log('=== ?�용?�역??조회 ?�작 ===');
+      console.log('?�력 ?�라미터:', { usrRoleId, useYn });
+      console.log('usrRoleId ?�??', typeof usrRoleId, '�?', usrRoleId);
+      console.log('useYn ?�??', typeof useYn, '�?', useYn);
 
-      // 메뉴 정보와 사용자 정보를 JOIN하여 사용자 역할별 사용자 수 조회
+      // 메뉴 ?�보?� ?�용???�보�?JOIN?�여 ?�용????���??�용????조회
       const queryBuilder = this.userRoleRepository.manager
         .createQueryBuilder(TblUserRole, 'ur')
         .leftJoin('TBL_MENU_INF', 'm', 'ur.menuId = m.menuId')
@@ -127,10 +127,10 @@ export class UserRoleService {
           'COUNT(u.userId) as CNT',
           'ur.orgInqRngCd as ORG_INQ_RANG_CD',
           'ur.baseOutputScrnPgmIdCtt as BASE_OUTPUT_SCRN_PGM_ID_CTT',
-          'p.pgmNm as BASE_OUTPUT_SCRN_PGM_NM_CTT', // 프로그램명 조인
+          'p.pgmNm as BASE_OUTPUT_SCRN_PGM_NM_CTT', // ?�로그램�?조인
         ]);
 
-      // 조회 조건 적용 (GROUP BY 이전에 적용)
+      // 조회 조건 ?�용 (GROUP BY ?�전???�용)
       if (usrRoleId && usrRoleId.trim()) {
         queryBuilder.andWhere(
           '(ur.usrRoleId LIKE :usrRoleId OR ur.usrRoleNm LIKE :usrRoleNm)',
@@ -139,21 +139,21 @@ export class UserRoleService {
             usrRoleNm: `%${usrRoleId}%`,
           },
         );
-        console.log('사용자역할코드/명 조건 적용:', usrRoleId);
+        console.log('?�용?�역?�코??�?조건 ?�용:', usrRoleId);
       }
 
       if (useYn && useYn.trim()) {
         queryBuilder.andWhere('ur.useYn = :useYn', { useYn });
-        console.log('사용여부 조건 적용:', useYn);
+        console.log('?�용?��? 조건 ?�용:', useYn);
       }
 
-      // 기본 쿼리 결과 확인 (조건 적용 전)
+      // 기본 쿼리 결과 ?�인 (조건 ?�용 ??
       const allRows = await this.userRoleRepository.manager
         .createQueryBuilder(TblUserRole, 'ur')
         .select(['ur.usrRoleId', 'ur.usrRoleNm', 'ur.useYn'])
         .getRawMany();
-      console.log('=== 전체 사용자역할 데이터 (조건 적용 전) ===');
-      console.log('총 개수:', allRows.length);
+      console.log('=== ?�체 ?�용?�역???�이??(조건 ?�용 ?? ===');
+      console.log('�?개수:', allRows.length);
       console.log(
         'useYn 값들:',
         allRows.map((row) => ({
@@ -171,9 +171,9 @@ export class UserRoleService {
         .getRawMany();
 
       // 쿼리 결과 로그 출력
-      console.log('사용자역할 조회 조건:', { usrRoleId, useYn });
-      console.log('사용자역할 쿼리 결과 개수:', rawRows.length);
-      console.log('사용자역할 쿼리 결과 (처음 3개):', rawRows.slice(0, 3));
+      console.log('?�용?�역??조회 조건:', { usrRoleId, useYn });
+      console.log('?�용?�역??쿼리 결과 개수:', rawRows.length);
+      console.log('?�용?�역??쿼리 결과 (처음 3�?:', rawRows.slice(0, 3));
 
       return toCamelCase(rawRows);
     } catch (error) {
@@ -183,17 +183,17 @@ export class UserRoleService {
   }
 
   /**
-   * 사용자 역할 저장 (신규/수정/삭제)
+   * ?�용????�� ?�??(?�규/?�정/??��)
    *
    * @description
-   * - 트랜잭션을 사용하여 신규 생성, 수정, 삭제를 안전하게 처리합니다.
-   * - 신규 생성 시 @BeforeInsert 데코레이터가 자동으로 usrRoleId를 생성합니다.
-   * - 수정 시 @BeforeUpdate 데코레이터가 자동으로 변경일시를 설정합니다.
-   * - 현재 로그인한 사용자의 세션 정보를 활용하여 등록자/변경자 정보를 설정합니다.
+   * - ?�랜??��???�용?�여 ?�규 ?�성, ?�정, ??���??�전?�게 처리?�니??
+   * - ?�규 ?�성 ??@BeforeInsert ?�코?�이?��? ?�동?�로 usrRoleId�??�성?�니??
+   * - ?�정 ??@BeforeUpdate ?�코?�이?��? ?�동?�로 변경일?��? ?�정?�니??
+   * - ?�재 로그?�한 ?�용?�의 ?�션 ?�보�??�용?�여 ?�록??변경자 ?�보�??�정?�니??
    *
-   * @param payload - 저장할 사용자 역할 데이터
-   * @param currentUserId - 현재 로그인한 사용자 ID (세션에서 전달)
-   * @returns Promise<TblUserRole[]> - 저장된 사용자 역할 목록
+   * @param payload - ?�?�할 ?�용????�� ?�이??
+   * @param currentUserId - ?�재 로그?�한 ?�용??ID (?�션?�서 ?�달)
+   * @returns Promise<TblUserRole[]> - ?�?�된 ?�용????�� 목록
    * @example
    * const result = await sysService.saveUserRoles({
    *   createdRows: [newRole],
@@ -201,7 +201,7 @@ export class UserRoleService {
    *   deletedRows: [deletedRole]
    * }, "E001");
    *
-   * @throws Error - 트랜잭션 실패 시
+   * @throws Error - ?�랜??�� ?�패 ??
    */
   async saveUserRoles(
     payload: SaveUserRolesPayload,
@@ -216,30 +216,30 @@ export class UserRoleService {
       const { createdRows, updatedRows, deletedRows } = payload;
       const savedRoles: TblUserRole[] = [];
 
-      // 삭제 처리
+      // ??�� 처리
       if (deletedRows && deletedRows.length > 0) {
         const deleteIds = deletedRows.map((row) => row.usrRoleId);
         await queryRunner.manager.delete(TblUserRole, deleteIds);
       }
 
-      // 엔티티의 @BeforeInsert 데코레이터에서 자동으로 usrRoleId 생성
+      // ?�티?�의 @BeforeInsert ?�코?�이?�에???�동?�로 usrRoleId ?�성
       const processedCreatedRows = createdRows;
 
       const upsertRows = [...processedCreatedRows, ...updatedRows];
       if (upsertRows && upsertRows.length > 0) {
-        // 엔티티 인스턴스로 변환하여 @BeforeInsert 데코레이터가 동작하도록 함
+        // ?�티???�스?�스�?변?�하??@BeforeInsert ?�코?�이?��? ?�작?�도�???
         const entityInstances = upsertRows.map((row) => {
           const entity = new TblUserRole();
           Object.assign(entity, row);
 
-          // 신규 생성 시에만 등록일시 설정
+          // ?�규 ?�성 ?�에�??�록?�시 ?�정
           if (!row.usrRoleId || row.usrRoleId.trim() === '') {
-            entity.regDttm = ''; // @BeforeInsert에서 자동 설정
-            entity.chngrId = currentUserId; // 현재 로그인한 사용자 ID
+            entity.regDttm = ''; // @BeforeInsert?�서 ?�동 ?�정
+            entity.chngrId = currentUserId; // ?�재 로그?�한 ?�용??ID
           } else {
-            // 수정 시 변경일시 설정
-            entity.chngDttm = ''; // @BeforeUpdate에서 자동 설정
-            entity.chngrId = currentUserId; // 현재 로그인한 사용자 ID
+            // ?�정 ??변경일???�정
+            entity.chngDttm = ''; // @BeforeUpdate?�서 ?�동 ?�정
+            entity.chngrId = currentUserId; // ?�재 로그?�한 ?�용??ID
           }
 
           return entity;
@@ -264,20 +264,20 @@ export class UserRoleService {
   }
 
   /**
-   * 특정 역할의 프로그램 그룹 목록 조회
+   * ?�정 ??��???�로그램 그룹 목록 조회
    *
    * @description
-   * - 특정 사용자 역할에 연결된 프로그램 그룹 목록을 조회합니다.
-   * - 각 프로그램 그룹별로 해당 그룹을 사용하는 사용자 수도 함께 조회합니다.
-   * - 결과는 camelCase로 변환하여 반환합니다.
+   * - ?�정 ?�용????��???�결???�로그램 그룹 목록??조회?�니??
+   * - �??�로그램 그룹별로 ?�당 그룹???�용?�는 ?�용???�도 ?�께 조회?�니??
+   * - 결과??camelCase�?변?�하??반환?�니??
    *
-   * @param usrRoleId - 사용자 역할 ID
-   * @returns Promise<any[]> - 프로그램 그룹 목록 (사용자 수 포함)
+   * @param usrRoleId - ?�용????�� ID
+   * @returns Promise<any[]> - ?�로그램 그룹 목록 (?�용?????�함)
    * @example
    * const pgmGrps = await sysService.findProgramGroupsByRoleId('A250715001');
-   * // 결과: [{ pgmGrpId: "PG001", pgmGrpNm: "사용자관리", cnt: 3 }]
+   * // 결과: [{ pgmGrpId: "PG001", pgmGrpNm: "?�용?��?�?, cnt: 3 }]
    *
-   * @throws Error - DB 조회 실패 시
+   * @throws Error - DB 조회 ?�패 ??
    */
   async findProgramGroupsByRoleId(usrRoleId: string): Promise<any[]> {
     const rawRows = await this.pgmGrpRepository.manager
@@ -297,7 +297,7 @@ export class UserRoleService {
       .select([
         'pg.PGM_GRP_ID as PGM_GRP_ID',
         'pg.PGM_GRP_NM as PGM_GRP_NM',
-        'pg.USE_YN as PGM_GRP_USE_YN', // 프로그램그룹 자체의 사용여부
+        'pg.USE_YN as PGM_GRP_USE_YN', // ?�로그램그룹 ?�체???�용?��?
         'urpg.USR_ROLE_ID as USR_ROLE_ID',
         'urpg.USE_YN as USE_YN',
         'COUNT(DISTINCT u.userId) as CNT',
@@ -309,26 +309,26 @@ export class UserRoleService {
       .getRawMany();
 
     // 쿼리 결과 로그 출력
-    console.log('프로그램그룹 쿼리 결과:', rawRows);
+    console.log('?�로그램그룹 쿼리 결과:', rawRows);
 
-    // key를 camelCase로 변환해서 반환
+    // key�?camelCase�?변?�해??반환
     return toCamelCase(rawRows);
   }
 
   /**
-   * 모든 프로그램 그룹 조회 (신규 역할 생성 시 사용)
+   * 모든 ?�로그램 그룹 조회 (?�규 ??�� ?�성 ???�용)
    *
    * @description
-   * - 모든 프로그램 그룹 목록을 조회합니다.
-   * - 각 프로그램 그룹별로 해당 그룹을 사용하는 사용자 수도 함께 조회합니다.
-   * - 신규 사용자 역할 생성 시 프로그램 그룹 선택용으로 사용됩니다.
+   * - 모든 ?�로그램 그룹 목록??조회?�니??
+   * - �??�로그램 그룹별로 ?�당 그룹???�용?�는 ?�용???�도 ?�께 조회?�니??
+   * - ?�규 ?�용????�� ?�성 ???�로그램 그룹 ?�택?�으�??�용?�니??
    *
-   * @returns Promise<any[]> - 전체 프로그램 그룹 목록 (사용자 수 포함)
+   * @returns Promise<any[]> - ?�체 ?�로그램 그룹 목록 (?�용?????�함)
    * @example
    * const allPgmGrps = await sysService.findAllProgramGroups();
-   * // 결과: [{ pgmGrpId: "PG001", pgmGrpNm: "사용자관리", cnt: 5 }]
+   * // 결과: [{ pgmGrpId: "PG001", pgmGrpNm: "?�용?��?�?, cnt: 5 }]
    *
-   * @throws Error - DB 조회 실패 시
+   * @throws Error - DB 조회 ?�패 ??
    */
   async findAllProgramGroups(): Promise<any[]> {
     const rawRows = await this.pgmGrpRepository.manager
@@ -342,7 +342,7 @@ export class UserRoleService {
       .select([
         'pg.PGM_GRP_ID as PGM_GRP_ID',
         'pg.PGM_GRP_NM as PGM_GRP_NM',
-        'pg.USE_YN as PGM_GRP_USE_YN', // 프로그램그룹 자체의 사용여부
+        'pg.USE_YN as PGM_GRP_USE_YN', // ?�로그램그룹 ?�체???�용?��?
         'COUNT(DISTINCT u.userId) as CNT',
       ])
       .groupBy('pg.PGM_GRP_ID, pg.PGM_GRP_NM, pg.USE_YN')
@@ -350,24 +350,24 @@ export class UserRoleService {
       .getRawMany();
 
     // 쿼리 결과 로그 출력
-    console.log('전체 프로그램그룹 쿼리 결과:', rawRows);
+    console.log('?�체 ?�로그램그룹 쿼리 결과:', rawRows);
 
-    // key를 camelCase로 변환해서 반환
+    // key�?camelCase�?변?�해??반환
     return toCamelCase(rawRows);
   }
 
   /**
-   * 특정 역할의 프로그램 그룹 연결 정보 저장
+   * ?�정 ??��???�로그램 그룹 ?�결 ?�보 ?�??
    *
    * @description
-   * - 특정 사용자 역할에 연결된 프로그램 그룹 정보를 저장합니다.
-   * - 기존 연결 정보를 모두 삭제한 후 새로운 연결 정보를 저장합니다.
-   * - 트랜잭션을 사용하여 안전하게 처리합니다.
-   * - 현재 로그인한 사용자의 세션 정보를 활용하여 등록자/변경자 정보를 설정합니다.
+   * - ?�정 ?�용????��???�결???�로그램 그룹 ?�보�??�?�합?�다.
+   * - 기존 ?�결 ?�보�?모두 ??��?????�로???�결 ?�보�??�?�합?�다.
+   * - ?�랜??��???�용?�여 ?�전?�게 처리?�니??
+   * - ?�재 로그?�한 ?�용?�의 ?�션 ?�보�??�용?�여 ?�록??변경자 ?�보�??�정?�니??
    *
-   * @param usrRoleId - 사용자 역할 ID
-   * @param pgmGrps - 저장할 프로그램 그룹 연결 정보 목록
-   * @param currentUserId - 현재 로그인한 사용자 ID (세션에서 전달)
+   * @param usrRoleId - ?�용????�� ID
+   * @param pgmGrps - ?�?�할 ?�로그램 그룹 ?�결 ?�보 목록
+   * @param currentUserId - ?�재 로그?�한 ?�용??ID (?�션?�서 ?�달)
    * @returns Promise<void>
    * @example
    * await sysService.saveProgramGroupsForRole('A250715001', [
@@ -375,7 +375,7 @@ export class UserRoleService {
    *   { pgmGrpId: 'PG002', useYn: 'N' }
    * ], "E001");
    *
-   * @throws Error - 트랜잭션 실패 시
+   * @throws Error - ?�랜??�� ?�패 ??
    */
   async saveProgramGroupsForRole(
     usrRoleId: string,
@@ -388,18 +388,18 @@ export class UserRoleService {
     await queryRunner.startTransaction();
 
     try {
-      // 1. 해당 역할의 기존 프로그램 그룹 연결을 모두 삭제
+      // 1. ?�당 ??��??기존 ?�로그램 그룹 ?�결??모두 ??��
       await queryRunner.manager.delete(TblUserRolePgmGrp, { usrRoleId });
 
-      // 2. 새로운 프로그램 그룹 목록을 저장 (pgmGrps가 비어있지 않은 경우)
+      // 2. ?�로???�로그램 그룹 목록???�??(pgmGrps가 비어?��? ?��? 경우)
       if (pgmGrps && pgmGrps.length > 0) {
-        // 엔티티 인스턴스로 변환하여 @BeforeInsert 데코레이터가 동작하도록 함
+        // ?�티???�스?�스�?변?�하??@BeforeInsert ?�코?�이?��? ?�작?�도�???
         const entitiesToSave = pgmGrps.map((p) => {
           const entity = new TblUserRolePgmGrp();
           Object.assign(entity, {
             ...p,
             usrRoleId,
-            chngrId: currentUserId, // 현재 로그인한 사용자 ID
+            chngrId: currentUserId, // ?�재 로그?�한 ?�용??ID
           });
           return entity;
         });
@@ -417,23 +417,23 @@ export class UserRoleService {
   }
 
   /**
-   * 사용자 역할 복사
+   * ?�용????�� 복사
    *
    * @description
-   * - 기존 사용자 역할을 복사하여 새로운 역할을 생성합니다.
-   * - 새로운 역할 ID는 'A' + YYMMDD + 3자리 순번 형식으로 자동 생성됩니다.
-   * - 원본 역할의 프로그램 그룹 연결 정보도 함께 복사됩니다.
-   * - 트랜잭션을 사용하여 안전하게 처리합니다.
-   * - 현재 로그인한 사용자의 세션 정보를 활용하여 등록자/변경자 정보를 설정합니다.
+   * - 기존 ?�용????��??복사?�여 ?�로????��???�성?�니??
+   * - ?�로????�� ID??'A' + YYMMDD + 3?�리 ?�번 ?�식?�로 ?�동 ?�성?�니??
+   * - ?�본 ??��???�로그램 그룹 ?�결 ?�보???�께 복사?�니??
+   * - ?�랜??��???�용?�여 ?�전?�게 처리?�니??
+   * - ?�재 로그?�한 ?�용?�의 ?�션 ?�보�??�용?�여 ?�록??변경자 ?�보�??�정?�니??
    *
-   * @param originalRoleId - 복사할 원본 역할 ID
-   * @param currentUserId - 현재 로그인한 사용자 ID (세션에서 전달)
-   * @returns Promise<TblUserRole> - 새로 생성된 사용자 역할
+   * @param originalRoleId - 복사???�본 ??�� ID
+   * @param currentUserId - ?�재 로그?�한 ?�용??ID (?�션?�서 ?�달)
+   * @returns Promise<TblUserRole> - ?�로 ?�성???�용????��
    * @example
    * const newRole = await sysService.copyUserRole('A250715001', "E001");
-   * // 결과: { usrRoleId: "A250715002", usrRoleNm: "일반사용자_복사본" }
+   * // 결과: { usrRoleId: "A250715002", usrRoleNm: "?�반?�용??복사�? }
    *
-   * @throws Error - 원본 역할이 없거나 트랜잭션 실패 시
+   * @throws Error - ?�본 ??��???�거???�랜??�� ?�패 ??
    */
   async copyUserRole(
     originalRoleId: string,
@@ -445,15 +445,15 @@ export class UserRoleService {
     await queryRunner.startTransaction();
 
     try {
-      // 1. 원본 역할 정보 조회
+      // 1. ?�본 ??�� ?�보 조회
       const originalRole = await queryRunner.manager.findOne(TblUserRole, {
         where: { usrRoleId: originalRoleId },
       });
       if (!originalRole) {
-        throw new Error('복사할 원본 역할을 찾을 수 없습니다.');
+        throw new Error('복사???�본 ??��??찾을 ???�습?�다.');
       }
 
-      // 2. 새로운 역할 ID 생성 (기존 패턴: A + YYMMDD + 3자리 순번)
+      // 2. ?�로????�� ID ?�성 (기존 ?�턴: A + YYMMDD + 3?�리 ?�번)
       const today = new Date();
       const year = today.getFullYear().toString().slice(-2);
       const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -462,15 +462,15 @@ export class UserRoleService {
 
       const newRoleId = `A${year}${month}${day}${timestamp}`;
 
-      // 3. 역할 정보 복사 및 저장 (엔티티 인스턴스로 변환하여 @BeforeInsert 데코레이터가 동작하도록 함)
+      // 3. ??�� ?�보 복사 �??�??(?�티???�스?�스�?변?�하??@BeforeInsert ?�코?�이?��? ?�작?�도�???
       const newRoleEntity = new TblUserRole();
       Object.assign(newRoleEntity, {
         ...originalRole,
         usrRoleId: newRoleId,
-        usrRoleNm: `${originalRole.usrRoleNm}_복사본`,
-        regDttm: undefined, // @BeforeInsert에서 자동 설정
-        chngDttm: undefined, // @BeforeInsert에서 자동 설정
-        chngrId: currentUserId, // 현재 로그인한 사용자 ID
+        usrRoleNm: `${originalRole.usrRoleNm}_복사�?,
+        regDttm: undefined, // @BeforeInsert?�서 ?�동 ?�정
+        chngDttm: undefined, // @BeforeInsert?�서 ?�동 ?�정
+        chngrId: currentUserId, // ?�재 로그?�한 ?�용??ID
       });
 
       const savedRole = await queryRunner.manager.save(
@@ -478,19 +478,19 @@ export class UserRoleService {
         newRoleEntity,
       );
 
-      // 4. 원본 역할의 프로그램 그룹 연결 정보 조회 및 복사
+      // 4. ?�본 ??��???�로그램 그룹 ?�결 ?�보 조회 �?복사
       const originalPgmGrps = await queryRunner.manager.find(
         TblUserRolePgmGrp,
         { where: { usrRoleId: originalRoleId } },
       );
       if (originalPgmGrps.length > 0) {
-        // 엔티티 인스턴스로 변환하여 @BeforeInsert 데코레이터가 동작하도록 함
+        // ?�티???�스?�스�?변?�하??@BeforeInsert ?�코?�이?��? ?�작?�도�???
         const newPgmGrps = originalPgmGrps.map((p) => {
           const entity = new TblUserRolePgmGrp();
           Object.assign(entity, {
             ...p,
             usrRoleId: newRoleId,
-            chngrId: currentUserId, // 현재 로그인한 사용자 ID
+            chngrId: currentUserId, // ?�재 로그?�한 ?�용??ID
           });
           return entity;
         });
@@ -508,3 +508,5 @@ export class UserRoleService {
     }
   }
 }
+
+

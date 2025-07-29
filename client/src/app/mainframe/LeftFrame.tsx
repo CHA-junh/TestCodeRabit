@@ -71,3 +71,4 @@ const LeftFrame: React.FC<LeftFrameProps> = ({
 export default LeftFrame
 
 
+

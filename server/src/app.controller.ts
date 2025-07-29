@@ -7,7 +7,7 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    return 'BIST_NEW API 서버가 정상적으로 실행 중입니다! 🚀';
+    return 'BIST_NEW API ?�버가 ?�상?�으�??�행 중입?�다! ??';
   }
 
   @Get('health')
@@ -18,7 +18,7 @@ export class AppController {
       timestamp: new Date().toISOString(),
       database: {
         connected: isConnected,
-        message: isConnected ? 'DB 연결됨' : 'DB 연결 안됨',
+        message: isConnected ? 'DB ?�결?? : 'DB ?�결 ?�됨',
       },
     };
   }
@@ -32,15 +32,17 @@ export class AppController {
 
       return {
         success: true,
-        message: 'DB 연결 테스트 성공!',
+        message: 'DB ?�결 ?�스???�공!',
         data: result.rows,
       };
     } catch (error) {
       return {
         success: false,
-        message: 'DB 연결 테스트 실패',
+        message: 'DB ?�결 ?�스???�패',
         error: error.message,
       };
     }
   }
 }
+
+

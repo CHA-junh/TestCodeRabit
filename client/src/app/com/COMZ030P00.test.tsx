@@ -32,7 +32,7 @@ Object.defineProperty(window, 'close', {
   writable: true
 })
 
-describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
+describe('COMZ030P00 - ?�급�??��? 조회 ?�업', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     // Reset window.opener for each test
@@ -42,17 +42,17 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
     })
   })
 
-  describe('렌더링 테스트', () => {
-    test('컴포넌트가 정상적으로 렌더링된다', () => {
+  describe('?�더�??�스??, () => {
+    test('컴포?�트가 ?�상?�으�??�더링된??, () => {
       render(<COMZ030P00 />)
       
-      expect(screen.getByText('등급별 단가 조회')).toBeInTheDocument()
-      expect(screen.getByText('자사/외주 구분')).toBeInTheDocument()
-      expect(screen.getByText('년도')).toBeInTheDocument()
+      expect(screen.getByText('?�급�??��? 조회')).toBeInTheDocument()
+      expect(screen.getByText('?�사/?�주 구분')).toBeInTheDocument()
+      expect(screen.getByText('?�도')).toBeInTheDocument()
       expect(screen.getByText('조회')).toBeInTheDocument()
     })
 
-    test('기본값이 정상적으로 설정된다', () => {
+    test('기본값이 ?�상?�으�??�정?�다', () => {
       render(<COMZ030P00 />)
       
       const currentYear = new Date().getFullYear().toString()
@@ -60,17 +60,17 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
       expect(screen.getByDisplayValue('1')).toBeInTheDocument()
     })
 
-    test('그리드 헤더가 정상적으로 렌더링된다', () => {
+    test('그리???�더가 ?�상?�으�??�더링된??, () => {
       render(<COMZ030P00 />)
       
-      expect(screen.getByText('등급')).toBeInTheDocument()
+      expect(screen.getByText('?�급')).toBeInTheDocument()
       expect(screen.getByText('직책')).toBeInTheDocument()
-      expect(screen.getByText('단가')).toBeInTheDocument()
+      expect(screen.getByText('?��?')).toBeInTheDocument()
     })
   })
 
-  describe('검색 조건 변경 테스트', () => {
-    test('자사/외주 구분을 변경할 수 있다', () => {
+  describe('검??조건 변�??�스??, () => {
+    test('?�사/?�주 구분??변경할 ???�다', () => {
       render(<COMZ030P00 />)
       
       const outsRadio = screen.getByDisplayValue('2')
@@ -79,7 +79,7 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
       expect(outsRadio).toBeChecked()
     })
 
-    test('년도를 변경할 수 있다', () => {
+    test('?�도�?변경할 ???�다', () => {
       render(<COMZ030P00 />)
       
       const yearSelect = screen.getByDisplayValue(new Date().getFullYear().toString())
@@ -89,15 +89,15 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
     })
   })
 
-  describe('조회 기능 테스트', () => {
-    test('조회 버튼을 클릭하면 API가 호출된다', async () => {
+  describe('조회 기능 ?�스??, () => {
+    test('조회 버튼???�릭?�면 API가 ?�출?�다', async () => {
       const mockResponse = {
         ok: true,
         json: async () => ({
           data: [
             {
               TCN_GRD_NM: '초급',
-              DUTY_NM: '사원',
+              DUTY_NM: '?�원',
               UPRC: '3000000'
             }
           ]
@@ -123,7 +123,7 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
       })
     })
 
-    test('년도가 없으면 경고 메시지가 표시된다', () => {
+    test('?�도가 ?�으�?경고 메시지가 ?�시?�다', () => {
       render(<COMZ030P00 />)
       
       const yearSelect = screen.getByDisplayValue(new Date().getFullYear().toString())
@@ -132,13 +132,13 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
       const searchButton = screen.getByText('조회')
       fireEvent.click(searchButton)
       
-      expect(mockShowToast).toHaveBeenCalledWith('년도를 입력하세요.', 'info')
+      expect(mockShowToast).toHaveBeenCalledWith('?�도�??�력?�세??', 'info')
     })
 
-    test('API 오류 발생 시 에러 메시지가 표시된다', async () => {
+    test('API ?�류 발생 ???�러 메시지가 ?�시?�다', async () => {
       const mockResponse = {
         ok: false,
-        json: async () => ({ message: '서버 오류' })
+        json: async () => ({ message: '?�버 ?�류' })
       }
       ;(global.fetch as jest.Mock).mockResolvedValueOnce(mockResponse)
 
@@ -148,11 +148,11 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
       fireEvent.click(searchButton)
 
       await waitFor(() => {
-        expect(mockShowToast).toHaveBeenCalledWith('서버 오류', 'warning')
+        expect(mockShowToast).toHaveBeenCalledWith('?�버 ?�류', 'warning')
       })
     })
 
-    test('검색 결과가 없으면 안내 메시지가 표시된다', async () => {
+    test('검??결과가 ?�으�??�내 메시지가 ?�시?�다', async () => {
       const mockResponse = {
         ok: true,
         json: async () => ({ data: [] })
@@ -165,25 +165,25 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
       fireEvent.click(searchButton)
 
       await waitFor(() => {
-        expect(screen.getByText('조회된 데이터가 없습니다.')).toBeInTheDocument()
+        expect(screen.getByText('조회???�이?��? ?�습?�다.')).toBeInTheDocument()
       })
     })
   })
 
-  describe('데이터 표시 테스트', () => {
-    test('검색 결과가 정상적으로 표시된다', async () => {
+  describe('?�이???�시 ?�스??, () => {
+    test('검??결과가 ?�상?�으�??�시?�다', async () => {
       const mockResponse = {
         ok: true,
         json: async () => ({
           data: [
             {
               TCN_GRD_NM: '초급',
-              DUTY_NM: '사원',
+              DUTY_NM: '?�원',
               UPRC: '3000000'
             },
             {
               TCN_GRD_NM: '중급',
-              DUTY_NM: '대리',
+              DUTY_NM: '?��?,
               UPRC: '4000000'
             }
           ]
@@ -198,24 +198,24 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
 
       await waitFor(() => {
         expect(screen.getByText('초급')).toBeInTheDocument()
-        expect(screen.getByText('사원')).toBeInTheDocument()
+        expect(screen.getByText('?�원')).toBeInTheDocument()
         expect(screen.getByText('3,000,000')).toBeInTheDocument()
         expect(screen.getByText('중급')).toBeInTheDocument()
-        expect(screen.getByText('대리')).toBeInTheDocument()
+        expect(screen.getByText('?��?)).toBeInTheDocument()
         expect(screen.getByText('4,000,000')).toBeInTheDocument()
       })
     })
   })
 
-  describe('행 선택 테스트', () => {
-    test('행을 클릭하면 선택 상태가 변경된다', async () => {
+  describe('???�택 ?�스??, () => {
+    test('?�을 ?�릭?�면 ?�택 ?�태가 변경된??, async () => {
       const mockResponse = {
         ok: true,
         json: async () => ({
           data: [
             {
               TCN_GRD_NM: '초급',
-              DUTY_NM: '사원',
+              DUTY_NM: '?�원',
               UPRC: '3000000'
             }
           ]
@@ -238,8 +238,8 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
     })
   })
 
-  describe('더블클릭 선택 테스트', () => {
-    test('행을 더블클릭하면 부모 창으로 메시지를 전송하고 창이 닫힌다', async () => {
+  describe('?�블?�릭 ?�택 ?�스??, () => {
+    test('?�을 ?�블?�릭?�면 부�?창으�?메시지�??�송?�고 창이 ?�힌??, async () => {
       // Mock window.opener
       Object.defineProperty(window, 'opener', {
         value: mockOpener,
@@ -252,7 +252,7 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
           data: [
             {
               TCN_GRD_NM: '초급',
-              DUTY_NM: '사원',
+              DUTY_NM: '?�원',
               UPRC: '3000000'
             }
           ]
@@ -281,8 +281,8 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
     })
   })
 
-  describe('키보드 이벤트 테스트', () => {
-    test('Enter 키로 검색이 실행된다', async () => {
+  describe('?�보???�벤???�스??, () => {
+    test('Enter ?�로 검?�이 ?�행?�다', async () => {
       const mockResponse = {
         ok: true,
         json: async () => ({ data: [] })
@@ -299,7 +299,7 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
       })
     })
 
-    test('Escape 키로 창이 닫힌다', () => {
+    test('Escape ?�로 창이 ?�힌??, () => {
       // Mock window.opener
       Object.defineProperty(window, 'opener', {
         value: mockOpener,
@@ -315,12 +315,12 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
     })
   })
 
-  describe('메서드 테스트', () => {
-    test('setUntPrcInfo 메서드가 정상적으로 작동한다', () => {
+  describe('메서???�스??, () => {
+    test('setUntPrcInfo 메서?��? ?�상?�으�??�동?�다', () => {
       render(<COMZ030P00 />)
       
-      // 컴포넌트 내부 메서드를 직접 호출할 수 없으므로
-      // 실제 동작을 통해 테스트
+      // 컴포?�트 ?��? 메서?��? 직접 ?�출?????�으므�?
+      // ?�제 ?�작???�해 ?�스??
       const yearSelect = screen.getByDisplayValue(new Date().getFullYear().toString())
       fireEvent.change(yearSelect, { target: { value: '2023' } })
       
@@ -328,3 +328,4 @@ describe('COMZ030P00 - 등급별 단가 조회 팝업', () => {
     })
   })
 }) 
+

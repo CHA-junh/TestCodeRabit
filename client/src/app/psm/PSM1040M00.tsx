@@ -83,7 +83,7 @@ interface CommonCode {
 interface PSM1040M00Props {
   selectedEmployee?: EmployeeListData | null;
   isTab?: boolean;
-  onRegisterSuccess?: () => void; // 등록 성공 후 상위 화면 재조회 콜백
+  onRegisterSuccess?: () => void; // ?�록 ?�공 ???�위 ?�면 ?�조??콜백
 }
 
 export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess }: PSM1040M00Props) {
@@ -97,7 +97,7 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
   const [scrollToIndex, setScrollToIndex] = useState<number>(-1);
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // AS-IS 공통 코드 상태
+  // AS-IS 공통 코드 ?�태
   const [commonCodes, setCommonCodes] = useState<{
     apntDiv: CommonCode[];
     hqDiv: CommonCode[];
@@ -110,24 +110,24 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
     duty: []
   });
 
-  // AS-IS 입력 데이터 상태
+  // AS-IS ?�력 ?�이???�태
   const [inputData, setInputData] = useState({
-    apntDiv: '2', // 발령구분 (기본값: 승진)
-    apntDt: '', // 발령일자
-    hqDiv: '', // 발령본부
-    deptDiv: '', // 발령부서
+    apntDiv: '2', // 발령구분 (기본�? ?�진)
+    apntDt: '', // 발령?�자
+    hqDiv: '', // 발령본�?
+    deptDiv: '', // 발령부??
     duty: '', // 발령직위
     rmk: '' // 비고
   });
 
-  // AS-IS 필드 활성화/비활성화 상태
+  // AS-IS ?�드 ?�성??비활?�화 ?�태
   const [fieldEnableState, setFieldEnableState] = useState({
     hqDiv: false,
     deptDiv: false,
     duty: true
   });
 
-  // AS-IS 초기화 로직
+  // AS-IS 초기??로직
   useEffect(() => {
     const initializeComponent = async () => {
       await loadCommonCodes();
@@ -149,7 +149,7 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
       const apntDivResult = await apntDivResponse.json();
       const apntDivData = apntDivResult.data || [];
 
-      // 본부 코드 로드 (AS-IS: cbHqDiv.setLargeCode('113', '00'))
+      // 본�? 코드 로드 (AS-IS: cbHqDiv.setLargeCode('113', '00'))
       const hqResponse = await fetch('/api/common/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -174,22 +174,22 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
         duty: dutyData || []
       });
     } catch (error) {
-      console.error('공통 코드 로드 중 오류:', error);
+      console.error('공통 코드 로드 �??�류:', error);
     }
   };
 
-  // AS-IS 화면 초기화
+  // AS-IS ?�면 초기??
   const initScreen = () => {
     setInputData({
       apntDiv: '2',
       apntDt: '',
       hqDiv: '',
       deptDiv: '',
-      duty: '9', // AS-IS와 동일: cbDuty.setLargeCode('116','9')의 기본값
+      duty: '9', // AS-IS?� ?�일: cbDuty.setLargeCode('116','9')??기본�?
       rmk: ''
     });
     
-    // AS-IS와 동일한 입력 필드 활성화/비활성화
+    // AS-IS?� ?�일???�력 ?�드 ?�성??비활?�화
     setFieldEnableState({
       hqDiv: false,
       deptDiv: false,
@@ -199,110 +199,110 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
     handleListClear();
   };
 
-  // AS-IS 인사발령 대상자 리스트에 추가
+  // AS-IS ?�사발령 ?�?�자 리스?�에 추�?
   const addAppointmentTarget = (employee: EmployeeListData) => {
     const validationResult = validateAppointmentTarget(employee);
     if (!validationResult) return;
 
     let remark = '';
-    // AS-IS와 동일한 비고 로직
+    // AS-IS?� ?�일??비고 로직
     if (inputData.apntDiv === '3') {
       const selectedHqLabel = commonCodes.hqDiv.find(code => code.codeId === inputData.hqDiv)?.codeNm;
       if (employee.HQ_DIV === selectedHqLabel) {
         remark = inputData.rmk;
       } else {
-        remark = `면:${employee.HQ_DIV} 명:${selectedHqLabel}`;
+        remark = `�?${employee.HQ_DIV} �?${selectedHqLabel}`;
       }
     } else {
       remark = inputData.rmk;
     }
 
-    // AS-IS와 동일한 데이터 구조로 생성
+    // AS-IS?� ?�일???�이??구조�??�성
     const newTarget: AppointmentTargetData = {
       APNT_DIV_NM: commonCodes.apntDiv.find(code => code.codeId === inputData.apntDiv)?.codeNm, // 발령구분
-      APNT_DT: inputData.apntDt, // 발령일자
-      EMP_NO: employee.EMP_NO, // 사번
-      EMP_NM: employee.EMP_NM, // 성명
+      APNT_DT: inputData.apntDt, // 발령?�자
+      EMP_NO: employee.EMP_NO, // ?�번
+      EMP_NM: employee.EMP_NM, // ?�명
       HQ_DIV_NM: inputData.apntDiv === '3' ? 
                  commonCodes.hqDiv.find(code => code.codeId === inputData.hqDiv)?.codeNm : 
-                 employee.HQ_DIV, // 발령본부
+                 employee.HQ_DIV, // 발령본�?
       DEPT_DIV_NM: inputData.apntDiv === '3' ? 
                    commonCodes.deptDiv.find(code => code.DATA === inputData.deptDiv)?.LABEL : 
-                   employee.DEPT_DIV, // 발령부서
+                   employee.DEPT_DIV, // 발령부??
       DUTY_NM: inputData.apntDiv === '2' && inputData.duty ? 
                commonCodes.duty.find(code => code.codeId === inputData.duty)?.codeNm : 
-               employee.DUTY, // 발령직책 (AS-IS와 동일: 승진일 때만 선택된 직책, 그 외에는 현재 직책)
-      HQ_DIV_NM_BEF: employee.HQ_DIV, // 발령전본부
-      DEPT_DIV_NM_BEF: employee.DEPT_DIV, // 발령전부서
-      DUTY_NM_BEF: employee.DUTY, // 발령전직책
+               employee.DUTY, // 발령직책 (AS-IS?� ?�일: ?�진???�만 ?�택??직책, �??�에???�재 직책)
+      HQ_DIV_NM_BEF: employee.HQ_DIV, // 발령?�본부
+      DEPT_DIV_NM_BEF: employee.DEPT_DIV, // 발령?��???
+      DUTY_NM_BEF: employee.DUTY, // 발령?�직�?
       RMK: remark, // 비고
       APNT_DIV_CD: inputData.apntDiv, // 발령구분코드
-      HQ_DIV_CD: inputData.apntDiv === '3' ? inputData.hqDiv : employee.HQ_DIV_CD, // 발령본부코드
-      DEPT_DIV_CD: inputData.apntDiv === '3' ? inputData.deptDiv : employee.DEPT_DIV_CD, // 발령부서코드
+      HQ_DIV_CD: inputData.apntDiv === '3' ? inputData.hqDiv : employee.HQ_DIV_CD, // 발령본�?코드
+      DEPT_DIV_CD: inputData.apntDiv === '3' ? inputData.deptDiv : employee.DEPT_DIV_CD, // 발령부?�코??
       DUTY_CD: inputData.apntDiv === '2' ? inputData.duty : employee.DUTY_CD // 발령직책코드
     };
 
-    // AS-IS와 동일하게 배열 끝에 추가
+    // AS-IS?� ?�일?�게 배열 ?�에 추�?
     setAppointmentTargets(prev => {
       const newTargets = [...prev, newTarget];
-      // AS-IS: 추가된 행으로 스크롤 위치 설정
+      // AS-IS: 추�????�으�??�크�??�치 ?�정
       setScrollToIndex(newTargets.length - 1);
       return newTargets;
     });
     setCurEmpNo(employee.EMP_NO || '');
   };
 
-  // AS-IS 인사발령 대상자 검증
+  // AS-IS ?�사발령 ?�?�자 검�?
   const validateAppointmentTarget = (employee: EmployeeListData): boolean => {
-    // 컴포넌트가 초기화되지 않았으면 검증하지 않음
+    // 컴포?�트가 초기?�되지 ?�았?�면 검증하지 ?�음
     if (!isInitialized) {
       return false;
     }
 
-    // AS-IS와 동일: 등록버튼 활성 여부 체크
+    // AS-IS?� ?�일: ?�록버튼 ?�성 ?��? 체크
     if (!isRegisterEnabled) {
-      showToast('신규 버튼을 클릭해 주십시요.', 'warning');
+      showToast('?�규 버튼???�릭??주십?�요.', 'warning');
       return false;
     }
 
-    // AS-IS와 동일: 발령일자 입력 체크
+    // AS-IS?� ?�일: 발령?�자 ?�력 체크
     if (!inputData.apntDt) {
-      showToast('발령일자를 입력해 주십시요.', 'warning');
+      showToast('발령?�자�??�력??주십?�요.', 'warning');
       return false;
     }
 
-    // AS-IS와 동일: 외주 인력 체크
+    // AS-IS?� ?�일: ?�주 ?�력 체크
     if (employee.OWN_OUTS_DIV_CD === '2') {
-      showToast('외주인력은 인사발령 대상이 아닙니다', 'warning');
+      showToast('?�주?�력?� ?�사발령 ?�?�이 ?�닙?�다', 'warning');
       return false;
     }
 
-    // AS-IS와 동일: 이미 추가된 사원인지 체크
+    // AS-IS?� ?�일: ?��? 추�????�원?��? 체크
     const existingIndex = appointmentTargets.findIndex(target => target.EMP_NO === employee.EMP_NO);
     if (existingIndex >= 0) {
-      showToast(`${employee.EMP_NM}는(은) 이미 인사발령 대상자로 추가되어 있습니다.`, 'warning');
+      showToast(`${employee.EMP_NM}???�) ?��? ?�사발령 ?�?�자�?추�??�어 ?�습?�다.`, 'warning');
       return false;
     }
 
-    // AS-IS와 동일: 승진일 경우 발령직책이 발령전 직책보다 높아야 한다
+    // AS-IS?� ?�일: ?�진??경우 발령직책??발령??직책보다 ?�아???�다
     if (inputData.apntDiv === '2') {
-      // AS-IS와 동일: 승진일 때는 직책이 선택되어야 함
+      // AS-IS?� ?�일: ?�진???�는 직책???�택?�어????
       if (!inputData.duty || inputData.duty.trim() === '') {
-        showToast('승진일 경우 발령직책을 선택해 주십시요.', 'warning');
+        showToast('?�진??경우 발령직책???�택??주십?�요.', 'warning');
         return false;
       }
       
-      const selectedDutyLabel = commonCodes.duty.find(code => code.codeId === inputData.duty)?.codeNm || '선택된 직책';
+      const selectedDutyLabel = commonCodes.duty.find(code => code.codeId === inputData.duty)?.codeNm || '?�택??직책';
       if (parseInt(inputData.duty) >= parseInt(employee.DUTY_CD || '0')) {
-        showToast(`${selectedDutyLabel} 승진 대상이 아닙니다.`, 'warning');
+        showToast(`${selectedDutyLabel} ?�진 ?�?�이 ?�닙?�다.`, 'warning');
         return false;
       }
     }
 
-    // AS-IS와 동일: 이동일 경우 발령본부/부서가 발령전 본부/부서와 달라야 한다
+    // AS-IS?� ?�일: ?�동??경우 발령본�?/부?��? 발령??본�?/부?��? ?�라???�다
     if (inputData.apntDiv === '3') {
       if (inputData.hqDiv === employee.HQ_DIV_CD && inputData.deptDiv === employee.DEPT_DIV_CD) {
-        showToast('발령본부(부서)가 같으면 부서 이동 대상이 아닙디다.', 'warning');
+        showToast('발령본�?(부??가 같으�?부???�동 ?�?�이 ?�닙?�다.', 'warning');
         return false;
       }
     }
@@ -310,35 +310,35 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
     return true;
   };
 
-  // AS-IS 발령구분 변경 시
+  // AS-IS 발령구분 변�???
   const handleApntDivChange = (apntDiv: string) => {
     setInputData(prev => ({ ...prev, apntDiv }));
 
-    // AS-IS와 동일한 로직: 발령구분에 따른 입력 필드 활성화/비활성화
+    // AS-IS?� ?�일??로직: 발령구분???�른 ?�력 ?�드 ?�성??비활?�화
     if (apntDiv === '1') {
-      // AS-IS: 입사 발령 등록은 사원관리 신규 등록 시 한다
-      showToast('※ 입사등록은 사원정보 신규등록시에만 가능함.', 'info');
+      // AS-IS: ?�사 발령 ?�록?� ?�원관�??�규 ?�록 ???�다
+      showToast('???�사?�록?� ?�원?�보 ?�규?�록?�에�?가?�함.', 'info');
       setFieldEnableState({
         hqDiv: false,
         deptDiv: false,
         duty: false
       });
     } else if (apntDiv === '2') {
-      // AS-IS: 승진을 선택하면 발령직위만 입력 가능
+      // AS-IS: ?�진???�택?�면 발령직위�??�력 가??
       setFieldEnableState({
         hqDiv: false,
         deptDiv: false,
         duty: true
       });
     } else if (apntDiv === '3') {
-      // AS-IS: 이동을 선택하면 본부/부서만 입력 가능
+      // AS-IS: ?�동???�택?�면 본�?/부?�만 ?�력 가??
       setFieldEnableState({
         hqDiv: true,
         deptDiv: true,
         duty: false
       });
     } else if (apntDiv === '4') {
-      // AS-IS: 퇴사를 선택하면 입력 불가능
+      // AS-IS: ?�사�??�택?�면 ?�력 불�???
       setFieldEnableState({
         hqDiv: false,
         deptDiv: false,
@@ -353,7 +353,7 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
     }
   };
 
-  // AS-IS 본부 변경 시 부서 로드
+  // AS-IS 본�? 변�???부??로드
   const handleHqDivChange = async (hqDiv: string) => {
     setInputData(prev => ({ ...prev, hqDiv }));
 
@@ -376,31 +376,31 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
         deptDiv: deptData || []
       }));
     } catch (error) {
-      console.error('부서 로드 중 오류:', error);
+      console.error('부??로드 �??�류:', error);
     }
   };
 
-  // AS-IS 신규 버튼 클릭
+  // AS-IS ?�규 버튼 ?�릭
   const handleNew = () => {
     handleListClear();
-    // AS-IS와 동일: 신규 시 기본값 설정
+    // AS-IS?� ?�일: ?�규 ??기본�??�정
     setInputData(prev => ({
       ...prev,
-      duty: '9' // AS-IS와 동일: cbDuty.setLargeCode('116','9')의 기본값
+      duty: '9' // AS-IS?� ?�일: cbDuty.setLargeCode('116','9')??기본�?
     }));
-    // 등록버튼 활성화
+    // ?�록버튼 ?�성??
     setIsRegisterEnabled(true);
   };
 
-  // AS-IS 등록 버튼 클릭
+  // AS-IS ?�록 버튼 ?�릭
   const handleRegister = async () => {
     if (appointmentTargets.length === 0) {
-      showToast('등록할 대상자가 없습니다.', 'warning');
+      showToast('?�록???�?�자가 ?�습?�다.', 'warning');
       return;
     }
 
     showConfirm({
-      message: `${appointmentTargets.length}명의 인사발령을 등록하시겠습니까?`,
+      message: `${appointmentTargets.length}명의 ?�사발령???�록?�시겠습?�까?`,
       type: 'info',
       onConfirm: async () => {
         setIsLoading(true);
@@ -408,7 +408,7 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
 
         try {
           
-          // AS-IS와 동일한 데이터 구성
+          // AS-IS?� ?�일???�이??구성
           const appointmentData = makeAppointmentData();
           
           const response = await fetch('/api/psm/appointment/batch-register', {
@@ -416,32 +416,32 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               appointmentData,
-              userId: user?.userId || 'system' // 로그인사용자 (실제 세션에서 가져옴)
+              userId: user?.userId || 'system' // 로그?�사?�자 (?�제 ?�션?�서 가?�옴)
             })
           });
 
           if (response.ok) {
             const result = await response.json();
             if (result.success) {
-              showToast('등록되었습니다.', 'info');
-              // 재 등록을 방지하기 위해서 등록버튼 비활성화
+              showToast('?�록?�었?�니??', 'info');
+              // ???�록??방�??�기 ?�해???�록버튼 비활?�화
               setIsRegisterEnabled(false);
               handleListClear();
               
-              // AS-IS: 사원리스트 재조회
+              // AS-IS: ?�원리스???�조??
               if (onRegisterSuccess) {
                 onRegisterSuccess();
               }
             } else {
-              setError(result.message || '등록에 실패했습니다.');
-              showToast(result.message || '등록에 실패했습니다.', 'error');
+              setError(result.message || '?�록???�패?�습?�다.');
+              showToast(result.message || '?�록???�패?�습?�다.', 'error');
             }
           } else {
-            throw new Error('등록에 실패했습니다.');
+            throw new Error('?�록???�패?�습?�다.');
           }
         } catch (error) {
-          console.error('인사발령 일괄등록 중 오류:', error);
-          const errorMessage = error instanceof Error ? error.message : '등록 중 오류가 발생했습니다.';
+          console.error('?�사발령 ?�괄?�록 �??�류:', error);
+          const errorMessage = error instanceof Error ? error.message : '?�록 �??�류가 발생?�습?�다.';
           setError(errorMessage);
           showToast(errorMessage, 'error');
         } finally {
@@ -449,12 +449,12 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
         }
       },
       onCancel: () => {
-        console.log('인사발령 등록 취소');
+        console.log('?�사발령 ?�록 취소');
       }
     });
   };
 
-  // AS-IS 등록데이터 만들기
+  // AS-IS ?�록?�이??만들�?
   const makeAppointmentData = (): string => {
     if (appointmentTargets.length === 0) {
       return '';
@@ -463,10 +463,10 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
     let appointmentData = '';
     for (const target of appointmentTargets) {
       appointmentData += `${target.APNT_DIV_CD}^`; // 발령구분
-      appointmentData += `${target.APNT_DT?.replace(/-/g, '')}^`; // 발령일자
-      appointmentData += `${target.EMP_NO}^`; // 사번
-      appointmentData += `${target.HQ_DIV_CD}^`; // 본부코드
-      appointmentData += `${target.DEPT_DIV_CD}^`; // 부서구분코드
+      appointmentData += `${target.APNT_DT?.replace(/-/g, '')}^`; // 발령?�자
+      appointmentData += `${target.EMP_NO}^`; // ?�번
+      appointmentData += `${target.HQ_DIV_CD}^`; // 본�?코드
+      appointmentData += `${target.DEPT_DIV_CD}^`; // 부?�구분코??
       appointmentData += `${target.DUTY_CD}^`; // 직책코드
       appointmentData += `${target.RMK}^`; // 비고
       appointmentData += '|';
@@ -474,7 +474,7 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
     return appointmentData;
   };
 
-  // AS-IS 행삭제 버튼 클릭
+  // AS-IS ?�삭??버튼 ?�릭
   const handleRowDelete = (index: number) => {
     if (index < 0 || index >= appointmentTargets.length) return;
 
@@ -482,20 +482,20 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
     newTargets.splice(index, 1);
     setAppointmentTargets(newTargets);
 
-    // AS-IS와 동일한 curEmpNo 처리
+    // AS-IS?� ?�일??curEmpNo 처리
     if (index > 0 && index >= newTargets.length) {
       setCurEmpNo(newTargets[index - 1].EMP_NO || '');
     }
   };
 
-  // AS-IS 리스트 초기화
+  // AS-IS 리스??초기??
   const handleListClear = () => {
     setAppointmentTargets([]);
     setCurEmpNo('');
     setScrollToIndex(-1);
   };
 
-  // 외부에서 사원 추가 호출 (PSM1000M00에서 사용)
+  // ?��??�서 ?�원 추�? ?�출 (PSM1000M00?�서 ?�용)
   useEffect(() => {
     if (selectedEmployee) {
       addAppointmentTarget(selectedEmployee);
@@ -504,12 +504,12 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
 
   return (
     <div className={`flex flex-col ${isTab ? 'flex-1 min-h-0' : 'h-full'} overflow-auto`}>
-      {/* AS-IS 인사발령내용 + 대상자 */}
+      {/* AS-IS ?�사발령?�용 + ?�?�자 */}
       <div className="flex gap-4 flex-1 min-h-0">
-        {/* AS-IS 왼쪽 인사발령내용 입력 */}
+        {/* AS-IS ?�쪽 ?�사발령?�용 ?�력 */}
         <div className="w-[320px] flex flex-col">
           <div className="tit_area">
-            <h3>인사발령내용</h3>
+            <h3>?�사발령?�용</h3>
           </div>
           <div className="flex-1">
             <table className="form-table">
@@ -532,7 +532,7 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
                   </td>
                 </tr>
                 <tr className="form-tr">
-                  <th className="form-th">발령일자</th>
+                  <th className="form-th">발령?�자</th>
                   <td className="form-td">
                     <input 
                       type="date" 
@@ -544,7 +544,7 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
                   </td>
                 </tr>
                 <tr className="form-tr">
-                  <th className="form-th">발령본부</th>
+                  <th className="form-th">발령본�?</th>
                   <td className="form-td">
                     <select 
                       className="combo-base w-full"
@@ -562,7 +562,7 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
                   </td>
                 </tr>
                 <tr className="form-tr">
-                  <th className="form-th">발령부서</th>
+                  <th className="form-th">발령부??/th>
                   <td className="form-td">
                     <select 
                       className="combo-base w-full"
@@ -606,13 +606,13 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
                       value={inputData.rmk}
                       onChange={(e) => {
                         const newValue = e.target.value;
-                        // UTF-8 바이트 수 계산
+                        // UTF-8 바이????계산
                         const byteLength = new TextEncoder().encode(newValue).length;
                         
                         if (byteLength <= 500) {
                           setInputData(prev => ({ ...prev, rmk: newValue }));
                         } else {
-                          showToast(`비고는 500바이트까지 입력 가능합니다. (현재: ${byteLength}바이트)`, 'warning');
+                          showToast(`비고??500바이?�까지 ?�력 가?�합?�다. (?�재: ${byteLength}바이??`, 'warning');
                         }
                       }}
                     />
@@ -625,47 +625,47 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
                 className="btn-base btn-etc"
                 onClick={handleNew}
               >
-                신규
+                ?�규
               </button>
               <button 
                 className="btn-base btn-act"
                 onClick={handleRegister}
                 disabled={isLoading || !isRegisterEnabled}
               >
-                등록
+                ?�록
               </button>
             </div>
           </div>
         </div>
 
-        {/* AS-IS 오른쪽 인사발령 대상자 */}
+        {/* AS-IS ?�른�??�사발령 ?�?�자 */}
         <div className="flex-1 flex flex-col">
           <div className="tit_area justify-between">
-            <h3>인사발령 대상자</h3>
+            <h3>?�사발령 ?�?�자</h3>
             <div className="flex gap-2">
               <button 
                 className="btn-base btn-etc"
                 onClick={handleListClear}
               >
-                리스트초기화
+                리스?�초기화
               </button>
               <button 
                 className="btn-base btn-delete"
                 onClick={() => {
                   if (!curEmpNo) {
-                    showToast('삭제할 행을 선택해 주십시요.', 'warning');
+                    showToast('??��???�을 ?�택??주십?�요.', 'warning');
                     return;
                   }
                   const selectedIndex = appointmentTargets.findIndex(target => target.EMP_NO === curEmpNo);
                   if (selectedIndex >= 0) {
                     handleRowDelete(selectedIndex);
                   } else {
-                    showToast('선택된 행을 찾을 수 없습니다.', 'warning');
+                    showToast('?�택???�을 찾을 ???�습?�다.', 'warning');
                   }
                 }}
                 disabled={!curEmpNo || appointmentTargets.length === 0}
               >
-                행삭제
+                ?�삭??
               </button>
             </div>
           </div>
@@ -674,14 +674,14 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
               rowData={appointmentTargets}
               columnDefs={[
                 { headerName: '구분', field: 'APNT_DIV_NM', width: 90 },
-                { headerName: '발령일자', field: 'APNT_DT', width: 110 },
-                { headerName: '사번', field: 'EMP_NO', width: 100 },
-                { headerName: '성명', field: 'EMP_NM', width: 100 },
-                { headerName: '본부', field: 'HQ_DIV_NM', width: 110 },
-                { headerName: '부서', field: 'DEPT_DIV_NM', width: 110 },
+                { headerName: '발령?�자', field: 'APNT_DT', width: 110 },
+                { headerName: '?�번', field: 'EMP_NO', width: 100 },
+                { headerName: '?�명', field: 'EMP_NM', width: 100 },
+                { headerName: '본�?', field: 'HQ_DIV_NM', width: 110 },
+                { headerName: '부??, field: 'DEPT_DIV_NM', width: 110 },
                 { headerName: '직책', field: 'DUTY_NM', width: 90 },
-                { headerName: '본부', field: 'HQ_DIV_NM_BEF', width: 110 },
-                { headerName: '부서', field: 'DEPT_DIV_NM_BEF', width: 110 },
+                { headerName: '본�?', field: 'HQ_DIV_NM_BEF', width: 110 },
+                { headerName: '부??, field: 'DEPT_DIV_NM_BEF', width: 110 },
                 { headerName: '직책', field: 'DUTY_NM_BEF', width: 90 },
                 { headerName: '비고', field: 'RMK', flex: 1 },
               ]}
@@ -702,12 +702,12 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
             />
           </div>
           <p className="text-[13px] text-[#00509A] py-1">
-            ※ 발령대상자는 화면 상단의 사원(외주)리스트를 더블클릭하면 인사발령 대상자 리스트에 추가 됩니다.
+            ??발령?�?�자???�면 ?�단???�원(?�주)리스?��? ?�블?�릭?�면 ?�사발령 ?�?�자 리스?�에 추�? ?�니??
           </p>
         </div>
       </div>
 
-      {/* 에러 메시지 */}
+      {/* ?�러 메시지 */}
       {error && (
         <div className="text-red-500 text-sm mt-2 px-1">
           {error}
@@ -716,3 +716,5 @@ export default function PSM1040M00({ selectedEmployee, isTab, onRegisterSuccess 
     </div>
   );
 }
+
+

@@ -37,10 +37,10 @@ export default function Toast({
 	}[type]
 
 	const icon = {
-		success: '✅',
-		info: '💡',
-		warning: '⚠️',
-		error: '❌',
+		success: '??,
+		info: '?��',
+		warning: '?�️',
+		error: '??,
 	}[type]
 
 	return (
@@ -62,3 +62,5 @@ export default function Toast({
 		</div>
 	)
 }
+
+

@@ -17,3 +17,4 @@ export class UserEntity {
   @Column({ name: 'USE_YN', type: 'char', length: 1 })
   useYn: string;
 } 
+

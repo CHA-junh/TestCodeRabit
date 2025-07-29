@@ -5,9 +5,9 @@ import Toast from '@/components/Toast'
 import ConfirmDialog from '@/components/ConfirmDialog'
 
 /**
- * ToastContext에서 제공하는 함수들의 타입 정의
- * - showToast: 토스트 알림을 표시하는 함수
- * - showConfirm: 확인 다이얼로그를 표시하는 함수
+ * ToastContext?�서 ?�공?�는 ?�수?�의 ?�???�의
+ * - showToast: ?�스???�림???�시?�는 ?�수
+ * - showConfirm: ?�인 ?�이?�로그�? ?�시?�는 ?�수
  */
 interface ToastContextType {
 	showToast: (
@@ -22,11 +22,11 @@ interface ToastContextType {
 }
 
 /**
- * 확인 다이얼로그 설정을 위한 인터페이스
- * - message: 다이얼로그에 표시할 메시지
- * - type: 다이얼로그 타입 (info, warning, error)
- * - onConfirm: 확인 버튼 클릭 시 실행할 함수
- * - onCancel: 취소 버튼 클릭 시 실행할 함수 (선택사항)
+ * ?�인 ?�이?�로�??�정???�한 ?�터?�이??
+ * - message: ?�이?�로그에 ?�시??메시지
+ * - type: ?�이?�로�??�??(info, warning, error)
+ * - onConfirm: ?�인 버튼 ?�릭 ???�행???�수
+ * - onCancel: 취소 버튼 ?�릭 ???�행???�수 (?�택?�항)
  */
 interface ConfirmConfig {
 	message: string
@@ -36,27 +36,27 @@ interface ConfirmConfig {
 	confirmOnly?: boolean
 }
 
-// React Context 생성 (전역 상태 관리를 위한 컨텍스트)
+// React Context ?�성 (?�역 ?�태 관리�? ?�한 컨텍?�트)
 const ToastContext = createContext<ToastContextType | undefined>(undefined)
 
 /**
- * ToastProvider 컴포넌트
+ * ToastProvider 컴포?�트
  *
- * 역할:
- * 1. Toast와 ConfirmDialog의 전역 상태 관리
- * 2. 전역에서 사용할 수 있는 showToast, showConfirm 함수 제공
- * 3. 실제 Toast와 ConfirmDialog 컴포넌트 렌더링
+ * ??��:
+ * 1. Toast?� ConfirmDialog???�역 ?�태 관�?
+ * 2. ?�역?�서 ?�용?????�는 showToast, showConfirm ?�수 ?�공
+ * 3. ?�제 Toast?� ConfirmDialog 컴포?�트 ?�더�?
  *
- * 사용법:
- * - layout.tsx에서 전체 앱을 감싸서 모든 컴포넌트에서 사용 가능
- * - useToast() 훅을 통해 showToast, showConfirm 함수 사용
+ * ?�용�?
+ * - layout.tsx?�서 ?�체 ?�을 감싸??모든 컴포?�트?�서 ?�용 가??
+ * - useToast() ?�을 ?�해 showToast, showConfirm ?�수 ?�용
  */
 export function ToastProvider({ children }: { children: ReactNode }) {
 	/**
-	 * Toast 상태 관리
-	 * - message: 토스트에 표시할 메시지
-	 * - type: 토스트 타입 (info, warning, error)
-	 * - isVisible: 토스트 표시 여부
+	 * Toast ?�태 관�?
+	 * - message: ?�스?�에 ?�시??메시지
+	 * - type: ?�스???�??(info, warning, error)
+	 * - isVisible: ?�스???�시 ?��?
 	 */
 	const [toastConfig, setToastConfig] = useState<{
 		message: string
@@ -69,12 +69,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 	})
 
 	/**
-	 * ConfirmDialog 상태 관리
-	 * - message: 다이얼로그에 표시할 메시지
-	 * - type: 다이얼로그 타입 (info, warning, error)
-	 * - isVisible: 다이얼로그 표시 여부
-	 * - onConfirm: 확인 버튼 클릭 시 실행할 함수
-	 * - onCancel: 취소 버튼 클릭 시 실행할 함수
+	 * ConfirmDialog ?�태 관�?
+	 * - message: ?�이?�로그에 ?�시??메시지
+	 * - type: ?�이?�로�??�??(info, warning, error)
+	 * - isVisible: ?�이?�로�??�시 ?��?
+	 * - onConfirm: ?�인 버튼 ?�릭 ???�행???�수
+	 * - onCancel: 취소 버튼 ?�릭 ???�행???�수
 	 */
 	const [confirmConfig, setConfirmConfig] = useState<{
 		message: string
@@ -92,14 +92,14 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 	})
 
 	/**
-	 * 토스트 알림을 표시하는 함수
+	 * ?�스???�림???�시?�는 ?�수
 	 *
-	 * @param message - 토스트에 표시할 메시지
-	 * @param type - 토스트 타입 (기본값: 'info')
+	 * @param message - ?�스?�에 ?�시??메시지
+	 * @param type - ?�스???�??(기본�? 'info')
 	 *
-	 * 사용 예시:
-	 * showToast('저장되었습니다.', 'info')
-	 * showToast('오류가 발생했습니다.', 'error')
+	 * ?�용 ?�시:
+	 * showToast('?�?�되?�습?�다.', 'info')
+	 * showToast('?�류가 발생?�습?�다.', 'error')
 	 */
 	const showToast = (
 		message: string,
@@ -129,8 +129,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 	}
 
 	/**
-	 * 토스트 알림을 숨기는 함수
-	 * - Toast 컴포넌트에서 자동으로 호출됨
+	 * ?�스???�림???�기???�수
+	 * - Toast 컴포?�트?�서 ?�동?�로 ?�출??
 	 */
 	const hideToast = () => {
 		setToastConfig((prev) => ({
@@ -140,20 +140,20 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 	}
 
 	/**
-	 * 확인 다이얼로그를 표시하는 함수
+	 * ?�인 ?�이?�로그�? ?�시?�는 ?�수
 	 *
-	 * @param config - 다이얼로그 설정 객체
+	 * @param config - ?�이?�로�??�정 객체
 	 *
-	 * 사용 예시:
+	 * ?�용 ?�시:
 	 * showConfirm({
-	 *   message: '정말 삭제하시겠습니까?',
+	 *   message: '?�말 ??��?�시겠습?�까?',
 	 *   type: 'warning',
 	 *   onConfirm: () => {
-	 *     // 삭제 로직
-	 *     showToast('삭제되었습니다.', 'info')
+	 *     // ??�� 로직
+	 *     showToast('??��?�었?�니??', 'info')
 	 *   },
 	 *   onCancel: () => {
-	 *     console.log('취소됨')
+	 *     console.log('취소??)
 	 *   }
 	 * })
 	 */
@@ -175,8 +175,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 	}
 
 	/**
-	 * 확인 다이얼로그를 숨기는 함수
-	 * - 현재는 사용되지 않지만 향후 확장을 위해 유지
+	 * ?�인 ?�이?�로그�? ?�기???�수
+	 * - ?�재???�용?��? ?��?�??�후 ?�장???�해 ?��?
 	 */
 	const hideConfirm = () => {
 		setConfirmConfig((prev) => ({ ...prev, isVisible: false }))
@@ -191,14 +191,14 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 			showInfo, 
 			showConfirm 
 		}}>
-			{/* 자식 컴포넌트들 렌더링 */}
+			{/* ?�식 컴포?�트???�더�?*/}
 			{children}
 
 			{/*
-			 * Toast 컴포넌트 렌더링
-			 * - toastConfig 상태에 따라 자동으로 표시/숨김
-			 * - 3초 후 자동으로 사라짐
-			 * - 화면 하단 좌측에 고정 위치
+			 * Toast 컴포?�트 ?�더�?
+			 * - toastConfig ?�태???�라 ?�동?�로 ?�시/?��?
+			 * - 3�????�동?�로 ?�라�?
+			 * - ?�면 ?�단 좌측??고정 ?�치
 			 */}
 			<Toast
 				message={toastConfig.message}
@@ -209,10 +209,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 			/>
 
 			{/*
-			 * ConfirmDialog 컴포넌트 렌더링
-			 * - confirmConfig 상태에 따라 자동으로 표시/숨김
-			 * - 화면 중앙에 모달 형태로 표시
-			 * - 배경 오버레이 포함
+			 * ConfirmDialog 컴포?�트 ?�더�?
+			 * - confirmConfig ?�태???�라 ?�동?�로 ?�시/?��?
+			 * - ?�면 중앙??모달 ?�태�??�시
+			 * - 배경 ?�버?�이 ?�함
 			 */}
 			<ConfirmDialog
 				message={confirmConfig.message}
@@ -227,16 +227,16 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 }
 
 /**
- * useToast 훅
+ * useToast ??
  *
- * ToastContext에서 제공하는 함수들을 사용하기 위한 커스텀 훅
+ * ToastContext?�서 ?�공?�는 ?�수?�을 ?�용?�기 ?�한 커스?� ??
  *
- * @returns {ToastContextType} showToast, showConfirm 함수를 포함한 객체
+ * @returns {ToastContextType} showToast, showConfirm ?�수�??�함??객체
  *
- * 사용 예시:
+ * ?�용 ?�시:
  * const { showToast, showConfirm } = useToast()
  *
- * @throws {Error} ToastProvider 외부에서 사용할 경우 에러 발생
+ * @throws {Error} ToastProvider ?��??�서 ?�용??경우 ?�러 발생
  */
 export function useToast() {
 	const context = useContext(ToastContext)
@@ -245,3 +245,5 @@ export function useToast() {
 	}
 	return context
 }
+
+

@@ -2,12 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 시스템 폰트 사용 (OTS 파싱 에러 방지)  */
+/* ?�스???�트 ?�용 (OTS ?�싱 ?�러 방�?)  */
 html,
 body,
 #__next {
 	font-family:
-		'Malgun Gothic', '맑은 고딕', 'NanumGothic', 'Apple SD Gothic Neo',
+		'Malgun Gothic', '맑�? 고딕', 'NanumGothic', 'Apple SD Gothic Neo',
 		'Noto Sans KR', sans-serif;
 	background: none !important;
 	height: 100%;
@@ -34,7 +34,7 @@ body,
 	@apply bg-gray-200 border-stone-300 cursor-not-allowed opacity-60 h-[26px] px-2 py-[2px] text-sm;
 }
 
-/* 캘린더/ date input */
+/* 캘린?? date input */
 .input-calender {
 	@apply bg-white border-stone-300 hover:border-sky-200 focus:border-blue-500 h-[26px] px-2 py-[2px] rounded border text-sm outline-none focus:ring-0 !w-[150px];
 }
@@ -60,19 +60,19 @@ body,
 }
 
 /** btn **/
-/* 공통 베이스 */
+/* 공통 베이??*/
 .btn-base {
 	@apply flex items-center justify-center 
     h-[26px] px-3 pt-[4px] pb-[6px]
     text-sm font-normal font-nanum 
     rounded 
     transition duration-150 ease-in-out
-    whitespace-nowrap /* ✅ 텍스트 줄바꿈 방지 */
-    leading-none        /* ✅ 세로 깨짐 방지 */
-    min-w-[64px]; /* ✅ 최소 가로폭 확보 */
+    whitespace-nowrap /* ???�스??줄바�?방�? */
+    leading-none        /* ???�로 깨짐 방�? */
+    min-w-[64px]; /* ??최소 가로폭 ?�보 */
 }
 
-/* --- 기본 버튼 스타일 --- */
+/* --- 기본 버튼 ?��???--- */
 .btn-etc {
 	@apply bg-[#58A5EE] text-white hover:opacity-80;
 }
@@ -83,7 +83,7 @@ body,
 	@apply bg-[#4B4B4B] text-white hover:opacity-80;
 }
 
-/* --- 검색 버튼 (아이콘 포함) --- */
+/* --- 검??버튼 (?�이�??�함) --- */
 .btn-search {
 	@apply bg-[#1784EA] text-white hover:opacity-80;
 	width: 72px;
@@ -100,7 +100,7 @@ body,
 	background-size: 16px 16px;
 }
 
-/* --- 엑셀 버튼 (아이콘 포함) --- */
+/* --- ?��? 버튼 (?�이�??�함) --- */
 .btn-excel {
 	@apply bg-[#00B846] text-white hover:opacity-80;
 	min-width: 72px;
@@ -117,7 +117,7 @@ body,
 	background-size: 16px 16px;
 }
 
-/* --- 아이콘 전용 버튼 --- */
+/* --- ?�이�??�용 버튼 --- */
 .icon_btn {
 	@apply hover:opacity-80 min-w-[26px] min-h-[26px] h-[26px] w-[26px] flex items-center leading-none;
 	background-color: #58a5ee;
@@ -134,7 +134,7 @@ body,
 	background-size: 14px 14px;
 }
 /* ============================= */
-/* 🔒 Disabled 상태 분리 정의     */
+/* ?�� Disabled ?�태 분리 ?�의     */
 /* ============================= */
 
 .btn-etc:disabled,
@@ -165,7 +165,7 @@ body,
 	background-image: url('/icon_calendar_disabled.svg');
 }
 
-/* 아이콘 버튼 크기 통일 */
+/* ?�이�?버튼 ?�기 ?�일 */
 .icon-square {
 	@apply w-4 h-4 shrink-0;
 }
@@ -188,41 +188,41 @@ body,
 }
 .form-th {
 	@apply table-cell bg-[#F1F5F8] border border-stone-300 px-1 py-1 text-sm text-right text-[#2A2A2A] align-middle whitespace-nowrap;
-	height: 30px; /* 고정 높이 지정 */
+	height: 30px; /* 고정 ?�이 지??*/
 	vertical-align: middle;
 }
 
 .form-td {
 	@apply table-cell bg-white border border-stone-300 px-1 py-1 text-left align-middle;
-	height: 30px; /* 고정 높이 지정 */
+	height: 30px; /* 고정 ?�이 지??*/
 	vertical-align: middle;
 }
 
-/* 커스텀 스크롤바/scroll-area/*/
+/* 커스?� ?�크롤바/scroll-area/*/
 .scroll-area {
 	overflow-y: auto;
 	scrollbar-width: thin;
 	scrollbar-color: #3b82c4 #f2f8ff;
-	background-color: transparent !important; /* ✅ 강제 제거 */
+	background-color: transparent !important; /* ??강제 ?�거 */
 }
 
-/* Webkit 기반 브라우저 (Chrome, Edge, Safari) */
+/* Webkit 기반 브라?��? (Chrome, Edge, Safari) */
 .scroll-area::-webkit-scrollbar {
 	width: 6px;
 }
 
 .scroll-area::-webkit-scrollbar-track {
-	background-color: #f2f8ff; /* 스크롤 트랙 배경 */
+	background-color: #f2f8ff; /* ?�크�??�랙 배경 */
 }
 
 .scroll-area::-webkit-scrollbar-thumb {
 	background-color: #3b82c4;
 	border-radius: 4px;
-	border: 2px solid #f2f8ff; /* 안쪽에 여백 효과 */
+	border: 2px solid #f2f8ff; /* ?�쪽???�백 ?�과 */
 	background-clip: content-box;
 }
 
-/* 스크롤디자인 */
+/* ?�크롤디?�인 */
 .scrollbar-thin::-webkit-scrollbar {
 	height: 6px;
 }
@@ -234,7 +234,7 @@ body,
 	background-color: transparent;
 }
 .scroll-content {
-	background-color: white; /* 불필요한 gray 방지 */
+	background-color: white; /* 불필?�한 gray 방�? */
 }
 
 /* ====  조회부 ==== */
@@ -254,7 +254,7 @@ body,
 	@apply bg-transparent  h-[30px] text-ellipsis overflow-hidden px-2;
 }
 
-/* ==== 타이틀 ==== */
+/* ==== ?�?��? ==== */
 .tit_area {
 	@apply font-medium h-[37px];
 	justify-content: space-between;
@@ -264,7 +264,7 @@ body,
 .sub-title {
 	@apply text-[13px] text-gray-500 mt-1 ml-2 leading-tight;
 }
-/* ==== 투명 테이블 ==== */
+/* ==== ?�명 ?�이�?==== */
 .clearbox-div {
 	@apply border rounded-[8px] p-3;
 }
@@ -282,45 +282,45 @@ body,
 	@apply h-[30px] bg-transparent align-middle pt-1;
 }
 
-/**페이지**/
+/**?�이지**/
 .mdi {
 	@apply flex flex-col overflow-auto min-w-[1510px] !h-[100%];
 }
 
 /**grid**/
-/* === 공통 그리드 박스 === */
+/* === 공통 그리??박스 === */
 .gridbox-div {
 	@apply border border-gray-200 rounded-md overflow-auto;
 }
 
-/* === 테이블 전체 === */
+/* === ?�이�??�체 === */
 .grid-table {
 	@apply table w-full text-sm text-gray-800 border-collapse;
 	table-layout: fixed !important;
 	width: 100% !important;
-	border-collapse: separate !important; /* 테두리 충돌 방지 */
-	border-spacing: 0 !important; /* 셀 간격 제거 */
+	border-collapse: separate !important; /* ?�두�?충돌 방�? */
+	border-spacing: 0 !important; /* ?� 간격 ?�거 */
 }
 
-/* === 헤더 행 === */
+/* === ?�더 ??=== */
 .grid-th {
 	@apply bg-[#EBF1F6] text-center font-semibold text-gray-700 border border-[#ccc] px-2 py-2 whitespace-nowrap;
-	border-top: none !important; /* 상단 검은 줄 제거 */
+	border-top: none !important; /* ?�단 검?� �??�거 */
 }
 
-/* === 데이터 행 === */
+/* === ?�이????=== */
 .grid-td {
 	@apply text-center px-2 py-2 border-b border-gray-100 whitespace-nowrap;
 }
 
-/* === 자동 스크롤을 위한 래퍼 === */
+/* === ?�동 ?�크롤을 ?�한 ?�퍼 === */
 .grid-scroll {
 	@apply overflow-y-auto w-full;
-	/* 필요 시 max-height 적용 */
+	/* ?�요 ??max-height ?�용 */
 	max-height: 300px;
 }
 
-/* === thead 전체에 sticky 적용 === */
+/* === thead ?�체??sticky ?�용 === */
 .popup-wrapper .grid-table thead,
 .grid-table thead {
 	position: sticky !important;
@@ -329,33 +329,33 @@ body,
 	background-color: #ebf1f6 !important;
 }
 
-/* === thead 내부 th 스타일 === */
+/* === thead ?��? th ?��???=== */
 .popup-wrapper .grid-table thead th,
 .grid-table thead th {
-	border: 1px solid #ccc !important; /* 원본과 동일한 border 스타일 */
+	border: 1px solid #ccc !important; /* ?�본�??�일??border ?��???*/
 	border-top: none !important;
 	transform: translateZ(0) !important;
 	isolation: isolate !important;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-	padding-right: 12px !important; /* 스크롤바 너비만큼 패딩 추가 */
+	padding-right: 12px !important; /* ?�크롤바 ?�비만큼 ?�딩 추�? */
 }
 
-/* === 그리드 데이터 컨테이너 === */
+/* === 그리???�이??컨테?�너 === */
 .grid-data-container {
 	height: calc(100% - 40px) !important;
 	overflow: auto !important;
 	position: relative !important;
 	z-index: 0 !important;
-	/*padding-right: 12px !important; /* 스크롤바 너비만큼 패딩 추가 */
+	/*padding-right: 12px !important; /* ?�크롤바 ?�비만큼 ?�딩 추�? */
 }
 
-/* === 헤더 셀들 사이의 세로 테두리 유지 === */
+/* === ?�더 ?�???�이???�로 ?�두�??��? === */
 .popup-wrapper .grid-table thead th:not(:first-child),
 .grid-table thead th:not(:first-child) {
-	border-left: 1px solid #ccc !important; /* 첫 번째 셀을 제외한 모든 셀에 왼쪽 테두리 */
+	border-left: 1px solid #ccc !important; /* �?번째 ?�???�외??모든 ?�???�쪽 ?�두�?*/
 }
 
-/* === sticky 헤더 하단 테두리 강화  === */
+/* === sticky ?�더 ?�단 ?�두�?강화  === */
 .popup-wrapper .grid-table thead th::after,
 .grid-table thead th::after {
 	content: '' !important;
@@ -365,29 +365,29 @@ body,
 	right: 0 !important;
 	height: 1px !important;
 	background-color: #ccc !important;
-	z-index: 11 !important; /* 다른 요소들 위에 표시 */
+	z-index: 11 !important; /* ?�른 ?�소???�에 ?�시 */
 }
 
-/* === tbody 첫 번째 행과의 경계선 처리 === */
+/* === tbody �?번째 ?�과??경계??처리 === */
 .popup-wrapper .grid-table tbody tr:first-child td,
 .grid-table tbody tr:first-child td {
-	border-top: none !important; /* 상단 테두리 제거 */
+	border-top: none !important; /* ?�단 ?�두�??�거 */
 }
 
-/* === tbody 셀 원본 스타일 적용 === */
+/* === tbody ?� ?�본 ?��????�용 === */
 .popup-wrapper .grid-table tbody td,
 .grid-table tbody td {
-	border: none !important; /* 모든 테두리 제거 */
-	border-bottom: 1px solid #d1d5db !important; /* 하단 테두리만 유지 (원본 border-gray-100과 유사) */
+	border: none !important; /* 모든 ?�두�??�거 */
+	border-bottom: 1px solid #d1d5db !important; /* ?�단 ?�두리만 ?��? (?�본 border-gray-100�??�사) */
 }
 
-/* === 그리드 짝수 컬러 다르게 === */
+/* === 그리??짝수 컬러 ?�르�?=== */
 .grid-tr {
 	@apply even:bg-[#fbfbfb] hover:bg-blue-50 cursor-pointer;
 }
-/* === hover 효과 === */
+/* === hover ?�과 === */
 .grid-tr:hover {
-	background-color: #dbecff !important; /* hover 시 더 강한 컬러 */
+	background-color: #dbecff !important; /* hover ????강한 컬러 */
 }
 @layer utilities {
 	.h-grid {
@@ -399,7 +399,7 @@ body,
 	@apply font-semibold text-sm px-4 py-2 bg-blue-50 border-b border-gray-300;
 }
 
-/* * 필수표시 */
+/* * ?�수?�시 */
 .required::before {
 	content: '*';
 	color: #ff2fa0;
@@ -407,27 +407,27 @@ body,
 	font-weight: bold;
 }
 
-/* 트리 전체 영역 */
+/* ?�리 ?�체 ?�역 */
 .menu-tree-wrap {
 	@apply w-full h-full flex flex-col border rounded border-stone-300 p-4 overflow-auto;
 }
-/* 트리 전체 ul */
+/* ?�리 ?�체 ul */
 .menu-tree {
 	@apply text-sm pl-2;
 }
-/* 1차 메뉴 */
+/* 1�?메뉴 */
 .menu-tree > li {
 	@apply mb-1;
 }
-/* 1차 메뉴 타이틀 */
+/* 1�?메뉴 ?�?��? */
 .menu-title {
 	@apply font-semibold text-stone-700 cursor-pointer hover:text-blue-600;
 }
-/* 하위 메뉴 ul */
+/* ?�위 메뉴 ul */
 .menu-children {
 	@apply ml-4 mt-1 list-disc;
 }
-/* 하위 메뉴 항목 */
+/* ?�위 메뉴 ??�� */
 .menu-child {
 	@apply cursor-pointer hover:text-blue-600;
 }
@@ -436,23 +436,23 @@ body,
 	margin: 0;
 }
 
-/* 팝업 전체 래퍼 */
+/* ?�업 ?�체 ?�퍼 */
 .popup-wrapper {
 	@apply w-full h-full flex flex-col bg-white border border-gray-300 rounded min-w-[600px];
 }
-/* 상단 헤더 */
+/* ?�단 ?�더 */
 .popup-header {
 	@apply flex items-center justify-between !h-[37px] px-4 text-white bg-[#00509A];
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 1;
-	white-space: nowrap; /* ✅ 텍스트 줄바꿈 방지 */
+	white-space: nowrap; /* ???�스??줄바�?방�? */
 }
-/* 타이틀 텍스트 */
+/* ?�?��? ?�스??*/
 .popup-title {
 	@apply truncate font-medium text-white py-3;
 }
-/* 닫기 버튼 */
+/* ?�기 버튼 */
 .popup-close {
 	@apply text-white text-xl leading-none hover:opacity-80 cursor-pointer;
 	line-height: 1;
@@ -469,7 +469,7 @@ body,
 	margin: 0;
 }
 
-/* 공통 에러 메시지 박스 스타일 */
+/* 공통 ?�러 메시지 박스 ?��???*/
 .error-message-box {
 	color: #fff;
 	background: #e53e3e;
@@ -492,29 +492,29 @@ body,
 	font-weight: normal;
 }
 
-/* 탭 컨테이너 */
+/* ??컨테?�너 */
 .tab-container {
 	@apply relative flex gap-1 z-10 border-b border-[#00509A];
 }
 
-/* 탭 버튼 */
+/* ??버튼 */
 .tab-button {
 	@apply h-[30px] px-4 py-1 text-[14px] font-normal font-['NanumGothic'] 
           inline-flex items-center justify-center rounded-t-md 
           border border-transparent relative;
 }
 
-/* 탭 활성 상태 */
+/* ???�성 ?�태 */
 .tab-active {
 	@apply bg-[#00509A] text-white border border-[#00509A] border-b z-20;
 }
 
-/* 탭 비활성 상태 */
+/* ??비활???�태 */
 .tab-inactive {
 	@apply bg-sky-50 text-[#798EA2] border border-[#D4E4F4] z-10;
 }
 
-/* 탭 콘텐츠 */
+/* ??콘텐�?*/
 .tab-panel {
 	@apply flex-1 min-h-0 overflow-auto 
          bg-white border border-[#00509A] rounded-br-lg p-4 z-0 relative;
@@ -523,40 +523,40 @@ body,
 	font-family: 'NanumGothic', sans-serif;
 }
 
-/* 서브 탭 박스 전체 */
+/* ?�브 ??박스 ?�체 */
 .sub-tab-container {
 	@apply border border-[#ccc] rounded-md;
 }
-/* 탭 리스트 wrapper */
+/* ??리스??wrapper */
 .sub-tab-list {
 	@apply flex border-b border-[#ccc] pt-2;
 }
-/* 공통 탭 버튼 스타일 */
+/* 공통 ??버튼 ?��???*/
 .sub-tab-button {
 	@apply px-4 py-2 text-sm font-semibold text-[#798EA2] hover:text-[#0071DB] transition-all;
 }
-/* 활성화된 탭 */
+/* ?�성?�된 ??*/
 .sub-tab-active {
 	@apply text-[#00509A] border-b border-[#00509A] pb-[7px];
 }
-/* 탭 패널 영역 */
+/* ???�널 ?�역 */
 .sub-tab-panel {
 	@apply p-4 bg-white;
 }
 
-/* === 우측 정렬 클래스 === */
+/* === ?�측 ?�렬 ?�래??=== */
 .text-right-align {
 	@apply text-right pr-4;
 	text-align: right !important;
 }
 
-/* === 좌측 정렬 클래스 === */
+/* === 좌측 ?�렬 ?�래??=== */
 .text-left-align {
 	@apply text-left pl-4;
 	text-align: left !important;
 }
 
-/* === ag-grid 헤더 가운데 정렬 === */
+/* === ag-grid ?�더 가?�데 ?�렬 === */
 .ag-center-header .ag-header-cell-text {
 	text-align: center !important;
 	justify-content: center !important;
@@ -565,3 +565,5 @@ body,
 .ag-center-header .ag-header-cell-label {
 	justify-content: center !important;
 }
+
+

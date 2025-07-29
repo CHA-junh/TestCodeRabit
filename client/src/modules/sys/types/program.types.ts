@@ -2,7 +2,7 @@ export interface Program {
   pgmId: string;
   pgmNm: string;
   pgmDivCd: string;
-  scrnDvcd?: string; // 화면 구분 코드 (SEIZE_TO_BIST와 동일)
+  scrnDvcd?: string; // ?�면 구분 코드 (SEIZE_TO_BIST?� ?�일)
   bizDivCd: string;
   sortSeq: number;
   useYn: string;
@@ -28,7 +28,7 @@ export interface ProgramCreateDto {
   pgmId: string;
   pgmNm: string;
   pgmDivCd?: string;
-  scrnDvcd?: string; // 화면 구분 코드 (SEIZE_TO_BIST와 동일)
+  scrnDvcd?: string; // ?�면 구분 코드 (SEIZE_TO_BIST?� ?�일)
   bizDivCd?: string;
   sortSeq?: number;
   useYn?: string;
@@ -79,3 +79,4 @@ export interface ProgramListResponse {
   page: number;
   limit: number;
 } 
+

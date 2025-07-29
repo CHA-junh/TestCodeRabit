@@ -46,3 +46,5 @@ export class User {
   @Column({ name: 'USR_ROLE_ID', type: 'varchar2', length: 20, nullable: true })
   usrRoleId?: string;
 }
+
+

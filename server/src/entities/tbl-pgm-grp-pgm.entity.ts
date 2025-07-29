@@ -20,3 +20,4 @@ export class TblPgmGrpPgm {
   @Column({ name: 'CHNGR_ID', type: 'varchar2', length: 10, nullable: true })
   chngrId: string;
 } 
+

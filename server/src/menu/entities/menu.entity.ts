@@ -32,3 +32,5 @@ export class MenuEntity {
   @Column({ name: 'CHNGR_ID', type: 'varchar2', length: 10 })
   chngrId: string;
 }
+
+

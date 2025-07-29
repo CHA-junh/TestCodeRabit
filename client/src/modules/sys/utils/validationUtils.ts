@@ -1,7 +1,7 @@
 /**
- * 필수 필드가 비어있는지 확인합니다.
- * @param value 검사할 값
- * @returns 비어있으면 true, 아니면 false
+ * ?�수 ?�드가 비어?�는지 ?�인?�니??
+ * @param value 검?�할 �?
+ * @returns 비어?�으�?true, ?�니�?false
  */
 export function isEmpty(value: any): boolean {
   if (value === null || value === undefined) return true;
@@ -11,11 +11,11 @@ export function isEmpty(value: any): boolean {
 }
 
 /**
- * 문자열 길이를 검사합니다.
- * @param value 검사할 문자열
+ * 문자??길이�?검?�합?�다.
+ * @param value 검?�할 문자??
  * @param min 최소 길이
- * @param max 최대 길이
- * @returns 유효성 검사 결과
+ * @param max 최�? 길이
+ * @returns ?�효??검??결과
  */
 export function validateStringLength(value: string, min?: number, max?: number): boolean {
   if (isEmpty(value)) return false;
@@ -29,9 +29,9 @@ export function validateStringLength(value: string, min?: number, max?: number):
 }
 
 /**
- * 이메일 형식을 검사합니다.
- * @param email 검사할 이메일
- * @returns 유효성 검사 결과
+ * ?�메???�식??검?�합?�다.
+ * @param email 검?�할 ?�메??
+ * @returns ?�효??검??결과
  */
 export function validateEmail(email: string): boolean {
   if (isEmpty(email)) return false;
@@ -41,9 +41,9 @@ export function validateEmail(email: string): boolean {
 }
 
 /**
- * 숫자 형식을 검사합니다.
- * @param value 검사할 값
- * @returns 유효성 검사 결과
+ * ?�자 ?�식??검?�합?�다.
+ * @param value 검?�할 �?
+ * @returns ?�효??검??결과
  */
 export function validateNumber(value: any): boolean {
   if (isEmpty(value)) return false;
@@ -53,9 +53,9 @@ export function validateNumber(value: any): boolean {
 }
 
 /**
- * 정수 형식을 검사합니다.
- * @param value 검사할 값
- * @returns 유효성 검사 결과
+ * ?�수 ?�식??검?�합?�다.
+ * @param value 검?�할 �?
+ * @returns ?�효??검??결과
  */
 export function validateInteger(value: any): boolean {
   if (isEmpty(value)) return false;
@@ -65,9 +65,9 @@ export function validateInteger(value: any): boolean {
 }
 
 /**
- * 날짜 형식을 검사합니다.
- * @param date 검사할 날짜 문자열
- * @returns 유효성 검사 결과
+ * ?�짜 ?�식??검?�합?�다.
+ * @param date 검?�할 ?�짜 문자??
+ * @returns ?�효??검??결과
  */
 export function validateDate(date: string): boolean {
   if (isEmpty(date)) return false;
@@ -77,35 +77,35 @@ export function validateDate(date: string): boolean {
 }
 
 /**
- * 프로그램 ID 형식을 검사합니다.
- * @param pgmId 검사할 프로그램 ID
- * @returns 유효성 검사 결과
+ * ?�로그램 ID ?�식??검?�합?�다.
+ * @param pgmId 검?�할 ?�로그램 ID
+ * @returns ?�효??검??결과
  */
 export function validateProgramId(pgmId: string): boolean {
   if (isEmpty(pgmId)) return false;
   
-  // 프로그램 ID는 영문자, 숫자, 언더스코어만 허용
+  // ?�로그램 ID???�문?? ?�자, ?�더?�코?�만 ?�용
   const pgmIdRegex = /^[A-Za-z0-9_]+$/;
   return pgmIdRegex.test(pgmId);
 }
 
 /**
- * 메뉴 ID 형식을 검사합니다.
- * @param menuId 검사할 메뉴 ID
- * @returns 유효성 검사 결과
+ * 메뉴 ID ?�식??검?�합?�다.
+ * @param menuId 검?�할 메뉴 ID
+ * @returns ?�효??검??결과
  */
 export function validateMenuId(menuId: string): boolean {
   if (isEmpty(menuId)) return false;
   
-  // 메뉴 ID는 영문자, 숫자, 언더스코어만 허용
+  // 메뉴 ID???�문?? ?�자, ?�더?�코?�만 ?�용
   const menuIdRegex = /^[A-Za-z0-9_]+$/;
   return menuIdRegex.test(menuId);
 }
 
 /**
- * Y/N 값인지 검사합니다.
- * @param value 검사할 값
- * @returns 유효성 검사 결과
+ * Y/N 값인지 검?�합?�다.
+ * @param value 검?�할 �?
+ * @returns ?�효??검??결과
  */
 export function validateYN(value: string): boolean {
   if (isEmpty(value)) return false;
@@ -114,10 +114,10 @@ export function validateYN(value: string): boolean {
 }
 
 /**
- * 폼 데이터의 유효성을 검사합니다.
- * @param data 검사할 데이터 객체
- * @param rules 검사 규칙 객체
- * @returns 검사 결과 객체
+ * ???�이?�의 ?�효?�을 검?�합?�다.
+ * @param data 검?�할 ?�이??객체
+ * @param rules 검??규칙 객체
+ * @returns 검??결과 객체
  */
 export function validateFormData(data: Record<string, any>, rules: Record<string, any>): Record<string, string> {
   const errors: Record<string, string> = {};
@@ -126,68 +126,68 @@ export function validateFormData(data: Record<string, any>, rules: Record<string
     const value = data[field];
     const fieldRules = rules[field];
 
-    // 필수 필드 검사
+    // ?�수 ?�드 검??
     if (fieldRules.required && isEmpty(value)) {
-      errors[field] = `${fieldRules.label || field}은(는) 필수입니다.`;
+      errors[field] = `${fieldRules.label || field}?�(?? ?�수?�니??`;
       return;
     }
 
-    // 값이 있는 경우에만 추가 검사
+    // 값이 ?�는 경우?�만 추�? 검??
     if (!isEmpty(value)) {
-      // 문자열 길이 검사
+      // 문자??길이 검??
       if (fieldRules.minLength && !validateStringLength(value, fieldRules.minLength)) {
-        errors[field] = `${fieldRules.label || field}은(는) 최소 ${fieldRules.minLength}자 이상이어야 합니다.`;
+        errors[field] = `${fieldRules.label || field}?�(?? 최소 ${fieldRules.minLength}???�상?�어???�니??`;
         return;
       }
 
       if (fieldRules.maxLength && !validateStringLength(value, undefined, fieldRules.maxLength)) {
-        errors[field] = `${fieldRules.label || field}은(는) 최대 ${fieldRules.maxLength}자까지 입력 가능합니다.`;
+        errors[field] = `${fieldRules.label || field}?�(?? 최�? ${fieldRules.maxLength}?�까지 ?�력 가?�합?�다.`;
         return;
       }
 
-      // 이메일 검사
+      // ?�메??검??
       if (fieldRules.email && !validateEmail(value)) {
-        errors[field] = `올바른 이메일 형식을 입력해주세요.`;
+        errors[field] = `?�바�??�메???�식???�력?�주?�요.`;
         return;
       }
 
-      // 숫자 검사
+      // ?�자 검??
       if (fieldRules.number && !validateNumber(value)) {
-        errors[field] = `숫자만 입력 가능합니다.`;
+        errors[field] = `?�자�??�력 가?�합?�다.`;
         return;
       }
 
-      // 정수 검사
+      // ?�수 검??
       if (fieldRules.integer && !validateInteger(value)) {
-        errors[field] = `정수만 입력 가능합니다.`;
+        errors[field] = `?�수�??�력 가?�합?�다.`;
         return;
       }
 
-      // 날짜 검사
+      // ?�짜 검??
       if (fieldRules.date && !validateDate(value)) {
-        errors[field] = `올바른 날짜 형식을 입력해주세요.`;
+        errors[field] = `?�바�??�짜 ?�식???�력?�주?�요.`;
         return;
       }
 
-      // 프로그램 ID 검사
+      // ?�로그램 ID 검??
       if (fieldRules.programId && !validateProgramId(value)) {
-        errors[field] = `프로그램 ID는 영문자, 숫자, 언더스코어만 사용 가능합니다.`;
+        errors[field] = `?�로그램 ID???�문?? ?�자, ?�더?�코?�만 ?�용 가?�합?�다.`;
         return;
       }
 
-      // 메뉴 ID 검사
+      // 메뉴 ID 검??
       if (fieldRules.menuId && !validateMenuId(value)) {
-        errors[field] = `메뉴 ID는 영문자, 숫자, 언더스코어만 사용 가능합니다.`;
+        errors[field] = `메뉴 ID???�문?? ?�자, ?�더?�코?�만 ?�용 가?�합?�다.`;
         return;
       }
 
-      // Y/N 검사
+      // Y/N 검??
       if (fieldRules.yn && !validateYN(value)) {
-        errors[field] = `Y 또는 N만 입력 가능합니다.`;
+        errors[field] = `Y ?�는 N�??�력 가?�합?�다.`;
         return;
       }
 
-      // 커스텀 검사
+      // 커스?� 검??
       if (fieldRules.custom) {
         const customError = fieldRules.custom(value, data);
         if (customError) {
@@ -200,3 +200,4 @@ export function validateFormData(data: Record<string, any>, rules: Record<string
 
   return errors;
 } 
+

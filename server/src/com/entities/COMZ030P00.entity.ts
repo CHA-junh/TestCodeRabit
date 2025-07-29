@@ -20,3 +20,4 @@ export class UnitPriceEntity {
   @Column({ name: 'USE_YN', type: 'char', length: 1 })
   useYn: string;
 } 
+

@@ -5,42 +5,42 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '../../modules/auth/hooks/useAuth'
 import COM0020M00 from '../com/COM0020M00'
 
-// 프리페치 방지
+// ?�리?�치 방�?
 export const dynamic = 'force-dynamic'
 
 /**
- * Signin Page - 로그인 페이지
+ * Signin Page - 로그???�이지
  *
  * 주요 기능:
- * - 인증 상태 확인
- * - 로그인 화면 렌더링
- * - 인증된 사용자 리다이렉트
+ * - ?�증 ?�태 ?�인
+ * - 로그???�면 ?�더�?
+ * - ?�증???�용??리다?�렉??
  *
- * 연관 컴포넌트:
- * - COM0020M00 (로그인 Main 화면)
+ * ?��? 컴포?�트:
+ * - COM0020M00 (로그??Main ?�면)
  */
 
 export default function SigninPage() {
 	const { isAuthenticated, loading } = useAuth()
 	const [isClient, setIsClient] = useState(false)
 
-	// 클라이언트 사이드 렌더링 확인
+	// ?�라?�언???�이???�더�??�인
 	useEffect(() => {
 		setIsClient(true)
 	}, [])
 
 	useEffect(() => {
-		// 클라이언트에서만 인증 체크
+		// ?�라?�언?�에?�만 ?�증 체크
 		if (!isClient) return
 
-		// 로딩이 완료되고 이미 인증된 경우 메인페이지로 리다이렉트
+		// 로딩???�료?�고 ?��? ?�증??경우 메인?�이지�?리다?�렉??
 		if (!loading && isAuthenticated) {
-			console.log('🔒 이미 인증된 사용자, 메인페이지로 리다이렉트')
+			console.log('?�� ?��? ?�증???�용?? 메인?�이지�?리다?�렉??)
 			window.location.href = '/mainframe'
 		}
 	}, [loading, isAuthenticated, isClient])
 
-	// 클라이언트가 아니거나 로딩 중이거나 이미 인증된 경우 로딩 화면 표시
+	// ?�라?�언?��? ?�니거나 로딩 중이거나 ?��? ?�증??경우 로딩 ?�면 ?�시
 	if (!isClient || loading || isAuthenticated) {
 		return (
 			<div className='min-h-screen flex items-center justify-center'>
@@ -65,7 +65,7 @@ export default function SigninPage() {
 							d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
 						></path>
 					</svg>
-					<span className='text-gray-600'>로딩 중...</span>
+					<span className='text-gray-600'>로딩 �?..</span>
 				</div>
 			</div>
 		)
@@ -73,3 +73,5 @@ export default function SigninPage() {
 
 	return <COM0020M00 />
 }
+
+

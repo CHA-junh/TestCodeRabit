@@ -4,9 +4,9 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
 export class MenuService {
   /**
-   * 메뉴 목록을 조회합니다.
-   * @param params 검색 조건
-   * @returns 메뉴 목록 응답
+   * 메뉴 목록??조회?�니??
+   * @param params 검??조건
+   * @returns 메뉴 목록 ?�답
    */
   static async getMenuList(params: MenuSearchParams = {}): Promise<MenuListResponse> {
     const searchParams = new URLSearchParams();
@@ -24,7 +24,7 @@ export class MenuService {
     });
 
     if (!response.ok) {
-      throw new Error(`메뉴 목록 조회 실패: ${response.statusText}`);
+      throw new Error(`메뉴 목록 조회 ?�패: ${response.statusText}`);
     }
 
     const result = await response.json();
@@ -37,9 +37,9 @@ export class MenuService {
   }
 
   /**
-   * 메뉴 ID로 단일 메뉴를 조회합니다.
+   * 메뉴 ID�??�일 메뉴�?조회?�니??
    * @param menuId 메뉴 ID
-   * @returns 메뉴 정보
+   * @returns 메뉴 ?�보
    */
   static async getMenuById(menuId: string): Promise<Menu> {
     const response = await fetch(`${API_BASE_URL}/api/sys/sys-menus/${menuId}`, {
@@ -50,7 +50,7 @@ export class MenuService {
     });
 
     if (!response.ok) {
-      throw new Error(`메뉴 조회 실패: ${response.statusText}`);
+      throw new Error(`메뉴 조회 ?�패: ${response.statusText}`);
     }
 
     const result = await response.json();
@@ -58,9 +58,9 @@ export class MenuService {
   }
 
   /**
-   * 새로운 메뉴를 생성합니다.
-   * @param data 메뉴 생성 데이터
-   * @returns 생성된 메뉴 정보
+   * ?�로??메뉴�??�성?�니??
+   * @param data 메뉴 ?�성 ?�이??
+   * @returns ?�성??메뉴 ?�보
    */
   static async createMenu(data: MenuCreateDto): Promise<Menu> {
     const response = await fetch(`${API_BASE_URL}/api/sys/sys-menus`, {
@@ -73,7 +73,7 @@ export class MenuService {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(`메뉴 생성 실패: ${errorData.message || response.statusText}`);
+      throw new Error(`메뉴 ?�성 ?�패: ${errorData.message || response.statusText}`);
     }
 
     const result = await response.json();
@@ -81,10 +81,10 @@ export class MenuService {
   }
 
   /**
-   * 메뉴 정보를 수정합니다.
+   * 메뉴 ?�보�??�정?�니??
    * @param menuId 메뉴 ID
-   * @param data 수정할 메뉴 데이터
-   * @returns 수정된 메뉴 정보
+   * @param data ?�정??메뉴 ?�이??
+   * @returns ?�정??메뉴 ?�보
    */
   static async updateMenu(menuId: string, data: MenuUpdateDto): Promise<Menu> {
     const response = await fetch(`${API_BASE_URL}/api/sys/sys-menus/${menuId}`, {
@@ -97,7 +97,7 @@ export class MenuService {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(`메뉴 수정 실패: ${errorData.message || response.statusText}`);
+      throw new Error(`메뉴 ?�정 ?�패: ${errorData.message || response.statusText}`);
     }
 
     const result = await response.json();
@@ -105,9 +105,9 @@ export class MenuService {
   }
 
   /**
-   * 메뉴를 삭제합니다.
+   * 메뉴�???��?�니??
    * @param menuId 메뉴 ID
-   * @returns 삭제 성공 여부
+   * @returns ??�� ?�공 ?��?
    */
   static async deleteMenu(menuId: string): Promise<boolean> {
     const response = await fetch(`${API_BASE_URL}/api/sys/sys-menus/${menuId}`, {
@@ -119,17 +119,17 @@ export class MenuService {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(`메뉴 삭제 실패: ${errorData.message || response.statusText}`);
+      throw new Error(`메뉴 ??�� ?�패: ${errorData.message || response.statusText}`);
     }
 
     return true;
   }
 
   /**
-   * 메뉴를 복사합니다.
-   * @param menuId 원본 메뉴 ID
-   * @param newMenuName 새로운 메뉴명
-   * @returns 복사된 메뉴 정보
+   * 메뉴�?복사?�니??
+   * @param menuId ?�본 메뉴 ID
+   * @param newMenuName ?�로??메뉴�?
+   * @returns 복사??메뉴 ?�보
    */
   static async copyMenu(menuId: string, newMenuName: string): Promise<Menu> {
     const response = await fetch(`${API_BASE_URL}/api/sys/sys-menus/${menuId}/copy`, {
@@ -142,7 +142,7 @@ export class MenuService {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(`메뉴 복사 실패: ${errorData.message || response.statusText}`);
+      throw new Error(`메뉴 복사 ?�패: ${errorData.message || response.statusText}`);
     }
 
     const result = await response.json();
@@ -150,9 +150,9 @@ export class MenuService {
   }
 
   /**
-   * 메뉴 트리를 조회합니다.
-   * @param menuId 메뉴 ID (전체 트리 조회 시 'ALL' 사용)
-   * @returns 메뉴 트리 정보
+   * 메뉴 ?�리�?조회?�니??
+   * @param menuId 메뉴 ID (?�체 ?�리 조회 ??'ALL' ?�용)
+   * @returns 메뉴 ?�리 ?�보
    */
   static async getMenuTree(menuId: string = 'ALL'): Promise<any[]> {
     const url = menuId === 'ALL' ? `${API_BASE_URL}/api/sys/sys-menus/tree` : `${API_BASE_URL}/api/sys/sys-menus/${menuId}/tree`;
@@ -164,7 +164,7 @@ export class MenuService {
     });
 
     if (!response.ok) {
-      throw new Error(`메뉴 트리 조회 실패: ${response.statusText}`);
+      throw new Error(`메뉴 ?�리 조회 ?�패: ${response.statusText}`);
     }
 
     const result = await response.json();
@@ -172,13 +172,13 @@ export class MenuService {
   }
 
   /**
-   * 특정 메뉴 기준으로 트리를 조회합니다.
+   * ?�정 메뉴 기�??�로 ?�리�?조회?�니??
    * @param menuId 메뉴 ID
-   * @returns 메뉴 트리 정보
+   * @returns 메뉴 ?�리 ?�보
    */
   static async getMenuTreeByMenu(menuId: string): Promise<any[]> {
-    console.log('🔍 MenuService.getMenuTreeByMenu 호출 - 메뉴ID:', menuId);
-    console.log('📡 API 엔드포인트:', `${API_BASE_URL}/api/sys/sys-menus/${menuId}/tree`);
+    console.log('?�� MenuService.getMenuTreeByMenu ?�출 - 메뉴ID:', menuId);
+    console.log('?�� API ?�드?�인??', `${API_BASE_URL}/api/sys/sys-menus/${menuId}/tree`);
     
     const response = await fetch(`${API_BASE_URL}/api/sys/sys-menus/${menuId}/tree`, {
       method: 'GET',
@@ -187,24 +187,24 @@ export class MenuService {
       },
     });
 
-    console.log('📊 API 응답 상태:', response.status, response.statusText);
+    console.log('?�� API ?�답 ?�태:', response.status, response.statusText);
 
     if (!response.ok) {
-      console.error('❌ API 호출 실패:', response.status, response.statusText);
-      throw new Error(`메뉴 트리 조회 실패: ${response.statusText}`);
+      console.error('??API ?�출 ?�패:', response.status, response.statusText);
+      throw new Error(`메뉴 ?�리 조회 ?�패: ${response.statusText}`);
     }
 
     const result = await response.json();
-    console.log('✅ API 응답 데이터:', result);
+    console.log('??API ?�답 ?�이??', result);
     
     return result.data || [];
   }
 
   /**
-   * 메뉴 상세를 조회합니다.
+   * 메뉴 ?�세�?조회?�니??
    * @param menuId 메뉴 ID
-   * @param parentMenuSeq 상위 메뉴 순번
-   * @returns 메뉴 상세 정보
+   * @param parentMenuSeq ?�위 메뉴 ?�번
+   * @returns 메뉴 ?�세 ?�보
    */
   static async getMenuDetails(menuId: string, parentMenuSeq: number): Promise<any[]> {
     const response = await fetch(`${API_BASE_URL}/api/sys/sys-menus/${menuId}/details/${parentMenuSeq}`, {
@@ -215,14 +215,14 @@ export class MenuService {
     });
 
     if (!response.ok) {
-      throw new Error(`메뉴 상세 조회 실패: ${response.statusText}`);
+      throw new Error(`메뉴 ?�세 조회 ?�패: ${response.statusText}`);
     }
 
     const result = await response.json();
     return result.data || [];
   }
 
-  // 메뉴별 프로그램 목록 조회 (SEIZE_TO_BIST 방식)
+  // 메뉴�??�로그램 목록 조회 (SEIZE_TO_BIST 방식)
   static async getMenuPrograms(menuId: string, menuSeq?: number): Promise<any[]> {
     const url = menuSeq !== undefined 
       ? `${API_BASE_URL}/api/sys/sys-menus/${menuId}/programs?menuSeq=${menuSeq}`
@@ -236,14 +236,14 @@ export class MenuService {
     });
 
     if (!response.ok) {
-      throw new Error('메뉴별 프로그램 조회 실패');
+      throw new Error('메뉴�??�로그램 조회 ?�패');
     }
 
     const result = await response.json();
     return result.data || [];
   }
 
-  // 프로그램 검색
+  // ?�로그램 검??
   static async searchPrograms(keyword: string): Promise<any[]> {
     const response = await fetch(`${API_BASE_URL}/api/sys/programs/search?keyword=${encodeURIComponent(keyword)}`, {
       method: 'GET',
@@ -253,14 +253,14 @@ export class MenuService {
     });
 
     if (!response.ok) {
-      throw new Error('프로그램 검색 실패');
+      throw new Error('?�로그램 검???�패');
     }
 
     const result = await response.json();
     return result.data || [];
   }
 
-  // 메뉴에 프로그램 추가
+  // 메뉴???�로그램 추�?
   static async addMenuProgram(menuId: string, programData: any): Promise<void> {
     const response = await fetch(`${API_BASE_URL}/api/sys/sys-menus/${menuId}/programs`, {
       method: 'POST',
@@ -271,11 +271,11 @@ export class MenuService {
     });
 
     if (!response.ok) {
-      throw new Error('프로그램 추가 실패');
+      throw new Error('?�로그램 추�? ?�패');
     }
   }
 
-  // 메뉴 프로그램 삭제
+  // 메뉴 ?�로그램 ??��
   static async deleteMenuProgram(menuId: string, menuSeq: number): Promise<void> {
     const response = await fetch(`${API_BASE_URL}/api/sys/sys-menus/${menuId}/programs/${menuSeq}`, {
       method: 'DELETE',
@@ -285,15 +285,15 @@ export class MenuService {
     });
 
     if (!response.ok) {
-      throw new Error('프로그램 삭제 실패');
+      throw new Error('?�로그램 ??�� ?�패');
     }
   }
 
-  // 메뉴 프로그램 저장 (SEIZE_TO_BIST 방식)
+  // 메뉴 ?�로그램 ?�??(SEIZE_TO_BIST 방식)
   static async saveMenuPrograms(menuId: string, programs: any[]): Promise<void> {
-    console.log('🔍 MenuService.saveMenuPrograms 호출');
-    console.log('📋 API URL:', `${API_BASE_URL}/api/sys/sys-menus/${menuId}/programs/save`);
-    console.log('📋 요청 데이터:', { MENU_PGM: programs });
+    console.log('?�� MenuService.saveMenuPrograms ?�출');
+    console.log('?�� API URL:', `${API_BASE_URL}/api/sys/sys-menus/${menuId}/programs/save`);
+    console.log('?�� ?�청 ?�이??', { MENU_PGM: programs });
     
     const response = await fetch(`${API_BASE_URL}/api/sys/sys-menus/${menuId}/programs/save`, {
       method: 'POST',
@@ -303,20 +303,20 @@ export class MenuService {
       body: JSON.stringify({ MENU_PGM: programs }),
     });
 
-    console.log('📋 응답 상태:', response.status);
-    console.log('📋 응답 상태 텍스트:', response.statusText);
+    console.log('?�� ?�답 ?�태:', response.status);
+    console.log('?�� ?�답 ?�태 ?�스??', response.statusText);
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.error('❌ API 응답 에러:', errorData);
-      throw new Error(`메뉴 프로그램 저장 실패: ${errorData.message || response.statusText}`);
+      console.error('??API ?�답 ?�러:', errorData);
+      throw new Error(`메뉴 ?�로그램 ?�???�패: ${errorData.message || response.statusText}`);
     }
     
     const result = await response.json().catch(() => ({}));
-    console.log('✅ API 응답 성공:', result);
+    console.log('??API ?�답 ?�공:', result);
   }
 
-  // 메뉴 트리 순서 업데이트
+  // 메뉴 ?�리 ?�서 ?�데?�트
   static async updateMenuTreeOrder(menuId: string, treeData: any[]): Promise<void> {
     const response = await fetch(`${API_BASE_URL}/api/sys/sys-menus/${menuId}/tree-order`, {
       method: 'PUT',
@@ -327,11 +327,11 @@ export class MenuService {
     });
 
     if (!response.ok) {
-      throw new Error('메뉴 트리 순서 업데이트 실패');
+      throw new Error('메뉴 ?�리 ?�서 ?�데?�트 ?�패');
     }
   }
 
-  // 트리 순서 업데이트 (SEIZE_TO_BIST 방식)
+  // ?�리 ?�서 ?�데?�트 (SEIZE_TO_BIST 방식)
   static async updateTreeMenu(menuId: string, treeData: any[]): Promise<void> {
     const response = await fetch(`${API_BASE_URL}/api/sys/sys-menus/${menuId}/update-tree-menu`, {
       method: 'POST',
@@ -342,14 +342,14 @@ export class MenuService {
     });
 
     if (!response.ok) {
-      throw new Error('트리 순서 업데이트 실패');
+      throw new Error('?�리 ?�서 ?�데?�트 ?�패');
     }
   }
 
   /**
-   * 메뉴 미리보기를 위한 메뉴 데이터를 조회합니다.
+   * 메뉴 미리보기�??�한 메뉴 ?�이?��? 조회?�니??
    * @param menuId 메뉴 ID
-   * @returns 메뉴 미리보기 데이터
+   * @returns 메뉴 미리보기 ?�이??
    */
   static async getMenuPreview(menuId: string): Promise<any[]> {
     const response = await fetch(`${API_BASE_URL}/api/sys/sys-menus/${menuId}/preview`, {
@@ -361,7 +361,7 @@ export class MenuService {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(`메뉴 미리보기 조회 실패: ${errorData.message || response.statusText}`);
+      throw new Error(`메뉴 미리보기 조회 ?�패: ${errorData.message || response.statusText}`);
     }
 
     const result = await response.json();
@@ -375,7 +375,8 @@ export class MenuService {
       body: JSON.stringify({ menuSeqs }),
     });
     if (!response.ok) {
-      throw new Error('계층 삭제 실패');
+      throw new Error('계층 ??�� ?�패');
     }
   }
 } 
+

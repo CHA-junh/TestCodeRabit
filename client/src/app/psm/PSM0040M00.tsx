@@ -5,27 +5,27 @@ import PSM0050M00 from './PSM0050M00';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
 
 /**
- * PSM0040M00 - 개발프로필 관리 메인 화면
+ * PSM0040M00 - 개발?�로??관�?메인 ?�면
  * 
- * 개발자의 프로필 정보를 관리하는 메인 화면입니다.
- * PSM0050M00 (개발프로필 등록 및 수정) 화면을 호출하는 컨테이너 컴포넌트로,
- * 첫 오픈 시 본인 정보를 자동으로 셋팅하고 조회까지 수행합니다.
+ * 개발?�의 ?�로???�보�?관리하??메인 ?�면?�니??
+ * PSM0050M00 (개발?�로???�록 �??�정) ?�면???�출?�는 컨테?�너 컴포?�트�?
+ * �??�픈 ??본인 ?�보�??�동?�로 ?�팅?�고 조회까�? ?�행?�니??
  * 
  * 주요 기능:
- * - 본인 정보 자동 셋팅 (로그인한 사용자 정보 활용)
- * - PSM0050M00 화면 호출 및 파라미터 전달
- * - props로 전달받은 사원 정보 우선 사용
+ * - 본인 ?�보 ?�동 ?�팅 (로그?�한 ?�용???�보 ?�용)
+ * - PSM0050M00 ?�면 ?�출 �??�라미터 ?�달
+ * - props�??�달받�? ?�원 ?�보 ?�선 ?�용
  * 
- * AS-IS: PSM_03_0100.mxml (개발프로필 등록 및 수정 메인 화면)
- * TO-BE: PSM0050M00을 호출하는 래퍼 컴포넌트
+ * AS-IS: PSM_03_0100.mxml (개발?�로???�록 �??�정 메인 ?�면)
+ * TO-BE: PSM0050M00???�출?�는 ?�퍼 컴포?�트
  * 
- * 사용 예시:
+ * ?�용 ?�시:
  * ```tsx
- * // 본인 프로필 관리 화면 열기
+ * // 본인 ?�로??관�??�면 ?�기
  * <PSM0040M00 />
  * 
- * // 특정 사원의 프로필 관리 화면 열기
- * <PSM0040M00 empNo="10001" empNm="홍길동" />
+ * // ?�정 ?�원???�로??관�??�면 ?�기
+ * <PSM0040M00 empNo="10001" empNm="?�길?? />
  * ```
  * 
  * @author BIST Development Team
@@ -33,28 +33,28 @@ import { useAuth } from '@/modules/auth/hooks/useAuth';
  */
 
 /**
- * PSM0040M00 컴포넌트 Props 인터페이스
+ * PSM0040M00 컴포?�트 Props ?�터?�이??
  * 
- * @property {string} [empNo] - 조회할 사원번호 (미입력 시 본인 정보 사용)
- * @property {string} [empNm] - 조회할 사원명 (미입력 시 본인 정보 사용)
- * @property {any} [key] - 기타 추가 파라미터
+ * @property {string} [empNo] - 조회???�원번호 (미입????본인 ?�보 ?�용)
+ * @property {string} [empNm] - 조회???�원�?(미입????본인 ?�보 ?�용)
+ * @property {any} [key] - 기�? 추�? ?�라미터
  */
 interface PSM0040M00Props {
-  /** 사원번호 */
+  /** ?�원번호 */
   empNo?: string;
-  /** 사원명 */
+  /** ?�원�?*/
   empNm?: string;
-  /** 기타 파라미터 */
+  /** 기�? ?�라미터 */
   [key: string]: any;
 }
 
 /**
- * PSM0040M00 컴포넌트
+ * PSM0040M00 컴포?�트
  * 
- * 개발프로필 관리 메인 화면을 렌더링하는 함수형 컴포넌트입니다.
+ * 개발?�로??관�?메인 ?�면???�더링하???�수??컴포?�트?�니??
  * 
- * @param {PSM0040M00Props} props - 컴포넌트 props
- * @returns {JSX.Element} PSM0040M00 화면 JSX
+ * @param {PSM0040M00Props} props - 컴포?�트 props
+ * @returns {JSX.Element} PSM0040M00 ?�면 JSX
  */
 const PSM0040M00: React.FC<PSM0040M00Props> = ({ empNo, empNm, ...otherProps }) => {
   const { user } = useAuth();
@@ -62,22 +62,22 @@ const PSM0040M00: React.FC<PSM0040M00Props> = ({ empNo, empNm, ...otherProps }) 
   const [autoEmpNm, setAutoEmpNm] = useState<string>('');
 
   /**
-   * 첫 오픈 시 본인 정보 자동 셋팅
+   * �??�픈 ??본인 ?�보 ?�동 ?�팅
    * 
-   * props로 전달받은 사원 정보가 없으면 현재 로그인한 사용자의 정보를 사용하고,
-   * props로 전달받은 정보가 있으면 해당 정보를 우선 사용합니다.
+   * props�??�달받�? ?�원 ?�보가 ?�으�??�재 로그?�한 ?�용?�의 ?�보�??�용?�고,
+   * props�??�달받�? ?�보가 ?�으�??�당 ?�보�??�선 ?�용?�니??
    * 
-   * @param {User} user - 현재 로그인한 사용자 정보
-   * @param {string} empNo - props로 전달받은 사원번호
-   * @param {string} empNm - props로 전달받은 사원명
+   * @param {User} user - ?�재 로그?�한 ?�용???�보
+   * @param {string} empNo - props�??�달받�? ?�원번호
+   * @param {string} empNm - props�??�달받�? ?�원�?
    */
   useEffect(() => {
     if (user && !empNo && !empNm) {
-      // props로 전달받은 empNo, empNm이 없고 로그인한 사용자 정보가 있으면 본인 정보 사용
+      // props�??�달받�? empNo, empNm???�고 로그?�한 ?�용???�보가 ?�으�?본인 ?�보 ?�용
       setAutoEmpNo(user.empNo || '');
       setAutoEmpNm(user.name || '');
     } else {
-      // props로 전달받은 정보가 있으면 해당 정보 사용
+      // props�??�달받�? ?�보가 ?�으�??�당 ?�보 ?�용
       setAutoEmpNo(empNo || '');
       setAutoEmpNm(empNm || '');
     }
@@ -95,3 +95,4 @@ const PSM0040M00: React.FC<PSM0040M00Props> = ({ empNo, empNm, ...otherProps }) 
 };
 
 export default PSM0040M00; 
+

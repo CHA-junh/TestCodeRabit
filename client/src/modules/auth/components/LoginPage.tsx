@@ -14,3 +14,5 @@ export default function LoginPage() {
 
 	return <LoginForm onSubmit={handleLogin} loading={loading} />
 }
+
+

@@ -5,15 +5,15 @@ export async function POST(request: NextRequest) {
 		const body = await request.json()
 		const { empNo, password } = body
 
-		// 입력 검증
+		// ?�력 검�?
 		if (!empNo || !password) {
 			return NextResponse.json(
-				{ success: false, message: '사원번호와 비밀번호를 입력해주세요.' },
+				{ success: false, message: '?�원번호?� 비�?번호�??�력?�주?�요.' },
 				{ status: 400 }
 			)
 		}
 
-		// 서버(DB) 인증 요청
+		// ?�버(DB) ?�증 ?�청
 		const serverUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
 		const requestBody = JSON.stringify({ empNo, password })
 
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 			return NextResponse.json(
 				{
 					success: false,
-					message: errorText || '사용자 정보 조회에 실패했습니다.',
+					message: errorText || '?�용???�보 조회???�패?�습?�다.',
 				},
 				{ status: dbResponse.status }
 			)
@@ -46,13 +46,13 @@ export async function POST(request: NextRequest) {
 			)
 		}
 
-		// 서버에서 조회한 사용자 정보를 클라이언트 형식으로 변환
+		// ?�버?�서 조회???�용???�보�??�라?�언???�식?�로 변??
 		const user = dbData.user
 
-		// 서버에서 설정한 세션 쿠키를 그대로 사용
+		// ?�버?�서 ?�정???�션 쿠키�?그�?�??�용
 		const response = NextResponse.json({
 			success: true,
-			message: '로그인 성공',
+			message: '로그???�공',
 			user,
 		})
 
@@ -64,8 +64,10 @@ export async function POST(request: NextRequest) {
 		return response
 	} catch (error) {
 		return NextResponse.json(
-			{ success: false, message: '서버 오류가 발생했습니다.' },
+			{ success: false, message: '?�버 ?�류가 발생?�습?�다.' },
 			{ status: 500 }
 		)
 	}
 }
+
+

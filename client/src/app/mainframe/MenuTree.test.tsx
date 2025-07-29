@@ -3,44 +3,44 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import MenuTree from './MenuTree'
 
-describe('MenuTree - 메뉴 트리 컴포넌트', () => {
+describe('MenuTree - 메뉴 ?�리 컴포?�트', () => {
 	const mockMenuList = [
 		{
 			menuSeq: '1',
-			menuDspNm: '시스템 관리',
+			menuDspNm: '?�스??관�?,
 			pgmId: null,
 			menuShpDvcd: 'F',
 			hgrkMenuSeq: '0',
 			flag: 1,
 			menuUseYn: 'Y',
 			menuLvl: 1,
-			mapTitle: '시스템 관리',
+			mapTitle: '?�스??관�?,
 			menuPath: '/sys',
 			children: []
 		},
 		{
 			menuSeq: '2',
-			menuDspNm: '사용자 관리',
+			menuDspNm: '?�용??관�?,
 			pgmId: 'USR2010M00',
 			menuShpDvcd: 'L',
 			hgrkMenuSeq: '1',
 			flag: 2,
 			menuUseYn: 'Y',
 			menuLvl: 2,
-			mapTitle: '사용자 관리',
+			mapTitle: '?�용??관�?,
 			menuPath: '/usr/USR2010M00',
 			children: []
 		},
 		{
 			menuSeq: '3',
-			menuDspNm: '공통 관리',
+			menuDspNm: '공통 관�?,
 			pgmId: null,
 			menuShpDvcd: 'F',
 			hgrkMenuSeq: '0',
 			flag: 1,
 			menuUseYn: 'Y',
 			menuLvl: 1,
-			mapTitle: '공통 관리',
+			mapTitle: '공통 관�?,
 			menuPath: '/com',
 			children: []
 		}
@@ -53,83 +53,83 @@ describe('MenuTree - 메뉴 트리 컴포넌트', () => {
 		jest.clearAllMocks()
 	})
 
-	describe('렌더링 테스트', () => {
-		it('메뉴 트리가 올바르게 렌더링되어야 한다', () => {
+	describe('?�더�??�스??, () => {
+		it('메뉴 ?�리가 ?�바르게 ?�더링되?�야 ?�다', () => {
 			render(<MenuTree menuList={mockMenuList} onMenuClick={mockOnMenuClick} />)
 			
-			expect(screen.getByText('프로그램')).toBeInTheDocument()
-			expect(screen.getByPlaceholderText('메뉴명을 입력 해 주세요')).toBeInTheDocument()
+			expect(screen.getByText('?�로그램')).toBeInTheDocument()
+			expect(screen.getByPlaceholderText('메뉴명을 ?�력 ??주세??)).toBeInTheDocument()
 		})
 
-		it('메뉴 리스트가 올바르게 표시되어야 한다', async () => {
+		it('메뉴 리스?��? ?�바르게 ?�시?�어???�다', async () => {
 			render(<MenuTree menuList={mockMenuList} onMenuClick={mockOnMenuClick} />)
 			
-			expect(screen.getByText('시스템 관리')).toBeInTheDocument()
+			expect(screen.getByText('?�스??관�?)).toBeInTheDocument()
 			
-			// 시스템 관리 메뉴를 확장하여 하위 메뉴 표시
+			// ?�스??관�?메뉴�??�장?�여 ?�위 메뉴 ?�시
 			const expandButton = screen.getByAltText('expand')
 			fireEvent.click(expandButton)
 			
 			await waitFor(() => {
-				expect(screen.getByText('사용자 관리')).toBeInTheDocument()
+				expect(screen.getByText('?�용??관�?)).toBeInTheDocument()
 			})
 		})
 
-		it('메뉴가 없을 때 안내 메시지가 표시되어야 한다', () => {
+		it('메뉴가 ?�을 ???�내 메시지가 ?�시?�어???�다', () => {
 			render(<MenuTree menuList={[]} onMenuClick={mockOnMenuClick} />)
 			
-			expect(screen.getByText('메뉴가 없습니다.')).toBeInTheDocument()
+			expect(screen.getByText('메뉴가 ?�습?�다.')).toBeInTheDocument()
 		})
 	})
 
-	describe('메뉴 검색 테스트', () => {
-		it('검색어 입력 시 필터링이 동작해야 한다', async () => {
+	describe('메뉴 검???�스??, () => {
+		it('검?�어 ?�력 ???�터링이 ?�작?�야 ?�다', async () => {
 			render(<MenuTree menuList={mockMenuList} onMenuClick={mockOnMenuClick} />)
 			
-			const searchInput = screen.getByPlaceholderText('메뉴명을 입력 해 주세요')
-			fireEvent.change(searchInput, { target: { value: '사용자' } })
+			const searchInput = screen.getByPlaceholderText('메뉴명을 ?�력 ??주세??)
+			fireEvent.change(searchInput, { target: { value: '?�용?? } })
 			
 			await waitFor(() => {
-				expect(screen.getByText('사용자 관리')).toBeInTheDocument()
-				expect(screen.queryByText('공통 관리')).not.toBeInTheDocument()
+				expect(screen.getByText('?�용??관�?)).toBeInTheDocument()
+				expect(screen.queryByText('공통 관�?)).not.toBeInTheDocument()
 			})
 		})
 
-		it('검색어가 2자 미만일 때 필터링이 동작하지 않아야 한다', async () => {
+		it('검?�어가 2??미만?????�터링이 ?�작?��? ?�아???�다', async () => {
 			render(<MenuTree menuList={mockMenuList} onMenuClick={mockOnMenuClick} />)
 			
-			const searchInput = screen.getByPlaceholderText('메뉴명을 입력 해 주세요')
-			fireEvent.change(searchInput, { target: { value: '시' } })
+			const searchInput = screen.getByPlaceholderText('메뉴명을 ?�력 ??주세??)
+			fireEvent.change(searchInput, { target: { value: '?? } })
 			
-			// 시스템 관리 메뉴를 확장
+			// ?�스??관�?메뉴�??�장
 			const expandButton = screen.getByAltText('expand')
 			fireEvent.click(expandButton)
 			
 			await waitFor(() => {
-				expect(screen.getByText('시스템 관리')).toBeInTheDocument()
-				expect(screen.getByText('사용자 관리')).toBeInTheDocument()
+				expect(screen.getByText('?�스??관�?)).toBeInTheDocument()
+				expect(screen.getByText('?�용??관�?)).toBeInTheDocument()
 			})
 		})
 
-		it('검색어를 지우면 전체 메뉴가 표시되어야 한다', async () => {
+		it('검?�어�?지?�면 ?�체 메뉴가 ?�시?�어???�다', async () => {
 			render(<MenuTree menuList={mockMenuList} onMenuClick={mockOnMenuClick} />)
 			
-			const searchInput = screen.getByPlaceholderText('메뉴명을 입력 해 주세요')
+			const searchInput = screen.getByPlaceholderText('메뉴명을 ?�력 ??주세??)
 			fireEvent.change(searchInput, { target: { value: '' } })
 			
-			// 시스템 관리 메뉴를 확장
+			// ?�스??관�?메뉴�??�장
 			const expandButton = screen.getByAltText('expand')
 			fireEvent.click(expandButton)
 			
 			await waitFor(() => {
-				expect(screen.getByText('시스템 관리')).toBeInTheDocument()
-				expect(screen.getByText('사용자 관리')).toBeInTheDocument()
+				expect(screen.getByText('?�스??관�?)).toBeInTheDocument()
+				expect(screen.getByText('?�용??관�?)).toBeInTheDocument()
 			})
 		})
 	})
 
-	describe('메뉴 클릭 테스트', () => {
-		it('프로그램 메뉴 클릭 시 onMenuClick이 호출되어야 한다', async () => {
+	describe('메뉴 ?�릭 ?�스??, () => {
+		it('?�로그램 메뉴 ?�릭 ??onMenuClick???�출?�어???�다', async () => {
 			render(
 				<MenuTree 
 					menuList={mockMenuList} 
@@ -137,11 +137,11 @@ describe('MenuTree - 메뉴 트리 컴포넌트', () => {
 				/>
 			)
 			
-			// 시스템 관리 메뉴를 확장
+			// ?�스??관�?메뉴�??�장
 			const expandButton = screen.getByAltText('expand')
 			fireEvent.click(expandButton)
 			
-			const userMenu = await screen.findByText('사용자 관리')
+			const userMenu = await screen.findByText('?�용??관�?)
 			fireEvent.click(userMenu)
 			
 			await waitFor(() => {
@@ -149,7 +149,7 @@ describe('MenuTree - 메뉴 트리 컴포넌트', () => {
 			})
 		})
 
-		it('폴더 메뉴 클릭 시 onMenuClick이 호출되지 않아야 한다', async () => {
+		it('?�더 메뉴 ?�릭 ??onMenuClick???�출?��? ?�아???�다', async () => {
 			render(
 				<MenuTree
 					menuList={mockMenuList}
@@ -158,7 +158,7 @@ describe('MenuTree - 메뉴 트리 컴포넌트', () => {
 				/>
 			)
 			
-			const systemMenu = screen.getByText('시스템 관리')
+			const systemMenu = screen.getByText('?�스??관�?)
 			fireEvent.click(systemMenu)
 			
 			await waitFor(() => {
@@ -167,8 +167,8 @@ describe('MenuTree - 메뉴 트리 컴포넌트', () => {
 		})
 	})
 
-	describe('잠금 기능 테스트', () => {
-		it('잠금 버튼 클릭 시 상태가 변경되어야 한다', async () => {
+	describe('?�금 기능 ?�스??, () => {
+		it('?�금 버튼 ?�릭 ???�태가 변경되?�야 ?�다', async () => {
 			render(
 				<MenuTree
 					menuList={mockMenuList}
@@ -185,7 +185,7 @@ describe('MenuTree - 메뉴 트리 컴포넌트', () => {
 			})
 		})
 
-		it('잠금 해제 버튼 클릭 시 상태가 변경되어야 한다', async () => {
+		it('?�금 ?�제 버튼 ?�릭 ???�태가 변경되?�야 ?�다', async () => {
 			render(
 				<MenuTree
 					menuList={mockMenuList}
@@ -194,11 +194,11 @@ describe('MenuTree - 메뉴 트리 컴포넌트', () => {
 				/>
 			)
 			
-			// 먼저 잠금
+			// 먼�? ?�금
 			const lockButton = screen.getByAltText('unlock')
 			fireEvent.click(lockButton)
 			
-			// 잠금 해제
+			// ?�금 ?�제
 			const unlockButton = screen.getByAltText('lock')
 			fireEvent.click(unlockButton)
 			
@@ -208,31 +208,31 @@ describe('MenuTree - 메뉴 트리 컴포넌트', () => {
 		})
 	})
 
-	describe('전체 확장/축소 테스트', () => {
-		it('전체 확장 버튼 클릭 시 모든 메뉴가 펼쳐져야 한다', async () => {
+	describe('?�체 ?�장/축소 ?�스??, () => {
+		it('?�체 ?�장 버튼 ?�릭 ??모든 메뉴가 ?�쳐?�야 ?�다', async () => {
 			const treeMenuList = [
 				{
 					menuSeq: '1',
-					menuDspNm: '시스템 관리',
+					menuDspNm: '?�스??관�?,
 					pgmId: null,
 					menuShpDvcd: 'F',
 					hgrkMenuSeq: '0',
 					flag: 1,
 					menuUseYn: 'Y',
 					menuLvl: 1,
-					mapTitle: '시스템 관리',
+					mapTitle: '?�스??관�?,
 					menuPath: '/sys',
 					children: [
 						{
 							menuSeq: '2',
-							menuDspNm: '사용자 관리',
+							menuDspNm: '?�용??관�?,
 							pgmId: 'USR2010M00',
 							menuShpDvcd: 'L',
 							hgrkMenuSeq: '1',
 							flag: 2,
 							menuUseYn: 'Y',
 							menuLvl: 2,
-							mapTitle: '사용자 관리',
+							mapTitle: '?�용??관�?,
 							menuPath: '/usr/USR2010M00',
 							children: []
 						}
@@ -252,34 +252,34 @@ describe('MenuTree - 메뉴 트리 컴포넌트', () => {
 			fireEvent.click(expandButton)
 			
 			await waitFor(() => {
-				expect(screen.getByText('사용자 관리')).toBeInTheDocument()
+				expect(screen.getByText('?�용??관�?)).toBeInTheDocument()
 			})
 		})
 
-		it('전체 축소 버튼 클릭 시 모든 메뉴가 접혀야 한다', async () => {
+		it('?�체 축소 버튼 ?�릭 ??모든 메뉴가 ?��????�다', async () => {
 			const treeMenuList = [
 				{
 					menuSeq: '1',
-					menuDspNm: '시스템 관리',
+					menuDspNm: '?�스??관�?,
 					pgmId: null,
 					menuShpDvcd: 'F',
 					hgrkMenuSeq: '0',
 					flag: 1,
 					menuUseYn: 'Y',
 					menuLvl: 1,
-					mapTitle: '시스템 관리',
+					mapTitle: '?�스??관�?,
 					menuPath: '/sys',
 					children: [
 						{
 							menuSeq: '2',
-							menuDspNm: '사용자 관리',
+							menuDspNm: '?�용??관�?,
 							pgmId: 'USR2010M00',
 							menuShpDvcd: 'L',
 							hgrkMenuSeq: '1',
 							flag: 2,
 							menuUseYn: 'Y',
 							menuLvl: 2,
-							mapTitle: '사용자 관리',
+							mapTitle: '?�용??관�?,
 							menuPath: '/usr/USR2010M00',
 							children: []
 						}
@@ -299,22 +299,22 @@ describe('MenuTree - 메뉴 트리 컴포넌트', () => {
 			fireEvent.click(collapseButton)
 			
 			await waitFor(() => {
-				expect(screen.queryByText('사용자 관리')).not.toBeInTheDocument()
+				expect(screen.queryByText('?�용??관�?)).not.toBeInTheDocument()
 			})
 		})
 	})
 
-	describe('트리 구조 변환 테스트', () => {
-		it('평면 배열을 트리 구조로 변환해야 한다', () => {
+	describe('?�리 구조 변???�스??, () => {
+		it('?�면 배열???�리 구조�?변?�해???�다', () => {
 			render(<MenuTree menuList={mockMenuList} onMenuClick={mockOnMenuClick} />)
 			
-			// 최상위 메뉴들이 표시되는지 확인
-			expect(screen.getByText('시스템 관리')).toBeInTheDocument()
+			// 최상??메뉴?�이 ?�시?�는지 ?�인
+			expect(screen.getByText('?�스??관�?)).toBeInTheDocument()
 		})
 	})
 
-	describe('접근성 테스트', () => {
-		it('검색 입력 필드에 적절한 placeholder가 있어야 한다', () => {
+	describe('?�근???�스??, () => {
+		it('검???�력 ?�드???�절??placeholder가 ?�어???�다', () => {
 			render(
 				<MenuTree
 					menuList={mockMenuList}
@@ -323,11 +323,11 @@ describe('MenuTree - 메뉴 트리 컴포넌트', () => {
 				/>
 			)
 			
-			const searchInput = screen.getByPlaceholderText('메뉴명을 입력 해 주세요')
+			const searchInput = screen.getByPlaceholderText('메뉴명을 ?�력 ??주세??)
 			expect(searchInput).toBeInTheDocument()
 		})
 
-		it('버튼들이 적절한 alt 텍스트를 가져야 한다', () => {
+		it('버튼?�이 ?�절??alt ?�스?��? 가?�야 ?�다', () => {
 			render(
 				<MenuTree
 					menuList={mockMenuList}
@@ -342,3 +342,4 @@ describe('MenuTree - 메뉴 트리 컴포넌트', () => {
 		})
 	})
 }) 
+

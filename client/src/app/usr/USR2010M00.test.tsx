@@ -1,13 +1,13 @@
 /*
- * USR2010M00 - 사용자 관리 화면 하이브리드 테스트
+ * USR2010M00 - ?�용??관�??�면 ?�이브리???�스??
  *
- * 이 테스트는 두 가지 방식을 사용합니다:
- * 1. UI 테스트: Mock을 사용한 컴포넌트 렌더링 테스트
- * 2. API 테스트: 실제 HTTP 클라이언트를 사용한 서버 통신 테스트 (서버 실행 시)
+ * ???�스?�는 ??가지 방식???�용?�니??
+ * 1. UI ?�스?? Mock???�용??컴포?�트 ?�더�??�스??
+ * 2. API ?�스?? ?�제 HTTP ?�라?�언?��? ?�용???�버 ?�신 ?�스??(?�버 ?�행 ??
  *
- * - 조회/저장/삭제 시 실제 거래 호출 방식 준비
- * - 실제 DB 연결을 통한 통합 테스트 준비
- * - 실제 사용자 시나리오 기반 테스트
+ * - 조회/?�????�� ???�제 거래 ?�출 방식 준�?
+ * - ?�제 DB ?�결???�한 ?�합 ?�스??준�?
+ * - ?�제 ?�용???�나리오 기반 ?�스??
  */
 
 import React from "react";
@@ -19,8 +19,8 @@ import axios from "axios";
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-// UI 테스트용 최소한의 Mock (필요시에만)
-// 실제 API 호출을 방지하기 위한 기본 Mock
+// UI ?�스?�용 최소?�의 Mock (?�요?�에�?
+// ?�제 API ?�출??방�??�기 ?�한 기본 Mock
 jest.mock("../../modules/auth/services/authService", () => ({
 	__esModule: true,
 	default: {
@@ -29,10 +29,10 @@ jest.mock("../../modules/auth/services/authService", () => ({
 			user: {
 				userId: "test-user",
 				empNo: "test-emp",
-				userName: "테스트 사용자",
+				userName: "?�스???�용??,
 				email: "test@example.com",
-				deptNm: "테스트 부서",
-				dutyNm: "테스트 직급",
+				deptNm: "?�스??부??,
+				dutyNm: "?�스??직급",
 				authCd: "30",
 				role: "ADMIN",
 				permissions: ["read", "write"],
@@ -42,7 +42,7 @@ jest.mock("../../modules/auth/services/authService", () => ({
 				needsPasswordChange: false,
 				deptDivCd: "DEPT001",
 				hqDivCd: "HQ001",
-				hqDivNm: "테스트 본부",
+				hqDivNm: "?�스??본�?",
 				deptTp: "DEPT",
 				dutyDivCd: "DUTY001",
 			},
@@ -53,12 +53,12 @@ jest.mock("../../modules/auth/services/authService", () => ({
 	},
 }));
 
-// 실제 HTTP 클라이언트 사용 (서버 실행 시)
+// ?�제 HTTP ?�라?�언???�용 (?�버 ?�행 ??
 const baseURL = "http://localhost:8080";
 
-describe("사용자 관리 화면 - UI 테스트 (Provider Wrapping)", () => {
+describe("?�용??관�??�면 - UI ?�스??(Provider Wrapping)", () => {
 	beforeEach(() => {
-		// UI 테스트용 기본 Mock 설정
+		// UI ?�스?�용 기본 Mock ?�정
 		mockedAxios.get.mockResolvedValue({
 			status: 200,
 			statusText: "OK",
@@ -85,264 +85,264 @@ describe("사용자 관리 화면 - UI 테스트 (Provider Wrapping)", () => {
 		jest.clearAllMocks();
 	});
 
-	test("사용자가 사용자 관리 화면에 접속하면 모든 주요 기능이 표시된다", async () => {
+	test("?�용?��? ?�용??관�??�면???�속?�면 모든 주요 기능???�시?�다", async () => {
 		render(<USR2010M00 />);
 
-		// 주요 기능 버튼들이 표시되는지 확인
+		// 주요 기능 버튼?�이 ?�시?�는지 ?�인
 		await waitFor(() => {
 			expect(screen.getByText("조회")).toBeInTheDocument();
 		});
 
-		expect(screen.getByText("저장")).toBeInTheDocument();
-		expect(screen.getByText("비밀번호 초기화")).toBeInTheDocument();
+		expect(screen.getByText("?�??)).toBeInTheDocument();
+		expect(screen.getByText("비�?번호 초기??)).toBeInTheDocument();
 
-		// 검색 조건 필드들이 표시되는지 확인
-		expect(screen.getByText("본부")).toBeInTheDocument();
-		expect(screen.getByText("부서")).toBeInTheDocument();
-		expect(screen.getByText("사용자명")).toBeInTheDocument();
+		// 검??조건 ?�드?�이 ?�시?�는지 ?�인
+		expect(screen.getByText("본�?")).toBeInTheDocument();
+		expect(screen.getByText("부??)).toBeInTheDocument();
+		expect(screen.getByText("?�용?�명")).toBeInTheDocument();
 
 		console.log(
-			"✅ 사용자가 화면에 접속하면 모든 주요 기능이 정상적으로 표시됩니다."
+			"???�용?��? ?�면???�속?�면 모든 주요 기능???�상?�으�??�시?�니??"
 		);
 	});
 
-	test("사용자가 조회 버튼을 클릭하면 사용자 목록이 화면에 표시된다", async () => {
+	test("?�용?��? 조회 버튼???�릭?�면 ?�용??목록???�면???�시?�다", async () => {
 		render(<USR2010M00 />);
 
 		await waitFor(() => {
 			expect(screen.getByText("조회")).toBeInTheDocument();
 		});
 
-		// 조회 버튼 클릭
+		// 조회 버튼 ?�릭
 		const searchButton = screen.getByText("조회");
 		fireEvent.click(searchButton);
 
-		// 사용자 목록 테이블 헤더가 표시되는지 확인
+		// ?�용??목록 ?�이�??�더가 ?�시?�는지 ?�인
 		await waitFor(() => {
-			const gridHeaders = screen.getAllByText("사번");
+			const gridHeaders = screen.getAllByText("?�번");
 			expect(gridHeaders.length).toBeGreaterThan(0);
 
-			const nameHeaders = screen.getAllByText("성명");
+			const nameHeaders = screen.getAllByText("?�명");
 			expect(nameHeaders.length).toBeGreaterThan(0);
 		});
 
 		console.log(
-			"✅ 사용자가 조회 버튼을 클릭하면 사용자 목록이 화면에 표시됩니다."
+			"???�용?��? 조회 버튼???�릭?�면 ?�용??목록???�면???�시?�니??"
 		);
 	});
 
-	test("사용자가 본부를 선택하면 해당 본부의 부서 목록이 업데이트된다", async () => {
+	test("?�용?��? 본�?�??�택?�면 ?�당 본�???부??목록???�데?�트?�다", async () => {
 		render(<USR2010M00 />);
 
 		await waitFor(() => {
 			expect(screen.getByText("조회")).toBeInTheDocument();
 		});
 
-		// 본부 선택 콤보박스 찾기 (title 속성 사용)
-		const hqSelect = screen.getByTitle("본부 선택");
+		// 본�? ?�택 콤보박스 찾기 (title ?�성 ?�용)
+		const hqSelect = screen.getByTitle("본�? ?�택");
 		expect(hqSelect).toBeInTheDocument();
 
-		// 부서 콤보박스가 존재하는지 확인 (title 속성 사용)
-		const deptSelect = screen.getByTitle("부서 선택");
+		// 부??콤보박스가 존재?�는지 ?�인 (title ?�성 ?�용)
+		const deptSelect = screen.getByTitle("부???�택");
 		expect(deptSelect).toBeInTheDocument();
 
 		console.log(
-			"✅ 사용자가 본부를 선택하면 해당 본부의 부서 목록이 업데이트됩니다."
+			"???�용?��? 본�?�??�택?�면 ?�당 본�???부??목록???�데?�트?�니??"
 		);
 	});
 
-	test("사용자가 사용자명을 입력하고 조회하면 해당 사용자가 목록에 표시된다", async () => {
+	test("?�용?��? ?�용?�명???�력?�고 조회?�면 ?�당 ?�용?��? 목록???�시?�다", async () => {
 		render(<USR2010M00 />);
 
 		await waitFor(() => {
 			expect(screen.getByText("조회")).toBeInTheDocument();
 		});
 
-		// 사용자명 입력 필드 찾기
-		const userNmInput = screen.getByPlaceholderText("사용자명 입력");
+		// ?�용?�명 ?�력 ?�드 찾기
+		const userNmInput = screen.getByPlaceholderText("?�용?�명 ?�력");
 
-		// 사용자명 입력
+		// ?�용?�명 ?�력
 		fireEvent.change(userNmInput, { target: { value: "김" } });
 
-		// 조회 버튼 클릭
+		// 조회 버튼 ?�릭
 		fireEvent.click(screen.getByText("조회"));
 
-		// 검색 결과가 표시되는지 확인
+		// 검??결과가 ?�시?�는지 ?�인
 		await waitFor(() => {
 			expect(userNmInput).toHaveValue("김");
 		});
 
 		console.log(
-			"✅ 사용자가 사용자명을 입력하고 조회하면 해당 사용자가 목록에 표시됩니다."
+			"???�용?��? ?�용?�명???�력?�고 조회?�면 ?�당 ?�용?��? 목록???�시?�니??"
 		);
 	});
 
-	test("사용자가 목록에서 사용자를 클릭하면 상세 정보가 폼에 표시된다", async () => {
+	test("?�용?��? 목록?�서 ?�용?��? ?�릭?�면 ?�세 ?�보가 ?�에 ?�시?�다", async () => {
 		render(<USR2010M00 />);
 
 		await waitFor(() => {
 			expect(screen.getByText("조회")).toBeInTheDocument();
 		});
 
-		// 조회 버튼 클릭하여 목록 로드
+		// 조회 버튼 ?�릭?�여 목록 로드
 		fireEvent.click(screen.getByText("조회"));
 
-		// 사용자 목록 테이블 헤더가 표시될 때까지 대기
+		// ?�용??목록 ?�이�??�더가 ?�시???�까지 ?��?
 		await waitFor(() => {
-			const gridHeaders = screen.getAllByText("사번");
+			const gridHeaders = screen.getAllByText("?�번");
 			expect(gridHeaders.length).toBeGreaterThan(0);
 
-			const nameHeaders = screen.getAllByText("성명");
+			const nameHeaders = screen.getAllByText("?�명");
 			expect(nameHeaders.length).toBeGreaterThan(0);
 		});
 
 		console.log(
-			"✅ 사용자가 목록에서 사용자를 클릭하면 상세 정보가 폼에 표시됩니다."
+			"???�용?��? 목록?�서 ?�용?��? ?�릭?�면 ?�세 ?�보가 ?�에 ?�시?�니??"
 		);
 	});
 
-	test("사용자가 저장 버튼을 클릭하면 저장 확인 메시지가 표시된다", async () => {
+	test("?�용?��? ?�??버튼???�릭?�면 ?�???�인 메시지가 ?�시?�다", async () => {
 		render(<USR2010M00 />);
 
 		await waitFor(() => {
-			expect(screen.getByText("저장")).toBeInTheDocument();
+			expect(screen.getByText("?�??)).toBeInTheDocument();
 		});
 
-		// 저장 버튼 클릭
-		const saveButton = screen.getByText("저장");
+		// ?�??버튼 ?�릭
+		const saveButton = screen.getByText("?�??);
 		fireEvent.click(saveButton);
 
-		// 저장 확인 메시지가 표시되는지 확인
+		// ?�???�인 메시지가 ?�시?�는지 ?�인
 		await waitFor(() => {
 			expect(saveButton).toBeInTheDocument();
 		});
 
 		console.log(
-			"✅ 사용자가 저장 버튼을 클릭하면 저장 확인 메시지가 표시됩니다."
+			"???�용?��? ?�??버튼???�릭?�면 ?�???�인 메시지가 ?�시?�니??"
 		);
 	});
 
-	test("사용자가 비밀번호 초기화 버튼을 클릭하면 초기화 확인 메시지가 표시된다", async () => {
+	test("?�용?��? 비�?번호 초기??버튼???�릭?�면 초기???�인 메시지가 ?�시?�다", async () => {
 		render(<USR2010M00 />);
 
 		await waitFor(() => {
-			expect(screen.getByText("비밀번호 초기화")).toBeInTheDocument();
+			expect(screen.getByText("비�?번호 초기??)).toBeInTheDocument();
 		});
 
-		// 비밀번호 초기화 버튼 클릭
-		const initPasswordButton = screen.getByText("비밀번호 초기화");
+		// 비�?번호 초기??버튼 ?�릭
+		const initPasswordButton = screen.getByText("비�?번호 초기??);
 		fireEvent.click(initPasswordButton);
 
-		// 초기화 확인 메시지가 표시되는지 확인
+		// 초기???�인 메시지가 ?�시?�는지 ?�인
 		await waitFor(() => {
 			expect(initPasswordButton).toBeInTheDocument();
 		});
 
 		console.log(
-			"✅ 사용자가 비밀번호 초기화 버튼을 클릭하면 초기화 확인 메시지가 표시됩니다."
+			"???�용?��? 비�?번호 초기??버튼???�릭?�면 초기???�인 메시지가 ?�시?�니??"
 		);
 	});
 
-	test("사용자가 승인결재자를 입력하면 입력된 값이 화면에 반영된다", async () => {
+	test("?�용?��? ?�인결재?��? ?�력?�면 ?�력??값이 ?�면??반영?�다", async () => {
 		render(<USR2010M00 />);
 
 		await waitFor(() => {
 			expect(screen.getByText("조회")).toBeInTheDocument();
 		});
 
-		// 승인결재자 입력 필드 찾기
+		// ?�인결재???�력 ?�드 찾기
 		const approverInput =
-			screen.getByPlaceholderText("승인결재자명을 입력하세요");
+			screen.getByPlaceholderText("?�인결재?�명???�력?�세??);
 
-		// 승인결재자명 입력
-		fireEvent.change(approverInput, { target: { value: "김부장" } });
+		// ?�인결재?�명 ?�력
+		fireEvent.change(approverInput, { target: { value: "김부?? } });
 
-		// 입력된 값이 화면에 반영되는지 확인
+		// ?�력??값이 ?�면??반영?�는지 ?�인
 		await waitFor(() => {
-			expect(approverInput).toHaveValue("김부장");
+			expect(approverInput).toHaveValue("김부??);
 		});
 
 		console.log(
-			"✅ 사용자가 승인결재자를 입력하면 입력된 값이 화면에 반영됩니다."
+			"???�용?��? ?�인결재?��? ?�력?�면 ?�력??값이 ?�면??반영?�니??"
 		);
 	});
 
-	test("사용자가 사용자 역할을 선택하면 선택된 역할이 화면에 표시된다", async () => {
+	test("?�용?��? ?�용????��???�택?�면 ?�택????��???�면???�시?�다", async () => {
 		render(<USR2010M00 />);
 
 		await waitFor(() => {
 			expect(screen.getByText("조회")).toBeInTheDocument();
 		});
 
-		// 사용자 역할 선택 콤보박스 찾기 (title 속성 사용)
-		const roleSelect = screen.getByTitle("사용자 역할 선택");
+		// ?�용????�� ?�택 콤보박스 찾기 (title ?�성 ?�용)
+		const roleSelect = screen.getByTitle("?�용????�� ?�택");
 		expect(roleSelect).toBeInTheDocument();
 
 		console.log(
-			"✅ 사용자가 사용자 역할을 선택하면 선택된 역할이 화면에 표시됩니다."
+			"???�용?��? ?�용????��???�택?�면 ?�택????��???�면???�시?�니??"
 		);
 	});
 
-	test("사용자가 업무권한을 선택하면 선택된 권한이 화면에 표시된다", async () => {
+	test("?�용?��? ?�무권한???�택?�면 ?�택??권한???�면???�시?�다", async () => {
 		render(<USR2010M00 />);
 
 		await waitFor(() => {
 			expect(screen.getByText("조회")).toBeInTheDocument();
 		});
 
-		// 업무권한 선택 콤보박스 찾기 (title 속성 사용)
-		const authSelect = screen.getByTitle("업무권한 선택");
+		// ?�무권한 ?�택 콤보박스 찾기 (title ?�성 ?�용)
+		const authSelect = screen.getByTitle("?�무권한 ?�택");
 		expect(authSelect).toBeInTheDocument();
 
 		console.log(
-			"✅ 사용자가 업무권한을 선택하면 선택된 권한이 화면에 표시됩니다."
+			"???�용?��? ?�무권한???�택?�면 ?�택??권한???�면???�시?�니??"
 		);
 	});
 
-	test("사용자가 모든 필수 정보를 입력하고 저장하면 저장 완료 메시지가 표시된다", async () => {
+	test("?�용?��? 모든 ?�수 ?�보�??�력?�고 ?�?�하�??�???�료 메시지가 ?�시?�다", async () => {
 		render(<USR2010M00 />);
 
 		await waitFor(() => {
-			expect(screen.getByText("저장")).toBeInTheDocument();
+			expect(screen.getByText("?�??)).toBeInTheDocument();
 		});
 
-		// 저장 버튼 클릭
-		const saveButton = screen.getByText("저장");
+		// ?�??버튼 ?�릭
+		const saveButton = screen.getByText("?�??);
 		fireEvent.click(saveButton);
 
-		// 저장 완료 메시지가 표시되는지 확인
+		// ?�???�료 메시지가 ?�시?�는지 ?�인
 		await waitFor(() => {
 			expect(saveButton).toBeInTheDocument();
 		});
 
 		console.log(
-			"✅ 사용자가 모든 필수 정보를 입력하고 저장하면 저장 완료 메시지가 표시됩니다."
+			"???�용?��? 모든 ?�수 ?�보�??�력?�고 ?�?�하�??�???�료 메시지가 ?�시?�니??"
 		);
 	});
 
-	test("사용자가 화면의 모든 주요 기능을 사용할 수 있다", async () => {
+	test("?�용?��? ?�면??모든 주요 기능???�용?????�다", async () => {
 		render(<USR2010M00 />);
 
 		await waitFor(() => {
 			expect(screen.getByText("조회")).toBeInTheDocument();
 		});
 
-		// 모든 주요 기능이 존재하는지 확인
-		expect(screen.getByText("저장")).toBeInTheDocument();
-		expect(screen.getByText("비밀번호 초기화")).toBeInTheDocument();
-		expect(screen.getByText("본부")).toBeInTheDocument();
-		expect(screen.getByText("부서")).toBeInTheDocument();
-		expect(screen.getByText("사용자명")).toBeInTheDocument();
+		// 모든 주요 기능??존재?�는지 ?�인
+		expect(screen.getByText("?�??)).toBeInTheDocument();
+		expect(screen.getByText("비�?번호 초기??)).toBeInTheDocument();
+		expect(screen.getByText("본�?")).toBeInTheDocument();
+		expect(screen.getByText("부??)).toBeInTheDocument();
+		expect(screen.getByText("?�용?�명")).toBeInTheDocument();
 
 		console.log(
-			"✅ 사용자가 화면의 모든 주요 기능을 정상적으로 사용할 수 있습니다."
+			"???�용?��? ?�면??모든 주요 기능???�상?�으�??�용?????�습?�다."
 		);
 	});
 });
 
-// 실제 거래 호출 테스트 - 서버 실행 시에만 실행
-describe("사용자 관리 API - 실제 DB 연결 테스트 (서버 실행 시)", () => {
-	// 서버가 실행 중인지 확인하는 헬퍼 함수
+// ?�제 거래 ?�출 ?�스??- ?�버 ?�행 ?�에�??�행
+describe("?�용??관�?API - ?�제 DB ?�결 ?�스??(?�버 ?�행 ??", () => {
+	// ?�버가 ?�행 중인지 ?�인?�는 ?�퍼 ?�수
 	const isServerRunning = async (): Promise<boolean> => {
 		try {
 			await axios.get(`${baseURL}/health`, { timeout: 2000 });
@@ -353,19 +353,19 @@ describe("사용자 관리 API - 실제 DB 연결 테스트 (서버 실행 시)"
 	};
 
 	beforeAll(async () => {
-		// 서버가 실행 중인지 확인
+		// ?�버가 ?�행 중인지 ?�인
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
 			console.log(
-				"⚠️ 서버가 실행되지 않았습니다. 실제 DB 연결 테스트를 건너뜁니다."
+				"?�️ ?�버가 ?�행?��? ?�았?�니?? ?�제 DB ?�결 ?�스?��? 건너?�니??"
 			);
 		}
 	});
 
-	test("사용자 목록 조회 API가 정상적으로 동작한다", async () => {
+	test("?�용??목록 조회 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
@@ -375,7 +375,7 @@ describe("사용자 관리 API - 실제 DB 연결 테스트 (서버 실행 시)"
 		expect((response.data as any).success).toBe(true);
 		expect(Array.isArray((response.data as any).data)).toBe(true);
 
-		// 실제 DB 데이터 검증
+		// ?�제 DB ?�이??검�?
 		if ((response.data as any).data.length > 0) {
 			const user = (response.data as any).data[0];
 			expect(user).toHaveProperty("usrId");
@@ -384,21 +384,21 @@ describe("사용자 관리 API - 실제 DB 연결 테스트 (서버 실행 시)"
 		}
 	});
 
-	test("사용자 저장 API가 정상적으로 동작한다", async () => {
+	test("?�용???�??API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		const newUser = {
 			usrId: "",
-			usrNm: "테스트 사용자",
+			usrNm: "?�스???�용??,
 			useYn: "Y",
 			hqCd: "HQ001",
 			deptCd: "DEPT001",
 			usrRoleId: "ROLE001",
-			approverNm: "김부장",
+			approverNm: "김부??,
 		};
 
 		const response = await axios.post(`${baseURL}/api/usr/users`, {
@@ -411,21 +411,21 @@ describe("사용자 관리 API - 실제 DB 연결 테스트 (서버 실행 시)"
 		expect((response.data as any).success).toBe(true);
 	});
 
-	test("사용자 수정 API가 정상적으로 동작한다", async () => {
+	test("?�용???�정 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		const updateUser = {
 			usrId: "TEST001",
-			usrNm: "수정된 사용자",
+			usrNm: "?�정???�용??,
 			useYn: "Y",
 			hqCd: "HQ001",
 			deptCd: "DEPT001",
 			usrRoleId: "ROLE001",
-			approverNm: "김부장",
+			approverNm: "김부??,
 		};
 
 		const response = await axios.post(`${baseURL}/api/usr/users`, {
@@ -438,16 +438,16 @@ describe("사용자 관리 API - 실제 DB 연결 테스트 (서버 실행 시)"
 		expect((response.data as any).success).toBe(true);
 	});
 
-	test("사용자 삭제 API가 정상적으로 동작한다", async () => {
+	test("?�용????�� API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
 		const deleteUser = {
 			usrId: "TEST001",
-			usrNm: "삭제할 사용자",
+			usrNm: "??��???�용??,
 			useYn: "N",
 		};
 
@@ -461,10 +461,10 @@ describe("사용자 관리 API - 실제 DB 연결 테스트 (서버 실행 시)"
 		expect((response.data as any).success).toBe(true);
 	});
 
-	test("비밀번호 초기화 API가 정상적으로 동작한다", async () => {
+	test("비�?번호 초기??API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
@@ -477,10 +477,10 @@ describe("사용자 관리 API - 실제 DB 연결 테스트 (서버 실행 시)"
 		expect((response.data as any).success).toBe(true);
 	});
 
-	test("코드 조회 API가 정상적으로 동작한다", async () => {
+	test("코드 조회 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
@@ -490,7 +490,7 @@ describe("사용자 관리 API - 실제 DB 연결 테스트 (서버 실행 시)"
 		expect((response.data as any).success).toBe(true);
 		expect(Array.isArray((response.data as any).data)).toBe(true);
 
-		// 실제 DB 데이터 검증
+		// ?�제 DB ?�이??검�?
 		if ((response.data as any).data.length > 0) {
 			const code = (response.data as any).data[0];
 			expect(code).toHaveProperty("codeId");
@@ -498,10 +498,10 @@ describe("사용자 관리 API - 실제 DB 연결 테스트 (서버 실행 시)"
 		}
 	});
 
-	test("사용자 역할 목록 조회 API가 정상적으로 동작한다", async () => {
+	test("?�용????�� 목록 조회 API가 ?�상?�으�??�작?�다", async () => {
 		const serverRunning = await isServerRunning();
 		if (!serverRunning) {
-			console.log("⏭️ 서버가 실행되지 않아 테스트를 건너뜁니다.");
+			console.log("??�� ?�버가 ?�행?��? ?�아 ?�스?��? 건너?�니??");
 			return;
 		}
 
@@ -511,7 +511,7 @@ describe("사용자 관리 API - 실제 DB 연결 테스트 (서버 실행 시)"
 		expect((response.data as any).success).toBe(true);
 		expect(Array.isArray((response.data as any).data)).toBe(true);
 
-		// 실제 DB 데이터 검증
+		// ?�제 DB ?�이??검�?
 		if ((response.data as any).data.length > 0) {
 			const role = (response.data as any).data[0];
 			expect(role).toHaveProperty("usrRoleId");
@@ -519,3 +519,5 @@ describe("사용자 관리 API - 실제 DB 연결 테스트 (서버 실행 시)"
 		}
 	});
 });
+
+

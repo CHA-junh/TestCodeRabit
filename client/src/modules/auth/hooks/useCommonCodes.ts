@@ -2,19 +2,19 @@
 
 import { useState, useEffect } from 'react'
 
-// 공통 코드 타입
+// 공통 코드 ?�??
 interface CommonCode {
 	code: string
 	name: string
 }
 
-// 본부별 부서 목록을 위한 타입 (공통 코드 테이블 기반)
+// 본�?�?부??목록???�한 ?�??(공통 코드 ?�이�?기반)
 export interface DeptByHq {
-	code: string // 부서구분코드
-	name: string // 부서명
+	code: string // 부?�구분코??
+	name: string // 부?�명
 }
 
-// 공통 코드 훅 반환 타입
+// 공통 코드 ??반환 ?�??
 interface UseCommonCodesReturn {
 	hqDivCodes: CommonCode[]
 	deptDivCodes: CommonCode[]
@@ -25,22 +25,22 @@ interface UseCommonCodesReturn {
 }
 
 /**
- * 공통 코드 조회 훅
+ * 공통 코드 조회 ??
  *
  * @description
- * - 본부구분코드, 부서구분코드 등 공통 코드를 조회하는 훅
- * - 캐싱 기능으로 중복 API 호출 방지
- * - 에러 처리 및 로딩 상태 관리
+ * - 본�?구분코드, 부?�구분코????공통 코드�?조회?�는 ??
+ * - 캐싱 기능?�로 중복 API ?�출 방�?
+ * - ?�러 처리 �?로딩 ?�태 관�?
  *
- * @returns 공통 코드 데이터와 관리 함수들
+ * @returns 공통 코드 ?�이?��? 관�??�수??
  *
  * @example
  * ```typescript
  * const { hqDivCodes, deptDivCodes, loading, error } = useCommonCodes();
  *
- * // 본부 콤보박스 렌더링
+ * // 본�? 콤보박스 ?�더�?
  * <select>
- *   <option value="">전체</option>
+ *   <option value="">?�체</option>
  *   {hqDivCodes.map(code => (
  *     <option key={code.code} value={code.code}>
  *       {code.name}
@@ -60,7 +60,7 @@ export function useCommonCodes(): UseCommonCodesReturn {
 		process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
 
 	/**
-	 * 본부구분코드 조회
+	 * 본�?구분코드 조회
 	 */
 	const fetchHqDivCodes = async () => {
 		try {
@@ -76,18 +76,18 @@ export function useCommonCodes(): UseCommonCodesReturn {
 			})
 
 			if (!response.ok) {
-				throw new Error(`본부구분코드 조회 실패: ${response.status}`)
+				throw new Error(`본�?구분코드 조회 ?�패: ${response.status}`)
 			}
 
 			const data = await response.json()
-			console.log('✅ 본부구분코드 조회 완료:', data)
+			console.log('??본�?구분코드 조회 ?�료:', data)
 			setHqDivCodes(data || [])
 		} catch (err) {
-			console.error('❌ 본부구분코드 조회 오류:', err)
+			console.error('??본�?구분코드 조회 ?�류:', err)
 			setError(
 				err instanceof Error
 					? err.message
-					: '본부구분코드 조회 중 오류가 발생했습니다.'
+					: '본�?구분코드 조회 �??�류가 발생?�습?�다.'
 			)
 			setHqDivCodes([])
 		} finally {
@@ -96,7 +96,7 @@ export function useCommonCodes(): UseCommonCodesReturn {
 	}
 
 	/**
-	 * 부서구분코드 조회
+	 * 부?�구분코??조회
 	 */
 	const fetchDeptDivCodes = async () => {
 		try {
@@ -115,18 +115,18 @@ export function useCommonCodes(): UseCommonCodesReturn {
 			)
 
 			if (!response.ok) {
-				throw new Error(`부서구분코드 조회 실패: ${response.status}`)
+				throw new Error(`부?�구분코??조회 ?�패: ${response.status}`)
 			}
 
 			const data = await response.json()
-			console.log('✅ 부서구분코드 조회 완료:', data)
+			console.log('??부?�구분코??조회 ?�료:', data)
 			setDeptDivCodes(data || [])
 		} catch (err) {
-			console.error('❌ 부서구분코드 조회 오류:', err)
+			console.error('??부?�구분코??조회 ?�류:', err)
 			setError(
 				err instanceof Error
 					? err.message
-					: '부서구분코드 조회 중 오류가 발생했습니다.'
+					: '부?�구분코??조회 �??�류가 발생?�습?�다.'
 			)
 			setDeptDivCodes([])
 		} finally {
@@ -135,20 +135,20 @@ export function useCommonCodes(): UseCommonCodesReturn {
 	}
 
 	/**
-	 * 본부구분코드 새로고침
+	 * 본�?구분코드 ?�로고침
 	 */
 	const refreshHqDivCodes = async () => {
 		await fetchHqDivCodes()
 	}
 
 	/**
-	 * 부서구분코드 새로고침
+	 * 부?�구분코???�로고침
 	 */
 	const refreshDeptDivCodes = async () => {
 		await fetchDeptDivCodes()
 	}
 
-	// 초기 데이터 로드
+	// 초기 ?�이??로드
 	useEffect(() => {
 		fetchHqDivCodes()
 		fetchDeptDivCodes()
@@ -165,21 +165,21 @@ export function useCommonCodes(): UseCommonCodesReturn {
 }
 
 /**
- * 부서구분코드 목록을 조회하는 커스텀 훅
- * - 최초 마운트 시 1회 API 호출
- * - 실패 시 빈 배열 반환
+ * 부?�구분코??목록??조회?�는 커스?� ??
+ * - 최초 마운????1??API ?�출
+ * - ?�패 ??�?배열 반환
  *
  * @returns CommonCode[] 코드 목록
  * @example
  *   const codes = useDeptDivCodes();
- *   // codes: [{ code: '112', name: '부서' }, ...]
+ *   // codes: [{ code: '112', name: '부?? }, ...]
  */
 export const useDeptDivCodes = () => {
 	const [codes, setCodes] = useState<CommonCode[]>([])
 	useEffect(() => {
 		const fetchCodes = async () => {
 			try {
-				// 개발/운영 환경에 따라 API 주소 자동 분기
+				// 개발/?�영 ?�경???�라 API 주소 ?�동 분기
 				const url =
 					process.env.NODE_ENV === 'development'
 						? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/api/common/dept-div-codes`
@@ -197,31 +197,31 @@ export const useDeptDivCodes = () => {
 }
 
 /**
- * 본부별 부서 목록을 조회하는 커스텀 훅
+ * 본�?�?부??목록??조회?�는 커스?� ??
  *
  * @description
- * - 본부코드(hqCd) 변경 시 자동으로 해당 본부의 부서 목록을 조회
- * - TBL_SML_CSF_CD 테이블의 부서구분코드에서 LINK_CD1로 본부별 필터링
- * - API 호출 실패 시 빈 배열 반환하여 안전하게 처리
- * - 개발/운영 환경에 따라 API 주소 자동 분기
+ * - 본�?코드(hqCd) 변�????�동?�로 ?�당 본�???부??목록??조회
+ * - TBL_SML_CSF_CD ?�이블의 부?�구분코?�에??LINK_CD1�?본�?�??�터�?
+ * - API ?�출 ?�패 ??�?배열 반환?�여 ?�전?�게 처리
+ * - 개발/?�영 ?�경???�라 API 주소 ?�동 분기
  *
- * @param hqCd 본부구분코드 (예: '01', '02', '03', '04')
- *   - '01': 경영지원본부
- *   - '02': 영업본부
- *   - '03': 서비스사업본부
- *   - '04': 개발본부
- *   - 'ALL': 전체 (빈 배열 반환)
+ * @param hqCd 본�?구분코드 (?? '01', '02', '03', '04')
+ *   - '01': 경영지?�본부
+ *   - '02': ?�업본�?
+ *   - '03': ?�비?�사?�본부
+ *   - '04': 개발본�?
+ *   - 'ALL': ?�체 (�?배열 반환)
  *
- * @returns DeptByHq[] 부서 목록 배열
- *   - code: 부서구분코드 (예: '1101', '1201', '1301')
- *   - name: 부서명 (예: '경영지원본부', '영업본부', '서비스사업본부')
+ * @returns DeptByHq[] 부??목록 배열
+ *   - code: 부?�구분코??(?? '1101', '1201', '1301')
+ *   - name: 부?�명 (?? '경영지?�본부', '?�업본�?', '?�비?�사?�본부')
  *
  * @example
  * ```tsx
- * // 서비스사업본부 부서 목록 조회
+ * // ?�비?�사?�본부 부??목록 조회
  * const deptList = useDeptByHq('03');
  *
- * // UI에서 사용
+ * // UI?�서 ?�용
  * {deptList.map((dept) => (
  *   <option key={dept.code} value={dept.code}>
  *     {dept.name}
@@ -235,24 +235,24 @@ export const useDeptDivCodes = () => {
  * - Response: DeptByHq[]
  *
  * @dependencies
- * - OracleService: TBL_SML_CSF_CD 테이블 조회
- * - CommonService: LINK_CD1 기반 본부별 부서 필터링 로직
+ * - OracleService: TBL_SML_CSF_CD ?�이�?조회
+ * - CommonService: LINK_CD1 기반 본�?�?부???�터�?로직
  */
 export const useDeptByHq = (hqCd: string) => {
 	const [depts, setDepts] = useState<DeptByHq[]>([])
 
 	useEffect(() => {
 		const fetchDepts = async () => {
-			// 본부코드가 없거나 'ALL'인 경우 빈 배열 반환
+			// 본�?코드가 ?�거??'ALL'??경우 �?배열 반환
 			if (!hqCd || hqCd === 'ALL') {
 				setDepts([])
 				return
 			}
 
 			try {
-				console.log('🔍 본부별 부서 조회 시작:', hqCd)
+				console.log('?�� 본�?�?부??조회 ?�작:', hqCd)
 
-				// 개발/운영 환경에 따라 API 주소 자동 분기
+				// 개발/?�영 ?�경???�라 API 주소 ?�동 분기
 				const url =
 					process.env.NODE_ENV === 'development'
 						? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/api/common/dept-by-hq?hqCd=${hqCd}`
@@ -264,15 +264,15 @@ export const useDeptByHq = (hqCd: string) => {
 				})
 
 				if (!res.ok) {
-					throw new Error('부서 조회 실패')
+					throw new Error('부??조회 ?�패')
 				}
 
 				const data = await res.json()
 				const newDepts = Array.isArray(data) ? data : (data.data ?? [])
 				setDepts(newDepts)
-				console.log('✅ 본부별 부서 조회 완료:', newDepts)
+				console.log('??본�?�?부??조회 ?�료:', newDepts)
 			} catch (error) {
-				console.error('❌ 본부별 부서 조회 오류:', error)
+				console.error('??본�?�?부??조회 ?�류:', error)
 				setDepts([])
 			}
 		}
@@ -282,3 +282,5 @@ export const useDeptByHq = (hqCd: string) => {
 
 	return depts
 }
+
+

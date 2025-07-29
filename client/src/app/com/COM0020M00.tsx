@@ -20,23 +20,23 @@ export default function COM0020M00() {
 		password: string
 	} | null>(null)
 	const [pendingNeedsPwdChange, setPendingNeedsPwdChange] = useState(false)
-	// infoMsg 상태 및 setInfoMsg 삭제
+	// infoMsg ?�태 �?setInfoMsg ??��
 
-	// 숫자만 입력되도록 처리
+	// ?�자�??�력?�도�?처리
 	const handleEmpNoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value.replace(/[^0-9]/g, '')
 		setEmpNo(value)
 	}
 
-	// 로그인 처리
+	// 로그??처리
 	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault()
-		// 보안: 로그인 시도 로그 제거
+		// 보안: 로그???�도 로그 ?�거
 		setError(null)
 
 		if (!empNo || !password) {
-			setError('사원번호와 비밀번호를 입력해주세요.')
-			console.log('입력값 없음 (2)')
+			setError('?�원번호?� 비�?번호�??�력?�주?�요.')
+			console.log('?�력�??�음 (2)')
 			return
 		}
 
@@ -45,30 +45,30 @@ export default function COM0020M00() {
 				empNo,
 				password,
 			}
-			// 보안: 민감한 정보 로그 제거
+			// 보안: 민감???�보 로그 ?�거
 
 			const result = await login(empNo, password)
 
-			// 1. 비밀번호 변경 필요 분기(최우선)
+			// 1. 비�?번호 변�??�요 분기(최우??
 			if (result.needsPasswordChange) {
 				setPwdChangeUserId(empNo)
 				setPendingLogin({ empNo, password })
 				setPendingNeedsPwdChange(true)
-				setShowPwdChange(true) // 팝업이 반드시 뜨도록 직접 호출
+				setShowPwdChange(true) // ?�업??반드???�도�?직접 ?�출
 				setError(
 					result.message ||
-						'초기 비밀번호입니다. 비밀번호를 변경해야 로그인할 수 있습니다.'
+						'초기 비�?번호?�니?? 비�?번호�?변경해??로그?�할 ???�습?�다.'
 				)
-				return // 아래 분기로 내려가지 않게!
+				return // ?�래 분기�??�려가지 ?�게!
 			}
 
-			// 2. 로그인 성공
+			// 2. 로그???�공
 			if (result.success) {
 				window.location.reload()
 				return
 			}
 
-			// 3. 로그인 실패
+			// 3. 로그???�패
 			setError(
 				typeof (result as any)?.message === 'string'
 					? (result as any).message
@@ -79,12 +79,12 @@ export default function COM0020M00() {
 							: JSON.stringify(result)
 			)
 		} catch (err) {
-			// 사용자 친화적 오류 메시지 처리
+			// ?�용??친화???�류 메시지 처리
 			const errorMessage =
-				(err as any)?.message || '로그인 중 오류가 발생했습니다.'
+				(err as any)?.message || '로그??�??�류가 발생?�습?�다.'
 			setError(errorMessage)
 
-			// 로그 완전 제거 - 보안상 민감한 정보 노출 방지
+			// 로그 ?�전 ?�거 - 보안??민감???�보 ?�출 방�?
 		}
 	}
 
@@ -97,7 +97,7 @@ export default function COM0020M00() {
 
 	const handlePwdChangeSubmit = async (newPassword: string) => {
 		try {
-			// API URL 환경변수 기반 설정
+			// API URL ?�경변??기반 ?�정
 			const apiUrl =
 				typeof window !== 'undefined' && process.env.NODE_ENV === 'development'
 					? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/api/auth/change-password`
@@ -113,20 +113,20 @@ export default function COM0020M00() {
 			if (data.success) {
 				showSuccess(
 					data.message ||
-						'비밀번호가 성공적으로 변경되었습니다. 새 비밀번호로 다시 로그인하세요.'
+						'비�?번호가 ?�공?�으�?변경되?�습?�다. ??비�?번호�??�시 로그?�하?�요.'
 				)
-				setShowPwdChange(false) // 팝업 닫기
-				setPendingNeedsPwdChange(false) // 상태 꼬임 방지
+				setShowPwdChange(false) // ?�업 ?�기
+				setPendingNeedsPwdChange(false) // ?�태 꼬임 방�?
 				setEmpNo('')
 				setPassword('')
 				setTimeout(() => {
-					window.location.reload() // 로그인 화면으로 돌아가기
+					window.location.reload() // 로그???�면?�로 ?�아가�?
 				}, 1500)
 			} else {
-				showError(data.message || '비밀번호 변경에 실패했습니다.')
+				showError(data.message || '비�?번호 변경에 ?�패?�습?�다.')
 			}
 		} catch (err) {
-			showError('비밀번호 변경 중 오류가 발생했습니다.')
+			showError('비�?번호 변�?�??�류가 발생?�습?�다.')
 		}
 	}
 
@@ -141,28 +141,28 @@ export default function COM0020M00() {
 				onSubmit={handlePwdChangeSubmit}
 				userId={pwdChangeUserId}
 			/>
-			{/* 안내 문구(infoMsg) 렌더링 부분 삭제 */}
+			{/* ?�내 문구(infoMsg) ?�더�?부�???�� */}
 			<div
 				className='min-h-screen w-full flex items-center justify-center bg-gray-100 px-4'
 				style={{ backgroundImage: `url('/login_bg.png')` }}
 			>
 				<div className='w-full max-w-5xl bg-gradient-to-b from-sky-50 to-white rounded-3xl shadow-lg overflow-hidden flex flex-col md:flex-row'>
-					{/* 이미지 영역 */}
+					{/* ?��?지 ?�역 */}
 					<div className='relative w-full md:w-1/2 h-[300px] md:h-auto'>
-						{/* 배경 이미지 */}
+						{/* 배경 ?��?지 */}
 						<img
 							src='/login_notebook.png'
 							alt='Login'
 							className='w-full h-full object-cover md:rounded-l-3xl'
 						/>
 
-						{/* 로고 이미지 (좌측 상단 고정) */}
+						{/* 로고 ?��?지 (좌측 ?�단 고정) */}
 						<img
 							src='/logo.svg'
 							alt='Logo'
 							className='absolute top-4 left-4 max-w-md h-auto'
 						/>
-						{/* 시스템명 (우측 상단 고정) */}
+						{/* ?�스?�명 (?�측 ?�단 고정) */}
 						<div className='absolute top-4 right-4'>
 							<span className='text-white text-sm font-medium bg-black bg-opacity-50 px-3 py-1 rounded'>
 								{getSystemName()}
@@ -170,14 +170,14 @@ export default function COM0020M00() {
 						</div>
 					</div>
 
-					{/* 로그인 영역 */}
+					{/* 로그???�역 */}
 					<div className='w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white'>
 						<h2 className='text-3xl md:text-5xl font-extrabold text-gray-800 mb-10'>
 							Sign in
 						</h2>
 
 						<form onSubmit={handleLogin}>
-							{/* ID 입력 */}
+							{/* ID ?�력 */}
 							<div className='mb-6'>
 								<label
 									htmlFor='empNo'
@@ -199,7 +199,7 @@ export default function COM0020M00() {
 								/>
 							</div>
 
-							{/* Password 입력 */}
+							{/* Password ?�력 */}
 							<div className='mb-4'>
 								<label
 									htmlFor='password'
@@ -218,7 +218,7 @@ export default function COM0020M00() {
 								/>
 							</div>
 
-							{/* 에러 메시지 */}
+							{/* ?�러 메시지 */}
 							{error && (
 								<div className='mb-4 text-red-600 text-sm font-medium'>
 									{typeof error === 'string' ? error : JSON.stringify(error)}
@@ -231,23 +231,25 @@ export default function COM0020M00() {
 								disabled={loading}
 								className='w-full bg-sky-600 hover:bg-sky-700 disabled:bg-sky-400 text-white font-bold py-3 rounded-full text-lg transition duration-200'
 							>
-								{loading ? '로그인 중...' : 'Login'}
+								{loading ? '로그??�?..' : 'Login'}
 							</button>
 						</form>
 
-						{/* 안내 문구 */}
+						{/* ?�내 문구 */}
 						<p className='text-sm text-gray-600 mt-6'>
-							ID는 사원번호이며, 초기비밀번호는 사원번호입니다.
+							ID???�원번호?�며, 초기비�?번호???�원번호?�니??
 						</p>
 					</div>
 				</div>
 
-				{/* 하단 안내 */}
+				{/* ?�단 ?�내 */}
 				<div className='absolute bottom-4 text-center w-full text-gray-700 text-sm'>
-					본 시스템은 부뜰종합전산시스템입니다. 문의사항은 경영지원본부를 이용해
-					주십시오.
+					�??�스?��? 부?�종?�전?�시?�템?�니?? 문의?�항?� 경영지?�본부�??�용??
+					주십?�오.
 				</div>
 			</div>
 		</>
 	)
 }
+
+

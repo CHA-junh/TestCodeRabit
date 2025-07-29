@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
 
-// 사용자 역할 목록 조회 (GET)
+// ?�용????�� 목록 조회 (GET)
 export async function GET() {
 	try {
 		const response = await fetch(`${API_URL}/api/sys/user-roles`, {
@@ -21,17 +21,17 @@ export async function GET() {
 	} catch (error) {
 		console.error('Failed to fetch user roles:', error)
 
-		// error 타입 가드
+		// error ?�??가??
 		const errorMessage =
 			error instanceof Error
 				? error.message
-				: '사용자 역할 조회에 실패했습니다.'
+				: '?�용????�� 조회???�패?�습?�다.'
 
 		return NextResponse.json({ message: errorMessage }, { status: 500 })
 	}
 }
 
-// 사용자 역할 저장 (POST)
+// ?�용????�� ?�??(POST)
 export async function POST(request: NextRequest) {
 	try {
 		const payload = await request.json()
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
 
 		if (!response.ok) {
 			const errorData = await response.json()
-			throw new Error(errorData.message || '저장에 실패했습니다.')
+			throw new Error(errorData.message || '?�?�에 ?�패?�습?�다.')
 		}
 
 		const data = await response.json()
@@ -53,12 +53,14 @@ export async function POST(request: NextRequest) {
 	} catch (error) {
 		console.error('Failed to save user roles:', error)
 
-		// error 타입 가드
+		// error ?�??가??
 		const errorMessage =
 			error instanceof Error
 				? error.message
-				: '사용자 역할 저장에 실패했습니다.'
+				: '?�용????�� ?�?�에 ?�패?�습?�다.'
 
 		return NextResponse.json({ message: errorMessage }, { status: 500 })
 	}
 }
+
+

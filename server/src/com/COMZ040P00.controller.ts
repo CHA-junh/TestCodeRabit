@@ -10,3 +10,5 @@ export class COMZ040P00Controller {
     return this.comz040p00Service.searchBusiness(body);
   }
 }
+
+

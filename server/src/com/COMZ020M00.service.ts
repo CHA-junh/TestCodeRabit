@@ -50,8 +50,8 @@ export class COMZ020M00Service {
 
       return { rtn: result.outBinds.rtn };
     } catch (error: any) {
-      console.error('단가 저장 오류:', error);
-      throw new Error(`단가 저장 중 오류가 발생했습니다: ${error.message}`);
+      console.error('?��? ?�???�류:', error);
+      throw new Error(`?��? ?�??�??�류가 발생?�습?�다: ${error.message}`);
     } finally {
       await connection.close();
     }
@@ -86,15 +86,15 @@ export class COMZ020M00Service {
 
       return { rtn: result.outBinds.rtn };
     } catch (error: any) {
-      console.error('단가 삭제 오류:', error);
-      throw new Error(`단가 삭제 중 오류가 발생했습니다: ${error.message}`);
+      console.error('?��? ??�� ?�류:', error);
+      throw new Error(`?��? ??�� �??�류가 발생?�습?�다: ${error.message}`);
     } finally {
       await connection.close();
     }
   }
 
   /**
-   * DB에서 실시간으로 프로시저 정보 조회
+   * DB?�서 ?�시간으�??�로?��? ?�보 조회
    */
   private async getProcedureInfo(
     procedureName: string,
@@ -109,14 +109,16 @@ export class COMZ020M00Service {
 
       return dto;
     } catch (error) {
-      console.error(`프로시저 정보 조회 오류 (${procedureName}):`, error);
+      console.error(`?�로?��? ?�보 조회 ?�류 (${procedureName}):`, error);
 
-      // 오류 발생 시 기본 정보 반환
+      // ?�류 발생 ??기본 ?�보 반환
       const dto = new ProcedureInfoDto();
       dto.name = procedureName;
-      dto.originalCommentLines = ['프로시저 정보를 조회할 수 없습니다.'];
+      dto.originalCommentLines = ['?�로?��? ?�보�?조회?????�습?�다.'];
 
       return dto;
     }
   }
 }
+
+

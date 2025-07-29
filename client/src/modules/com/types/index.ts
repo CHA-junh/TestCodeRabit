@@ -1,4 +1,4 @@
-// 시스템 코드 타입
+// ?�스??코드 ?�??
 export interface SystemCode {
 	codeId: string
 	codeName: string
@@ -10,7 +10,7 @@ export interface SystemCode {
 	updatedAt: string
 }
 
-// 등급별 단가 타입
+// ?�급�??��? ?�??
 export interface PriceGrade {
 	gradeId: string
 	gradeName: string
@@ -22,10 +22,12 @@ export interface PriceGrade {
 	isActive: boolean
 }
 
-// 검색 결과 타입
+// 검??결과 ?�??
 export interface SearchResult {
 	id: string
 	name: string
 	code?: string
 	description?: string
 }
+
+

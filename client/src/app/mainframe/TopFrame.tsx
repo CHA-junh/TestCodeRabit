@@ -14,40 +14,40 @@ interface TopFrameProps {
 }
 
 const TopFrame: React.FC<TopFrameProps> = ({
-	userName = '김부뜰',
-	userTeam = 'SI 3팀',
-	userPosition = '대리',
+	userName = '김부??,
+	userTeam = 'SI 3?�',
+	userPosition = '?��?,
 	userEmpNo = '25',
-	notice = '공지사항내용이 표시됩니다.',
+	notice = '공�??�항?�용???�시?�니??',
 }) => {
 	const { showToast } = useToast()
 	const [searchTerm, setSearchTerm] = useState('')
 
-	// 사용자 정보 표시 형식: "SI 2팀(25) 성지훈 차장"
+	// ?�용???�보 ?�시 ?�식: "SI 2?�(25) ?��???차장"
 	const userDisplayName = (() => {
 		if (!userTeam || !userName || !userPosition) {
-			return userName || '사용자'
+			return userName || '?�용??
 		}
 		return `${userTeam}(${userEmpNo}) ${userName} ${userPosition}`
 	})()
 
-	// 검색 핸들러
+	// 검???�들??
 	const handleSearch = (e: React.FormEvent) => {
 		e.preventDefault()
 		if (searchTerm.trim()) {
-			showToast('KMS 검색 연동 준비중입니다.', 'info')
+			showToast('KMS 검???�동 준비중?�니??', 'info')
 		}
 	}
 
-	// 검색어 입력 핸들러
+	// 검?�어 ?�력 ?�들??
 	const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(e.target.value)
 	}
 
-	// 검색 아이콘 클릭 핸들러
+	// 검???�이�??�릭 ?�들??
 	const handleSearchIconClick = () => {
 		if (searchTerm.trim()) {
-			showToast('KMS 검색 연동 준비중입니다.', 'info')
+			showToast('KMS 검???�동 준비중?�니??', 'info')
 		}
 	}
 
@@ -57,9 +57,9 @@ const TopFrame: React.FC<TopFrameProps> = ({
 			<div className='flex items-center gap-2 pr-4 w-[230px] h-auto flex-shrink-0'>
 				<img src='/logo-top-wh.svg' alt='Logo' className='h-8' />
 			</div>
-			{/* 구분선 */}
+			{/* 구분??*/}
 			<div className='h-full w-px bg-gray-600 mx-3' />
-			{/* 프로필 + 이름 */}
+			{/* ?�로??+ ?�름 */}
 			<div className='flex items-center gap-2 pr-4 h-8'>
 				<div className='w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center'>
 					<img src='/icon_user.svg' alt='user' className='w-4 h-4' />
@@ -68,25 +68,25 @@ const TopFrame: React.FC<TopFrameProps> = ({
 					{userDisplayName}
 				</div>
 			</div>
-			{/* 구분선 */}
+			{/* 구분??*/}
 			<div className='h-full w-px bg-gray-600 mx-3' />
-			{/* 알림 + 공지 */}
+			{/* ?�림 + 공�? */}
 			<div className='flex items-center gap-2 flex-shrink-0 h-8'>
 				<div className='w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center'>
 					<img src='/icon_notice.svg' alt='notice' className='w-4 h-4' />
 				</div>
 				<div className='whitespace-nowrap text-white leading-8'>{notice}</div>
 			</div>
-			{/* 구분선 */}
+			{/* 구분??*/}
 			<div className='h-full w-px bg-gray-600 mx-3' />
-			{/* 검색창 */}
+			{/* 검?�창 */}
 			<form
 				onSubmit={handleSearch}
 				className='flex items-center ml-auto bg-[#3f4a5a] rounded px-3 py-1 w-[240px]'
 			>
 				<input
 					type='text'
-					placeholder='검색어를 입력하세요'
+					placeholder='검?�어�??�력?�세??
 					value={searchTerm}
 					onChange={handleSearchInput}
 					className='flex-1 bg-transparent text-white placeholder:text-gray-300 text-sm outline-none'
@@ -106,15 +106,15 @@ const TopFrame: React.FC<TopFrameProps> = ({
 					/>
 				</svg>
 			</form>
-			{/* 구분선 */}
+			{/* 구분??*/}
 			<div className='h-full w-px bg-gray-600 mx-3' />
-			{/* 버튼 2개 */}
+			{/* 버튼 2�?*/}
 			<div className='flex items-center gap-2 ml-3'>
 				<button
 					onClick={() => window.open('https://www.buttle.co.kr/', '_blank')}
 					className='bg-[#4b5563] px-3 py-2 rounded text-sm hover:brightness-110 transition-colors'
 				>
-					부뜰 홈페이지 바로가기
+					부???�페?��? 바로가�?
 				</button>
 				<button
 					onClick={() =>
@@ -122,7 +122,7 @@ const TopFrame: React.FC<TopFrameProps> = ({
 					}
 					className='bg-[#4b5563] px-3 py-2 rounded text-sm hover:brightness-110 transition-colors'
 				>
-					그룹웨어로 바로가기
+					그룹?�어�?바로가�?
 				</button>
 			</div>
 		</header>
@@ -130,3 +130,5 @@ const TopFrame: React.FC<TopFrameProps> = ({
 }
 
 export default TopFrame
+
+

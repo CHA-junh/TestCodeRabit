@@ -5,38 +5,38 @@ import { useToast } from '@/contexts/ToastContext';
 import '../common/common.css';
 
 /**
- * 직원 정보 인터페이스
- * ASIS: AdvancedDataGrid의 dataField와 동일한 구조
+ * 직원 ?�보 ?�터?�이??
+ * ASIS: AdvancedDataGrid??dataField?� ?�일??구조
  */
 interface EmployeeInfo {
   LIST_NO: string;          // 목록 번호
-  OWN_OUTS_NM: string;      // 자사/외주 구분명
-  EMP_NM: string;           // 직원명
+  OWN_OUTS_NM: string;      // ?�사/?�주 구분�?
+  EMP_NM: string;           // 직원�?
   EMP_NO: string;           // 직원번호
-  DUTY_CD_NM: string;       // 직책 코드명
-  TCN_GRD_NM: string;       // 기술등급명
-  PARTY_NM: string;         // 소속명
-  BSN_NM: string;           // 사업명
-  EXEC_IN_STRT_DT: string;  // 투입시작일
-  EXEC_IN_END_DT: string;   // 투입종료일
+  DUTY_CD_NM: string;       // 직책 코드�?
+  TCN_GRD_NM: string;       // 기술?�급�?
+  PARTY_NM: string;         // ?�속�?
+  BSN_NM: string;           // ?�업�?
+  EXEC_IN_STRT_DT: string;  // ?�입?�작??
+  EXEC_IN_END_DT: string;   // ?�입종료??
   RMK: string;              // 비고
-  HQ_DIV_CD: string;        // 본부구분코드
-  DEPT_DIV_CD: string;      // 부서구분코드
+  HQ_DIV_CD: string;        // 본�?구분코드
+  DEPT_DIV_CD: string;      // 부?�구분코??
 }
 
 /**
- * 더블클릭시 반환할 최소 정보 타입
- * ASIS: EvtDblClick 이벤트의 txtData 구조와 동일
- * 형식: "사번^자사외주구분^사원명"
+ * ?�블?�릭??반환??최소 ?�보 ?�??
+ * ASIS: EvtDblClick ?�벤?�의 txtData 구조?� ?�일
+ * ?�식: "?�번^?�사?�주구분^?�원�?
  */
 interface EmpSelectInfo {
-  empNo: string;           // 사번 (ASIS: EMP_NO)
-  ownOutsNm: string;       // 자사/외주 구분 (ASIS: OWN_OUTS_NM)
-  empNm: string;           // 사원명 (ASIS: EMP_NM)
+  empNo: string;           // ?�번 (ASIS: EMP_NO)
+  ownOutsNm: string;       // ?�사/?�주 구분 (ASIS: OWN_OUTS_NM)
+  empNm: string;           // ?�원�?(ASIS: EMP_NM)
 }
 
 /**
- * postMessage로 받을 데이터 타입
+ * postMessage�?받을 ?�이???�??
  */
 interface PostMessageData {
   type: 'CHOICE_EMP_INIT';
@@ -45,52 +45,52 @@ interface PostMessageData {
 }
 
 /**
- * 직원 검색 팝업 컴포넌트
- * ASIS: COM_02_0400.mxml → TOBE: COMZ070P00.tsx
+ * 직원 검???�업 컴포?�트
+ * ASIS: COM_02_0400.mxml ??TOBE: COMZ070P00.tsx
  * 
  * 주요 기능:
- * 1. 부모창에서 직원 목록 데이터 수신 (postMessage)
- * 2. 직원명 입력 필드 (검색용이 아닌 표시용)
- * 3. 직원 선택(더블클릭) (onDoubleClick)
- * 4. 팝업 닫기 (PopUpManager.removePopUp)
- * 5. postMessage로 부모창과 통신
+ * 1. 부모창?�서 직원 목록 ?�이???�신 (postMessage)
+ * 2. 직원�??�력 ?�드 (검?�용???�닌 ?�시??
+ * 3. 직원 ?�택(?�블?�릭) (onDoubleClick)
+ * 4. ?�업 ?�기 (PopUpManager.removePopUp)
+ * 5. postMessage�?부모창�??�신
  */
 const COMZ070P00 = () => {
   /**
-   * 직원 목록 상태 관리
+   * 직원 목록 ?�태 관�?
    * ASIS: grdEmpList.dataProvider (ArrayCollection)
-   * TOBE: useState로 상태 관리
+   * TOBE: useState�??�태 관�?
    */
   const [employees, setEmployees] = useState<EmployeeInfo[]>([])
   
   /**
-   * 직원명 검색어 상태 관리
+   * 직원�?검?�어 ?�태 관�?
    * ASIS: txtEmpNm.text
-   * TOBE: useState로 상태 관리
+   * TOBE: useState�??�태 관�?
    */
   const [empNm, setEmpNm] = useState('')
 
   /**
-   * 로딩 상태 관리
+   * 로딩 ?�태 관�?
    * ASIS: showBusyCursor="true"
    */
   const [loading, setLoading] = useState(false)
 
   /**
-   * 입력 필드 참조 (ASIS: txtEmpNm)
+   * ?�력 ?�드 참조 (ASIS: txtEmpNm)
    */
   const inputRef = useRef<HTMLInputElement>(null)
 
   const { showToast } = useToast();
 
   /**
-   * 메시지 수신 상태 관리
+   * 메시지 ?�신 ?�태 관�?
    */
   const [messageReceived, setMessageReceived] = useState(false)
 
   /**
-   * postMessage 이벤트 핸들러
-   * 부모 창에서 전송된 choiceEmpInit 데이터를 처리
+   * postMessage ?�벤???�들??
+   * 부�?창에???�송??choiceEmpInit ?�이?��? 처리
    */
   const handlePostMessage = (event: MessageEvent) => {
     const data = event.data;
@@ -101,15 +101,15 @@ const COMZ070P00 = () => {
   }
 
   /**
-   * init_Complete 함수
-   * ASIS: init_Complete() 함수와 동일한 역할
-   * 모달이 처음 로드될 때 초기화 작업을 수행
+   * init_Complete ?�수
+   * ASIS: init_Complete() ?�수?� ?�일????��
+   * 모달??처음 로드????초기???�업???�행
    */
   const init_Complete = () => {
     setEmpNm('')
     setEmployees([])
     setLoading(false)
-    // 검색창에 포커스 (ASIS: txtEmpNm.focus())
+    // 검?�창???�커??(ASIS: txtEmpNm.focus())
     setTimeout(() => {
       inputRef.current?.focus()
     }, 0)
@@ -117,16 +117,16 @@ const COMZ070P00 = () => {
 
   /**
    * choiceEmpInit
-   * ASIS: choiceEmpInit(strEmpNm:String, arrEmpList:ArrayCollection):void 함수와 동일한 로직
-   * 직원선택 리스트 화면 호출할 때 초기값 설정
-   * @param strEmpNm - 초기 직원명
+   * ASIS: choiceEmpInit(strEmpNm:String, arrEmpList:ArrayCollection):void ?�수?� ?�일??로직
+   * 직원?�택 리스???�면 ?�출????초기�??�정
+   * @param strEmpNm - 초기 직원�?
    * @param arrEmpList - 초기 직원 목록
    */
   const choiceEmpInit = (strEmpNm: string, arrEmpList: EmployeeInfo[]) => {
     // ASIS: txtEmpNm.text = strEmpNm; grdEmpList.dataProvider = arrEmpList
     setEmpNm(strEmpNm);
     setEmployees(arrEmpList);
-    // 검색창에 포커스 (ASIS: txtEmpNm.focus())
+    // 검?�창???�커??(ASIS: txtEmpNm.focus())
     setTimeout(() => {
       inputRef.current?.focus()
     }, 0)
@@ -134,8 +134,8 @@ const COMZ070P00 = () => {
 
   /**
    * fnBsnNoSearch
-   * ASIS: fnBsnNoSearch():void 함수와 동일한 로직
-   * 창 열면서 자동조회
+   * ASIS: fnBsnNoSearch():void ?�수?� ?�일??로직
+   * �??�면???�동조회
    */
   const fnBsnNoSearch = () => {
     // ASIS: init(); onSearchClick()
@@ -143,11 +143,11 @@ const COMZ070P00 = () => {
   };
 
   /**
-   * 직원 더블클릭 처리 함수
-   * ASIS: onDoubleClick() 함수와 동일한 로직
+   * 직원 ?�블?�릭 처리 ?�수
+   * ASIS: onDoubleClick() ?�수?� ?�일??로직
    * 
-   * 선택된 직원 정보를 부모 컴포넌트로 전달하고 팝업 닫기
-   * ASIS: EvtDblClick 이벤트 발생 후 PopUpManager.removePopUp()
+   * ?�택??직원 ?�보�?부�?컴포?�트�??�달?�고 ?�업 ?�기
+   * ASIS: EvtDblClick ?�벤??발생 ??PopUpManager.removePopUp()
    */
   const handleDoubleClick = (employee: EmployeeInfo) => {
     // ASIS: evtDblClck.txtData = grdEmpList.selectedItem.EMP_NO + "^" + grdEmpList.selectedItem.OWN_OUTS_NM + "^" + grdEmpList.selectedItem.EMP_NM
@@ -157,10 +157,10 @@ const COMZ070P00 = () => {
       empNm: employee.EMP_NM
     }
 
-    // 팝업 창인 경우 부모 창으로 결과 전송
+    // ?�업 창인 경우 부�?창으�?결과 ?�송
     if (window.opener && !window.opener.closed) {
       try {
-        // 부모 창의 handleEmployeeSelect 함수 호출
+        // 부�?창의 handleEmployeeSelect ?�수 ?�출
         const messageData = {
           type: 'EMP_SELECTED',
           data: selectInfo,
@@ -170,20 +170,20 @@ const COMZ070P00 = () => {
         
         window.opener.postMessage(messageData, '*');
         
-        // 팝업 창 닫기
+        // ?�업 �??�기
         window.close();
       } catch (error) {
-        console.error('부모창 통신 오류:', error);
+        console.error('부모창 ?�신 ?�류:', error);
       }
     }
   }
 
   /**
-   * 테이블 행 번호 생성 함수
-   * ASIS: setRowNum() 함수와 동일한 로직
+   * ?�이�???번호 ?�성 ?�수
+   * ASIS: setRowNum() ?�수?� ?�일??로직
    * 
-   * @param index - 행 인덱스
-   * @returns 행 번호 (1부터 시작)
+   * @param index - ???�덱??
+   * @returns ??번호 (1부???�작)
    */
   const setRowNumber = (index: number) => {
     // ASIS: var index:int = grdEmpList.dataProvider.getItemIndex(cItem) + 1
@@ -191,10 +191,10 @@ const COMZ070P00 = () => {
   }
 
   /**
-   * 키보드 이벤트 처리 함수
-   * ASIS: 키보드 이벤트 처리와 동일
-   * Enter: 검색 실행
-   * Escape: 팝업 닫기
+   * ?�보???�벤??처리 ?�수
+   * ASIS: ?�보???�벤??처리?� ?�일
+   * Enter: 검???�행
+   * Escape: ?�업 ?�기
    */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -207,34 +207,34 @@ const COMZ070P00 = () => {
   };
 
   /**
-   * 포커스 시 전체 선택
-   * ASIS: FInputHangul 컴포넌트의 포커스 시 전체 선택 기능과 동일
+   * ?�커?????�체 ?�택
+   * ASIS: FInputHangul 컴포?�트???�커?????�체 ?�택 기능�??�일
    */
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     e.target.select()
   }
 
   /**
-   * 직원 검색 기능 (구현 필요)
-   * ASIS: onSearchClick() 함수와 동일한 역할
+   * 직원 검??기능 (구현 ?�요)
+   * ASIS: onSearchClick() ?�수?� ?�일????��
    * 
-   * TODO: API 연동 구현 필요
-   * - 엔드포인트: /api/COMZ070P00/search
-   * - 파라미터: 직원명 (empNm)
-   * - 응답: 직원 목록 (EmployeeInfo[])
+   * TODO: API ?�동 구현 ?�요
+   * - ?�드?�인?? /api/COMZ070P00/search
+   * - ?�라미터: 직원�?(empNm)
+   * - ?�답: 직원 목록 (EmployeeInfo[])
    */
   const handleSearch = async () => {
-    // 조회 기능 제거됨 - 부모창에서 데이터를 받아서 표시만 함
+    // 조회 기능 ?�거??- 부모창?�서 ?�이?��? 받아???�시�???
   }
 
   /**
-   * 컴포넌트 초기화 및 메시지 수신 처리
+   * 컴포?�트 초기??�?메시지 ?�신 처리
    */
   const messageListenerRef = useRef<((event: MessageEvent) => void) | null>(null);
   const isInitializedRef = useRef(false);
   
   useEffect(() => {
-    // 이미 초기화되었는지 확인
+    // ?��? 초기?�되?�는지 ?�인
     if (isInitializedRef.current) return;
     isInitializedRef.current = true;
     init_Complete();
@@ -267,9 +267,9 @@ const COMZ070P00 = () => {
 
   return (
     <div className="popup-wrapper">
-      {/* 팝업 헤더 - ASIS: TitleWindow의 title과 showCloseButton */}
+      {/* ?�업 ?�더 - ASIS: TitleWindow??title�?showCloseButton */}
       <div className="popup-header">
-        <h3 className="popup-title">직원 검색</h3>
+        <h3 className="popup-title">직원 검??/h3>
         <button 
           className="popup-close" 
           type="button" 
@@ -284,13 +284,13 @@ const COMZ070P00 = () => {
       </div>
 
       <div className="popup-body">
-        {/* 검색 영역 - ASIS: HBox 내 TextInput과 Button */}
+        {/* 검???�역 - ASIS: HBox ??TextInput�?Button */}
         <div className="search-div mb-4">
           <table className="search-table">
             <tbody>
               <tr>
-                {/* 직원명 입력 - ASIS: txtEmpNm (TextInput) */}
-                <th className="search-th w-[80px]">직원명</th>
+                {/* 직원�??�력 - ASIS: txtEmpNm (TextInput) */}
+                <th className="search-th w-[80px]">직원�?/th>
                 <td className="search-td w-[200px]">
                   <input 
                     ref={inputRef}
@@ -300,33 +300,33 @@ const COMZ070P00 = () => {
                     onChange={(e) => setEmpNm(e.target.value)}
                     onKeyDown={handleKeyDown}
                     onFocus={handleFocus}
-                    placeholder="직원명 입력"
+                    placeholder="직원�??�력"
                   />
                 </td>
-                {/* 조회 버튼 제거됨 */}
+                {/* 조회 버튼 ?�거??*/}
                 <td className="search-td text-right" colSpan={6}>
-                  {/* 조회 버튼 제거됨 */}
+                  {/* 조회 버튼 ?�거??*/}
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        {/* 결과 그리드 - ASIS: grdEmpList (AdvancedDataGrid) */}
+        {/* 결과 그리??- ASIS: grdEmpList (AdvancedDataGrid) */}
         <div className="gridbox-div mb-4">
           <table className="grid-table">
             <thead>
               <tr>
-                {/* ASIS: AdvancedDataGridColumn과 동일한 컬럼 구조 */}
+                {/* ASIS: AdvancedDataGridColumn�??�일??컬럼 구조 */}
                 <th className="grid-th w-[40px]">No</th>
                 <th className="grid-th">구분</th>
-                <th className="grid-th">직원명</th>
+                <th className="grid-th">직원�?/th>
                 <th className="grid-th">직책</th>
-                <th className="grid-th">등급</th>
-                <th className="grid-th">소속</th>
-                <th className="grid-th">최종프로젝트</th>
-                <th className="grid-th">투입일</th>
-                <th className="grid-th">철수일</th>
+                <th className="grid-th">?�급</th>
+                <th className="grid-th">?�속</th>
+                <th className="grid-th">최종?�로?�트</th>
+                <th className="grid-th">?�입??/th>
+                <th className="grid-th">철수??/th>
                 <th className="grid-th">비고</th>
               </tr>
             </thead>
@@ -337,7 +337,7 @@ const COMZ070P00 = () => {
                   className="grid-tr cursor-pointer hover:bg-blue-50"
                   onDoubleClick={() => handleDoubleClick(employee)}
                 >
-                  {/* ASIS: labelFunction="setRowNum"과 동일 */}
+                  {/* ASIS: labelFunction="setRowNum"�??�일 */}
                   <td className="grid-td text-center">{setRowNumber(index)}</td>
                   <td className="grid-td">{employee.OWN_OUTS_NM}</td>
                   <td className="grid-td">{employee.EMP_NM}</td>
@@ -354,9 +354,9 @@ const COMZ070P00 = () => {
           </table>
         </div>
 
-        {/* 검색 결과가 없을 때 표시 */}
+        {/* 검??결과가 ?�을 ???�시 */}
         {employees.length === 0 && !loading && (
-          <p className="text-center text-gray-500 py-4">🔍 검색 결과가 없습니다.</p>
+          <p className="text-center text-gray-500 py-4">?�� 검??결과가 ?�습?�다.</p>
         )}
 
         {/* 종료 버튼 - ASIS: btnClose (Button) */}
@@ -378,3 +378,5 @@ const COMZ070P00 = () => {
 };
 
 export default COMZ070P00;
+
+

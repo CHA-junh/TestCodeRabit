@@ -8,7 +8,7 @@ import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
 import session from 'express-session';
 
-// express-session 타입 확장
+// express-session ?�???�장
 interface RequestWithSession extends Request {
   session: session.Session & { user?: any };
 }
@@ -24,23 +24,23 @@ export class RoleGuard implements CanActivate {
     );
 
     if (!requiredRoles) {
-      return true; // 역할 요구사항이 없으면 통과
+      return true; // ??�� ?�구?�항???�으�??�과
     }
 
     const request = context.switchToHttp().getRequest<RequestWithSession>();
     const user = request.session?.user;
 
     if (!user) {
-      throw new ForbiddenException('인증이 필요합니다.');
+      throw new ForbiddenException('?�증???�요?�니??');
     }
 
-    // 사용자 권한 확인
+    // ?�용??권한 ?�인
     const hasRole = requiredRoles.some((role) => {
       // 관리자 권한 (AUTH_CD = '30')
       if (role === 'ADMIN' && user.authCd === '30') {
         return true;
       }
-      // 일반 사용자 권한
+      // ?�반 ?�용??권한
       if (role === 'USER' && user.authCd) {
         return true;
       }
@@ -48,9 +48,11 @@ export class RoleGuard implements CanActivate {
     });
 
     if (!hasRole) {
-      throw new ForbiddenException('접근 권한이 없습니다.');
+      throw new ForbiddenException('?�근 권한???�습?�다.');
     }
 
     return true;
   }
 }
+
+

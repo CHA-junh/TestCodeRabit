@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
 	try {
-		// 세션 쿠키 삭제
+		// ?�션 쿠키 ??��
 		const response = NextResponse.json({
 			success: true,
-			message: '로그아웃 성공',
+			message: '로그?�웃 ?�공',
 		})
 
 		response.cookies.set('session', '', {
@@ -13,15 +13,17 @@ export async function POST(request: NextRequest) {
 			secure: process.env.NODE_ENV === 'production',
 			sameSite: 'lax',
 			maxAge: 0, // 즉시 만료
-			path: '/', // 모든 경로에서 쿠키 삭제
+			path: '/', // 모든 경로?�서 쿠키 ??��
 		})
 
 		return response
 	} catch (error) {
-		console.error('로그아웃 API 오류:', error)
+		console.error('로그?�웃 API ?�류:', error)
 		return NextResponse.json(
-			{ success: false, message: '로그아웃 중 오류가 발생했습니다.' },
+			{ success: false, message: '로그?�웃 �??�류가 발생?�습?�다.' },
 			{ status: 500 }
 		)
 	}
 }
+
+

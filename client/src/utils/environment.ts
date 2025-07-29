@@ -1,8 +1,8 @@
 /**
- * 환경별 시스템명 반환
+ * ?�경�??�스?�명 반환
  */
 export function getSystemName(): string {
-	// 1. 환경 변수 우선 확인 (가장 확실한 방법)
+	// 1. ?�경 변???�선 ?�인 (가???�실??방법)
 	const appEnv = process.env.NEXT_PUBLIC_APP_ENV
 	if (appEnv) {
 		switch (appEnv.toLowerCase()) {
@@ -17,25 +17,27 @@ export function getSystemName(): string {
 		}
 	}
 
-	// 2. 호스트명 기반 확인 (localhost는 Local 환경)
+	// 2. ?�스?�명 기반 ?�인 (localhost??Local ?�경)
 	const hostname = typeof window !== 'undefined' ? window.location.hostname : ''
 	if (hostname === 'localhost' || hostname === '127.0.0.1') {
 		return 'BIST (Local)'
 	}
 
-	// 3. NODE_ENV 확인 (localhost가 아닌 경우)
+	// 3. NODE_ENV ?�인 (localhost가 ?�닌 경우)
 	if (process.env.NODE_ENV === 'development') {
 		return 'BIST (Dev)'
 	}
 
-	// 운영 환경 (기본값)
+	// ?�영 ?�경 (기본�?
 	return 'BIST (Prod)'
 }
 
 /**
- * 환경별 브라우저 탭 제목 반환
+ * ?�경�?브라?��? ???�목 반환
  */
 export function getPageTitle(pageName?: string): string {
 	const systemName = getSystemName()
 	return pageName ? `${pageName} - ${systemName}` : systemName
 }
+
+

@@ -11,19 +11,19 @@ interface PasswordChangePopupProps {
 
 const validatePassword = (password: string, userId: string) => {
 	if (password.length < 8 || password.length > 20) {
-		return '비밀번호는 8~20자여야 합니다.'
+		return '비�?번호??8~20?�여???�니??'
 	}
-	// 영문, 숫자, 특수문자 중 2종류 이상
+	// ?�문, ?�자, ?�수문자 �?2종류 ?�상
 	const types = [
 		/[a-zA-Z]/.test(password),
 		/[0-9]/.test(password),
-		/[^a-zA-Z0-9]/.test(password), // 특수문자 포함
+		/[^a-zA-Z0-9]/.test(password), // ?�수문자 ?�함
 	].filter(Boolean).length
 	if (types < 2) {
-		return '영문, 숫자, 특수문자 중 2종류 이상을 조합해야 합니다.'
+		return '?�문, ?�자, ?�수문자 �?2종류 ?�상??조합?�야 ?�니??'
 	}
 	if (password.includes(userId)) {
-		return '비밀번호에 사번(아이디)을 포함할 수 없습니다.'
+		return '비�?번호???�번(?�이?????�함?????�습?�다.'
 	}
 	return null
 }
@@ -39,7 +39,7 @@ export const PasswordChangePopup: React.FC<PasswordChangePopupProps> = ({
 	const [error, setError] = useState<string | null>(null)
 	const [loading, setLoading] = useState(false)
 
-	// 팝업이 닫힐 때 입력값/에러/로딩 상태 초기화
+	// ?�업???�힐 ???�력�??�러/로딩 ?�태 초기??
 	React.useEffect(() => {
 		if (!isOpen) {
 			setNewPassword('')
@@ -52,7 +52,7 @@ export const PasswordChangePopup: React.FC<PasswordChangePopupProps> = ({
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 		if (newPassword !== confirmPassword) {
-			setError('비밀번호가 일치하지 않습니다.')
+			setError('비�?번호가 ?�치?��? ?�습?�다.')
 			return
 		}
 		const patternError = validatePassword(newPassword, userId)
@@ -65,7 +65,7 @@ export const PasswordChangePopup: React.FC<PasswordChangePopupProps> = ({
 		try {
 			await onSubmit(newPassword)
 		} catch (err: any) {
-			setError(err.message || '비밀번호 변경 중 오류가 발생했습니다.')
+			setError(err.message || '비�?번호 변�?�??�류가 발생?�습?�다.')
 		} finally {
 			setLoading(false)
 		}
@@ -97,16 +97,16 @@ export const PasswordChangePopup: React.FC<PasswordChangePopupProps> = ({
 				}}
 			>
 				<h2 style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 8 }}>
-					비밀번호 변경 (임시)
+					비�?번호 변�?(?�시)
 				</h2>
 				<p style={{ color: '#666', marginBottom: 16 }}>
-					비밀번호는 8~20자, 영문/숫자/특수문자 중 2종류 이상을 조합해야 하며,
+					비�?번호??8~20?? ?�문/?�자/?�수문자 �?2종류 ?�상??조합?�야 ?�며,
 					<br />
-					사번(아이디)와 동일하게 설정할 수 없습니다.
+					?�번(?�이???� ?�일?�게 ?�정?????�습?�다.
 				</p>
 				<form onSubmit={handleSubmit}>
 					<div style={{ marginBottom: 12 }}>
-						<label>새 비밀번호</label>
+						<label>??비�?번호</label>
 						<input
 							type='password'
 							value={newPassword}
@@ -117,11 +117,11 @@ export const PasswordChangePopup: React.FC<PasswordChangePopupProps> = ({
 								borderRadius: 4,
 								border: '1px solid #ccc',
 							}}
-							placeholder='8~20자, 2종류 이상 조합'
+							placeholder='8~20?? 2종류 ?�상 조합'
 						/>
 					</div>
 					<div style={{ marginBottom: 12 }}>
-						<label>비밀번호 확인</label>
+						<label>비�?번호 ?�인</label>
 						<input
 							type='password'
 							value={confirmPassword}
@@ -132,7 +132,7 @@ export const PasswordChangePopup: React.FC<PasswordChangePopupProps> = ({
 								borderRadius: 4,
 								border: '1px solid #ccc',
 							}}
-							placeholder='비밀번호 확인'
+							placeholder='비�?번호 ?�인'
 						/>
 					</div>
 					{error && (
@@ -161,7 +161,7 @@ export const PasswordChangePopup: React.FC<PasswordChangePopupProps> = ({
 								color: 'white',
 							}}
 						>
-							{loading ? '변경 중...' : '확인'}
+							{loading ? '변�?�?..' : '?�인'}
 						</button>
 					</div>
 				</form>
@@ -169,3 +169,5 @@ export const PasswordChangePopup: React.FC<PasswordChangePopupProps> = ({
 		</div>
 	)
 }
+
+

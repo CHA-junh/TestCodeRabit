@@ -21,7 +21,7 @@ export default function ConfirmDialog({
 }: ConfirmDialogProps) {
 	useEffect(() => {
 		if (isVisible) {
-			// ESC 키로 닫기
+			// ESC ?�로 ?�기
 			const handleEscape = (e: KeyboardEvent) => {
 				if (e.key === 'Escape') {
 					onCancel?.()
@@ -29,7 +29,7 @@ export default function ConfirmDialog({
 			}
 
 			document.addEventListener('keydown', handleEscape)
-			// 스크롤 방지
+			// ?�크�?방�?
 			document.body.style.overflow = 'hidden'
 
 			return () => {
@@ -48,9 +48,9 @@ export default function ConfirmDialog({
 	}[type]
 
 	const icon = {
-		info: '💡',
-		warning: '⚠️',
-		error: '❌',
+		info: '?��',
+		warning: '?�️',
+		error: '??,
 	}[type]
 
 	const buttonColor = {
@@ -65,7 +65,7 @@ export default function ConfirmDialog({
 
 	return (
 		<>
-			{/* 배경 오버레이와 모달 컨테이너를 하나로 합침 */}
+			{/* 배경 ?�버?�이?� 모달 컨테?�너�??�나�??�침 */}
 			<div 
 				className='fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4'
 				onClick={() => onCancel?.()}
@@ -74,10 +74,10 @@ export default function ConfirmDialog({
 					className='bg-white rounded-lg shadow-xl max-w-md w-full animate-scale-in'
 					onClick={(e) => e.stopPropagation()}
 				>
-					{/* 헤더 */}
+					{/* ?�더 */}
 					<div className={`${bgColor} px-6 py-4 rounded-t-lg flex items-center gap-3`}>
 						<span className='text-xl flex-shrink-0'>{icon}</span>
-						<h3 className='text-lg font-semibold flex-1'>확인</h3>
+						<h3 className='text-lg font-semibold flex-1'>?�인</h3>
 						<button
 							onClick={onCancel}
 							className='text-gray-500 hover:text-gray-700 text-xl font-bold flex-shrink-0'
@@ -105,7 +105,7 @@ export default function ConfirmDialog({
 							onClick={handleConfirm}
 							className={`px-4 py-2 text-white font-medium rounded-lg transition-colors ${buttonColor}`}
 						>
-							확인
+							?�인
 						</button>
 					</div>
 				</div>
@@ -113,3 +113,4 @@ export default function ConfirmDialog({
 		</>
 	)
 } 
+

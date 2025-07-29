@@ -75,7 +75,7 @@ export class TblUserRole {
     if (!this.regDttm) {
       this.regDttm = this.formatDateTime(now);
     }
-    // 신규 등록 시에도 CHNG_DTTM 설정
+    // ?�규 ?�록 ?�에??CHNG_DTTM ?�정
     this.chngDttm = this.formatDateTime(now);
   }
 
@@ -96,3 +96,5 @@ export class TblUserRole {
     return `${year}${month}${day}${hours}${minutes}${seconds}`;
   }
 }
+
+

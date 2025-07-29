@@ -1,41 +1,41 @@
 /**
- * USR2010M00 - 사용자 관리 화면
+ * USR2010M00 - ?�용??관�??�면
  *
  * 주요 기능:
- * - 사용자 목록 조회 및 검색 (본부/부서/사용자명 조건)
- * - 사용자 정보 신규 등록 및 수정
- * - 사용자 업무권한 관리 (라디오 버튼으로 권한 부여/해제)
- * - 사용자 역할 할당 (콤보박스)
- * - 승인결재자 검색 및 선택
- * - 비밀번호 초기화
+ * - ?�용??목록 조회 �?검??(본�?/부???�용?�명 조건)
+ * - ?�용???�보 ?�규 ?�록 �??�정
+ * - ?�용???�무권한 관�?(?�디??버튼?�로 권한 부???�제)
+ * - ?�용????�� ?�당 (콤보박스)
+ * - ?�인결재??검??�??�택
+ * - 비�?번호 초기??
  *
- * API 연동:
- * - GET /api/usr/list - 사용자 목록 조회
- * - GET /api/usr/work-auth/:userId - 사용자 업무권한 조회
- * - POST /api/usr/save - 사용자 정보 저장
- * - POST /api/usr/password-init - 비밀번호 초기화
- * - GET /api/usr/approver-search - 승인결재자 검색
- * - GET /api/usr/roles - 사용자 역할 목록 조회
- * - GET /api/common/search - 공통 코드 조회 (본부, 부서, 권한, 직책 등)
- * - GET /api/common/dept-div-codes - 부서구분코드 조회
+ * API ?�동:
+ * - GET /api/usr/list - ?�용??목록 조회
+ * - GET /api/usr/work-auth/:userId - ?�용???�무권한 조회
+ * - POST /api/usr/save - ?�용???�보 ?�??
+ * - POST /api/usr/password-init - 비�?번호 초기??
+ * - GET /api/usr/approver-search - ?�인결재??검??
+ * - GET /api/usr/roles - ?�용????�� 목록 조회
+ * - GET /api/common/search - 공통 코드 조회 (본�?, 부?? 권한, 직책 ??
+ * - GET /api/common/dept-div-codes - 부?�구분코??조회
  *
- * 상태 관리:
- * - 사용자 목록 및 선택된 사용자
- * - 폼 데이터 (신규/수정용)
- * - 업무권한 목록 및 선택 상태
- * - 콤보박스 데이터 (본부, 부서, 권한, 직책, 역할 등)
- * - 로딩 상태 및 에러 처리
+ * ?�태 관�?
+ * - ?�용??목록 �??�택???�용??
+ * - ???�이??(?�규/?�정??
+ * - ?�무권한 목록 �??�택 ?�태
+ * - 콤보박스 ?�이??(본�?, 부?? 권한, 직책, ??�� ??
+ * - 로딩 ?�태 �??�러 처리
  *
- * 사용자 인터페이스:
- * - 검색 조건 입력 (본부, 부서, 사용자명)
- * - 사용자 목록 테이블 (선택 가능)
- * - 사용자 정보 입력 폼 (신규/수정)
- * - 업무권한 관리 그리드 (라디오 버튼)
- * - 승인결재자 검색 팝업
- * - 저장/초기화/비밀번호 초기화 버튼
+ * ?�용???�터?�이??
+ * - 검??조건 ?�력 (본�?, 부?? ?�용?�명)
+ * - ?�용??목록 ?�이�?(?�택 가??
+ * - ?�용???�보 ?�력 ??(?�규/?�정)
+ * - ?�무권한 관�?그리??(?�디??버튼)
+ * - ?�인결재??검???�업
+ * - ?�??초기??비�?번호 초기??버튼
  *
- * 연관 화면:
- * - SYS1003M00: 사용자 역할 관리 (역할 정보 연동)
+ * ?��? ?�면:
+ * - SYS1003M00: ?�용????�� 관�?(??�� ?�보 ?�동)
  */
 "use client";
 
@@ -59,29 +59,29 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
 /**
- * USR2010M00 - 사용자 관리 화면
+ * USR2010M00 - ?�용??관�??�면
  *
  * 주요 기능:
- * - 사용자 조회 및 등록/수정
- * - 본부/부서별 사용자 필터링
- * - 사용자 권한 및 직책 관리
- * - 업무별 사용권한 설정
- * - 승인결재자 지정
- * - 비밀번호 초기화
+ * - ?�용??조회 �??�록/?�정
+ * - 본�?/부?�별 ?�용???�터�?
+ * - ?�용??권한 �?직책 관�?
+ * - ?�무�??�용권한 ?�정
+ * - ?�인결재??지??
+ * - 비�?번호 초기??
  *
- * 연관 테이블:
- * - 사용자 정보 (사번, 성명, 본부, 부서, 직급, 직책 등)
- * - 사용자 권한 (사용자권한, 사용자역할)
- * - 업무별 사용권한 (사업관리, 프로젝트관리, 업무추진비관리, 인사관리, 시스템관리)
- * - 승인결재자 정보
+ * ?��? ?�이�?
+ * - ?�용???�보 (?�번, ?�명, 본�?, 부?? 직급, 직책 ??
+ * - ?�용??권한 (?�용?�권?? ?�용?�역??
+ * - ?�무�??�용권한 (?�업관�? ?�로?�트관�? ?�무추진비�?�? ?�사관�? ?�스?��?�?
+ * - ?�인결재???�보
  *
- * 연관 프로시저:
- * - USR_01_0201_S: 사용자 목록 조회 (본부/부서/사용자명 조건)
- * - USR_01_0202_S: 업무별 사용권한 목록 조회 (사용자ID 기준)
- * - USR_01_0203_T: 사용자 정보 저장 (신규/수정)
- * - USR_01_0104_T: 비밀번호 초기화
- * - COM_03_0101_S: 공통코드 조회 (본부, 부서, 권한, 직책구분, 업무권한 등)
- * - COM_03_0201_S: 부서코드 조회 (본부별 부서 목록)
+ * ?��? ?�로?��?:
+ * - USR_01_0201_S: ?�용??목록 조회 (본�?/부???�용?�명 조건)
+ * - USR_01_0202_S: ?�무�??�용권한 목록 조회 (?�용?�ID 기�?)
+ * - USR_01_0203_T: ?�용???�보 ?�??(?�규/?�정)
+ * - USR_01_0104_T: 비�?번호 초기??
+ * - COM_03_0101_S: 공통코드 조회 (본�?, 부?? 권한, 직책구분, ?�무권한 ??
+ * - COM_03_0201_S: 부?�코??조회 (본�?�?부??목록)
  */
 
 const initialSearch = { hqDiv: "ALL", deptDiv: "ALL", userNm: "" };
@@ -96,7 +96,7 @@ const initialFormData = {
 	usrRoleId: "",
 };
 
-// API 응답을 CodeData로 매핑
+// API ?�답??CodeData�?매핑
 function mapCodeApiToCodeData(apiData: any[]): CodeData[] {
 	return apiData.map((item) => ({
 		data: item.codeId,
@@ -106,33 +106,33 @@ function mapCodeApiToCodeData(apiData: any[]): CodeData[] {
 
 const USR2010M00: React.FC = () => {
 	const { showToast, showConfirm } = useToast();
-	const { openPopup } = usePopup(); // 팝업 오픈 함수 선언 복구
+	const { openPopup } = usePopup(); // ?�업 ?�픈 ?�수 ?�언 복구
 	const { user } = useAuth();
 
-	// 검색 조건 상태 관리 (ASIS: txtHqDiv.text, txtDeptDiv.text, txtUserNm.text)
+	// 검??조건 ?�태 관�?(ASIS: txtHqDiv.text, txtDeptDiv.text, txtUserNm.text)
 	const [searchParams, setSearchParams] = useState(initialSearch);
-	// 선택된 사용자 상태 관리 (ASIS: grdUser.selectedItem)
+	// ?�택???�용???�태 관�?(ASIS: grdUser.selectedItem)
 	const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
-	// 편집 중인 사용자 정보 상태 관리 (ASIS: 폼 필드들의 값들)
+	// ?�집 중인 ?�용???�보 ?�태 관�?(ASIS: ???�드?�의 값들)
 	const [editedUser, setEditedUser] = useState<Partial<UserSaveData>>({});
 
-	// 업무권한 목록 상태 관리 (ASIS: grdWorkAuth.dataProvider)
+	// ?�무권한 목록 ?�태 관�?(ASIS: grdWorkAuth.dataProvider)
 	const [workAuthList, setWorkAuthList] = useState<WorkAuthData[]>([]);
-	// 업무권한 로딩 상태 관리 (ASIS: showBusyCursor="true")
+	// ?�무권한 로딩 ?�태 관�?(ASIS: showBusyCursor="true")
 	const [workAuthLoading, setWorkAuthLoading] = useState(false);
-	// 업무권한 에러 상태 관리 (ASIS: Alert.show() 메시지)
+	// ?�무권한 ?�러 ?�태 관�?(ASIS: Alert.show() 메시지)
 	const [workAuthError, setWorkAuthError] = useState<string | null>(null);
-	// 선택된 업무권한 코드 상태 관리 (ASIS: cboWorkAuth.selectedItem)
+	// ?�택???�무권한 코드 ?�태 관�?(ASIS: cboWorkAuth.selectedItem)
 	const [selectedWorkAuthCode, setSelectedWorkAuthCode] = useState<string>("");
-	// 업무권한 액션 상태 관리 (ASIS: rdoGrant.selected, rdoRevoke.selected)
+	// ?�무권한 ?�션 ?�태 관�?(ASIS: rdoGrant.selected, rdoRevoke.selected)
 	const [workAuthAction, setWorkAuthAction] = useState<"1" | "0">("1");
-	// 폼 데이터 상태 관리 (ASIS: 폼 필드들의 초기값)
+	// ???�이???�태 관�?(ASIS: ???�드?�의 초기�?
 	const [formData, setFormData] = useState(initialFormData);
 
-	// 1. 승인결재자 후보 목록 상태 관리 (메인 userData와 분리)
+	// 1. ?�인결재???�보 목록 ?�태 관�?(메인 userData?� 분리)
 	const [approverList, setApproverList] = useState<UserData[]>([]);
 
-	// 2. 승인결재자 검색 함수 (메인 userData를 건드리지 않음)
+	// 2. ?�인결재??검???�수 (메인 userData�?건드리�? ?�음)
 	const handleApproverSearch = async (searchName: string) => {
 		const result = await usrApiService.getUserList({
 			hqDiv: "ALL",
@@ -142,7 +142,7 @@ const USR2010M00: React.FC = () => {
 		setApproverList(result);
 	};
 
-	// 3. 팝업 오픈 시 approverList를 전달
+	// 3. ?�업 ?�픈 ??approverList�??�달
 	const openApproverPopup = () => {
 		openPopup({
 			url: "/popup/com/COMZ100P00",
@@ -157,7 +157,7 @@ const USR2010M00: React.FC = () => {
 				},
 			},
 			onOpen: (popup) => {
-				console.log("📱 USR2010M00 - 팝업 열림");
+				console.log("?�� USR2010M00 - ?�업 ?�림");
 			},
 		});
 	};
@@ -187,7 +187,7 @@ const USR2010M00: React.FC = () => {
 	});
 	const { data: deptData } = useQuery<CodeData[]>({
 		queryKey: ["deptCodes"],
-		queryFn: () => Promise.resolve([{ data: "ALL", label: "전체" }]),
+		queryFn: () => Promise.resolve([{ data: "ALL", label: "?�체" }]),
 	});
 	const { data: authData } = useQuery<CodeData[]>({
 		queryKey: ["authCodes"],
@@ -208,21 +208,21 @@ const USR2010M00: React.FC = () => {
 
 	useEffect(() => {
 		if (hqData) setHqCodeList(mapCodeApiToCodeData(hqData));
-		if (deptData) setDeptCodeList(deptData); // 이미 올바른 형태이므로 변환하지 않음
+		if (deptData) setDeptCodeList(deptData); // ?��? ?�바�??�태?��?�?변?�하지 ?�음
 		if (authData) setAuthCodeList(mapCodeApiToCodeData(authData));
 		if (dutyDivData) setDutyDivCodeList(mapCodeApiToCodeData(dutyDivData));
 		if (workAuthData) setWorkAuthCodeList(mapCodeApiToCodeData(workAuthData));
 		if (rolesData) setUserRoleList(rolesData);
 	}, [hqData, deptData, authData, dutyDivData, workAuthData, rolesData]);
 
-	// useEffect([userData])에서 selectedUser를 무조건 null로 만드는 로직 개선 부분은 유지하되, 불필요한 setFormData/editedUser 초기화는 최소화
+	// useEffect([userData])?�서 selectedUser�?무조�?null�?만드??로직 개선 부분�? ?��??�되, 불필?�한 setFormData/editedUser 초기?�는 최소??
 	useEffect(() => {
 		if (userData) {
 			if (userData.length === 0) {
 				setSelectedUser(null);
 				setEditedUser({});
 			} else if (selectedUser) {
-				// userData에 현재 선택된 사용자가 있으면 유지
+				// userData???�재 ?�택???�용?��? ?�으�??��?
 				const stillExists = userData.some(
 					(u) => u.empNo === selectedUser.empNo
 				);
@@ -230,20 +230,20 @@ const USR2010M00: React.FC = () => {
 					setSelectedUser(null);
 					setEditedUser({});
 				}
-				// else: selectedUser 유지 (초기화하지 않음)
+				// else: selectedUser ?��? (초기?�하지 ?�음)
 			}
-			// selectedUser가 null이면 아무것도 하지 않음 (초기화하지 않음)
+			// selectedUser가 null?�면 ?�무것도 ?��? ?�음 (초기?�하지 ?�음)
 		}
 	}, [userData]);
 
-	// userData 변경 시, selectedUser가 null이고 userData가 있으면 첫 번째 사용자 자동 선택
+	// userData 변�??? selectedUser가 null?�고 userData가 ?�으�?�?번째 ?�용???�동 ?�택
 	useEffect(() => {
 		if (userData && userData.length > 0 && !selectedUser) {
 			handleUserSelect(userData[0]);
 		}
 	}, [userData]);
 
-	// 업무권한 콤보박스 변경 시 라디오 버튼 상태 동기화
+	// ?�무권한 콤보박스 변�????�디??버튼 ?�태 ?�기??
 	useEffect(() => {
 		if (selectedWorkAuthCode) {
 			const selectedAuth = workAuthList.find(
@@ -256,10 +256,10 @@ const USR2010M00: React.FC = () => {
 	}, [selectedWorkAuthCode, workAuthList]);
 
 	/**
-	 * 검색 조건 변경 핸들러
-	 * ASIS: txtHqDiv_change(), txtDeptDiv_change(), txtUserNm_change() 함수와 동일한 역할
-	 * 검색 조건 입력 시 상태를 업데이트하고, 본부 변경 시 부서 콤보를 동적으로 업데이트
-	 * @param e 입력 이벤트
+	 * 검??조건 변�??�들??
+	 * ASIS: txtHqDiv_change(), txtDeptDiv_change(), txtUserNm_change() ?�수?� ?�일????��
+	 * 검??조건 ?�력 ???�태�??�데?�트?�고, 본�? 변�???부??콤보�??�적?�로 ?�데?�트
+	 * @param e ?�력 ?�벤??
 	 */
 	const handleSearchParamChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -267,16 +267,16 @@ const USR2010M00: React.FC = () => {
 		const { name, value } = e.target;
 		setSearchParams((prev) => ({ ...prev, [name]: value }));
 
-		// 본부 변경 시 부서 콤보 업데이트 (ASIS: cboHqDiv_change() 함수와 동일)
+		// 본�? 변�???부??콤보 ?�데?�트 (ASIS: cboHqDiv_change() ?�수?� ?�일)
 		if (name === "hqDiv") {
-			// 부서를 'ALL'로 초기화 (ASIS: cboDeptDiv.selectedIndex = 0)
+			// 부?��? 'ALL'�?초기??(ASIS: cboDeptDiv.selectedIndex = 0)
 			setSearchParams((prev) => ({ ...prev, deptDiv: "ALL" }));
 
 			if (value === "ALL") {
-				// 본부가 "전체"일 때는 부서 콤보에 "전체"만 표시
-				setDeptCodeList([{ data: "ALL", label: "전체" }]);
+				// 본�?가 "?�체"???�는 부??콤보??"?�체"�??�시
+				setDeptCodeList([{ data: "ALL", label: "?�체" }]);
 			} else {
-				// 특정 본부 선택 시 해당 본부의 부서 목록 조회 (ASIS: COM_03_0201_S 프로시저 호출)
+				// ?�정 본�? ?�택 ???�당 본�???부??목록 조회 (ASIS: COM_03_0201_S ?�로?��? ?�출)
 				usrApiService
 					.getDeptDivCodesByHq(value)
 					.then((deptList) => {
@@ -284,33 +284,33 @@ const USR2010M00: React.FC = () => {
 						setDeptCodeList(mappedList);
 					})
 					.catch((error) => {
-						console.error("본부별 부서 조회 실패:", error);
-						// 실패 시 "전체"만 표시
-						setDeptCodeList([{ data: "ALL", label: "전체" }]);
+						console.error("본�?�?부??조회 ?�패:", error);
+						// ?�패 ??"?�체"�??�시
+						setDeptCodeList([{ data: "ALL", label: "?�체" }]);
 					});
 			}
 		}
 	};
 
 	/**
-	 * 사용자 검색 실행 함수
-	 * ASIS: btnSearch_click() 함수와 동일한 역할
-	 * 현재 검색 조건으로 사용자 목록을 조회
+	 * ?�용??검???�행 ?�수
+	 * ASIS: btnSearch_click() ?�수?� ?�일????��
+	 * ?�재 검??조건?�로 ?�용??목록??조회
 	 */
 	const handleSearch = () => {
 		refetchUserList();
 	};
 
 	/**
-	 * 사용자 선택 처리 함수
-	 * ASIS: grdUser_change() 함수와 동일한 역할
-	 * 사용자 목록에서 사용자를 선택했을 때 폼에 사용자 정보를 설정하고 업무권한 목록을 조회
-	 * @param user 선택된 사용자 정보
+	 * ?�용???�택 처리 ?�수
+	 * ASIS: grdUser_change() ?�수?� ?�일????��
+	 * ?�용??목록?�서 ?�용?��? ?�택?�을 ???�에 ?�용???�보�??�정?�고 ?�무권한 목록??조회
+	 * @param user ?�택???�용???�보
 	 */
 	const handleUserSelect = (user: UserData) => {
 		setSelectedUser(user);
 
-		// 폼 데이터 설정 (ASIS: 폼 필드들에 사용자 정보 설정)
+		// ???�이???�정 (ASIS: ???�드?�에 ?�용???�보 ?�정)
 		setFormData({
 			empNo: user.empNo,
 			empNm: user.empNm,
@@ -321,23 +321,23 @@ const USR2010M00: React.FC = () => {
 			usrRoleId: user.usrRoleId,
 		});
 
-		// 편집용 사용자 정보 초기화 (ASIS: 편집 모드 진입)
+		// ?�집???�용???�보 초기??(ASIS: ?�집 모드 진입)
 		const initialEditedUser: Partial<UserSaveData> = {
 			empNo: user.empNo,
 			empNm: user.empNm,
 			authCd: user.authCd,
 			dutyDivCd: user.dutyDivCd,
 			apvApofId: user.apvApofId,
-			apvApofNm: user.apvApofNm, // 승인결재자 추가
+			apvApofNm: user.apvApofNm, // ?�인결재??추�?
 			emailAddr: user.emailAddr,
 			usrRoleId: user.usrRoleId,
 		};
 
-		// 사용자별 업무권한 목록 조회 (ASIS: USR_01_0202_S 프로시저 호출)
+		// ?�용?�별 ?�무권한 목록 조회 (ASIS: USR_01_0202_S ?�로?��? ?�출)
 		usrApiService.getWorkAuthList(user.empNo).then((list) => {
 			setWorkAuthList(list);
 			setEditedUser({ ...initialEditedUser, workAuthList: list });
-			// 업무권한 콤보박스 초기값 설정 (ASIS: cboWorkAuth.selectedIndex = 0)
+			// ?�무권한 콤보박스 초기�??�정 (ASIS: cboWorkAuth.selectedIndex = 0)
 			if (list.length > 0) {
 				setSelectedWorkAuthCode(list[0].smlCsfCd);
 			}
@@ -345,10 +345,10 @@ const USR2010M00: React.FC = () => {
 	};
 
 	/**
-	 * 사용자 정보 입력 변경 핸들러
-	 * ASIS: 폼 필드들의 change 이벤트 핸들러와 동일한 역할
-	 * 사용자 정보 입력 시 편집 상태를 업데이트
-	 * @param e 입력 이벤트
+	 * ?�용???�보 ?�력 변�??�들??
+	 * ASIS: ???�드?�의 change ?�벤???�들?��? ?�일????��
+	 * ?�용???�보 ?�력 ???�집 ?�태�??�데?�트
+	 * @param e ?�력 ?�벤??
 	 */
 	const handleUserInputChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -358,41 +358,41 @@ const USR2010M00: React.FC = () => {
 	};
 
 	/**
-	 * 사용자 정보 저장 진행 함수
-	 * ASIS: fnUserInfoSave() 함수와 동일한 역할
-	 * 승인결재자 정보와 함께 사용자 정보를 저장하고 결과를 처리
-	 * @param approver 승인결재자 정보 (id: 승인결재자ID, name: 승인결재자명)
+	 * ?�용???�보 ?�??진행 ?�수
+	 * ASIS: fnUserInfoSave() ?�수?� ?�일????��
+	 * ?�인결재???�보?� ?�께 ?�용???�보�??�?�하�?결과�?처리
+	 * @param approver ?�인결재???�보 (id: ?�인결재?�ID, name: ?�인결재?�명)
 	 */
 	const proceedWithSave = useCallback(
 		async (approver: { id: string; name: string }, userForSave?: UserData) => {
-			// 저장 확인 메시지 표시 (ASIS: Alert.show("저장하시겠습니까?"))
+			// ?�???�인 메시지 ?�시 (ASIS: Alert.show("?�?�하?�겠?�니�?"))
 			showConfirm({
-				message: "저장하시겠습니까?",
+				message: "?�?�하?�겠?�니�?",
 				type: "info",
 				onConfirm: async () => {
-					// 현재 업무권한 목록에서 부여된 권한만 필터링
+					// ?�재 ?�무권한 목록?�서 부?�된 권한�??�터�?
 					const currentWorkAuthList = editedUser.workAuthList || workAuthList;
 
-					// 저장할 데이터 구성 (ASIS: 저장할 객체 구성)
+					// ?�?�할 ?�이??구성 (ASIS: ?�?�할 객체 구성)
 					const saveData: UserSaveData = {
 						...(userForSave || selectedUser!),
 						...editedUser,
-						empNo: userForSave?.empNo || editedUser.empNo || "", // ← 반드시 포함!
-						apvApofId: approver.id, // 승인결재자ID
-						apvApofNm: approver.name, // 승인결재자명
+						empNo: userForSave?.empNo || editedUser.empNo || "", // ??반드???�함!
+						apvApofId: approver.id, // ?�인결재?�ID
+						apvApofNm: approver.name, // ?�인결재?�명
 						workAuthList: currentWorkAuthList,
 						regUserId: user && "empNo" in user ? (user as any).empNo : "",
 					};
 
 					try {
-						// 사용자 정보 저장 (ASIS: USR_01_0203_T 프로시저 호출)
+						// ?�용???�보 ?�??(ASIS: USR_01_0203_T ?�로?��? ?�출)
 						await usrApiService.saveUser(saveData);
-						showToast("성공적으로 저장되었습니다.", "info");
+						showToast("?�공?�으�??�?�되?�습?�다.", "info");
 
-						// 저장 후 사용자 목록 새로고침 (ASIS: fn_srch() 호출)
+						// ?�?????�용??목록 ?�로고침 (ASIS: fn_srch() ?�출)
 						await refetchUserList();
 
-						// 현재 선택된 사용자가 있다면 업데이트된 정보로 다시 설정
+						// ?�재 ?�택???�용?��? ?�다�??�데?�트???�보�??�시 ?�정
 						if (userForSave || selectedUser) {
 							const updatedUserList =
 								await usrApiService.getUserList(searchParams);
@@ -406,7 +406,7 @@ const USR2010M00: React.FC = () => {
 					} catch (error) {
 						console.error("Failed to save user:", error);
 						showConfirm({
-							message: `저장 중 오류가 발생했습니다: ${(error as Error).message}`,
+							message: `?�??�??�류가 발생?�습?�다: ${(error as Error).message}`,
 							type: "error",
 							onConfirm: () => {},
 							confirmOnly: true,
@@ -427,13 +427,13 @@ const USR2010M00: React.FC = () => {
 		]
 	);
 
-	// 4. handleApproverSelect는 editedUser만 갱신 (userData/selectedUser는 건드리지 않음)
+	// 4. handleApproverSelect??editedUser�?갱신 (userData/selectedUser??건드리�? ?�음)
 	const handleApproverSelect = useCallback(
 		(approver: { empNo: string; empNm: string; authCd: string }) => {
 			if (approver.authCd !== "10" && approver.authCd !== "00") {
 				showConfirm({
 					message:
-						"승인결재자는 부서장 이상이어야 합니다.\n재 입력 해 주십시요.",
+						"?�인결재?�는 부?�장 ?�상?�어???�니??\n???�력 ??주십?�요.",
 					type: "warning",
 					onConfirm: () => {
 						const apvApofInput = document.getElementById(
@@ -450,13 +450,13 @@ const USR2010M00: React.FC = () => {
 				apvApofId: approver.empNo,
 				apvApofNm: approver.empNm,
 			}));
-			// 팝업에서 선택 후 자동 저장 호출
+			// ?�업?�서 ?�택 ???�동 ?�???�출
 			proceedWithSave({ id: approver.empNo, name: approver.empNm });
 		},
 		[showConfirm, proceedWithSave]
 	);
 
-	// postMessage 이벤트 리스너 추가
+	// postMessage ?�벤??리스??추�?
 	useEffect(() => {
 		const handleMessage = (event: MessageEvent) => {
 			if (event.data.type === "EMP_SELECTED") {
@@ -467,19 +467,19 @@ const USR2010M00: React.FC = () => {
 
 		window.addEventListener("message", handleMessage);
 		return () => window.removeEventListener("message", handleMessage);
-	}, [handleApproverSelect]); // handleApproverSelect 의존성 추가
+	}, [handleApproverSelect]); // handleApproverSelect ?�존??추�?
 
 	/**
-	 * 업무권한 변경 처리 함수
-	 * ASIS: rdoGrant_click(), rdoRevoke_click() 함수와 동일한 역할
-	 * 선택된 업무권한에 대해 부여/해제 액션을 적용
-	 * @param action 권한 액션 ("1": 부여, "0": 해제)
+	 * ?�무권한 변�?처리 ?�수
+	 * ASIS: rdoGrant_click(), rdoRevoke_click() ?�수?� ?�일????��
+	 * ?�택???�무권한???�??부???�제 ?�션???�용
+	 * @param action 권한 ?�션 ("1": 부?? "0": ?�제)
 	 */
 	const handleWorkAuthChange = (action: "1" | "0") => {
-		// 업무권한이 선택되지 않은 경우 경고 메시지 표시
+		// ?�무권한???�택?��? ?��? 경우 경고 메시지 ?�시
 		if (!selectedWorkAuthCode) {
 			showConfirm({
-				message: "수정할 업무권한을 선택하세요.",
+				message: "?�정???�무권한???�택?�세??",
 				type: "warning",
 				onConfirm: () => {},
 				confirmOnly: true,
@@ -487,30 +487,30 @@ const USR2010M00: React.FC = () => {
 			return;
 		}
 
-		// 업무권한 목록에서 선택된 항목의 권한 상태를 업데이트 (ASIS: grdWorkAuth 데이터 업데이트)
+		// ?�무권한 목록?�서 ?�택????��??권한 ?�태�??�데?�트 (ASIS: grdWorkAuth ?�이???�데?�트)
 		const updatedList = workAuthList.map((auth) =>
 			auth.smlCsfCd === selectedWorkAuthCode
 				? { ...auth, wrkUseYn: action }
 				: auth
 		);
 
-		// 업데이트된 목록으로 상태 갱신
+		// ?�데?�트??목록?�로 ?�태 갱신
 		setWorkAuthList(updatedList);
 		setEditedUser((prev) => ({ ...prev, workAuthList: updatedList }));
 	};
 
-	// useEffect 제거 - 무한 루프 방지
+	// useEffect ?�거 - 무한 루프 방�?
 
 	/**
-	 * 사용자 정보 저장 함수
-	 * ASIS: btnSave_click() 함수와 동일한 역할
-	 * 사용자 정보 유효성 검사 후 승인결재자 검색 및 저장 진행
+	 * ?�용???�보 ?�???�수
+	 * ASIS: btnSave_click() ?�수?� ?�일????��
+	 * ?�용???�보 ?�효??검?????�인결재??검??�??�??진행
 	 */
 	const handleSave = async () => {
 		const userForSave = selectedUser;
 		if (!userForSave || !userForSave.empNo) {
 			showConfirm({
-				message: "저장할 사용자를 선택해주세요.",
+				message: "?�?�할 ?�용?��? ?�택?�주?�요.",
 				type: "warning",
 				onConfirm: () => {},
 				confirmOnly: true,
@@ -519,7 +519,7 @@ const USR2010M00: React.FC = () => {
 		}
 		if (!editedUser.apvApofNm) {
 			showConfirm({
-				message: "승인결재자를 입력해 주십시요.",
+				message: "?�인결재?��? ?�력??주십?�요.",
 				type: "warning",
 				onConfirm: () => {
 					const apvApofInput = document.getElementById(
@@ -533,7 +533,7 @@ const USR2010M00: React.FC = () => {
 		}
 		if (!editedUser.authCd) {
 			showConfirm({
-				message: "사용자권한을 선택해 주십시요.",
+				message: "?�용?�권?�을 ?�택??주십?�요.",
 				type: "warning",
 				onConfirm: () => {
 					const authSelect = document.getElementById(
@@ -547,7 +547,7 @@ const USR2010M00: React.FC = () => {
 		}
 		if (!editedUser.dutyDivCd) {
 			showConfirm({
-				message: "직책구분을 선택해 주십시요.",
+				message: "직책구분???�택??주십?�요.",
 				type: "warning",
 				onConfirm: () => {
 					const dutyDivSelect = document.getElementById(
@@ -568,7 +568,7 @@ const USR2010M00: React.FC = () => {
 			if (approvers.length === 0) {
 				showConfirm({
 					message:
-						"사용자 정보에 미등록된 승인결재자 입니다. 승인결재자를 다시 입력해 주십시요.",
+						"?�용???�보??미등록된 ?�인결재???�니?? ?�인결재?��? ?�시 ?�력??주십?�요.",
 					type: "warning",
 					onConfirm: () => {
 						const apvApofInput = document.getElementById(
@@ -584,7 +584,7 @@ const USR2010M00: React.FC = () => {
 				if (approver.authCd !== "10" && approver.authCd !== "00") {
 					showConfirm({
 						message:
-							"승인결재자는 부서장 이상이어야 합니다.\n재 입력 해 주십시요.",
+							"?�인결재?�는 부?�장 ?�상?�어???�니??\n???�력 ??주십?�요.",
 						type: "warning",
 						onConfirm: () => {
 							const apvApofInput = document.getElementById(
@@ -611,7 +611,7 @@ const USR2010M00: React.FC = () => {
 		} catch (error) {
 			console.error("Failed to search approver:", error);
 			showConfirm({
-				message: `승인결재자 조회 중 오류가 발생했습니다: ${(error as Error).message}`,
+				message: `?�인결재??조회 �??�류가 발생?�습?�다: ${(error as Error).message}`,
 				type: "error",
 				onConfirm: () => {},
 				confirmOnly: true,
@@ -620,14 +620,14 @@ const USR2010M00: React.FC = () => {
 	};
 
 	/**
-	 * 비밀번호 초기화 함수
-	 * ASIS: btnPasswordInit_click() 함수와 동일한 역할
-	 * 선택된 사용자의 비밀번호를 초기화하고 결과를 처리
+	 * 비�?번호 초기???�수
+	 * ASIS: btnPasswordInit_click() ?�수?� ?�일????��
+	 * ?�택???�용?�의 비�?번호�?초기?�하�?결과�?처리
 	 */
 	const handlePasswordReset = async () => {
 		if (!selectedUser) {
 			showConfirm({
-				message: "비밀번호를 초기화할 사용자를 선택해주세요.",
+				message: "비�?번호�?초기?�할 ?�용?��? ?�택?�주?�요.",
 				type: "warning",
 				onConfirm: () => {},
 				confirmOnly: true,
@@ -636,7 +636,7 @@ const USR2010M00: React.FC = () => {
 		}
 
 		showConfirm({
-			message: `'${selectedUser.empNm}'님의 비밀번호를 초기화하시겠습니까?`,
+			message: `'${selectedUser.empNm}'?�의 비�?번호�?초기?�하?�겠?�니�?`,
 			type: "info",
 			onConfirm: async () => {
 				try {
@@ -647,7 +647,7 @@ const USR2010M00: React.FC = () => {
 				} catch (error) {
 					console.error("Failed to reset password:", error);
 					showConfirm({
-						message: `비밀번호 초기화 중 오류가 발생했습니다: ${(error as Error).message}`,
+						message: `비�?번호 초기??�??�류가 발생?�습?�다: ${(error as Error).message}`,
 						type: "error",
 						onConfirm: () => {},
 						confirmOnly: true,
@@ -657,10 +657,10 @@ const USR2010M00: React.FC = () => {
 		});
 	};
 
-	// 사용자 목록 컬럼 정의
+	// ?�용??목록 컬럼 ?�의
 	const userColumnDefs: ColDef[] = [
 		{
-			headerName: "사번",
+			headerName: "?�번",
 			field: "empNo",
 			width: 80,
 			flex: 0,
@@ -668,7 +668,7 @@ const USR2010M00: React.FC = () => {
 			headerClass: "ag-center-header",
 		},
 		{
-			headerName: "성명",
+			headerName: "?�명",
 			field: "empNm",
 			width: 90,
 			flex: 0,
@@ -676,7 +676,7 @@ const USR2010M00: React.FC = () => {
 			headerClass: "ag-center-header",
 		},
 		{
-			headerName: "본부명",
+			headerName: "본�?�?,
 			field: "hqDivNm",
 			width: 130,
 			flex: 1,
@@ -684,7 +684,7 @@ const USR2010M00: React.FC = () => {
 			headerClass: "ag-center-header",
 		},
 		{
-			headerName: "부서명",
+			headerName: "부?�명",
 			field: "deptDivNm",
 			width: 130,
 			flex: 1,
@@ -692,7 +692,7 @@ const USR2010M00: React.FC = () => {
 			headerClass: "ag-center-header",
 		},
 		{
-			headerName: "직급명",
+			headerName: "직급�?,
 			field: "dutyNm",
 			width: 80,
 			flex: 0,
@@ -708,7 +708,7 @@ const USR2010M00: React.FC = () => {
 			headerClass: "ag-center-header",
 		},
 		{
-			headerName: "사용자권한",
+			headerName: "?�용?�권??,
 			field: "authCdNm",
 			width: 110,
 			flex: 0,
@@ -716,7 +716,7 @@ const USR2010M00: React.FC = () => {
 			headerClass: "ag-center-header",
 		},
 		{
-			headerName: "사용자역할ID",
+			headerName: "?�용?�역?�ID",
 			field: "usrRoleId",
 			width: 120,
 			flex: 0,
@@ -724,7 +724,7 @@ const USR2010M00: React.FC = () => {
 			headerClass: "ag-center-header",
 		},
 		{
-			headerName: "사용자역할",
+			headerName: "?�용?�역??,
 			field: "usrRoleNm",
 			width: 130,
 			flex: 1,
@@ -732,7 +732,7 @@ const USR2010M00: React.FC = () => {
 			headerClass: "ag-center-header",
 		},
 		{
-			headerName: "승인결재자",
+			headerName: "?�인결재??,
 			field: "apvApofNm",
 			width: 100,
 			flex: 0,
@@ -740,7 +740,7 @@ const USR2010M00: React.FC = () => {
 			headerClass: "ag-center-header",
 		},
 		{
-			headerName: "사업",
+			headerName: "?�업",
 			field: "bsnUseYn",
 			width: 80,
 			flex: 0,
@@ -751,7 +751,7 @@ const USR2010M00: React.FC = () => {
 			),
 		},
 		{
-			headerName: "추진비",
+			headerName: "추진�?,
 			field: "wpcUseYn",
 			width: 80,
 			flex: 0,
@@ -762,7 +762,7 @@ const USR2010M00: React.FC = () => {
 			),
 		},
 		{
-			headerName: "인사/복리",
+			headerName: "?�사/복리",
 			field: "psmUseYn",
 			width: 100,
 			flex: 0,
@@ -774,10 +774,10 @@ const USR2010M00: React.FC = () => {
 		},
 	];
 
-	// 업무별 사용권한 컬럼 정의
+	// ?�무�??�용권한 컬럼 ?�의
 	const workAuthColumnDefs: ColDef[] = [
 		{
-			headerName: "업무구분",
+			headerName: "?�무구분",
 			field: "smlCsfNm",
 			width: 200,
 			flex: 2,
@@ -785,7 +785,7 @@ const USR2010M00: React.FC = () => {
 			headerClass: "ag-center-header",
 		},
 		{
-			headerName: "사용권한",
+			headerName: "?�용권한",
 			field: "wrkUseYn",
 			width: 100,
 			flex: 0,
@@ -807,12 +807,12 @@ const USR2010M00: React.FC = () => {
 
 	return (
 		<div className='mdi'>
-			{/* 상단 검색 영역 */}
+			{/* ?�단 검???�역 */}
 			<div className='search-div mb-4'>
 				<table className='search-table'>
 					<tbody>
 						<tr className='search-tr'>
-							<th className='search-th w-[70px]'>본부</th>
+							<th className='search-th w-[70px]'>본�?</th>
 							<td className='search-td w-[180px]'>
 								<select
 									name='hqDiv'
@@ -820,10 +820,10 @@ const USR2010M00: React.FC = () => {
 									onChange={handleSearchParamChange}
 									className='combo-base'
 									id='hqDiv'
-									title='본부 선택'
+									title='본�? ?�택'
 								>
 									<option key='ALL' value='ALL'>
-										전체
+										?�체
 									</option>
 									{hqCodeList.map((item) => (
 										<option key={item.data} value={item.data}>
@@ -832,7 +832,7 @@ const USR2010M00: React.FC = () => {
 									))}
 								</select>
 							</td>
-							<th className='search-th w-[70px]'>부서</th>
+							<th className='search-th w-[70px]'>부??/th>
 							<td className='search-td w-[180px]'>
 								<select
 									name='deptDiv'
@@ -840,7 +840,7 @@ const USR2010M00: React.FC = () => {
 									onChange={handleSearchParamChange}
 									className='combo-base'
 									id='deptDiv'
-									title='부서 선택'
+									title='부???�택'
 								>
 									{deptCodeList.map((item) => (
 										<option key={item.data} value={item.data}>
@@ -849,7 +849,7 @@ const USR2010M00: React.FC = () => {
 									))}
 								</select>
 							</td>
-							<th className='search-th w-[90px]'>사용자명</th>
+							<th className='search-th w-[90px]'>?�용?�명</th>
 							<td className='search-td w-[180px]'>
 								<input
 									type='text'
@@ -858,8 +858,8 @@ const USR2010M00: React.FC = () => {
 									onChange={handleSearchParamChange}
 									className='input-base'
 									id='userNm'
-									placeholder='사용자명 입력'
-									title='사용자명 입력'
+									placeholder='?�용?�명 ?�력'
+									title='?�용?�명 ?�력'
 									maxLength={20}
 								/>
 							</td>
@@ -873,12 +873,12 @@ const USR2010M00: React.FC = () => {
 				</table>
 			</div>
 
-			{/* 사용자 목록 그리드 */}
+			{/* ?�용??목록 그리??*/}
 			<div className='ag-theme-alpine' style={{ height: 400, width: "100%" }}>
 				<AgGridReact
 					rowData={userData || []}
 					columnDefs={userColumnDefs}
-					onRowClicked={(event) => handleUserSelect(event.data)} // 단일 클릭에도 반영
+					onRowClicked={(event) => handleUserSelect(event.data)} // ?�일 ?�릭?�도 반영
 					rowSelection='single'
 					getRowClass={(params: any) =>
 						selectedUser?.empNo === params.data.empNo ? "selected" : ""
@@ -897,12 +897,12 @@ const USR2010M00: React.FC = () => {
 				/>
 			</div>
 
-			{/* 하단: 등록/수정 영역과 업무권한 테이블을 가로 배치 */}
+			{/* ?�단: ?�록/?�정 ?�역�??�무권한 ?�이블을 가�?배치 */}
 			<div className='flex gap-4 items-start'>
-				{/* 왼쪽: 업무권한 타이틀 + 테이블 */}
+				{/* ?�쪽: ?�무권한 ?�?��? + ?�이�?*/}
 				<div className='w-[30%]'>
 					<div className='tit_area'>
-						<h2>업무별 사용권한</h2>
+						<h2>?�무�??�용권한</h2>
 					</div>
 					<div
 						className='ag-theme-alpine'
@@ -926,15 +926,15 @@ const USR2010M00: React.FC = () => {
 					</div>
 				</div>
 
-				{/* 오른쪽: 사용자 등록 및 수정 */}
+				{/* ?�른�? ?�용???�록 �??�정 */}
 				<div className='flex-1'>
 					<div className='tit_area'>
-						<h2>사용자 등록 및 수정</h2>
+						<h2>?�용???�록 �??�정</h2>
 					</div>
 					<table className='form-table'>
 						<tbody>
 							<tr className='form-tr'>
-								<th className='form-th w-[80px]'>사번</th>
+								<th className='form-th w-[80px]'>?�번</th>
 								<td className='form-td w-[200px]'>
 									<input
 										name='empNo'
@@ -943,10 +943,10 @@ const USR2010M00: React.FC = () => {
 										type='text'
 										className='input-base input-default'
 										id='empNo'
-										title='사번 입력'
+										title='?�번 ?�력'
 									/>
 								</td>
-								<th className='form-th w-[80px]'>성명</th>
+								<th className='form-th w-[80px]'>?�명</th>
 								<td className='form-td !w-[150px]'>
 									<input
 										name='empNm'
@@ -955,12 +955,12 @@ const USR2010M00: React.FC = () => {
 										type='text'
 										className='input-base input-default'
 										id='empNm'
-										title='성명 입력'
+										title='?�명 ?�력'
 									/>
 								</td>
 							</tr>
 							<tr className='form-tr'>
-								<th className='form-th'>사용자권한</th>
+								<th className='form-th'>?�용?�권??/th>
 								<td className='form-td'>
 									<select
 										name='authCd'
@@ -968,10 +968,10 @@ const USR2010M00: React.FC = () => {
 										onChange={handleUserInputChange}
 										className='combo-base'
 										id='authCd'
-										title='사용자권한 선택'
+										title='?�용?�권???�택'
 									>
 										<option key='auth-empty' value=''>
-											선택
+											?�택
 										</option>
 										{authCodeList.map((code) => (
 											<option key={code.data} value={code.data}>
@@ -988,10 +988,10 @@ const USR2010M00: React.FC = () => {
 										onChange={handleUserInputChange}
 										className='combo-base'
 										id='dutyDivCd'
-										title='직책구분 선택'
+										title='직책구분 ?�택'
 									>
 										<option key='duty-empty' value=''>
-											선택
+											?�택
 										</option>
 										{dutyDivCodeList.map((code) => (
 											<option key={code.data} value={code.data}>
@@ -1002,7 +1002,7 @@ const USR2010M00: React.FC = () => {
 								</td>
 							</tr>
 							<tr className='form-tr'>
-								<th className='form-th'>승인결재자</th>
+								<th className='form-th'>?�인결재??/th>
 								<td className='form-td'>
 									<div className='flex items-center'>
 										<input
@@ -1011,13 +1011,13 @@ const USR2010M00: React.FC = () => {
 											onChange={handleUserInputChange}
 											className='input-base input-default'
 											id='apvApofNm'
-											placeholder='승인결재자명을 입력하세요'
-											title='승인결재자명 입력'
+											placeholder='?�인결재?�명???�력?�세??
+											title='?�인결재?�명 ?�력'
 											maxLength={20}
 										/>
 									</div>
 								</td>
-								<th className='form-th'>사용자역할</th>
+								<th className='form-th'>?�용?�역??/th>
 								<td className='form-td'>
 									<select
 										name='usrRoleId'
@@ -1025,10 +1025,10 @@ const USR2010M00: React.FC = () => {
 										onChange={handleUserInputChange}
 										className='combo-base'
 										id='usrRoleId'
-										title='사용자 역할 선택'
+										title='?�용????�� ?�택'
 									>
 										<option key='role-empty' value=''>
-											선택
+											?�택
 										</option>
 										{userRoleList.map((role) => (
 											<option key={role.usrRoleId} value={role.usrRoleId}>
@@ -1039,7 +1039,7 @@ const USR2010M00: React.FC = () => {
 								</td>
 							</tr>
 							<tr className='form-tr'>
-								<th className='form-th'>업무권한</th>
+								<th className='form-th'>?�무권한</th>
 								<td className='form-td' colSpan={3}>
 									<div className='flex items-center gap-2 text-sm leading-none'>
 										<select
@@ -1049,10 +1049,10 @@ const USR2010M00: React.FC = () => {
 												setSelectedWorkAuthCode(e.target.value);
 											}}
 											id='workAuth'
-											title='업무권한 선택'
+											title='?�무권한 ?�택'
 										>
 											<option key='work-auth-empty' value=''>
-												== 선택 ==
+												== ?�택 ==
 											</option>
 											{workAuthList.map((auth) => (
 												<option key={auth.smlCsfCd} value={auth.smlCsfCd}>
@@ -1070,13 +1070,13 @@ const USR2010M00: React.FC = () => {
 												onChange={(e) => {
 													const value = e.target.value as "1";
 													setWorkAuthAction(value);
-													// 즉시 업무권한 변경 적용
+													// 즉시 ?�무권한 변�??�용
 													if (selectedWorkAuthCode) {
 														handleWorkAuthChange(value);
 													}
 												}}
 											/>{" "}
-											부여
+											부??
 										</label>
 										<label htmlFor='workAuthAction_0'>
 											<input
@@ -1088,13 +1088,13 @@ const USR2010M00: React.FC = () => {
 												onChange={(e) => {
 													const value = e.target.value as "0";
 													setWorkAuthAction(value);
-													// 즉시 업무권한 변경 적용
+													// 즉시 ?�무권한 변�??�용
 													if (selectedWorkAuthCode) {
 														handleWorkAuthChange(value);
 													}
 												}}
 											/>{" "}
-											해제
+											?�제
 										</label>
 									</div>
 								</td>
@@ -1102,16 +1102,16 @@ const USR2010M00: React.FC = () => {
 						</tbody>
 					</table>
 
-					{/* 하단 버튼 영역 */}
+					{/* ?�단 버튼 ?�역 */}
 					<div className='flex justify-end mt-4'>
 						<button
 							onClick={handlePasswordReset}
 							className='btn-base btn-etc mr-2'
 						>
-							비밀번호 초기화
+							비�?번호 초기??
 						</button>
 						<button onClick={handleSave} className='btn-base btn-act'>
-							저장
+							?�??
 						</button>
 					</div>
 				</div>
@@ -1121,3 +1121,5 @@ const USR2010M00: React.FC = () => {
 };
 
 export default USR2010M00;
+
+

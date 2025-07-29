@@ -1,26 +1,26 @@
 /**
- * SysController - 사용자 역할 관리 API 컨트롤러
+ * SysController - ?�용????�� 관�?API 컨트롤러
  *
  * 주요 기능:
- * - 사용자 역할 목록 조회 및 관리
- * - 프로그램 그룹별 사용자 역할 연결 관리
- * - 메뉴 정보 조회
- * - 사용자 역할 복사 기능
+ * - ?�용????�� 목록 조회 �?관�?
+ * - ?�로그램 그룹�??�용????�� ?�결 관�?
+ * - 메뉴 ?�보 조회
+ * - ?�용????�� 복사 기능
  *
- * API 엔드포인트:
+ * API ?�드?�인??
  * - GET /api/sys/menus - 메뉴 목록 조회
- * - GET /api/sys/user-roles - 사용자 역할 목록 조회
- * - POST /api/sys/user-roles - 사용자 역할 저장
- * - GET /api/sys/user-roles/:usrRoleId/program-groups - 역할별 프로그램 그룹 조회
- * - GET /api/sys/program-groups - 전체 프로그램 그룹 조회
- * - POST /api/sys/user-roles/:usrRoleId/program-groups - 역할별 프로그램 그룹 저장
- * - POST /api/sys/user-roles/:usrRoleId/copy - 사용자 역할 복사
+ * - GET /api/sys/user-roles - ?�용????�� 목록 조회
+ * - POST /api/sys/user-roles - ?�용????�� ?�??
+ * - GET /api/sys/user-roles/:usrRoleId/program-groups - ??���??�로그램 그룹 조회
+ * - GET /api/sys/program-groups - ?�체 ?�로그램 그룹 조회
+ * - POST /api/sys/user-roles/:usrRoleId/program-groups - ??���??�로그램 그룹 ?�??
+ * - POST /api/sys/user-roles/:usrRoleId/copy - ?�용????�� 복사
  *
- * 연관 서비스:
- * - SysService: 사용자 역할 관리 비즈니스 로직
+ * ?��? ?�비??
+ * - SysService: ?�용????�� 관�?비즈?�스 로직
  *
- * 사용 화면:
- * - SYS1003M00: 사용자 역할 관리 화면
+ * ?�용 ?�면:
+ * - SYS1003M00: ?�용????�� 관�??�면
  */
 import {
   Controller,
@@ -40,18 +40,18 @@ import { TblUserRole } from '../entities/tbl-user-role.entity';
 import { TblUserRolePgmGrp } from '../entities/tbl-user-role-pgm-grp.entity';
 import { Response } from 'express';
 
-// express-session 타입 확장
+// express-session ?�???�장
 interface RequestWithSession extends Request {
   session: session.Session & { user?: any };
 }
 
 /**
- * 사용자 역할 저장용 페이로드 인터페이스
+ * ?�용????�� ?�?�용 ?�이로드 ?�터?�이??
  *
  * @description
- * - createdRows: 신규 생성할 사용자 역할 목록
- * - updatedRows: 수정할 사용자 역할 목록
- * - deletedRows: 삭제할 사용자 역할 목록
+ * - createdRows: ?�규 ?�성???�용????�� 목록
+ * - updatedRows: ?�정???�용????�� 목록
+ * - deletedRows: ??��???�용????�� 목록
  */
 interface SaveUserRolesPayload {
   createdRows: TblUserRole[];
@@ -67,15 +67,15 @@ export class UserRoleController {
    * 메뉴 목록 조회 (GET)
    *
    * @description
-   * - 사용여부가 'Y'인 메뉴 목록을 조회합니다.
-   * - 메뉴ID 순으로 정렬하여 반환합니다.
+   * - ?�용?��?가 'Y'??메뉴 목록??조회?�니??
+   * - 메뉴ID ?�으�??�렬?�여 반환?�니??
    *
    * @returns Promise<TblMenuInf[]> - 메뉴 목록
    * @example
    * GET /api/sys/menus
-   * Response: [{ "menuId": "M001", "menuNm": "사용자 관리", "useYn": "Y" }]
+   * Response: [{ "menuId": "M001", "menuNm": "?�용??관�?, "useYn": "Y" }]
    *
-   * @throws Error - 서비스 호출 실패 시
+   * @throws Error - ?�비???�출 ?�패 ??
    */
   @Get('menus')
   async findAllMenus() {
@@ -83,22 +83,22 @@ export class UserRoleController {
   }
 
   /**
-   * 사용자 역할 목록 조회 (GET)
+   * ?�용????�� 목록 조회 (GET)
    *
    * @description
-   * - 사용자 역할 목록을 조회합니다.
-   * - 검색 조건(usrRoleId, useYn)을 적용할 수 있습니다.
-   * - 각 역할별로 해당 역할을 가진 사용자 수도 함께 조회합니다.
+   * - ?�용????�� 목록??조회?�니??
+   * - 검??조건(usrRoleId, useYn)???�용?????�습?�다.
+   * - �???��별로 ?�당 ??��??가�??�용???�도 ?�께 조회?�니??
    *
-   * @param usrRoleId - 사용자 역할 ID (쿼리 파라미터, 부분 검색)
-   * @param useYn - 사용여부 (쿼리 파라미터, 'Y'/'N')
-   * @param request - Express 요청 객체 (디버깅용)
-   * @returns Promise<TblUserRole[]> - 사용자 역할 목록 (사용자 수 포함)
+   * @param usrRoleId - ?�용????�� ID (쿼리 ?�라미터, 부�?검??
+   * @param useYn - ?�용?��? (쿼리 ?�라미터, 'Y'/'N')
+   * @param request - Express ?�청 객체 (?�버깅용)
+   * @returns Promise<TblUserRole[]> - ?�용????�� 목록 (?�용?????�함)
    * @example
    * GET /api/sys/user-roles?usrRoleId=A25&useYn=Y
-   * Response: [{ "usrRoleId": "A250715001", "usrRoleNm": "일반사용자", "cnt": 5 }]
+   * Response: [{ "usrRoleId": "A250715001", "usrRoleNm": "?�반?�용??, "cnt": 5 }]
    *
-   * @throws Error - 서비스 호출 실패 시
+   * @throws Error - ?�비???�출 ?�패 ??
    */
   @Get('user-roles')
   async findAllUserRoles(
@@ -106,28 +106,28 @@ export class UserRoleController {
     @Query('useYn') useYn?: string,
     @Req() request?: Request,
   ): Promise<TblUserRole[]> {
-    console.log('=== 컨트롤러에서 받은 쿼리 파라미터 ===');
-    console.log('usrRoleId:', usrRoleId, '타입:', typeof usrRoleId);
-    console.log('useYn:', useYn, '타입:', typeof useYn);
-    console.log('전체 쿼리 객체:', { usrRoleId, useYn });
+    console.log('=== 컨트롤러?�서 받�? 쿼리 ?�라미터 ===');
+    console.log('usrRoleId:', usrRoleId, '?�??', typeof usrRoleId);
+    console.log('useYn:', useYn, '?�??', typeof useYn);
+    console.log('?�체 쿼리 객체:', { usrRoleId, useYn });
     console.log('request.query:', request?.query);
     console.log('request.url:', request?.url);
     return this.userRoleService.findAllUserRoles(usrRoleId, useYn);
   }
 
   /**
-   * 사용자 역할 저장 (POST)
+   * ?�용????�� ?�??(POST)
    *
    * @description
-   * - 사용자 역할을 신규 생성, 수정, 삭제합니다.
-   * - 트랜잭션을 사용하여 안전하게 처리합니다.
-   * - 신규 생성 시 @BeforeInsert 데코레이터가 자동으로 usrRoleId를 생성합니다.
-   * - 현재 로그인한 사용자의 세션 정보를 활용하여 등록자/변경자 정보를 설정합니다.
+   * - ?�용????��???�규 ?�성, ?�정, ??��?�니??
+   * - ?�랜??��???�용?�여 ?�전?�게 처리?�니??
+   * - ?�규 ?�성 ??@BeforeInsert ?�코?�이?��? ?�동?�로 usrRoleId�??�성?�니??
+   * - ?�재 로그?�한 ?�용?�의 ?�션 ?�보�??�용?�여 ?�록??변경자 ?�보�??�정?�니??
    *
-   * @param payload - 저장할 사용자 역할 데이터 (요청 본문)
-   * @param req - Express 요청 객체 (세션 정보 포함)
-   * @param res - Express 응답 객체
-   * @returns HTTP 응답
+   * @param payload - ?�?�할 ?�용????�� ?�이??(?�청 본문)
+   * @param req - Express ?�청 객체 (?�션 ?�보 ?�함)
+   * @param res - Express ?�답 객체
+   * @returns HTTP ?�답
    * @example
    * POST /api/sys/user-roles
    * Body: {
@@ -136,11 +136,11 @@ export class UserRoleController {
    *   "deletedRows": [deletedRole]
    * }
    * Response: {
-   *   "message": "저장되었습니다.",
+   *   "message": "?�?�되?�습?�다.",
    *   "savedRoles": [...]
    * }
    *
-   * @throws Error - 서비스 호출 실패 시
+   * @throws Error - ?�비???�출 ?�패 ??
    */
   @Post('user-roles')
   async saveUserRoles(
@@ -149,23 +149,23 @@ export class UserRoleController {
     @Res() res: Response,
   ) {
     try {
-      // 현재 로그인한 사용자 세션 정보 확인
+      // ?�재 로그?�한 ?�용???�션 ?�보 ?�인
       if (!req.session.user) {
         return res.status(HttpStatus.UNAUTHORIZED).json({
-          message: '로그인이 필요합니다.',
+          message: '로그?�이 ?�요?�니??',
         });
       }
 
       const currentUser = req.session.user;
       const currentUserId = currentUser.empNo || currentUser.userId;
-      console.log('🔍 현재 로그인 사용자:', currentUserId);
+      console.log('?�� ?�재 로그???�용??', currentUserId);
 
       const savedRoles = await this.userRoleService.saveUserRoles(
         payload,
         currentUserId,
       );
       return res.status(HttpStatus.OK).json({
-        message: '저장되었습니다.',
+        message: '?�?�되?�습?�다.',
         savedRoles: savedRoles,
       });
     } catch (error) {
@@ -173,24 +173,24 @@ export class UserRoleController {
         error instanceof Error ? error.message : String(error);
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: '저장에 실패했습니다.', error: errorMessage });
+        .json({ message: '?�?�에 ?�패?�습?�다.', error: errorMessage });
     }
   }
 
   /**
-   * 특정 역할의 프로그램 그룹 목록 조회 (GET)
+   * ?�정 ??��???�로그램 그룹 목록 조회 (GET)
    *
    * @description
-   * - 특정 사용자 역할에 연결된 프로그램 그룹 목록을 조회합니다.
-   * - 각 프로그램 그룹별로 해당 그룹을 사용하는 사용자 수도 함께 조회합니다.
+   * - ?�정 ?�용????��???�결???�로그램 그룹 목록??조회?�니??
+   * - �??�로그램 그룹별로 ?�당 그룹???�용?�는 ?�용???�도 ?�께 조회?�니??
    *
-   * @param usrRoleId - 사용자 역할 ID (경로 파라미터)
-   * @returns Promise<TblUserRolePgmGrp[]> - 프로그램 그룹 목록 (사용자 수 포함)
+   * @param usrRoleId - ?�용????�� ID (경로 ?�라미터)
+   * @returns Promise<TblUserRolePgmGrp[]> - ?�로그램 그룹 목록 (?�용?????�함)
    * @example
    * GET /api/sys/user-roles/A250715001/program-groups
-   * Response: [{ "pgmGrpId": "PG001", "pgmGrpNm": "사용자관리", "cnt": 3 }]
+   * Response: [{ "pgmGrpId": "PG001", "pgmGrpNm": "?�용?��?�?, "cnt": 3 }]
    *
-   * @throws Error - 서비스 호출 실패 시
+   * @throws Error - ?�비???�출 ?�패 ??
    */
   @Get('user-roles/:usrRoleId/program-groups')
   async findProgramGroupsByRoleId(
@@ -200,19 +200,19 @@ export class UserRoleController {
   }
 
   /**
-   * 전체 프로그램 그룹 목록 조회 (GET)
+   * ?�체 ?�로그램 그룹 목록 조회 (GET)
    *
    * @description
-   * - 모든 프로그램 그룹 목록을 조회합니다.
-   * - 각 프로그램 그룹별로 해당 그룹을 사용하는 사용자 수도 함께 조회합니다.
-   * - 신규 사용자 역할 생성 시 프로그램 그룹 선택용으로 사용됩니다.
+   * - 모든 ?�로그램 그룹 목록??조회?�니??
+   * - �??�로그램 그룹별로 ?�당 그룹???�용?�는 ?�용???�도 ?�께 조회?�니??
+   * - ?�규 ?�용????�� ?�성 ???�로그램 그룹 ?�택?�으�??�용?�니??
    *
-   * @returns Promise<any[]> - 전체 프로그램 그룹 목록 (사용자 수 포함)
+   * @returns Promise<any[]> - ?�체 ?�로그램 그룹 목록 (?�용?????�함)
    * @example
    * GET /api/sys/program-groups
-   * Response: [{ "pgmGrpId": "PG001", "pgmGrpNm": "사용자관리", "cnt": 5 }]
+   * Response: [{ "pgmGrpId": "PG001", "pgmGrpNm": "?�용?��?�?, "cnt": 5 }]
    *
-   * @throws Error - 서비스 호출 실패 시
+   * @throws Error - ?�비???�출 ?�패 ??
    */
   @Get('program-groups')
   async findAllProgramGroups(): Promise<any[]> {
@@ -220,28 +220,28 @@ export class UserRoleController {
   }
 
   /**
-   * 특정 역할의 프로그램 그룹 연결 정보 저장 (POST)
+   * ?�정 ??��???�로그램 그룹 ?�결 ?�보 ?�??(POST)
    *
    * @description
-   * - 특정 사용자 역할에 연결된 프로그램 그룹 정보를 저장합니다.
-   * - 기존 연결 정보를 모두 삭제한 후 새로운 연결 정보를 저장합니다.
-   * - 트랜잭션을 사용하여 안전하게 처리합니다.
-   * - 현재 로그인한 사용자의 세션 정보를 활용하여 등록자/변경자 정보를 설정합니다.
+   * - ?�정 ?�용????��???�결???�로그램 그룹 ?�보�??�?�합?�다.
+   * - 기존 ?�결 ?�보�?모두 ??��?????�로???�결 ?�보�??�?�합?�다.
+   * - ?�랜??��???�용?�여 ?�전?�게 처리?�니??
+   * - ?�재 로그?�한 ?�용?�의 ?�션 ?�보�??�용?�여 ?�록??변경자 ?�보�??�정?�니??
    *
-   * @param usrRoleId - 사용자 역할 ID (경로 파라미터)
-   * @param pgmGrps - 저장할 프로그램 그룹 연결 정보 목록 (요청 본문)
-   * @param req - Express 요청 객체 (세션 정보 포함)
-   * @param res - Express 응답 객체
-   * @returns HTTP 응답
+   * @param usrRoleId - ?�용????�� ID (경로 ?�라미터)
+   * @param pgmGrps - ?�?�할 ?�로그램 그룹 ?�결 ?�보 목록 (?�청 본문)
+   * @param req - Express ?�청 객체 (?�션 ?�보 ?�함)
+   * @param res - Express ?�답 객체
+   * @returns HTTP ?�답
    * @example
    * POST /api/sys/user-roles/A250715001/program-groups
    * Body: [
    *   { "pgmGrpId": "PG001", "useYn": "Y" },
    *   { "pgmGrpId": "PG002", "useYn": "N" }
    * ]
-   * Response: { "message": "프로그램 그룹이 저장되었습니다." }
+   * Response: { "message": "?�로그램 그룹???�?�되?�습?�다." }
    *
-   * @throws Error - 서비스 호출 실패 시
+   * @throws Error - ?�비???�출 ?�패 ??
    */
   @Post('user-roles/:usrRoleId/program-groups')
   async saveProgramGroupsForRole(
@@ -251,16 +251,16 @@ export class UserRoleController {
     @Res() res: Response,
   ) {
     try {
-      // 현재 로그인한 사용자 세션 정보 확인
+      // ?�재 로그?�한 ?�용???�션 ?�보 ?�인
       if (!req.session.user) {
         return res.status(HttpStatus.UNAUTHORIZED).json({
-          message: '로그인이 필요합니다.',
+          message: '로그?�이 ?�요?�니??',
         });
       }
 
       const currentUser = req.session.user;
       const currentUserId = currentUser.empNo || currentUser.userId;
-      console.log('🔍 현재 로그인 사용자:', currentUserId);
+      console.log('?�� ?�재 로그???�용??', currentUserId);
 
       await this.userRoleService.saveProgramGroupsForRole(
         usrRoleId,
@@ -269,37 +269,37 @@ export class UserRoleController {
       );
       return res
         .status(HttpStatus.OK)
-        .json({ message: '프로그램 그룹이 저장되었습니다.' });
+        .json({ message: '?�로그램 그룹???�?�되?�습?�다.' });
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: '저장에 실패했습니다.', error: errorMessage });
+        .json({ message: '?�?�에 ?�패?�습?�다.', error: errorMessage });
     }
   }
 
   /**
-   * 사용자 역할 복사 (POST)
+   * ?�용????�� 복사 (POST)
    *
    * @description
-   * - 기존 사용자 역할을 복사하여 새로운 역할을 생성합니다.
-   * - 새로운 역할 ID는 'A' + YYMMDD + 3자리 순번 형식으로 자동 생성됩니다.
-   * - 원본 역할의 프로그램 그룹 연결 정보도 함께 복사됩니다.
-   * - 현재 로그인한 사용자의 세션 정보를 활용하여 등록자/변경자 정보를 설정합니다.
+   * - 기존 ?�용????��??복사?�여 ?�로????��???�성?�니??
+   * - ?�로????�� ID??'A' + YYMMDD + 3?�리 ?�번 ?�식?�로 ?�동 ?�성?�니??
+   * - ?�본 ??��???�로그램 그룹 ?�결 ?�보???�께 복사?�니??
+   * - ?�재 로그?�한 ?�용?�의 ?�션 ?�보�??�용?�여 ?�록??변경자 ?�보�??�정?�니??
    *
-   * @param originalRoleId - 복사할 원본 역할 ID (경로 파라미터)
-   * @param req - Express 요청 객체 (세션 정보 포함)
-   * @param res - Express 응답 객체
-   * @returns HTTP 응답
+   * @param originalRoleId - 복사???�본 ??�� ID (경로 ?�라미터)
+   * @param req - Express ?�청 객체 (?�션 ?�보 ?�함)
+   * @param res - Express ?�답 객체
+   * @returns HTTP ?�답
    * @example
    * POST /api/sys/user-roles/A250715001/copy
    * Response: {
-   *   "message": "사용자 역할이 복사되었습니다.",
-   *   "newRole": { "usrRoleId": "A250715002", "usrRoleNm": "일반사용자_복사본" }
+   *   "message": "?�용????��??복사?�었?�니??",
+   *   "newRole": { "usrRoleId": "A250715002", "usrRoleNm": "?�반?�용??복사�? }
    * }
    *
-   * @throws Error - 원본 역할이 없거나 서비스 호출 실패 시
+   * @throws Error - ?�본 ??��???�거???�비???�출 ?�패 ??
    */
   @Post('user-roles/:usrRoleId/copy')
   async copyUserRole(
@@ -308,23 +308,23 @@ export class UserRoleController {
     @Res() res: Response,
   ) {
     try {
-      // 현재 로그인한 사용자 세션 정보 확인
+      // ?�재 로그?�한 ?�용???�션 ?�보 ?�인
       if (!req.session.user) {
         return res.status(HttpStatus.UNAUTHORIZED).json({
-          message: '로그인이 필요합니다.',
+          message: '로그?�이 ?�요?�니??',
         });
       }
 
       const currentUser = req.session.user;
       const currentUserId = currentUser.empNo || currentUser.userId;
-      console.log('🔍 현재 로그인 사용자:', currentUserId);
+      console.log('?�� ?�재 로그???�용??', currentUserId);
 
       const newRole = await this.userRoleService.copyUserRole(
         originalRoleId,
         currentUserId,
       );
       return res.status(HttpStatus.OK).json({
-        message: '사용자 역할이 복사되었습니다.',
+        message: '?�용????��??복사?�었?�니??',
         newRole: newRole,
       });
     } catch (error) {
@@ -332,7 +332,9 @@ export class UserRoleController {
         error instanceof Error ? error.message : String(error);
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: '역할 복사에 실패했습니다.', error: errorMessage });
+        .json({ message: '??�� 복사???�패?�습?�다.', error: errorMessage });
     }
   }
 }
+
+

@@ -5,43 +5,43 @@ import { useToast } from '@/contexts/ToastContext';
 import '../common/common.css';
 
 /**
- * 직원 정보 인터페이스 (ASIS 기반)
- * ASIS: COM_02_0600.mxml의 AdvancedDataGrid 컬럼 구조와 동일
+ * 직원 ?�보 ?�터?�이??(ASIS 기반)
+ * ASIS: COM_02_0600.mxml??AdvancedDataGrid 컬럼 구조?� ?�일
  */
 interface EmpInfo {
   LIST_NO: string;        // 목록 번호
-  EMP_NO: string;         // 사번
-  EMP_NM: string;         // 성명
-  HQ_DIV_NM: string;      // 본부명
-  DEPT_DIV_NM: string;    // 부서명
-  DUTY_NM: string;        // 직급명
-  AUTH_CD_NM: string;     // 사용자 권한
-  BSN_USE_YN: string;     // 사업 사용권한
-  WPC_USE_YN: string;     // 추진비 사용권한
-  PSM_USE_YN: string;     // 인사/복리 사용권한
+  EMP_NO: string;         // ?�번
+  EMP_NM: string;         // ?�명
+  HQ_DIV_NM: string;      // 본�?�?
+  DEPT_DIV_NM: string;    // 부?�명
+  DUTY_NM: string;        // 직급�?
+  AUTH_CD_NM: string;     // ?�용??권한
+  BSN_USE_YN: string;     // ?�업 ?�용권한
+  WPC_USE_YN: string;     // 추진�??�용권한
+  PSM_USE_YN: string;     // ?�사/복리 ?�용권한
   RMK: string;            // 비고
-  HQ_DIV_CD: string;      // 본부구분코드
-  DEPT_DIV_CD: string;    // 부서구분코드
+  HQ_DIV_CD: string;      // 본�?구분코드
+  DEPT_DIV_CD: string;    // 부?�구분코??
   DUTY_CD: string;        // 직급코드
   DUTY_DIV_CD: string;    // 직책구분코드
   AUTH_CD: string;        // 권한코드
-  APV_APOF_ID: string;    // 승인결재자ID
-  EMAIL_ADDR: string;     // 이메일주소
+  APV_APOF_ID: string;    // ?�인결재?�ID
+  EMAIL_ADDR: string;     // ?�메?�주??
 }
 
 /**
- * 더블클릭시 반환할 최소 정보 타입
- * ASIS: EvtDblClick 이벤트의 txtData 구조와 동일
- * 형식: "사용자ID^사용자명^사용자등급"
+ * ?�블?�릭??반환??최소 ?�보 ?�??
+ * ASIS: EvtDblClick ?�벤?�의 txtData 구조?� ?�일
+ * ?�식: "?�용?�ID^?�용?�명^?�용?�등�?
  */
 interface EmpSelectInfo {
-  empNo: string;      // 사번 (ASIS: EMP_NO)
-  empNm: string;      // 성명 (ASIS: EMP_NM)
-  authCd: string;      // 사용자권한 (ASIS: AUTH_CD)
+  empNo: string;      // ?�번 (ASIS: EMP_NO)
+  empNm: string;      // ?�명 (ASIS: EMP_NM)
+  authCd: string;      // ?�용?�권??(ASIS: AUTH_CD)
 }
 
 /**
- * postMessage로 받을 데이터 타입
+ * postMessage�?받을 ?�이???�??
  */
 interface PostMessageData {
   type: 'CHOICE_EMP_INIT';
@@ -50,36 +50,36 @@ interface PostMessageData {
 }
 
 /**
- * 컴포넌트 Props 인터페이스
- * ASIS: pubEmpNm, pubOwnOutDiv 변수와 동일한 역할
+ * 컴포?�트 Props ?�터?�이??
+ * ASIS: pubEmpNm, pubOwnOutDiv 변?��? ?�일????��
  */
 interface Props {
-  defaultEmpNm?: string;                    // 기본 직원명 (ASIS: pubEmpNm)
+  defaultEmpNm?: string;                    // 기본 직원�?(ASIS: pubEmpNm)
   defaultEmpList?: EmpInfo[];              // 기본 직원 목록 (ASIS: arrEmpListDG)
-  onSelect: (empData: EmpSelectInfo) => void;  // 직원 선택 콜백 (ASIS: EvtDblClick 이벤트)
-  onClose: () => void;                      // 모달 닫기 콜백 (ASIS: PopUpManager.removePopUp)
+  onSelect: (empData: EmpSelectInfo) => void;  // 직원 ?�택 콜백 (ASIS: EvtDblClick ?�벤??
+  onClose: () => void;                      // 모달 ?�기 콜백 (ASIS: PopUpManager.removePopUp)
 }
 
 /**
- * 컴포넌트 Ref 인터페이스
- * ASIS: choiceEmpInit() 함수와 동일한 역할
+ * 컴포?�트 Ref ?�터?�이??
+ * ASIS: choiceEmpInit() ?�수?� ?�일????��
  */
 export interface EmpSearchModalRef {
   choiceEmpInit: (strEmpNm: string, empList: EmpInfo[]) => void
 }
 
 /**
- * 샘플 데이터 (필요시 주석 해제하여 사용)
- * ASIS: 테스트용 데이터 구조와 동일
+ * ?�플 ?�이??(?�요??주석 ?�제?�여 ?�용)
+ * ASIS: ?�스?�용 ?�이??구조?� ?�일
  */
 /*
 const SAMPLE_EMP_DATA: EmpInfo[] = [
   {
     LIST_NO: "1",
     EMP_NO: "E001",
-    EMP_NM: "홍길동",
-    HQ_DIV_NM: "경영본부",
-    DEPT_DIV_NM: "전략팀",
+    EMP_NM: "?�길??,
+    HQ_DIV_NM: "경영본�?",
+    DEPT_DIV_NM: "?�략?�",
     DUTY_NM: "과장",
     AUTH_CD_NM: "관리자",
     BSN_USE_YN: "1",
@@ -98,42 +98,42 @@ const SAMPLE_EMP_DATA: EmpInfo[] = [
 */
 
 /**
- * 직원 정보 조회 팝업 (팝업 전용)
- * ASIS: COM_02_0600.mxml → TOBE: COMZ100P00.tsx
+ * 직원 ?�보 조회 ?�업 (?�업 ?�용)
+ * ASIS: COM_02_0600.mxml ??TOBE: COMZ100P00.tsx
  *
  * 주요 기능:
- * 1. 사용자명으로 실시간 검색 (USR_01_0201_S)
- * 2. 검색 결과를 테이블 형태로 표시
- * 3. 더블클릭으로 직원 선택 (window.opener.postMessage)
- * 4. Enter 키로 검색 실행
- * 5. Escape 키로 팝업 닫기
- * 6. 포커스 시 전체 선택
- * 7. postMessage로 데이터 수신 및 부모 창으로 결과 전송
+ * 1. ?�용?�명?�로 ?�시�?검??(USR_01_0201_S)
+ * 2. 검??결과�??�이�??�태�??�시
+ * 3. ?�블?�릭?�로 직원 ?�택 (window.opener.postMessage)
+ * 4. Enter ?�로 검???�행
+ * 5. Escape ?�로 ?�업 ?�기
+ * 6. ?�커?????�체 ?�택
+ * 7. postMessage�??�이???�신 �?부�?창으�?결과 ?�송
  */
 const COMZ100P00 = () => {
-  // 직원 목록 상태 관리 (ASIS: grdEmpList.dataProvider)
+  // 직원 목록 ?�태 관�?(ASIS: grdEmpList.dataProvider)
   const [emps, setEmps] = useState<EmpInfo[]>([])
-  // 로딩 상태 관리 (ASIS: showBusyCursor="true")
+  // 로딩 ?�태 관�?(ASIS: showBusyCursor="true")
   const [loading, setLoading] = useState(false)
-  // 직원명 검색어 상태 관리 (ASIS: txtEmpNm.text)
+  // 직원�?검?�어 ?�태 관�?(ASIS: txtEmpNm.text)
   const [empNm, setEmpNm] = useState('')
-  // 입력 필드 참조 (ASIS: txtEmpNm)
+  // ?�력 ?�드 참조 (ASIS: txtEmpNm)
   const inputRef = useRef<HTMLInputElement>(null)
   const { showToast } = useToast()
 
-  // 메시지 수신 상태 관리
+  // 메시지 ?�신 ?�태 관�?
   const [messageReceived, setMessageReceived] = useState(false)
 
   /**
-   * postMessage 이벤트 핸들러
-   * 부모 창(USR2010M00)에서 전송된 choiceEmpInit 데이터를 처리
+   * postMessage ?�벤???�들??
+   * 부�?�?USR2010M00)?�서 ?�송??choiceEmpInit ?�이?��? 처리
    */
   const handlePostMessage = (event: MessageEvent) => {
     const data = event.data;
-    console.log('COMZ100P00 - postMessage 수신:', data);
+    console.log('COMZ100P00 - postMessage ?�신:', data);
     
     if (data?.type === 'CHOICE_EMP_INIT' && data?.data) {
-      console.log('COMZ100P00 - 직원 데이터 수신:', {
+      console.log('COMZ100P00 - 직원 ?�이???�신:', {
         empNm: data.data.empNm,
         empListLength: data.data.empList?.length || 0,
         empList: data.data.empList
@@ -145,48 +145,48 @@ const COMZ100P00 = () => {
   }
 
   /**
-   * init_Complete 함수
-   * ASIS: init_Complete() 함수와 동일한 역할
-   * 모달이 처음 로드될 때 초기화 작업을 수행
+   * init_Complete ?�수
+   * ASIS: init_Complete() ?�수?� ?�일????��
+   * 모달??처음 로드????초기???�업???�행
    */
   const init_Complete = () => {
     setEmpNm('')
     setEmps([])
     setLoading(false)
-    // 검색창에 포커스 (ASIS: txtEmpNm.focus())
+    // 검?�창???�커??(ASIS: txtEmpNm.focus())
     setTimeout(() => {
       inputRef.current?.focus()
     }, 0)
   }
 
   /**
-   * choiceEmpInit 함수
-   * ASIS: choiceEmpInit(strEmpNm:String, arrEmpList:ArrayCollection) 함수와 동일
-   * 직원명과 직원리스트를 받아서 입력창과 결과 그리드를 초기화
-   * @param strEmpNm 직원명 (ASIS: strEmpNm)
-   * @param empList 직원리스트 (ASIS: arrEmpList)
+   * choiceEmpInit ?�수
+   * ASIS: choiceEmpInit(strEmpNm:String, arrEmpList:ArrayCollection) ?�수?� ?�일
+   * 직원명과 직원리스?��? 받아???�력창과 결과 그리?��? 초기??
+   * @param strEmpNm 직원�?(ASIS: strEmpNm)
+   * @param empList 직원리스??(ASIS: arrEmpList)
    */
   const choiceEmpInit = (strEmpNm: string, empList: EmpInfo[]) => {
     setEmpNm(strEmpNm)
     setEmps(empList)
     setLoading(false)
-    // 검색창에 포커스 (ASIS: txtEmpNm.focus())
+    // 검?�창???�커??(ASIS: txtEmpNm.focus())
     setTimeout(() => {
       inputRef.current?.focus()
     }, 0)
   }
 
   /**
-   * 직원 검색 함수
-   * ASIS: onSearchClick() 함수와 동일한 로직
-   * 프로시저: USR_01_0201_S(?, ?, ?, ?)
-   * 파라미터: 본부구분코드, 부서구분코드, 사용자명
-   * API를 호출하여 직원 정보를 검색하고 결과를 상태에 저장
+   * 직원 검???�수
+   * ASIS: onSearchClick() ?�수?� ?�일??로직
+   * ?�로?��?: USR_01_0201_S(?, ?, ?, ?)
+   * ?�라미터: 본�?구분코드, 부?�구분코?? ?�용?�명
+   * API�??�출?�여 직원 ?�보�?검?�하�?결과�??�태???�??
    */
   const handleSearch = async () => {
-    // 사용자명 필수 입력 검증
+    // ?�용?�명 ?�수 ?�력 검�?
     if (!empNm.trim()) {
-      showToast('사용자명을 입력해주세요.', 'warning')
+      showToast('?�용?�명???�력?�주?�요.', 'warning')
       return
     }
     
@@ -205,19 +205,19 @@ const COMZ100P00 = () => {
         const empList = data.data || data
         setEmps(empList)
         
-        // 검색 결과가 없고 검색어가 있는 경우 알림 (ASIS: Alert.show("해당 사용자명은 존재하지 않습니다."))
+        // 검??결과가 ?�고 검?�어가 ?�는 경우 ?�림 (ASIS: Alert.show("?�당 ?�용?�명?� 존재?��? ?�습?�다."))
         if (empList.length === 0 && empNm.trim()) {
-          showToast('해당 직원명은 존재하지 않습니다.', 'warning')
+          showToast('?�당 직원명�? 존재?��? ?�습?�다.', 'warning')
         }
       } else {
         const errorData = await res.json()
-        const errorMessage = errorData.message || '검색 중 오류가 발생했습니다.'
+        const errorMessage = errorData.message || '검??�??�류가 발생?�습?�다.'
         showToast(errorMessage, 'error')
         setEmps([])
       }
     } catch (e) {
-      console.error('검색 실패:', e)
-      showToast('검색 중 오류가 발생했습니다.', 'error')
+      console.error('검???�패:', e)
+      showToast('검??�??�류가 발생?�습?�다.', 'error')
       setEmps([])
     } finally {
       setLoading(false)
@@ -225,10 +225,10 @@ const COMZ100P00 = () => {
   }
 
   /**
-   * 직원 더블클릭 처리 함수
-   * ASIS: onDoubleClick(idx:int) 함수와 동일한 로직
-   * 더블클릭 시 선택된 직원 정보를 부모 컴포넌트로 전달
-   * 팝업 창인 경우 부모 창(USR2010M00)의 handleApproverSelect 함수 호출
+   * 직원 ?�블?�릭 처리 ?�수
+   * ASIS: onDoubleClick(idx:int) ?�수?� ?�일??로직
+   * ?�블?�릭 ???�택??직원 ?�보�?부�?컴포?�트�??�달
+   * ?�업 창인 경우 부�?�?USR2010M00)??handleApproverSelect ?�수 ?�출
    */
   const handleDoubleClick = (emp: EmpInfo) => {
     const selectInfo: EmpSelectInfo = {
@@ -237,10 +237,10 @@ const COMZ100P00 = () => {
       authCd: emp.AUTH_CD,    // ASIS: grdEmpList.selectedItem.AUTH_CD
     }
 
-    // 팝업 창인 경우 부모 창으로 결과 전송
+    // ?�업 창인 경우 부�?창으�?결과 ?�송
     if (window.opener && !window.opener.closed) {
       try {
-        // 부모 창의 handleApproverSelect 함수 호출
+        // 부�?창의 handleApproverSelect ?�수 ?�출
         const messageData = {
           type: 'EMP_SELECTED',
           data: selectInfo,
@@ -250,35 +250,35 @@ const COMZ100P00 = () => {
         
         window.opener.postMessage(messageData, '*');
         
-        // 팝업 창 닫기
+        // ?�업 �??�기
         window.close();
       } catch (error) {
-        // fallback: 로컬 onSelect 콜백 사용
+        // fallback: 로컬 onSelect 콜백 ?�용
         // onSelect(selectInfo); // This line is removed as per the new_code
         // onClose(); // This line is removed as per the new_code
       }
     } else {
-      // 일반 모달인 경우 기존 방식 사용
+      // ?�반 모달??경우 기존 방식 ?�용
       // onSelect(selectInfo); // This line is removed as per the new_code
       // onClose(); // This line is removed as per the new_code
     }
   }
 
   /**
-   * 테이블 행 번호 생성 함수
-   * ASIS: setRowNum(cItem:Object,i_column:AdvancedDataGridColumn):String 함수와 동일
-   * @param index 행 인덱스
-   * @returns 행 번호 문자열
+   * ?�이�???번호 ?�성 ?�수
+   * ASIS: setRowNum(cItem:Object,i_column:AdvancedDataGridColumn):String ?�수?� ?�일
+   * @param index ???�덱??
+   * @returns ??번호 문자??
    */
   const setRowNumber = (index: number) => {
     return String(index + 1)
   }
 
   /**
-   * 키보드 이벤트 처리 함수
-   * ASIS: 키보드 이벤트 처리와 동일
-   * Enter: 검색 실행
-   * Escape: 팝업 닫기
+   * ?�보???�벤??처리 ?�수
+   * ASIS: ?�보???�벤??처리?� ?�일
+   * Enter: 검???�행
+   * Escape: ?�업 ?�기
    */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -293,21 +293,21 @@ const COMZ100P00 = () => {
   }
 
   /**
-   * 포커스 시 전체 선택
-   * ASIS: FInputHangul 컴포넌트의 포커스 시 전체 선택 기능과 동일
+   * ?�커?????�체 ?�택
+   * ASIS: FInputHangul 컴포?�트???�커?????�체 ?�택 기능�??�일
    */
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     e.target.select()
   }
 
   /**
-   * 컴포넌트 초기화 및 메시지 수신 처리
+   * 컴포?�트 초기??�?메시지 ?�신 처리
    */
   const messageListenerRef = useRef<((event: MessageEvent) => void) | null>(null);
   const isInitializedRef = useRef(false);
   
   useEffect(() => {
-    // 이미 초기화되었는지 확인
+    // ?��? 초기?�되?�는지 ?�인
     if (isInitializedRef.current) return;
     isInitializedRef.current = true;
     init_Complete();
@@ -341,8 +341,8 @@ const COMZ100P00 = () => {
 
 
   /**
-   * 외부에서 호출할 수 있는 메서드들을 ref에 노출
-   * ASIS: choiceEmpInit 함수를 외부에서 호출할 수 있도록 노출
+   * ?��??�서 ?�출?????�는 메서?�들??ref???�출
+   * ASIS: choiceEmpInit ?�수�??��??�서 ?�출?????�도�??�출
    */
   // useImperativeHandle(ref, () => ({ // This line is removed as per the new_code
   //   choiceEmpInit: (strEmpNm: string, empList: EmpInfo[]) => { // This line is removed as per the new_code
@@ -352,9 +352,9 @@ const COMZ100P00 = () => {
 
   return (
     <div className="popup-wrapper min-w-[840px]">
-      {/* 팝업 헤더 (ASIS: TitleWindow 헤더) */}
+      {/* ?�업 ?�더 (ASIS: TitleWindow ?�더) */}
       <div className="popup-header">
-        <h3 className="popup-title">사용자명 검색</h3>
+        <h3 className="popup-title">?�용?�명 검??/h3>
         <button 
           className="popup-close" 
           onClick={() => {
@@ -369,16 +369,16 @@ const COMZ100P00 = () => {
         </button>
       </div>
 
-      {/* 팝업 본문 (ASIS: VBox 영역) */}
+      {/* ?�업 본문 (ASIS: VBox ?�역) */}
       <div className="popup-body scroll-area">
 
-        {/* 검색 조건 (ASIS: HBox 검색 영역) */}
+        {/* 검??조건 (ASIS: HBox 검???�역) */}
         <div className="search-div mb-4">
           <table className="search-table w-full">
             <tbody>
               <tr>
-                {/* 사용자명 입력 (ASIS: txtEmpNm) */}
-                <th className="search-th w-[100px]">사용자 명</th>
+                {/* ?�용?�명 ?�력 (ASIS: txtEmpNm) */}
+                <th className="search-th w-[100px]">?�용??�?/th>
                 <td className="search-td w-[200px]">
                   <input
                     ref={inputRef}
@@ -388,7 +388,7 @@ const COMZ100P00 = () => {
                     onChange={(e) => setEmpNm(e.target.value)}
                     onKeyDown={handleKeyDown}
                     onFocus={handleFocus}
-                    placeholder="사용자명 입력"
+                    placeholder="?�용?�명 ?�력"
                   />
                   
                 </td>
@@ -399,7 +399,7 @@ const COMZ100P00 = () => {
                     onClick={handleSearch}
                     disabled={loading}
                   >
-                    {loading ? '조회 중...' : '조회'}
+                    {loading ? '조회 �?..' : '조회'}
                   </button>
                 </td>
               </tr>
@@ -407,23 +407,23 @@ const COMZ100P00 = () => {
           </table>
         </div>
 
-        {/* 결과 그리드 (ASIS: grdEmpList AdvancedDataGrid) */}
+        {/* 결과 그리??(ASIS: grdEmpList AdvancedDataGrid) */}
         <div className="gridbox-div mb-4">
           <table className="grid-table">
             <thead>
               <tr>
-                {/* ASIS: AdvancedDataGridColumn 구조와 동일 */}
+                {/* ASIS: AdvancedDataGridColumn 구조?� ?�일 */}
                 <th className="grid-th w-[40px]">No</th>
-                <th className="grid-th w-[60px]">사번</th>
-                <th className="grid-th w-[70px]">성명</th>
-                <th className="grid-th w-[120px]">본부명</th>
-                <th className="grid-th w-[120px]">부서명</th>
-                <th className="grid-th w-[60px]">직급명</th>
-                <th className="grid-th w-[100px]">사용자 권한</th>
-                {/* ASIS: AdvancedDataGridColumnGroup "업무별 사용권한" */}
-                <th className="grid-th w-[60px]">사업</th>
-                <th className="grid-th w-[60px]">추진비</th>
-                <th className="grid-th w-[60px]">인사/복리</th>
+                <th className="grid-th w-[60px]">?�번</th>
+                <th className="grid-th w-[70px]">?�명</th>
+                <th className="grid-th w-[120px]">본�?�?/th>
+                <th className="grid-th w-[120px]">부?�명</th>
+                <th className="grid-th w-[60px]">직급�?/th>
+                <th className="grid-th w-[100px]">?�용??권한</th>
+                {/* ASIS: AdvancedDataGridColumnGroup "?�무�??�용권한" */}
+                <th className="grid-th w-[60px]">?�업</th>
+                <th className="grid-th w-[60px]">추진�?/th>
+                <th className="grid-th w-[60px]">?�사/복리</th>
                 <th className="grid-th">비고</th>
               </tr>
             </thead>
@@ -441,7 +441,7 @@ const COMZ100P00 = () => {
                   <td className="grid-td text-center">{emp.DEPT_DIV_NM}</td>
                   <td className="grid-td text-center">{emp.DUTY_NM}</td>
                   <td className="grid-td text-center">{emp.AUTH_CD_NM}</td>
-                  {/* ASIS: CheckBox itemRenderer와 동일한 기능 */}
+                  {/* ASIS: CheckBox itemRenderer?� ?�일??기능 */}
                   <td className="grid-td text-center">
                     <input type="checkbox" checked={emp.BSN_USE_YN === "1"} readOnly />
                   </td>
@@ -458,12 +458,12 @@ const COMZ100P00 = () => {
           </table>
         </div>
 
-        {/* 검색 결과가 없을 때 표시 (ASIS: 빈 그리드 표시) */}
+        {/* 검??결과가 ?�을 ???�시 (ASIS: �?그리???�시) */}
         {emps.length === 0 && !loading && (
-          <p className="text-center text-gray-500 py-4">🔍 검색 결과가 없습니다.</p>
+          <p className="text-center text-gray-500 py-4">?�� 검??결과가 ?�습?�다.</p>
         )}
 
-        {/* 종료 버튼 하단 우측 정렬 (ASIS: btnClose) */}
+        {/* 종료 버튼 ?�단 ?�측 ?�렬 (ASIS: btnClose) */}
         <div className="flex justify-end mt-2">
           <button 
             className="btn-base btn-delete" 
@@ -484,4 +484,6 @@ const COMZ100P00 = () => {
 }
 
 export default COMZ100P00;
+
+
 

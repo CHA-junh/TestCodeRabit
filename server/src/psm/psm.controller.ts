@@ -1,16 +1,16 @@
 /**
  * PSM (Personnel System Management) 컨트롤러
  * 
- * 인사관리 시스템의 REST API 엔드포인트를 제공하는 컨트롤러입니다.
- * 클라이언트의 요청을 받아 PSM 서비스로 전달하고, 표준화된 응답을 반환합니다.
+ * ?�사관�??�스?�의 REST API ?�드?�인?��? ?�공?�는 컨트롤러?�니??
+ * ?�라?�언?�의 ?�청??받아 PSM ?�비?�로 ?�달?�고, ?��??�된 ?�답??반환?�니??
  * 
  * 주요 기능:
- * - 사원 정보 관리 API
- * - 경력 계산 및 관리 API
- * - 인사발령 관리 API
+ * - ?�원 ?�보 관�?API
+ * - 경력 계산 �?관�?API
+ * - ?�사발령 관�?API
  * - 공통 코드 조회 API
  * 
- * 모든 API는 Swagger 문서화가 되어 있으며, 표준화된 응답 형식을 사용합니다.
+ * 모든 API??Swagger 문서?��? ?�어 ?�으�? ?��??�된 ?�답 ?�식???�용?�니??
  * 
  * @author BIST Development Team
  * @since 2024
@@ -45,7 +45,7 @@ import {
   ProfileCarrCalcDto
 } from './dto/psm.dto';
 
-@ApiTags('PSM - 인사관리')
+@ApiTags('PSM - ?�사관�?)
 @Controller('psm')
 export class PsmController {
   constructor(
@@ -53,13 +53,13 @@ export class PsmController {
   ) {}
 
   @ApiOperation({ 
-    summary: '사원 검색', 
-    description: '조건에 맞는 사원 목록을 검색합니다.' 
+    summary: '?�원 검??, 
+    description: '조건??맞는 ?�원 목록??검?�합?�다.' 
   })
   @ApiBody({ type: SearchEmployeesDto })
   @ApiResponse({ 
     status: 200, 
-    description: '사원 검색 성공',
+    description: '?�원 검???�공',
     type: ApiResponseDto 
   })
   @Post('employee/search')
@@ -68,13 +68,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '사원 상세 조회', 
-    description: '특정 사원의 상세 정보를 조회합니다.' 
+    summary: '?�원 ?�세 조회', 
+    description: '?�정 ?�원???�세 ?�보�?조회?�니??' 
   })
   @ApiBody({ type: EmployeeDetailDto })
   @ApiResponse({ 
     status: 200, 
-    description: '사원 상세 조회 성공',
+    description: '?�원 ?�세 조회 ?�공',
     type: ApiResponseDto 
   })
   @Post('employee/detail')
@@ -84,12 +84,12 @@ export class PsmController {
 
   @ApiOperation({ 
     summary: '경력 계산', 
-    description: '사원의 경력을 계산합니다.' 
+    description: '?�원??경력??계산?�니??' 
   })
   @ApiBody({ type: CalculateCareerDto })
   @ApiResponse({ 
     status: 200, 
-    description: '경력 계산 성공',
+    description: '경력 계산 ?�공',
     type: ApiResponseDto 
   })
   @Post('career/calculate')
@@ -98,13 +98,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '프로필 경력 조회', 
-    description: '사원의 프로필 경력 정보를 조회합니다.' 
+    summary: '?�로??경력 조회', 
+    description: '?�원???�로??경력 ?�보�?조회?�니??' 
   })
   @ApiBody({ type: ProfileCareerDto })
   @ApiResponse({ 
     status: 200, 
-    description: '프로필 경력 조회 성공',
+    description: '?�로??경력 조회 ?�공',
     type: ApiResponseDto 
   })
   @Post('career/profile')
@@ -113,13 +113,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '프로필 경력 조회 (GET)', 
-    description: '사원번호로 프로필 경력 정보를 조회합니다.' 
+    summary: '?�로??경력 조회 (GET)', 
+    description: '?�원번호�??�로??경력 ?�보�?조회?�니??' 
   })
-  @ApiParam({ name: 'empNo', description: '사원번호' })
+  @ApiParam({ name: 'empNo', description: '?�원번호' })
   @ApiResponse({ 
     status: 200, 
-    description: '프로필 경력 조회 성공',
+    description: '?�로??경력 조회 ?�공',
     type: ApiResponseDto 
   })
   @Get('career/profile/:empNo')
@@ -130,12 +130,12 @@ export class PsmController {
 
 
   @ApiOperation({ 
-    summary: '본부별 부서 조회', 
-    description: '본부 코드에 해당하는 부서 목록을 조회합니다.' 
+    summary: '본�?�?부??조회', 
+    description: '본�? 코드???�당?�는 부??목록??조회?�니??' 
   })
   @ApiResponse({ 
     status: 200, 
-    description: '본부별 부서 조회 성공',
+    description: '본�?�?부??조회 ?�공',
     type: ApiResponseDto 
   })
   @Post('dept-by-hq')
@@ -145,13 +145,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '경력 계산 (프로시저)', 
-    description: '프로시저를 통한 경력 계산을 수행합니다.' 
+    summary: '경력 계산 (?�로?��?)', 
+    description: '?�로?��?�??�한 경력 계산???�행?�니??' 
   })
   @ApiBody({ type: CalculateCareerDto })
   @ApiResponse({ 
     status: 200, 
-    description: '경력 계산 성공',
+    description: '경력 계산 ?�공',
     type: ApiResponseDto 
   })
   @Post('career/calculate-proc')
@@ -160,13 +160,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '경력 업데이트', 
-    description: '사원의 경력 정보를 업데이트합니다.' 
+    summary: '경력 ?�데?�트', 
+    description: '?�원??경력 ?�보�??�데?�트?�니??' 
   })
   @ApiBody({ type: UpdateCareerDto })
   @ApiResponse({ 
     status: 200, 
-    description: '경력 업데이트 성공',
+    description: '경력 ?�데?�트 ?�공',
     type: ApiResponseDto 
   })
   @Post('career/update')
@@ -175,13 +175,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '프로필 경력 조회 (프로시저)', 
-    description: '프로시저를 통한 프로필 경력 정보를 조회합니다.' 
+    summary: '?�로??경력 조회 (?�로?��?)', 
+    description: '?�로?��?�??�한 ?�로??경력 ?�보�?조회?�니??' 
   })
   @ApiBody({ type: ProfileCareerDto })
   @ApiResponse({ 
     status: 200, 
-    description: '프로필 경력 조회 성공',
+    description: '?�로??경력 조회 ?�공',
     type: ApiResponseDto 
   })
   @Post('career/profile-proc')
@@ -190,13 +190,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '기술등급 이력 조회', 
-    description: '사원의 기술등급 이력을 조회합니다.' 
+    summary: '기술?�급 ?�력 조회', 
+    description: '?�원??기술?�급 ?�력??조회?�니??' 
   })
   @ApiBody({ type: TechnicalGradeHistoryDto })
   @ApiResponse({ 
     status: 200, 
-    description: '기술등급 이력 조회 성공',
+    description: '기술?�급 ?�력 조회 ?�공',
     type: ApiResponseDto 
   })
   @Post('career/technical-grade-history')
@@ -205,13 +205,13 @@ export class PsmController {
   }
   
   @ApiOperation({ 
-    summary: '인사발령내역 조회', 
-    description: '사원의 인사발령내역을 조회합니다.' 
+    summary: '?�사발령?�역 조회', 
+    description: '?�원???�사발령?�역??조회?�니??' 
   })
   @ApiBody({ type: SearchAppointmentDto })
   @ApiResponse({ 
     status: 200, 
-    description: '인사발령내역 조회 성공',
+    description: '?�사발령?�역 조회 ?�공',
     type: ApiResponseDto 
   })
   @Post('appointment/search')
@@ -220,13 +220,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '인사발령 저장', 
-    description: '인사발령 정보를 저장합니다.' 
+    summary: '?�사발령 ?�??, 
+    description: '?�사발령 ?�보�??�?�합?�다.' 
   })
   @ApiBody({ type: SaveAppointmentDto })
   @ApiResponse({ 
     status: 200, 
-    description: '인사발령 저장 성공',
+    description: '?�사발령 ?�???�공',
     type: ApiResponseDto 
   })
   @Post('appointment/save')
@@ -235,13 +235,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '인사발령 삭제', 
-    description: '인사발령 정보를 삭제합니다.' 
+    summary: '?�사발령 ??��', 
+    description: '?�사발령 ?�보�???��?�니??' 
   })
   @ApiBody({ type: DeleteAppointmentDto })
   @ApiResponse({ 
     status: 200, 
-    description: '인사발령 삭제 성공',
+    description: '?�사발령 ??�� ?�공',
     type: ApiResponseDto 
   })
   @Post('appointment/delete')
@@ -250,13 +250,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '인사발령 일괄등록', 
-    description: '여러 사원의 인사발령을 일괄 등록합니다.' 
+    summary: '?�사발령 ?�괄?�록', 
+    description: '?�러 ?�원???�사발령???�괄 ?�록?�니??' 
   })
   @ApiBody({ type: BatchRegisterAppointmentDto })
   @ApiResponse({ 
     status: 200, 
-    description: '인사발령 일괄등록 성공',
+    description: '?�사발령 ?�괄?�록 ?�공',
     type: ApiResponseDto 
   })
   @Post('appointment/batch-register')
@@ -265,13 +265,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '사원 정보 업데이트', 
-    description: '사원의 기본 정보를 업데이트합니다.' 
+    summary: '?�원 ?�보 ?�데?�트', 
+    description: '?�원??기본 ?�보�??�데?�트?�니??' 
   })
   @ApiBody({ type: UpdateEmployeeDto })
   @ApiResponse({ 
     status: 200, 
-    description: '사원 정보 업데이트 성공',
+    description: '?�원 ?�보 ?�데?�트 ?�공',
     type: ApiResponseDto 
   })
   @Post('employee/update')
@@ -280,13 +280,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '사원 정보 삭제', 
-    description: '사원의 모든 정보를 삭제합니다. (AS-IS PSM_01_0113_D 프로시저 호출)' 
+    summary: '?�원 ?�보 ??��', 
+    description: '?�원??모든 ?�보�???��?�니?? (AS-IS PSM_01_0113_D ?�로?��? ?�출)' 
   })
   @ApiBody({ type: DeleteEmployeeDto })
   @ApiResponse({ 
     status: 200, 
-    description: '사원 정보 삭제 성공',
+    description: '?�원 ?�보 ??�� ?�공',
     type: ApiResponseDto 
   })
   @Post('employee/delete')
@@ -295,13 +295,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '프로필 리스트 조회', 
-    description: '사원의 개발 프로필 리스트를 조회합니다.' 
+    summary: '?�로??리스??조회', 
+    description: '?�원??개발 ?�로??리스?��? 조회?�니??' 
   })
   @ApiBody({ type: ProfileListDto })
   @ApiResponse({ 
     status: 200, 
-    description: '프로필 리스트 조회 성공',
+    description: '?�로??리스??조회 ?�공',
     type: ApiResponseDto 
   })
   @Post('profile/list')
@@ -310,13 +310,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '프로필 등록', 
-    description: '새로운 개발 프로필을 등록합니다.' 
+    summary: '?�로???�록', 
+    description: '?�로??개발 ?�로?�을 ?�록?�니??' 
   })
   @ApiBody({ type: ProfileInsertDto })
   @ApiResponse({ 
     status: 200, 
-    description: '프로필 등록 성공',
+    description: '?�로???�록 ?�공',
     type: ApiResponseDto 
   })
   @Post('profile/insert')
@@ -325,13 +325,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '프로필 수정', 
-    description: '기존 개발 프로필을 수정합니다.' 
+    summary: '?�로???�정', 
+    description: '기존 개발 ?�로?�을 ?�정?�니??' 
   })
   @ApiBody({ type: ProfileUpdateDto })
   @ApiResponse({ 
     status: 200, 
-    description: '프로필 수정 성공',
+    description: '?�로???�정 ?�공',
     type: ApiResponseDto 
   })
   @Post('profile/update')
@@ -340,13 +340,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '프로필 삭제', 
-    description: '개발 프로필을 삭제합니다.' 
+    summary: '?�로????��', 
+    description: '개발 ?�로?�을 ??��?�니??' 
   })
   @ApiBody({ type: ProfileDeleteDto })
   @ApiResponse({ 
     status: 200, 
-    description: '프로필 삭제 성공',
+    description: '?�로????�� ?�공',
     type: ApiResponseDto 
   })
   @Post('profile/delete')
@@ -355,13 +355,13 @@ export class PsmController {
   }
 
   @ApiOperation({ 
-    summary: '프로필 경력 계산 데이터 조회', 
-    description: '프로필 기반 경력 계산 데이터를 조회합니다. (PSM_03_0131_S)' 
+    summary: '?�로??경력 계산 ?�이??조회', 
+    description: '?�로??기반 경력 계산 ?�이?��? 조회?�니?? (PSM_03_0131_S)' 
   })
   @ApiBody({ type: ProfileCarrCalcDto })
   @ApiResponse({ 
     status: 200, 
-    description: '프로필 경력 계산 데이터 조회 성공',
+    description: '?�로??경력 계산 ?�이??조회 ?�공',
     type: ApiResponseDto 
   })
   @Post('profile/carr-calc')
@@ -373,13 +373,13 @@ export class PsmController {
 
 
   @ApiOperation({ 
-    summary: '사원 정보 조회 (COM_02_0411_S)', 
-    description: 'COM_02_0411_S 프로시저를 사용하여 사원 정보를 조회합니다.' 
+    summary: '?�원 ?�보 조회 (COM_02_0411_S)', 
+    description: 'COM_02_0411_S ?�로?��?�??�용?�여 ?�원 ?�보�?조회?�니??' 
   })
   @ApiBody({ type: SearchEmployeesDto })
   @ApiResponse({ 
     status: 200, 
-    description: '사원 정보 조회 성공',
+    description: '?�원 ?�보 조회 ?�공',
     type: ApiResponseDto 
   })
   @Post('employee/search-com')
@@ -387,3 +387,4 @@ export class PsmController {
     return await this.psmService.searchEmployeesCom(searchParams);
   }
 }
+

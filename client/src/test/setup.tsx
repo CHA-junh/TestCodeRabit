@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 
-// 전역 테스트 설정
+// ?�역 ?�스???�정
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
 	observe: jest.fn(),
 	unobserve: jest.fn(),
@@ -36,3 +36,4 @@ global.IntersectionObserver = jest.fn().mockImplementation(() => ({
 	disconnect: jest.fn(),
 }));
  
+

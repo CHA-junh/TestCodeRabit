@@ -14,3 +14,4 @@ export class CodeEntity {
   @Column({ name: 'SORT_SEQ', type: 'number' })
   sortSeq: number;
 } 
+

@@ -16,9 +16,11 @@ module.exports = {
         nanum: ['"Nanum Gothic"', 'sans-serif'],
       },
       fontSize: {
-        base: '13px', // 전역 기준 폰트 크기 설정
+        base: '13px', // ?�역 기�? ?�트 ?�기 ?�정
       },
     },
   },
   plugins: [],
 }
+
+

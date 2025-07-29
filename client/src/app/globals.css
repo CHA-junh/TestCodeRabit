@@ -7,7 +7,7 @@
 @import 'ag-grid-community/styles/ag-theme-alpine.css';
 @import './common/common.css';
 
-/* AG Grid 커스텀 스타일 */
+/* AG Grid 커스?� ?��???*/
 .ag-theme-alpine {
 	--ag-header-height: 50px;
 	--ag-row-height: 45px;
@@ -21,13 +21,13 @@
 		'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* 그리드 컨테이너 스타일 */
+/* 그리??컨테?�너 ?��???*/
 .grid-container {
 	height: 600px;
 	width: 100%;
 }
 
-/* 반응형 그리드 */
+/* 반응??그리??*/
 @media (max-width: 768px) {
 	.grid-container {
 		height: 400px;
@@ -58,7 +58,7 @@ body {
 		rgb(var(--background-start-rgb));
 }
 
-/* 기존 글로벌 스타일 유지 */
+/* 기존 글로벌 ?��????��? */
 
 * {
 	box-sizing: border-box;
@@ -86,7 +86,7 @@ form h1 {
 	color: #000;
 }
 
-/* 토스트 애니메이션 */
+/* ?�스???�니메이??*/
 @keyframes fadeIn {
 	from {
 		opacity: 0;
@@ -102,7 +102,7 @@ form h1 {
 	animation: fadeIn 0.25s ease-out;
 }
 
-/* 모달 스케일 애니메이션 */
+/* 모달 ?��????�니메이??*/
 @keyframes scaleIn {
 	from {
 		opacity: 0;
@@ -117,3 +117,5 @@ form h1 {
 .animate-scale-in {
 	animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+

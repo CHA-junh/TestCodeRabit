@@ -12,22 +12,22 @@ import { useDeptByHq, DeptByHq } from '@/modules/auth/hooks/useCommonCodes';
 import { useCommonCodes } from '@/modules/auth/hooks/useCommonCodes';
 
 /**
- * COMZ040P00 - (팝)사업번호검색화면
+ * COMZ040P00 - (???�업번호검?�화�?
  * 
  * 주요 기능:
- * - 사업번호 검색 및 선택
- * - 권한별 조회 범위 제어
- * - 진행상태별 필터링
- * - 부서별 사업 조회
+ * - ?�업번호 검??�??�택
+ * - 권한�?조회 범위 ?�어
+ * - 진행?�태�??�터�?
+ * - 부?�별 ?�업 조회
  * 
- * 연관 테이블:
- * - TBL_BSN_NO_INF (사업번호 정보)
- * - TBL_BSN_SCDC (사업품의서)
- * - TBL_BSN_PLAN (사업계획)
- * - TBL_DEPT (부서 정보)
+ * ?��? ?�이�?
+ * - TBL_BSN_NO_INF (?�업번호 ?�보)
+ * - TBL_BSN_SCDC (?�업?�의??
+ * - TBL_BSN_PLAN (?�업계획)
+ * - TBL_DEPT (부???�보)
  */
 
-// API URL 설정
+// API URL ?�정
 const apiUrl =
   typeof window !== 'undefined' && process.env.NODE_ENV === 'development'
     ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/api/COMZ040P00`
@@ -36,9 +36,9 @@ const apiUrl =
 interface BusinessData {
   bsnNo: string;
   bsnNm: string;
-  bizRepnm: string;  // 백엔드에서 실제로 오는 필드명
-  bizRepid: string;  // 백엔드에서 실제로 오는 필드명
-  bizRepemail: string;  // 백엔드에서 실제로 오는 필드명
+  bizRepnm: string;  // 백엔?�에???�제�??�는 ?�드�?
+  bizRepid: string;  // 백엔?�에???�제�??�는 ?�드�?
+  bizRepemail: string;  // 백엔?�에???�제�??�는 ?�드�?
   pmNm: string;
   pmId: string;
   bsnStrtDt: string;
@@ -52,7 +52,7 @@ interface BusinessData {
   pgrsStDivNm: string;
 }
 
-// 부서 정보 타입
+// 부???�보 ?�??
 interface DeptInfo {
   deptDivCd: string;
   deptNm: string;
@@ -67,10 +67,10 @@ export default function ProjectSearchPopup() {
   // AG-Grid ref
   const businessGridRef = useRef<AgGridReact<BusinessData>>(null);
 
-  // AG-Grid 컬럼 정의
+  // AG-Grid 컬럼 ?�의
   const [businessColDefs] = useState<ColDef[]>([
     {
-      headerName: '사업번호',
+      headerName: '?�업번호',
       field: 'bsnNo',
       width: 120,
       flex: 0,
@@ -79,7 +79,7 @@ export default function ProjectSearchPopup() {
       tooltipField: 'bsnNo',
     },
     {
-      headerName: '사업명',
+      headerName: '?�업�?,
       field: 'bsnNm',
       width: 400,
       flex: 1,
@@ -88,7 +88,7 @@ export default function ProjectSearchPopup() {
       tooltipField: 'bsnNm',
     },
     {
-      headerName: '시작일자',
+      headerName: '?�작?�자',
       field: 'bsnStrtDt',
       width: 100,
       flex: 0,
@@ -97,7 +97,7 @@ export default function ProjectSearchPopup() {
       tooltipField: 'bsnStrtDt',
     },
     {
-      headerName: '종료일자',
+      headerName: '종료?�자',
       field: 'bsnEndDt',
       width: 100,
       flex: 0,
@@ -106,7 +106,7 @@ export default function ProjectSearchPopup() {
       tooltipField: 'bsnEndDt',
     },
     {
-      headerName: '영업부서',
+      headerName: '?�업부??,
       field: 'pplsDeptNm',
       width: 120,
       flex: 0,
@@ -115,17 +115,17 @@ export default function ProjectSearchPopup() {
       tooltipField: 'pplsDeptNm',
     },
     {
-      headerName: '영업대표',
+      headerName: '?�업?�??,
       field: 'bizRepnm',
       width: 100,
       flex: 0,
       cellStyle: { textAlign: 'center' },
       headerClass: 'ag-center-header',
-      valueGetter: (params) => params.data?.bizRepnm || '미지정',
+      valueGetter: (params) => params.data?.bizRepnm || '미�???,
       tooltipField: 'bizRepnm',
     },
     {
-      headerName: '실행부서',
+      headerName: '?�행부??,
       field: 'execDeptNm',
       width: 120,
       flex: 0,
@@ -143,7 +143,7 @@ export default function ProjectSearchPopup() {
       tooltipField: 'pmNm',
     },
     {
-      headerName: '진행상태',
+      headerName: '진행?�태',
       field: 'pgrsStDivNm',
       width: 100,
       flex: 0,
@@ -153,7 +153,7 @@ export default function ProjectSearchPopup() {
     },
   ]);
 
-  const [searchType, setSearchType] = useState(''); // 초기값을 빈 문자열로 설정
+  const [searchType, setSearchType] = useState(''); // 초기값을 �?문자?�로 ?�정
   const [hqDiv, setHqDiv] = useState('ALL');
   const [deptDiv, setDeptDiv] = useState('ALL');
   const [userNm, setUserNm] = useState('');
@@ -183,9 +183,9 @@ export default function ProjectSearchPopup() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedBusiness, setSelectedBusiness] = useState<BusinessData | null>(null);
-  const [planYn, setPlanYn] = useState(false); // 사업예산품의서 여부
+  const [planYn, setPlanYn] = useState(false); // ?�업?�산?�의???��?
 
-  // 진행상태 코드 매핑
+  // 진행?�태 코드 매핑
   const getProgressStateCode = () => {
     let codes = [];
     if (progressStates.new) codes.push('1');
@@ -198,88 +198,88 @@ export default function ProjectSearchPopup() {
     return codes.join(',');
   };
 
-  // 본부별 부서 목록 조회 (공통 훅 사용)
+  // 본�?�?부??목록 조회 (공통 ???�용)
   const deptListData = useDeptByHq(hqDiv);
 
-  // 디버깅용 로그 - 상태 변경 시에만 실행
+  // ?�버깅용 로그 - ?�태 변�??�에�??�행
   useEffect(() => {
     if (user) {
-      console.log('🔍 현재 본부:', hqDiv);
-      console.log('🔍 부서 목록:', deptListData);
-      console.log('🔍 사용자 정보:', user);
+      console.log('?�� ?�재 본�?:', hqDiv);
+      console.log('?�� 부??목록:', deptListData);
+      console.log('?�� ?�용???�보:', user);
     }
   }, [hqDiv, deptListData, user]);
 
-  // 권한에 따른 조회구분 디폴트 설정 (레거시 setDefalutSrchKb 함수)
+  // 권한???�른 조회구분 ?�폴???�정 (?�거??setDefalutSrchKb ?�수)
   const setDefaultSearchType = () => {
     const authCd = user?.authCd || '';
     const hqDivCd = user?.hqDivCd || '';
     const deptTp = user?.deptTp || '';
 
-    console.log('🔍 권한:', authCd);
-    console.log('🔍 본부:', hqDivCd);
-    console.log('🔍 부서유형:', deptTp);
+    console.log('?�� 권한:', authCd);
+    console.log('?�� 본�?:', hqDivCd);
+    console.log('?�� 부?�유??', deptTp);
 
-    let newSearchType = '0'; // 기본값
+    let newSearchType = '0'; // 기본�?
 
-    if (authCd === '00') { // 본부장/임원 이상
+    if (authCd === '00') { // 본�????�원 ?�상
       newSearchType = '0';
-    } else if (authCd === '10') { // 부서장
-      if (hqDivCd === '02' || deptTp === 'BIZ') { // 영업본부
+    } else if (authCd === '10') { // 부?�장
+      if (hqDivCd === '02' || deptTp === 'BIZ') { // ?�업본�?
         newSearchType = '1';
-      } else if (hqDivCd === '03' || hqDivCd === '04') { // 서비스사업본부, 개발본부
+      } else if (hqDivCd === '03' || hqDivCd === '04') { // ?�비?�사?�본부, 개발본�?
         newSearchType = '2';
       } else {
         newSearchType = '0';
       }
-    } else if (authCd === '20') { // 영업대표
+    } else if (authCd === '20') { // ?�업?�??
       newSearchType = '1';
     } else if (authCd === '30') { // PM
-      newSearchType = '2'; // 레거시와 동일하게 PM은 기본적으로 실행부서
+      newSearchType = '2'; // ?�거?��? ?�일?�게 PM?� 기본?�으�??�행부??
     } else {
-      // 권한코드가 없거나 알 수 없는 경우
-      if (hqDivCd === '01' || deptTp === 'ADM') { // 경영지원본부
+      // 권한코드가 ?�거???????�는 경우
+      if (hqDivCd === '01' || deptTp === 'ADM') { // 경영지?�본부
         newSearchType = '0';
       } else {
-        newSearchType = '0'; // 기본값으로 '전체' 설정
+        newSearchType = '0'; // 기본값으�?'?�체' ?�정
       }
     }
 
-    console.log('🔍 설정된 조회구분:', newSearchType);
+    console.log('?�� ?�정??조회구분:', newSearchType);
     setSearchType(newSearchType);
     
-    handleSearchTypeChange(newSearchType); // 새로운 값으로 직접 호출
+    handleSearchTypeChange(newSearchType); // ?�로??값으�?직접 ?�출
   };
 
-  // 컴포넌트 마운트 시 권한에 따른 기본값 설정 (초기 데이터 로드와 분리)
+  // 컴포?�트 마운????권한???�른 기본�??�정 (초기 ?�이??로드?� 분리)
   useEffect(() => {
     if (user) {
-      console.log('🔍 useEffect - 사용자 정보 로드됨:', user);
+      console.log('?�� useEffect - ?�용???�보 로드??', user);
       setDefaultSearchType();
     }
   }, [user]);
 
-  // 권한 설정 완료 후 초기 검색 실행
+  // 권한 ?�정 ?�료 ??초기 검???�행
   useEffect(() => {
     if (user && searchType !== '') {
-      console.log('🔍 권한 설정 완료 - 초기 검색 실행');
-      console.log('🔍 검색 타입:', searchType);
-      console.log('🔍 사용자 정보:', user);
-      setProgressStateByType(''); // 기본 진행상태 설정
+      console.log('?�� 권한 ?�정 ?�료 - 초기 검???�행');
+      console.log('?�� 검???�??', searchType);
+      console.log('?�� ?�용???�보:', user);
+      setProgressStateByType(''); // 기본 진행?�태 ?�정
             handleSearch();
     }
   }, [searchType, user]);
 
-  // 공통 코드 에러 처리
+  // 공통 코드 ?�러 처리
   useEffect(() => {
     if (codesError) {
       showToast(codesError, 'error');
     }
   }, [codesError, showToast]);
 
-  // 진행상태 설정 (레거시 setPgrsSt 함수)
+  // 진행?�태 ?�정 (?�거??setPgrsSt ?�수)
   const setProgressStateByType = (val: string) => {
-    if (val === 'plan') { // 사업예산품의서
+    if (val === 'plan') { // ?�업?�산?�의??
       setPlanYn(true);
       setProgressStates({
         all: true,
@@ -291,7 +291,7 @@ export default function ProjectSearchPopup() {
         failed: false,
         cancelled: false
       });
-      // 레거시와 동일하게 신규, 영업진행만 체크 가능
+      // ?�거?��? ?�일?�게 ?�규, ?�업진행�?체크 가??
       setProgressEnabled({
         all: true,
         new: true,
@@ -302,7 +302,7 @@ export default function ProjectSearchPopup() {
         failed: false,
         cancelled: false
       });
-    } else if (val === 'rsts') { // 사업확정품의서
+    } else if (val === 'rsts') { // ?�업?�정?�의??
       setPlanYn(false);
       setProgressStates({
         all: true,
@@ -314,7 +314,7 @@ export default function ProjectSearchPopup() {
         failed: false,
         cancelled: false
       });
-      // 레거시와 동일하게 수주확정, 계약, 완료만 체크 가능
+      // ?�거?��? ?�일?�게 ?�주?�정, 계약, ?�료�?체크 가??
       setProgressEnabled({
         all: true,
         new: false,
@@ -325,14 +325,14 @@ export default function ProjectSearchPopup() {
         failed: false,
         cancelled: false
       });
-    } else if (val === 'pplct') { // 업무추진비
+    } else if (val === 'pplct') { // ?�무추진�?
       setPlanYn(false);
       const authCd = user?.authCd || '';
       const hqDivCd = user?.hqDivCd || '';
       const deptTp = user?.deptTp || '';
 
       if (hqDivCd === '02' || authCd === '00' || deptTp === 'BIZ') {
-        // 영업본부 또는 본부장 이상
+        // ?�업본�? ?�는 본�????�상
         setProgressStates({
           all: true,
           new: true,
@@ -354,7 +354,7 @@ export default function ProjectSearchPopup() {
           cancelled: false
         });
       } else {
-        // 영업본부와 본부장이상이 아니면 수주확정된 사업리스트만 조회 가능
+        // ?�업본�??� 본�??�이?�이 ?�니�??�주?�정???�업리스?�만 조회 가??
         setProgressStates({
           all: true,
           new: false,
@@ -401,24 +401,24 @@ export default function ProjectSearchPopup() {
     }
   };
 
-  // 선택 권한 체크 (레거시 chkAuthListSelect 함수)
+  // ?�택 권한 체크 (?�거??chkAuthListSelect ?�수)
   const checkAuthListSelect = (item: BusinessData): boolean => {
     const authCd = user?.authCd || '';
     const userName = user?.name || '';
 
-    // PM인 경우에는 자신의 사업만 선택할 수 있다
+    // PM??경우?�는 ?�신???�업�??�택?????�다
     if (authCd === '30') {
       if (userName !== item.pmNm) {
-        showToast(`해당 사업의 PM이 아닙니다. 선택할 수 없습니다.`, 'warning');
+        showToast(`?�당 ?�업??PM???�닙?�다. ?�택?????�습?�다.`, 'warning');
         return false;
       }
     }
     return true;
   };
 
-  // 모두선택 체크박스 처리 (레거시 onChangeAll 함수)
+  // 모두?�택 체크박스 처리 (?�거??onChangeAll ?�수)
   const handleAllProgressChange = (checked: boolean) => {
-    console.log('🔄 전체 체크박스 클릭:', checked);
+    console.log('?�� ?�체 체크박스 ?�릭:', checked);
     setProgressStates(prev => ({
       ...prev,
       all: checked,
@@ -432,18 +432,18 @@ export default function ProjectSearchPopup() {
     }));
   };
 
-  // 개별 진행상태 체크박스 처리 (레거시 onChangePrgsSt 함수)
+  // 개별 진행?�태 체크박스 처리 (?�거??onChangePrgsSt ?�수)
   const handleProgressChange = (key: string, checked: boolean) => {
-    console.log('🔄 개별 체크박스 클릭:', key, checked);
+    console.log('?�� 개별 체크박스 ?�릭:', key, checked);
     setProgressStates(prev => ({
       ...prev,
       [key]: checked,
-      // 개별 체크박스 해제 시 전체 선택도 해제 (레거시와 동일)
+      // 개별 체크박스 ?�제 ???�체 ?�택???�제 (?�거?��? ?�일)
       all: checked ? prev.all : false
     }));
   };
 
-  // 조회구분 변경 처리 (레거시 onRdPplsExecDivChange 함수)
+  // 조회구분 변�?처리 (?�거??onRdPplsExecDivChange ?�수)
   const handleSearchTypeChange = (value: string) => {
     setSearchType(value);
     
@@ -477,21 +477,21 @@ export default function ProjectSearchPopup() {
     }
   };
 
-  // 본부 변경 처리 (레거시 onHqDivChange 함수)
+  // 본�? 변�?처리 (?�거??onHqDivChange ?�수)
   const handleHqChange = (value: string) => {
     setHqDiv(value);
-    setDeptDiv('ALL'); // 레거시와 동일하게 본부 변경 시 부서는 'ALL'로 리셋
+    setDeptDiv('ALL'); // ?�거?��? ?�일?�게 본�? 변�???부?�는 'ALL'�?리셋
   };
 
-  // 검색 실행
+  // 검???�행
   const handleSearch = async () => {
     if (!user) {
-      showToast('사용자 정보를 찾을 수 없습니다.', 'error');
+      showToast('?�용???�보�?찾을 ???�습?�다.', 'error');
       return;
     }
 
-    console.log('🔍 검색 시작');
-    console.log('🔍 현재 상태:', {
+    console.log('?�� 검???�작');
+    console.log('?�� ?�재 ?�태:', {
       searchType,
       hqDiv,
       deptDiv,
@@ -501,9 +501,9 @@ export default function ProjectSearchPopup() {
       progressStates
     });
 
-    // 검색 조건 유효성 검사
+    // 검??조건 ?�효??검??
     if (searchType === '') {
-      console.log('⚠️ 검색 타입이 설정되지 않음');
+      console.log('?�️ 검???�?�이 ?�정?��? ?�음');
       return;
     }
 
@@ -518,11 +518,11 @@ export default function ProjectSearchPopup() {
         searchDiv: searchType,
         hqCd: hqDiv,
         deptCd: deptDiv,
-        userNm: userNm || 'ALL', // 프로시저 로직에 맞춰 'ALL' 사용
+        userNm: userNm || 'ALL', // ?�로?��? 로직??맞춰 'ALL' ?�용
         loginId: user.userId || user.empNo || ''
       };
 
-      console.log('📤 검색 요청:', searchParams);
+      console.log('?�� 검???�청:', searchParams);
 
       const response = await fetch(`${apiUrl}/search`, {
         method: 'POST',
@@ -534,7 +534,7 @@ export default function ProjectSearchPopup() {
       });
 
       if (!response.ok) {
-        throw new Error(`검색 실패: ${response.status}`);
+        throw new Error(`검???�패: ${response.status}`);
       }
 
       const result = await response.json();
@@ -542,28 +542,28 @@ export default function ProjectSearchPopup() {
       if (result.success) {
         setBusinessList(result.data || []);
         if (result.data && result.data.length === 0) {
-          showToast('조회 결과가 없습니다.', 'info');
+          showToast('조회 결과가 ?�습?�다.', 'info');
         } else {
-          showToast(`${result.data?.length || 0}건의 사업이 조회되었습니다.`, 'info');
+          showToast(`${result.data?.length || 0}건의 ?�업??조회?�었?�니??`, 'info');
         }
       } else {
-        showToast(result.message || '조회 중 오류가 발생했습니다.', 'error');
+        showToast(result.message || '조회 �??�류가 발생?�습?�다.', 'error');
       }
     } catch (error) {
-      console.error('검색 오류:', error);
-      setError(error instanceof Error ? error.message : '조회 중 오류가 발생했습니다.');
-      showToast('조회 중 오류가 발생했습니다.', 'error');
+      console.error('검???�류:', error);
+      setError(error instanceof Error ? error.message : '조회 �??�류가 발생?�습?�다.');
+      showToast('조회 �??�류가 발생?�습?�다.', 'error');
     } finally {
       setLoading(false);
     }
   };
 
-  // 행 클릭 처리
+  // ???�릭 처리
   const handleRowClick = (item: BusinessData) => {
     setSelectedBusiness(item);
   }
 
-  // AG-Grid 선택 이벤트
+  // AG-Grid ?�택 ?�벤??
   const onBusinessSelectionChanged = (event: SelectionChangedEvent) => {
     const selectedRows = event.api.getSelectedRows();
     if (selectedRows.length > 0) {
@@ -574,12 +574,12 @@ export default function ProjectSearchPopup() {
     }
   };
 
-  // AG-Grid 준비 완료 이벤트
+  // AG-Grid 준�??�료 ?�벤??
   const onBusinessGridReady = (params: any) => {
     params.api.sizeColumnsToFit();
   };
 
-  // 더블클릭 처리
+  // ?�블?�릭 처리
   const handleDoubleClick = (item: BusinessData) => {
     // 권한 체크
     if (!checkAuthListSelect(item)) {
@@ -587,23 +587,23 @@ export default function ProjectSearchPopup() {
     }
 
     if (window.opener) {
-      // 부모창에 데이터 전달
+      // 부모창???�이???�달
       const resultData = {
         bsnNo: item.bsnNo,
         bsnDeptKb: item.bsnDeptKb,
-        bizRepNm: item.bizRepnm,  // 실제 필드명 사용
-        bizRepId: item.bizRepid,  // 실제 필드명 사용
+        bizRepNm: item.bizRepnm,  // ?�제 ?�드�??�용
+        bizRepId: item.bizRepid,  // ?�제 ?�드�??�용
         pmNm: item.pmNm,
         pmId: item.pmId,
         bsnStrtDt: item.bsnStrtDt,
         bsnEndDt: item.bsnEndDt,
-        bizRepEmail: item.bizRepemail,  // 실제 필드명 사용
+        bizRepEmail: item.bizRepemail,  // ?�제 ?�드�??�용
         pplsDeptCd: item.pplsDeptCd,
         execDeptCd: item.execDeptCd,
         bsnNm: item.bsnNm
       };
       
-      // 부모창에 이벤트 전달
+      // 부모창???�벤???�달
       window.opener.postMessage({
         type: 'BUSINESS_SELECT',
         data: resultData
@@ -613,16 +613,16 @@ export default function ProjectSearchPopup() {
     }
   };
 
-  // 그리드 행 키보드 네비게이션
+  // 그리?????�보???�비게이??
   const handleRowKeyDown = (idx: number) => (e: React.KeyboardEvent<HTMLTableRowElement>) => {
     if (e.key === 'ArrowDown') {
       const nextIdx = idx + 1;
       if (nextIdx < businessList.length) {
         const nextRow = businessList[nextIdx];
         setSelectedBusiness(nextRow);
-        // 다음 행에 포커스 이동
+        // ?�음 ?�에 ?�커???�동
         setTimeout(() => {
-          document.querySelectorAll<HTMLTableRowElement>('tr[aria-label^="사업번호 "]')[nextIdx]?.focus();
+          document.querySelectorAll<HTMLTableRowElement>('tr[aria-label^="?�업번호 "]')[nextIdx]?.focus();
         }, 0);
       }
     } else if (e.key === 'ArrowUp') {
@@ -631,11 +631,11 @@ export default function ProjectSearchPopup() {
         const prevRow = businessList[prevIdx];
         setSelectedBusiness(prevRow);
         setTimeout(() => {
-          document.querySelectorAll<HTMLTableRowElement>('tr[aria-label^="사업번호 "]')[prevIdx]?.focus();
+          document.querySelectorAll<HTMLTableRowElement>('tr[aria-label^="?�업번호 "]')[prevIdx]?.focus();
         }, 0);
       }
     } else if (e.key === 'Enter') {
-      // 엔터키로 선택
+      // ?�터?�로 ?�택
       const currentRow = businessList[idx];
       if (currentRow) {
         handleDoubleClick(currentRow);
@@ -643,32 +643,32 @@ export default function ProjectSearchPopup() {
     }
   };
 
-  // 엔터키 처리
+  // ?�터??처리
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleSearch();
     }
   };
 
-  // 유효성 체크 (레거시 chkValidation 함수)
+  // ?�효??체크 (?�거??chkValidation ?�수)
   const checkValidation = (): boolean => {
-    // 사업예산품의서일 경우
+    // ?�업?�산?�의?�일 경우
     if (planYn) {
       if (!progressStates.new && !progressStates.sales) {
-        showToast('진행상태를 선택하세요. (신규 또는 영업진행 중 하나 이상)', 'warning');
+        showToast('진행?�태�??�택?�세?? (?�규 ?�는 ?�업진행 �??�나 ?�상)', 'warning');
         return false;
       }
     } else {
-      // 사업확정품의서일 경우 - 수주확정, 계약, 완료 중 하나라도 선택되어야 함
+      // ?�업?�정?�의?�일 경우 - ?�주?�정, 계약, ?�료 �??�나?�도 ?�택?�어????
       if (!progressStates.confirmed && !progressStates.contract && !progressStates.completed) {
-        showToast('진행상태를 선택하세요. (수주확정, 계약, 완료 중 하나 이상)', 'warning');
+        showToast('진행?�태�??�택?�세?? (?�주?�정, 계약, ?�료 �??�나 ?�상)', 'warning');
         return false;
       }
     }
     return true;
   };
 
-  // ESC 키로 팝업 닫기
+  // ESC ?�로 ?�업 ?�기
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -680,7 +680,7 @@ export default function ProjectSearchPopup() {
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
 
-  // 전체 체크박스 상태 자동 업데이트
+  // ?�체 체크박스 ?�태 ?�동 ?�데?�트
   useEffect(() => {
     const allIndividualChecked = progressStates.new && 
                                 progressStates.sales && 
@@ -691,7 +691,7 @@ export default function ProjectSearchPopup() {
                                 progressStates.cancelled;
     
     if (allIndividualChecked !== progressStates.all) {
-      console.log('🔄 전체 체크박스 상태 업데이트:', allIndividualChecked);
+      console.log('?�� ?�체 체크박스 ?�태 ?�데?�트:', allIndividualChecked);
       setProgressStates(prev => ({
         ...prev,
         all: allIndividualChecked
@@ -703,26 +703,26 @@ export default function ProjectSearchPopup() {
 
   return (
     <div className="popup-wrapper">
-      {/* 상단 헤더 */}
+      {/* ?�단 ?�더 */}
       <div className="popup-header">
-        <h3 className="popup-title">사업번호검색</h3>
+        <h3 className="popup-title">?�업번호검??/h3>
         <button 
           className="popup-close" 
           type="button"
           onClick={() => window.close()}
           tabIndex={0}
-          aria-label="닫기"
+          aria-label="?�기"
         >
           ×
         </button>
       </div>
 
       <div className="popup-body">
-        {/* 검색 영역 */}
+        {/* 검???�역 */}
         <div className="search-div">
           <table className="search-table">
             <tbody>
-              {/* 1행 - 조회구분 */}
+              {/* 1??- 조회구분 */}
               <tr className="search-tr">
                 <th className="search-th w-[110px]">조회구분</th>
                 <td className="search-td" colSpan={7}>
@@ -732,7 +732,7 @@ export default function ProjectSearchPopup() {
                       name="searchType" 
                       checked={searchType === '0'}
                       onChange={() => handleSearchTypeChange('0')}
-                    /> 전체
+                    /> ?�체
                   </label>
                   <label className="mr-2">
                     <input 
@@ -740,7 +740,7 @@ export default function ProjectSearchPopup() {
                       name="searchType" 
                       checked={searchType === '1'}
                       onChange={() => handleSearchTypeChange('1')}
-                    /> 사업부서
+                    /> ?�업부??
                   </label>
                   <label>
                     <input 
@@ -748,14 +748,14 @@ export default function ProjectSearchPopup() {
                       name="searchType" 
                       checked={searchType === '2'}
                       onChange={() => handleSearchTypeChange('2')}
-                    /> 실행부서
+                    /> ?�행부??
                   </label>
                 </td>
               </tr>
 
-              {/* 2행 - 본부, 추진부서, 영업대표 */}
+              {/* 2??- 본�?, 추진부?? ?�업?�??*/}
               <tr className="search-tr">
-                <th className="search-th">본부</th>
+                <th className="search-th">본�?</th>
                 <td className="search-td !w-[150px]">
                   <select 
                     className="combo-base"
@@ -763,7 +763,7 @@ export default function ProjectSearchPopup() {
                     onChange={(e) => handleHqChange(e.target.value)}
                     disabled={searchType === '0' || codesLoading}
                   >
-                    <option value="ALL">전체</option>
+                    <option value="ALL">?�체</option>
                     {hqDivCodes.map((code) => (
                       <option key={code.code} value={code.code}>
                         {code.name}
@@ -772,7 +772,7 @@ export default function ProjectSearchPopup() {
                   </select>
                 </td>
                 <th className="search-th w-[110px]">
-                  {searchType === '2' ? '실행부서' : '추진부서'}
+                  {searchType === '2' ? '?�행부?? : '추진부??}
                 </th>
                 <td className="search-td !w-[150px]">
                   <select 
@@ -781,7 +781,7 @@ export default function ProjectSearchPopup() {
                     onChange={(e) => setDeptDiv(e.target.value)}
                     disabled={searchType === '0'}
                   >
-                    <option value="ALL">전체</option>
+                    <option value="ALL">?�체</option>
                     {deptListData.map((dept: any) => (
                       <option key={dept.code || dept.deptDivCd} value={dept.code || dept.deptDivCd}>
                         {dept.name || dept.deptNm}
@@ -790,7 +790,7 @@ export default function ProjectSearchPopup() {
                   </select>
                 </td>
                 <th className="search-th w-[110px]">
-                  {searchType === '2' ? 'PM명' : '영업대표'}
+                  {searchType === '2' ? 'PM�? : '?�업?�??}
                 </th>
                 <td className="search-td !w-[150px]">
                   <input 
@@ -799,15 +799,15 @@ export default function ProjectSearchPopup() {
                     value={userNm}
                     onChange={(e) => setUserNm(e.target.value)}
                     disabled={searchType === '0' || (user?.authCd === '40' || (user?.authCd === '30' && user?.dutyDivCd === '4'))}
-                    placeholder={user?.authCd === '30' && user?.dutyDivCd === '4' && searchType === '2' ? '본인 PM 사업만 조회' : ''}
+                    placeholder={user?.authCd === '30' && user?.dutyDivCd === '4' && searchType === '2' ? '본인 PM ?�업�?조회' : ''}
                   />
                 </td>
                 <td className="search-td" colSpan={4}></td>
               </tr>
 
-              {/* 3행 - 진행상태 */}
+              {/* 3??- 진행?�태 */}
               <tr className="search-tr">
-                <th className="search-th">진행상태</th>
+                <th className="search-th">진행?�태</th>
                 <td className="search-td" colSpan={7}>
                   <label className="mr-2">
                     <input 
@@ -815,7 +815,7 @@ export default function ProjectSearchPopup() {
                       checked={progressStates.all}
                       onChange={(e) => handleAllProgressChange(e.target.checked)}
                       disabled={!progressEnabled.all}
-                    /> (모두선택)
+                    /> (모두?�택)
                   </label>
                   <label className="mr-2">
                     <input 
@@ -823,7 +823,7 @@ export default function ProjectSearchPopup() {
                       checked={progressStates.new}
                       onChange={(e) => handleProgressChange('new', e.target.checked)}
                       disabled={!progressEnabled.new}
-                    /> 신규
+                    /> ?�규
                   </label>
                   <label className="mr-2">
                     <input 
@@ -831,7 +831,7 @@ export default function ProjectSearchPopup() {
                       checked={progressStates.sales}
                       onChange={(e) => handleProgressChange('sales', e.target.checked)}
                       disabled={!progressEnabled.sales}
-                    /> 영업진행
+                    /> ?�업진행
                   </label>
                   <label className="mr-2">
                     <input 
@@ -839,7 +839,7 @@ export default function ProjectSearchPopup() {
                       checked={progressStates.confirmed}
                       onChange={(e) => handleProgressChange('confirmed', e.target.checked)}
                       disabled={!progressEnabled.confirmed}
-                    /> 수주확정
+                    /> ?�주?�정
                   </label>
                   <label className="mr-2">
                     <input 
@@ -855,7 +855,7 @@ export default function ProjectSearchPopup() {
                       checked={progressStates.completed}
                       onChange={(e) => handleProgressChange('completed', e.target.checked)}
                       disabled={!progressEnabled.completed}
-                    /> 완료(종결)
+                    /> ?�료(종결)
                   </label>
                   <label className="mr-2">
                     <input 
@@ -863,7 +863,7 @@ export default function ProjectSearchPopup() {
                       checked={progressStates.failed}
                       onChange={(e) => handleProgressChange('failed', e.target.checked)}
                       disabled={!progressEnabled.failed}
-                    /> 수주실패
+                    /> ?�주?�패
                   </label>
                   <label>
                     <input 
@@ -871,29 +871,29 @@ export default function ProjectSearchPopup() {
                       checked={progressStates.cancelled}
                       onChange={(e) => handleProgressChange('cancelled', e.target.checked)}
                       disabled={!progressEnabled.cancelled}
-                    /> 취소(삭제)
+                    /> 취소(??��)
                   </label>
                 </td>
               </tr>
 
-              {/* 4행 - 사업년도, 사업번호, 조회버튼 */}
+              {/* 4??- ?�업?�도, ?�업번호, 조회버튼 */}
               <tr className="search-tr">
-                <th className="search-th">사업년도</th>
+                <th className="search-th">?�업?�도</th>
                 <td className="search-td">
                   <select 
                     className="combo-base w-[120px]"
                     value={bsnYear}
                     onChange={(e) => setBsnYear(e.target.value)}
                   >
-                    <option value="ALL">전체</option>
-                    <option value="2025">2025년</option>
-                    <option value="2024">2024년</option>
-                    <option value="2023">2023년</option>
-                    <option value="2022">2022년</option>
-                    <option value="2021">2021년</option>
+                    <option value="ALL">?�체</option>
+                    <option value="2025">2025??/option>
+                    <option value="2024">2024??/option>
+                    <option value="2023">2023??/option>
+                    <option value="2022">2022??/option>
+                    <option value="2021">2021??/option>
                   </select>
                 </td>
-                <th className="search-th">사업번호</th>
+                <th className="search-th">?�업번호</th>
                 <td className="search-td">
                   <input 
                     type="text" 
@@ -902,7 +902,7 @@ export default function ProjectSearchPopup() {
                     onChange={(e) => setBsnNo(e.target.value)}
                     onKeyDown={handleKeyPress}
                     tabIndex={0}
-                    aria-label="사업번호 입력"
+                    aria-label="?�업번호 ?�력"
                   />
                 </td>
                 <td className="search-td text-right" colSpan={4}>
@@ -917,7 +917,7 @@ export default function ProjectSearchPopup() {
                     tabIndex={0}
                     aria-label="조회"
                   >
-                    {loading ? '조회중...' : '조회'}
+                    {loading ? '조회�?..' : '조회'}
                   </button>
                 </td>
               </tr>
@@ -925,17 +925,17 @@ export default function ProjectSearchPopup() {
           </table>
         </div>
 
-        {/* 에러 메시지 */}
+        {/* ?�러 메시지 */}
         {error && (
           <div className="mt-2">
             <div className="error-message-box">
-              <div className="error-message-icon">⚠</div>
+              <div className="error-message-icon">??/div>
               <div className="error-message-desc">{error}</div>
             </div>
           </div>
         )}
 
-        {/* 그리드 영역 */}
+        {/* 그리???�역 */}
         <div className='ag-theme-alpine' style={{ height: 400, width: "100%" }}>
 			<AgGridReact
 				ref={businessGridRef}
@@ -976,5 +976,7 @@ export default function ProjectSearchPopup() {
     </div>
   );
 }
+
+
 
 

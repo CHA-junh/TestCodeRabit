@@ -19,34 +19,34 @@ export default function RootLayout({
 	const isAuthPage =
 		pathname?.startsWith('/signin') || pathname?.startsWith('/signup')
 
-	// 페이지별 타이틀 설정
+	// ?�이지�??�?��? ?�정
 	useEffect(() => {
 		if (!pathname) return
 
 		let pageTitle = ''
 
 		if (pathname.startsWith('/signin')) {
-			pageTitle = '로그인'
+			pageTitle = '로그??
 		} else if (pathname.startsWith('/mainframe')) {
-			// 메인프레임은 시스템명만 표시
+			// 메인?�레?��? ?�스?�명�??�시
 			document.title = getSystemName()
 			return
 		} else if (pathname === '/') {
-			pageTitle = '홈'
+			pageTitle = '??
 		}
 
 		document.title = getPageTitle(pageTitle)
 	}, [pathname])
 
-	// WebSocket 완전 차단
+	// WebSocket ?�전 차단
 	useEffect(() => {
-		// WebSocket 생성자 완전 차단
+		// WebSocket ?�성???�전 차단
 		const originalWebSocket = (window as any).WebSocket
 		;(window as any).WebSocket = function (
 			url: string,
 			protocols?: string | string[]
 		) {
-			// webpack-hmr 관련 연결 시도만 차단 (메시지 없이)
+			// webpack-hmr 관???�결 ?�도�?차단 (메시지 ?�이)
 			if (
 				url &&
 				(url.includes('webpack-hmr') || url.includes('_next/webpack-hmr'))
@@ -68,11 +68,11 @@ export default function RootLayout({
 					dispatchEvent: () => false,
 				}
 			}
-			// 다른 WebSocket 연결은 정상 처리
+			// ?�른 WebSocket ?�결?� ?�상 처리
 			return new originalWebSocket(url, protocols)
 		}
 
-		// 컴포넌트 언마운트 시 원래 WebSocket 복원
+		// 컴포?�트 ?�마?�트 ???�래 WebSocket 복원
 		return () => {
 			;(window as any).WebSocket = originalWebSocket
 		}
@@ -92,3 +92,6 @@ export default function RootLayout({
 		</QueryClientProvider>
 	)
 }
+
+
+

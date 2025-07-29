@@ -4,9 +4,9 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
 export class ProgramService {
   /**
-   * 프로그램 목록을 조회합니다.
-   * @param params 검색 조건
-   * @returns 프로그램 목록 응답
+   * ?�로그램 목록??조회?�니??
+   * @param params 검??조건
+   * @returns ?�로그램 목록 ?�답
    */
   static async getProgramList(params: ProgramSearchParams = {}): Promise<ProgramListResponse> {
     const searchParams = new URLSearchParams();
@@ -18,7 +18,7 @@ export class ProgramService {
     if (params.page) searchParams.append('page', params.page.toString());
     if (params.limit) searchParams.append('limit', params.limit.toString());
 
-    console.log('API 호출 URL:', `${API_BASE_URL}/api/sys/programs?${searchParams.toString()}`);
+    console.log('API ?�출 URL:', `${API_BASE_URL}/api/sys/programs?${searchParams.toString()}`);
     
     const response = await fetch(`${API_BASE_URL}/api/sys/programs?${searchParams.toString()}`, {
       method: 'GET',
@@ -27,23 +27,23 @@ export class ProgramService {
       },
     });
 
-    console.log('API 응답 상태:', response.status, response.statusText);
+    console.log('API ?�답 ?�태:', response.status, response.statusText);
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('API 에러 응답:', errorText);
-      throw new Error(`프로그램 목록 조회 실패: ${response.status} ${response.statusText} - ${errorText}`);
+      console.error('API ?�러 ?�답:', errorText);
+      throw new Error(`?�로그램 목록 조회 ?�패: ${response.status} ${response.statusText} - ${errorText}`);
     }
 
     const data = await response.json();
-    console.log('API 응답 데이터:', data);
+    console.log('API ?�답 ?�이??', data);
     return data;
   }
 
   /**
-   * 프로그램 ID로 단일 프로그램을 조회합니다.
-   * @param pgmId 프로그램 ID
-   * @returns 프로그램 정보
+   * ?�로그램 ID�??�일 ?�로그램??조회?�니??
+   * @param pgmId ?�로그램 ID
+   * @returns ?�로그램 ?�보
    */
   static async getProgramById(pgmId: string): Promise<Program> {
     const response = await fetch(`${API_BASE_URL}/api/sys/programs/${pgmId}`, {
@@ -54,16 +54,16 @@ export class ProgramService {
     });
 
     if (!response.ok) {
-      throw new Error(`프로그램 조회 실패: ${response.statusText}`);
+      throw new Error(`?�로그램 조회 ?�패: ${response.statusText}`);
     }
 
     return response.json();
   }
 
   /**
-   * 새로운 프로그램을 생성합니다.
-   * @param data 프로그램 생성 데이터
-   * @returns 생성된 프로그램 정보
+   * ?�로???�로그램???�성?�니??
+   * @param data ?�로그램 ?�성 ?�이??
+   * @returns ?�성???�로그램 ?�보
    */
   static async createProgram(data: ProgramCreateDto): Promise<Program> {
     const response = await fetch(`${API_BASE_URL}/api/sys/programs`, {
@@ -76,17 +76,17 @@ export class ProgramService {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(`프로그램 생성 실패: ${errorData.message || response.statusText}`);
+      throw new Error(`?�로그램 ?�성 ?�패: ${errorData.message || response.statusText}`);
     }
 
     return response.json();
   }
 
   /**
-   * 프로그램 정보를 수정합니다.
-   * @param pgmId 프로그램 ID
-   * @param data 수정할 프로그램 데이터
-   * @returns 수정된 프로그램 정보
+   * ?�로그램 ?�보�??�정?�니??
+   * @param pgmId ?�로그램 ID
+   * @param data ?�정???�로그램 ?�이??
+   * @returns ?�정???�로그램 ?�보
    */
   static async updateProgram(pgmId: string, data: ProgramUpdateDto): Promise<Program> {
     const response = await fetch(`${API_BASE_URL}/api/sys/programs/${pgmId}`, {
@@ -99,16 +99,16 @@ export class ProgramService {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(`프로그램 수정 실패: ${errorData.message || response.statusText}`);
+      throw new Error(`?�로그램 ?�정 ?�패: ${errorData.message || response.statusText}`);
     }
 
     return response.json();
   }
 
   /**
-   * 프로그램을 삭제합니다.
-   * @param pgmId 프로그램 ID
-   * @returns 삭제 성공 여부
+   * ?�로그램????��?�니??
+   * @param pgmId ?�로그램 ID
+   * @returns ??�� ?�공 ?��?
    */
   static async deleteProgram(pgmId: string): Promise<boolean> {
     const response = await fetch(`${API_BASE_URL}/api/sys/programs/${pgmId}`, {
@@ -120,9 +120,10 @@ export class ProgramService {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(`프로그램 삭제 실패: ${errorData.message || response.statusText}`);
+      throw new Error(`?�로그램 ??�� ?�패: ${errorData.message || response.statusText}`);
     }
 
     return true;
   }
 } 
+

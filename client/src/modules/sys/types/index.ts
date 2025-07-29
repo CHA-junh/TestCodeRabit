@@ -1,4 +1,4 @@
-// BIST_NEW/apps/server/src/entities/tbl-user-role.entity.ts 와 동일한 구조
+// BIST_NEW/apps/server/src/entities/tbl-user-role.entity.ts ?� ?�일??구조
 export interface TblUserRole {
 	usrRoleId: string;
 	menuId: string;
@@ -12,7 +12,7 @@ export interface TblUserRole {
 	chngrId?: string;
 }
 
-// BIST_NEW/apps/server/src/entities/tbl-user-role-pgm-grp.entity.ts 와 동일
+// BIST_NEW/apps/server/src/entities/tbl-user-role-pgm-grp.entity.ts ?� ?�일
 export interface TblUserRolePgmGrp {
 	usrRoleId: string;
 	pgmGrpId: string;
@@ -22,7 +22,7 @@ export interface TblUserRolePgmGrp {
 	chngrId?: string;
 }
 
-// 백엔드에서 반환하는 프로그램 그룹 데이터 구조
+// 백엔?�에??반환?�는 ?�로그램 그룹 ?�이??구조
 export interface ProgramGroupData {
 	pgmGrpId: string;
 	pgmGrpNm: string;
@@ -40,3 +40,5 @@ export interface TblMenuInf {
 	chngDttm: string | null;
 	chngrId: string | null;
 }
+
+

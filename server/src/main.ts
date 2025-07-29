@@ -10,7 +10,7 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { OracleService } from './database/database.provider';
 import * as dotenv from 'dotenv';
 
-// 환경변수 파일 로드 (.env.development 우선)
+// ?�경변???�일 로드 (.env.development ?�선)
 dotenv.config({ path: '.env.development' });
 dotenv.config({ path: '.env' });
 
@@ -22,10 +22,10 @@ async function bootstrap() {
         : ['error', 'warn', 'log', 'debug', 'verbose'],
   });
 
-  // DB 커넥션 풀 초기화 (운영/개발 모두)
-  // (NestJS 라이프사이클에 맡기므로 직접 호출하지 않음)
+  // DB 커넥???� 초기??(?�영/개발 모두)
+  // (NestJS ?�이?�사?�클??맡기므�?직접 ?�출?��? ?�음)
 
-  // 🔒 보안 헤더 설정 (Helmet)
+  // ?�� 보안 ?�더 ?�정 (Helmet)
   app.use(
     helmet({
       contentSecurityPolicy: {
@@ -44,21 +44,21 @@ async function bootstrap() {
     }),
   );
 
-  // 🔒 Rate Limiting 설정 (더 관대하게 조정)
+  // ?�� Rate Limiting ?�정 (??관?�?�게 조정)
   const limiter = rateLimit({
-    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '60000'), // 1분
-    max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '1000'), // IP당 최대 요청 수 (1000개로 증가)
+    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '60000'), // 1�?
+    max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '1000'), // IP??최�? ?�청 ??(1000개로 증�?)
     message: {
-      error: '너무 많은 요청이 발생했습니다. 잠시 후 다시 시도해주세요.',
+      error: '?�무 많�? ?�청??발생?�습?�다. ?�시 ???�시 ?�도?�주?�요.',
     },
     standardHeaders: true,
     legacyHeaders: false,
-    skipSuccessfulRequests: true, // 성공한 요청은 카운트하지 않음
-    skipFailedRequests: false, // 실패한 요청은 카운트
+    skipSuccessfulRequests: true, // ?�공???�청?� 카운?�하지 ?�음
+    skipFailedRequests: false, // ?�패???�청?� 카운??
   });
   app.use(limiter);
 
-  // 🔒 보안 강화된 세션 설정 (메모리 저장소 + 강제 무효화)
+  // ?�� 보안 강화???�션 ?�정 (메모�??�?�소 + 강제 무효??
   const sessionConfig: any = {
     secret: process.env.SESSION_SECRET || 'bist-secret',
     resave: false,
@@ -71,19 +71,19 @@ async function bootstrap() {
       maxAge: parseInt(process.env.SESSION_COOKIE_MAX_AGE || '86400000'),
     },
     name: 'bist-session',
-    // 세션 무효화 강화
+    // ?�션 무효??강화
     unset: 'destroy',
     rolling: true,
   };
 
-  // 로컬 환경에서 세션 설정
+  // 로컬 ?�경?�서 ?�션 ?�정
   if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {
-    sessionConfig.cookie.maxAge = 30 * 60 * 1000; // 30분으로 단축
+    sessionConfig.cookie.maxAge = 30 * 60 * 1000; // 30분으�??�축
   }
 
   app.use(session(sessionConfig));
 
-  // 🔒 전역 캐시 방지 미들웨어 (모든 응답에 캐시 무효화 헤더 추가)
+  // ?�� ?�역 캐시 방�? 미들?�어 (모든 ?�답??캐시 무효???�더 추�?)
   app.use((req, res, next) => {
     res.setHeader(
       'Cache-Control',
@@ -96,26 +96,26 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
-  // 🔒 전역 인터셉터 적용
+  // ?�� ?�역 ?�터?�터 ?�용
   app.useGlobalInterceptors(new LoggingInterceptor());
 
-  // 🔒 전역 예외 필터 적용
+  // ?�� ?�역 ?�외 ?�터 ?�용
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  // 🔒 전역 Validation Pipe 설정 (보안 강화)
+  // ?�� ?�역 Validation Pipe ?�정 (보안 강화)
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
-      disableErrorMessages: process.env.NODE_ENV === 'production', // 운영환경에서는 에러 메시지 비활성화
+      disableErrorMessages: process.env.NODE_ENV === 'production', // ?�영?�경?�서???�러 메시지 비활?�화
     }),
   );
 
-  // Swagger 설정
+  // Swagger ?�정
   const config = new DocumentBuilder()
     .setTitle('BIST API')
-    .setDescription('BIST 서버 API 문서')
+    .setDescription('BIST ?�버 API 문서')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
@@ -133,21 +133,21 @@ async function bootstrap() {
     },
   });
 
-  // 🔒 보안 강화된 CORS 설정 (로컬/개발계 모두 지원)
+  // ?�� 보안 강화??CORS ?�정 (로컬/개발�?모두 지??
   let allowedOrigins: string[] = [];
   if (process.env.ALLOWED_ORIGINS) {
     allowedOrigins = process.env.ALLOWED_ORIGINS.split(',').map((origin) =>
       origin.trim(),
     );
   } else {
-    // 환경변수 없으면 기본값: 로컬, 개발계 IP
+    // ?�경변???�으�?기본�? 로컬, 개발�?IP
     allowedOrigins = [
       'http://localhost:3000',
       'http://127.0.0.1:3000',
       'http://172.20.30.176:3000',
     ];
   }
-  console.log('🔓 CORS 허용 Origin:', allowedOrigins);
+  console.log('?�� CORS ?�용 Origin:', allowedOrigins);
 
   app.enableCors({
     origin: allowedOrigins,
@@ -157,7 +157,7 @@ async function bootstrap() {
     exposedHeaders: ['X-Total-Count'],
   });
 
-  // 서버 부팅 시점에 OracleService 인스턴스 강제 생성 (onModuleInit은 NestJS가 자동 호출)
+  // ?�버 부???�점??OracleService ?�스?�스 강제 ?�성 (onModuleInit?� NestJS가 ?�동 ?�출)
   app.get(OracleService);
 
   const port = process.env.PORT || 8080;
@@ -167,6 +167,9 @@ async function bootstrap() {
       : 'localhost';
   await app.listen(port, host);
 
-  console.log(`🚀 서버가 http://${host}:${port} 에서 실행 중입니다.`);
+  console.log(`?? ?�버가 http://${host}:${port} ?�서 ?�행 중입?�다.`);
 }
 bootstrap();
+
+
+

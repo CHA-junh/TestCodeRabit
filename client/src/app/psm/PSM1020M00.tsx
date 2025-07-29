@@ -7,7 +7,7 @@ import '../common/common.css';
 import PSM1050M00 from './PSM1050M00';
 import PSM0030P00 from './PSM0030P00';
 
-// 타입 정의
+// ?�???�의
 interface EmployeeData {
   EMP_NO?: string;
   OWN_OUTS_DIV_CD?: string;
@@ -69,14 +69,14 @@ interface EmployeeData {
   CHNGR_ID?: string;
   HDOFC_YEAR?: string;
   HDOFC_MONTH?: string;
-  // AS-IS MXML에서 사용되는 추가 필드들
-  ENTR_AFT_ADBG_CARR?: string; // 입사후학력경력개월수
-  ENTR_AFT_CTQL_CARR?: string; // 입사후자격경력개월수
-  ENTR_BEF_ADBG_CARR?: string; // 입사전학력경력개월수
+  // AS-IS MXML?�서 ?�용?�는 추�? ?�드??
+  ENTR_AFT_ADBG_CARR?: string; // ?�사?�학?�경?�개?�수
+  ENTR_AFT_CTQL_CARR?: string; // ?�사?�자격경?�개?�수
+  ENTR_BEF_ADBG_CARR?: string; // ?�사?�학?�경?�개?�수
 }
 
-// PSM1010M0는 selectedEmployee 타입
-// interface SelectedEmployee { ... } <= 이 부분 전체 삭제
+// PSM1010M0??selectedEmployee ?�??
+// interface SelectedEmployee { ... } <= ??부�??�체 ??��
 
 interface CommonCode {
   data: string;
@@ -84,13 +84,13 @@ interface CommonCode {
 }
 
 /**
- * PSM1020M00 컴포넌트 Props 인터페이스
+ * PSM1020M00 컴포?�트 Props ?�터?�이??
  * 
- * 사원 정보 등록/수정 화면의 props 정의
+ * ?�원 ?�보 ?�록/?�정 ?�면??props ?�의
  * 
- * @property {EmployeeData | null} selectedEmployee - 선택된 사원 정보 (PSM1010M00에서 전달)
- * @property {Object} [fieldEnableState] - 필드 활성화 상태 (신규/수정 모드에 따라 다름)
- * @property {Function} [onSearchSuccess] - 검색 성공 시 호출될 콜백 (상위 화면 재조회)
+ * @property {EmployeeData | null} selectedEmployee - ?�택???�원 ?�보 (PSM1010M00?�서 ?�달)
+ * @property {Object} [fieldEnableState] - ?�드 ?�성???�태 (?�규/?�정 모드???�라 ?�름)
+ * @property {Function} [onSearchSuccess] - 검???�공 ???�출??콜백 (?�위 ?�면 ?�조??
  */
 interface PSM1020M00Props {
   selectedEmployee: EmployeeData | null;
@@ -102,16 +102,16 @@ interface PSM1020M00Props {
     duty: boolean;
     crpnNm: boolean;
   };
-  onSearchSuccess?: () => void; // AS-IS MXML의 parentDocument.prf_PsmSearch와 동일
+  onSearchSuccess?: () => void; // AS-IS MXML??parentDocument.prf_PsmSearch?� ?�일
 }
 
 /**
- * PSM1020M00 컴포넌트 Ref 인터페이스
+ * PSM1020M00 컴포?�트 Ref ?�터?�이??
  * 
- * 부모 컴포넌트에서 호출할 수 있는 메서드들을 정의
+ * 부�?컴포?�트?�서 ?�출?????�는 메서?�들???�의
  * 
- * @property {Function} handleSearch - 사원 정보 검색 실행
- * @property {Function} initialize - 컴포넌트 초기화 (신규 모드로 설정)
+ * @property {Function} handleSearch - ?�원 ?�보 검???�행
+ * @property {Function} initialize - 컴포?�트 초기??(?�규 모드�??�정)
  */
 export interface PSM1020M00Ref {
   handleSearch: () => Promise<void>;
@@ -121,72 +121,72 @@ export interface PSM1020M00Ref {
 const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmployee, fieldEnableState, onSearchSuccess }, ref) => {
   const { showToast, showConfirm } = useToast();
   const { user } = useAuth();
-  // 검색 조건 state
+  // 검??조건 state
   const [searchConditions, setSearchConditions] = useState({
-    ownOutsDiv: '1', // 자사/외주 구분 (1:자사, 2:외주)
-    empNm: '', // 사원성명
-    hqDivCd: 'ALL', // 본부코드
-    deptDivCd: 'ALL', // 부서코드
+    ownOutsDiv: '1', // ?�사/?�주 구분 (1:?�사, 2:?�주)
+    empNm: '', // ?�원?�명
+    hqDivCd: 'ALL', // 본�?코드
+    deptDivCd: 'ALL', // 부?�코??
     dutyCd: 'ALL', // 직책코드
-    retirYn: 'Y' // 퇴사자포함유무
+    retirYn: 'Y' // ?�사?�포?�유�?
   });
 
-  // 사원 데이터 state - 초기값으로 자사 설정
+  // ?�원 ?�이??state - 초기값으�??�사 ?�정
   const [employeeData, setEmployeeData] = useState<EmployeeData | null>({
     OWN_OUTS_DIV_CD: '1',
-    OWN_OUTS_DIV: '자사',
+    OWN_OUTS_DIV: '?�사',
     ENTR_CD: '',
     CARR_DIV_CD: '1',
     WKG_ST_DIV_CD: '1',
-    WKG_ST_DIV: '재직중',
+    WKG_ST_DIV: '?�직�?,
     KOSA_REG_YN: 'N',
-    HQ_DIV_CD: '', // 본부 코드 초기값 추가
-    DEPT_DIV_CD: '', // 부서 코드 초기값 추가
-    DUTY_CD: '', // 직책 코드 초기값 추가
-    EMP_NO: '', // 사원번호 초기값 추가
-    EMP_NM: '', // 사원명 초기값 추가
-    EMP_ENG_NM: '', // 영문명 초기값 추가
-    RES_REG_NO: '', // 주민등록번호 초기값 추가
-    BIR_YR_MN_DT: '', // 생년월일 초기값 추가
-    SEX_DIV_CD: '', // 성별 초기값 추가
-    NTLT_DIV_CD: '', // 국적 초기값 추가
-    ENTR_DT: '', // 입사일자 초기값 추가
-    RETIR_DT: '', // 퇴사일자 초기값 추가
-    EMAIL_ADDR: '', // 이메일 초기값 추가
-    MOB_PHN_NO: '', // 휴대전화 초기값 추가
-    HOME_TEL: '', // 자택전화 초기값 추가
-    HOME_ZIP_NO: '', // 우편번호 초기값 추가
-    HOME_ADDR: '', // 주소 초기값 추가
-    HOME_DET_ADDR: '', // 상세주소 초기값 추가
-    LAST_IN_DT: '', // 최종투입일자 초기값 추가
-    LAST_END_DT: '', // 최종철수일자 초기값 추가
-    LAST_SCHL: '', // 학교 초기값 추가
-    MAJR: '', // 전공 초기값 추가
-    LAST_GRAD_DT: '', // 졸업일자 초기값 추가
-    CTQL_CD: '', // 자격증 초기값 추가
-    CTQL_PUR_DT: '', // 자격취득일자 초기값 추가
-    CARR_MCNT: '0', // 경력개월수 초기값 추가
-    FST_IN_DT: '', // 최초투입일자 초기값 추가
-    ENTR_BEF_CARR: '0', // 입사전경력 초기값 추가
-    ENTR_BEF_CTQL_CARR: '0', // 입사전자격경력 초기값 추가
-    ADBG_CARR_MCNT: '0', // 학력경력개월수 초기값 추가
-    CTQL_CARR_MCNT: '0', // 자격경력개월수 초기값 추가
-    CARR_CALC_STND_DT: '', // 경력계산기준일 초기값 추가
-    LAST_ADBG_DIV: '', // 최종학력 초기값 추가
-    LAST_TCN_GRD: '', // 기술등급 초기값 추가
-    RMK: '', // 비고 초기값 추가
-    HDOFC_YEAR: '0', // 재직년수(년) 초기값 추가
-    HDOFC_MONTH: '0', // 재직년수(월) 초기값 추가
-    ENTR_AFT_ADBG_CARR: '0', // 입사후학력경력 초기값 추가
-    ENTR_AFT_CTQL_CARR: '0' // 입사후자격경력 초기값 추가
+    HQ_DIV_CD: '', // 본�? 코드 초기�?추�?
+    DEPT_DIV_CD: '', // 부??코드 초기�?추�?
+    DUTY_CD: '', // 직책 코드 초기�?추�?
+    EMP_NO: '', // ?�원번호 초기�?추�?
+    EMP_NM: '', // ?�원�?초기�?추�?
+    EMP_ENG_NM: '', // ?�문�?초기�?추�?
+    RES_REG_NO: '', // 주�??�록번호 초기�?추�?
+    BIR_YR_MN_DT: '', // ?�년?�일 초기�?추�?
+    SEX_DIV_CD: '', // ?�별 초기�?추�?
+    NTLT_DIV_CD: '', // �?�� 초기�?추�?
+    ENTR_DT: '', // ?�사?�자 초기�?추�?
+    RETIR_DT: '', // ?�사?�자 초기�?추�?
+    EMAIL_ADDR: '', // ?�메??초기�?추�?
+    MOB_PHN_NO: '', // ?��??�화 초기�?추�?
+    HOME_TEL: '', // ?�택?�화 초기�?추�?
+    HOME_ZIP_NO: '', // ?�편번호 초기�?추�?
+    HOME_ADDR: '', // 주소 초기�?추�?
+    HOME_DET_ADDR: '', // ?�세주소 초기�?추�?
+    LAST_IN_DT: '', // 최종?�입?�자 초기�?추�?
+    LAST_END_DT: '', // 최종철수?�자 초기�?추�?
+    LAST_SCHL: '', // ?�교 초기�?추�?
+    MAJR: '', // ?�공 초기�?추�?
+    LAST_GRAD_DT: '', // 졸업?�자 초기�?추�?
+    CTQL_CD: '', // ?�격�?초기�?추�?
+    CTQL_PUR_DT: '', // ?�격취득?�자 초기�?추�?
+    CARR_MCNT: '0', // 경력개월??초기�?추�?
+    FST_IN_DT: '', // 최초?�입?�자 초기�?추�?
+    ENTR_BEF_CARR: '0', // ?�사?�경??초기�?추�?
+    ENTR_BEF_CTQL_CARR: '0', // ?�사?�자격경??초기�?추�?
+    ADBG_CARR_MCNT: '0', // ?�력경력개월??초기�?추�?
+    CTQL_CARR_MCNT: '0', // ?�격경력개월??초기�?추�?
+    CARR_CALC_STND_DT: '', // 경력계산기�???초기�?추�?
+    LAST_ADBG_DIV: '', // 최종?�력 초기�?추�?
+    LAST_TCN_GRD: '', // 기술?�급 초기�?추�?
+    RMK: '', // 비고 초기�?추�?
+    HDOFC_YEAR: '0', // ?�직?�수(?? 초기�?추�?
+    HDOFC_MONTH: '0', // ?�직?�수(?? 초기�?추�?
+    ENTR_AFT_ADBG_CARR: '0', // ?�사?�학?�경??초기�?추�?
+    ENTR_AFT_CTQL_CARR: '0' // ?�사?�자격경??초기�?추�?
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [newFlag, setNewFlag] = useState<boolean>(false); // AS-IS MXML의 newFlag와 동일 - 초기값을 false로 설정
-  const [showCarrCalcPopup, setShowCarrCalcPopup] = useState<boolean>(false); // 경력계산 팝업 표시 여부
-  const [showGradeHistoryPopup, setShowGradeHistoryPopup] = useState<boolean>(false); // 등급이력조회 팝업 표시 여부
+  const [newFlag, setNewFlag] = useState<boolean>(false); // AS-IS MXML??newFlag?� ?�일 - 초기값을 false�??�정
+  const [showCarrCalcPopup, setShowCarrCalcPopup] = useState<boolean>(false); // 경력계산 ?�업 ?�시 ?��?
+  const [showGradeHistoryPopup, setShowGradeHistoryPopup] = useState<boolean>(false); // ?�급?�력조회 ?�업 ?�시 ?��?
 
-  // AS-IS MXML과 동일한 저장 데이터 변수들
+  // AS-IS MXML�??�일???�???�이??변?�들
   const [saveData, setSaveData] = useState<{
     ctqlCd: string;
     ctqlPurDt: string;
@@ -213,8 +213,8 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     ctqlCd: CommonCode[];
     wkgStDiv: CommonCode[];
     tcnGrd: CommonCode[];
-    ownCompanyList: CommonCode[]; // 자사 업체 목록
-    entrList: CommonCode[]; // 외주 업체 목록
+    ownCompanyList: CommonCode[]; // ?�사 ?�체 목록
+    entrList: CommonCode[]; // ?�주 ?�체 목록
   }>({
     ownOutsDiv: [],
     hqDiv: [],
@@ -230,18 +230,18 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     entrList: []
   });
 
-  // 외부에서 호출할 수 있는 함수들을 ref로 노출
+  // ?��??�서 ?�출?????�는 ?�수?�을 ref�??�출
   useImperativeHandle(ref, () => ({
     handleSearch: async () => {
       await handleSearch();
     },
     initialize: () => {
-      // PSM1020M00 초기화
+      // PSM1020M00 초기??
       setNewFlag(false);
       setEmployeeData({
         EMP_NO: '',
         OWN_OUTS_DIV_CD: '1',
-        OWN_OUTS_DIV: '자사',
+        OWN_OUTS_DIV: '?�사',
         CRPN_NM: '',
         ENTR_NO: '',
         ENTR_CD: '',
@@ -297,15 +297,15 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     }
   }));
 
-  // selectedEmployee prop이 변경될 때 employeeData를 업데이트
+  // selectedEmployee prop??변경될 ??employeeData�??�데?�트
   useEffect(() => {
     if (selectedEmployee) {
-      // PSM1020M00: selectedEmployee 변경됨 - 선택된 사원 정보로 employeeData 설정
+      // PSM1020M00: selectedEmployee 변경됨 - ?�택???�원 ?�보�?employeeData ?�정
       
-      // 사원 선택 시 신규 모드 해제
+      // ?�원 ?�택 ???�규 모드 ?�제
       setNewFlag(false);
       
-      // selectedEmployee 데이터를 employeeData 형식으로 변환
+      // selectedEmployee ?�이?��? employeeData ?�식?�로 변??
       const convertedData: EmployeeData = {
         EMP_NO: selectedEmployee.EMP_NO,
         OWN_OUTS_DIV_CD: selectedEmployee.OWN_OUTS_DIV_CD,
@@ -348,44 +348,44 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
         WKG_ST_DIV: selectedEmployee.WKG_ST_DIV,
         FST_IN_DT: selectedEmployee.FST_IN_DT,
         RMK: selectedEmployee.RMK,
-        // AS-IS MXML에서 사용되는 필드들
+        // AS-IS MXML?�서 ?�용?�는 ?�드??
         ENTR_BEF_CARR: selectedEmployee.ENTR_BEF_CARR,
         ENTR_BEF_CTQL_CARR: selectedEmployee.ENTR_BEF_CTQL_CARR,
         ADBG_CARR_MCNT: selectedEmployee.ADBG_CARR_MCNT,
         CTQL_CARR_MCNT: selectedEmployee.CTQL_CARR_MCNT,
         CARR_CALC_STND_DT: selectedEmployee.CARR_CALC_STND_DT,
-        // 기본값 유지
+        // 기본�??��?
         CARR_DIV_CD: selectedEmployee.CARR_DIV_CD || '1',
         KOSA_REG_YN: selectedEmployee.KOSA_REG_YN || 'N',
         HDOFC_YEAR: selectedEmployee.HDOFC_YEAR,
         HDOFC_MONTH: selectedEmployee.HDOFC_MONTH,
         ENTR_AFT_ADBG_CARR: selectedEmployee.ENTR_AFT_ADBG_CARR,
         ENTR_AFT_CTQL_CARR: selectedEmployee.ENTR_AFT_CTQL_CARR,
-        // 최종학력 정보 추가
+        // 최종?�력 ?�보 추�?
         LAST_ADBG_DIV: selectedEmployee.LAST_ADBG_DIV,
         LAST_ADBG_DIV_NM: selectedEmployee.LAST_ADBG_DIV_NM
       };
       
       setEmployeeData(convertedData);
       
-      // 외주 사원인 경우 외주 업체 목록 로드
+      // ?�주 ?�원??경우 ?�주 ?�체 목록 로드
       if (selectedEmployee.OWN_OUTS_DIV_CD === '2') {
         loadEntrList();
       }
     }
   }, [selectedEmployee]);
 
-  // 초기 데이터 로드
+  // 초기 ?�이??로드
   useEffect(() => {
-    // 초기 데이터 로드 시작 - 공통코드, 자사/외주 업체 목록 로드
+    // 초기 ?�이??로드 ?�작 - 공통코드, ?�사/?�주 ?�체 목록 로드
     const initializeData = async () => {
       await loadCommonCodes();
-      await loadOwnCompanyList(); // 자사 업체 목록 로드
-      await loadEntrList(); // 외주 업체 목록 로드
+      await loadOwnCompanyList(); // ?�사 ?�체 목록 로드
+      await loadEntrList(); // ?�주 ?�체 목록 로드
     };
     initializeData();
     
-    // 카카오 주소 검색 스크립트 로드
+    // 카카??주소 검???�크립트 로드
     if (typeof window !== 'undefined' && !window.daum) {
       const script = document.createElement('script');
       script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
@@ -394,26 +394,26 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     }
   }, []);
 
-  // AS-IS COM_03_0101_S 프로시저 호출 방식으로 공통코드 로드
+  // AS-IS COM_03_0101_S ?�로?��? ?�출 방식?�로 공통코드 로드
   const loadCommonCodes = async () => {
     try {
       const codeTypes = [
-        { key: 'ownOutsDiv', type: '103' }, // 자사/외주구분
-        { key: 'hqDiv', type: '113' }, // 본부구분
+        { key: 'ownOutsDiv', type: '103' }, // ?�사/?�주구분
+        { key: 'hqDiv', type: '113' }, // 본�?구분
         { key: 'duty', type: '116' }, // 직책
-        { key: 'sexDiv', type: '011' }, // 성별구분
-        { key: 'ntltDiv', type: '012' }, // 국적구분
-        { key: 'lastAdbgDiv', type: '014' }, // 최종학력구분
-        { key: 'ctqlCd', type: '013' }, // 자격증
-        { key: 'wkgStDiv', type: '017' }, // 근무상태구분
-        { key: 'tcnGrd', type: '104' } // 기술등급
+        { key: 'sexDiv', type: '011' }, // ?�별구분
+        { key: 'ntltDiv', type: '012' }, // �?��구분
+        { key: 'lastAdbgDiv', type: '014' }, // 최종?�력구분
+        { key: 'ctqlCd', type: '013' }, // ?�격�?
+        { key: 'wkgStDiv', type: '017' }, // 근무?�태구분
+        { key: 'tcnGrd', type: '104' } // 기술?�급
       ];
 
       const newCommonCodes: any = { ...commonCodes };
 
       for (const { key, type } of codeTypes) {
         try {
-          // AS-IS COM_03_0101_S 프로시저 호출 방식
+          // AS-IS COM_03_0101_S ?�로?��? ?�출 방식
           const response = await fetch('/api/common/search', {
             method: 'POST',
             headers: {
@@ -428,7 +428,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
             const result = await response.json();
             const data = result.data || [];
             
-            // API 응답을 {data: codeId, label: codeNm} 형태로 변환
+            // API ?�답??{data: codeId, label: codeNm} ?�태�?변??
             const transformedData = data.map((item: any) => ({
               data: item.codeId || '',
               label: item.codeNm || ''
@@ -437,23 +437,23 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
             newCommonCodes[key] = transformedData;
           }
         } catch (error) {
-          console.error(`공통코드 로드 실패 (${type}):`, error);
+          console.error(`공통코드 로드 ?�패 (${type}):`, error);
         }
       }
 
       setCommonCodes(newCommonCodes);
     } catch (error) {
-      console.error('공통코드 로드 중 오류:', error);
+      console.error('공통코드 로드 �??�류:', error);
     }
   };
 
-  // AS-IS COM_03_0201_S 프로시저 호출 방식으로 본부별 부서 로드
+  // AS-IS COM_03_0201_S ?�로?��? ?�출 방식?�로 본�?�?부??로드
   const loadDeptByHq = async (hqDivCd: string) => {
     try {
-      // 본부별 부서 로드 시작
+      // 본�?�?부??로드 ?�작
       
-      // AS-IS COM_03_0201_S 프로시저 호출 방식
-      // 조회유형=2, 전체포함유무=N, 본부코드=hqDivCd
+      // AS-IS COM_03_0201_S ?�로?��? ?�출 방식
+      // 조회?�형=2, ?�체?�함?�무=N, 본�?코드=hqDivCd
       const response = await fetch('/api/psm/dept-by-hq', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -468,7 +468,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
           const result = await response.json();
           const data = result.success ? result.data : [];
           
-          // API 응답이 배열 형태인 경우 객체 형태로 변환
+          // API ?�답??배열 ?�태??경우 객체 ?�태�?변??
           let transformedData = data;
           if (Array.isArray(data) && data.length > 0) {
             transformedData = data.map((item: any) => ({
@@ -482,9 +482,9 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
           deptDiv: transformedData
         }));
         
-        // 부서 목록이 로드되면 기존 employeeData의 DEPT_DIV_CD 값 유지
+        // 부??목록??로드?�면 기존 employeeData??DEPT_DIV_CD �??��?
         if (transformedData && transformedData.length > 0) {
-          // employeeData에 DEPT_DIV_CD가 있으면 그 값을 유지, 없으면 첫 번째 항목 선택
+          // employeeData??DEPT_DIV_CD가 ?�으�?�?값을 ?��?, ?�으�?�?번째 ??�� ?�택
           const currentDeptDivCd = employeeData?.DEPT_DIV_CD;
           if (!currentDeptDivCd || currentDeptDivCd === '') {
             setEmployeeData(prev => ({
@@ -495,21 +495,21 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
         }
       }
     } catch (error) {
-      console.error('부서 로드 중 오류:', error);
+      console.error('부??로드 �??�류:', error);
     }
   };
 
-  // AS-IS COM_03_0101_S 프로시저 호출 방식으로 자사 업체 목록 로드
+  // AS-IS COM_03_0101_S ?�로?��? ?�출 방식?�로 ?�사 ?�체 목록 로드
   const loadOwnCompanyList = async () => {
     try {
-      // 자사 업체 목록 로드 시작
+      // ?�사 ?�체 목록 로드 ?�작
       const response = await fetch('/api/common/search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          largeCategoryCode: '110' // 자사 업체 대분류 코드
+          largeCategoryCode: '110' // ?�사 ?�체 ?�분류 코드
         })
       });
       
@@ -517,7 +517,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
           const result = await response.json();
           const data = result.data || [];
           
-          // API 응답을 {data: codeId, label: codeNm} 형태로 변환
+          // API ?�답??{data: codeId, label: codeNm} ?�태�?변??
           const transformedData = data.map((item: any) => ({
             data: item.codeId || '',
             label: item.codeNm || ''
@@ -528,7 +528,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
           ownCompanyList: transformedData
         }));
         
-        // 자사 업체 목록이 로드되고 첫 번째 항목이 있으면 자동 선택
+        // ?�사 ?�체 목록??로드?�고 �?번째 ??��???�으�??�동 ?�택
         if (transformedData && transformedData.length > 0 && employeeData?.OWN_OUTS_DIV_CD === '1') {
           setEmployeeData(prev => ({
             ...prev!,
@@ -537,21 +537,21 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
         }
       }
     } catch (error) {
-      console.error('자사 업체 목록 로드 중 오류:', error);
+      console.error('?�사 ?�체 목록 로드 �??�류:', error);
     }
   };
 
-  // AS-IS COM_03_0101_S 프로시저 호출 방식으로 외주 업체 목록 로드
+  // AS-IS COM_03_0101_S ?�로?��? ?�출 방식?�로 ?�주 ?�체 목록 로드
   const loadEntrList = async () => {
     try {
-      // 외주 업체 목록 로드 시작
+      // ?�주 ?�체 목록 로드 ?�작
             const response = await fetch('/api/common/search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          largeCategoryCode: '111' // 외주 업체 대분류 코드
+          largeCategoryCode: '111' // ?�주 ?�체 ?�분류 코드
         })
       });
       
@@ -559,7 +559,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
         const result = await response.json();
         const data = result.data || [];
         
-        // API 응답을 {data: codeId, label: codeNm} 형태로 변환
+        // API ?�답??{data: codeId, label: codeNm} ?�태�?변??
         const transformedData = data.map((item: any) => ({
           data: item.codeId || '',
           label: item.codeNm || ''
@@ -571,93 +571,93 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
         }));
       }
     } catch (error) {
-      console.error('외주 업체 목록 로드 중 오류:', error);
+      console.error('?�주 ?�체 목록 로드 �??�류:', error);
     }
   };
 
-  // 검색 조건 변경 핸들러
+  // 검??조건 변�??�들??
   const handleSearchChange = (field: string, value: string) => {
     setSearchConditions(prev => ({
       ...prev,
       [field]: value
     }));
 
-    // 본부 변경 시 부서 리스트 업데이트 (AS-IS onCbHqDivChange 로직)
+    // 본�? 변�???부??리스???�데?�트 (AS-IS onCbHqDivChange 로직)
     if (field === 'hqDivCd') {
       handleHqDivChange(value);
     }
     
-    // 자사/외주 구분 변경 시 이벤트 (AS-IS onOwnOutsDivChange 로직)
+    // ?�사/?�주 구분 변�????�벤??(AS-IS onOwnOutsDivChange 로직)
     if (field === 'ownOutsDiv') {
       handleOwnOutsDivChange(value);
     }
   };
 
-  // AS-IS MXML의 onOwnOutsDivChange 함수와 동일한 로직
+  // AS-IS MXML??onOwnOutsDivChange ?�수?� ?�일??로직
   const handleOwnOutsDivChange = (value: string) => {
-    // 자사/외주 구분 변경 처리
+    // ?�사/?�주 구분 변�?처리
     
     if (value === '1') {
-      // AS-IS MXML과 동일: 자사인 경우
-      // cbCrpnNm.setLargeCode('110','') - 자사 업체 목록 로드
+      // AS-IS MXML�??�일: ?�사??경우
+      // cbCrpnNm.setLargeCode('110','') - ?�사 ?�체 목록 로드
       if (commonCodes.ownCompanyList.length === 0) {
         loadOwnCompanyList();
       }
       
-      // AS-IS MXML과 동일: txtEmpNo.enabled = true - 사원번호 활성화
+      // AS-IS MXML�??�일: txtEmpNo.enabled = true - ?�원번호 ?�성??
       
       setEmployeeData(prev => ({
         ...prev!,
         OWN_OUTS_DIV_CD: '1',
-        OWN_OUTS_DIV: '자사',
-        ENTR_CD: '' // 자사 업체 코드 초기화
+        OWN_OUTS_DIV: '?�사',
+        ENTR_CD: '' // ?�사 ?�체 코드 초기??
       }));
     } else if (value === '2') {
-      // AS-IS MXML과 동일: 외주인 경우
-      // cbCrpnNm.setLargeCode('111','') - 외주 업체 목록 로드
+      // AS-IS MXML�??�일: ?�주??경우
+      // cbCrpnNm.setLargeCode('111','') - ?�주 ?�체 목록 로드
       if (commonCodes.entrList.length === 0) {
         loadEntrList();
       }
       
-      // AS-IS MXML과 동일: txtEmpNo.enabled = false - 외주 사번은 자동채번
+      // AS-IS MXML�??�일: txtEmpNo.enabled = false - ?�주 ?�번?� ?�동채번
       
       setEmployeeData(prev => ({
         ...prev!,
         OWN_OUTS_DIV_CD: '2',
-        OWN_OUTS_DIV: '외주',
-        ENTR_CD: '' // 외주 업체 코드 초기화
+        OWN_OUTS_DIV: '?�주',
+        ENTR_CD: '' // ?�주 ?�체 코드 초기??
       }));
     }
     
-    // AS-IS MXML과 동일: 신규 모드에서 외주 선택 시 추가 처리
+    // AS-IS MXML�??�일: ?�규 모드?�서 ?�주 ?�택 ??추�? 처리
     if (newFlag === true && value === '2') {
-      // AS-IS: setEmpNoMaxCnt() 호출 (현재는 주석 처리됨)
+      // AS-IS: setEmpNoMaxCnt() ?�출 (?�재??주석 처리??
     }
   };
 
-  // 본부 콤보 변경 이벤트 핸들러 (AS-IS onCbHqDivChange와 동일)
+  // 본�? 콤보 변�??�벤???�들??(AS-IS onCbHqDivChange?� ?�일)
   const handleHqDivChange = (value: string) => {
-    // 본부 콤보 변경 이벤트 처리
+    // 본�? 콤보 변�??�벤??처리
     
-    // AS-IS와 동일하게 부서 콤보 초기화
+    // AS-IS?� ?�일?�게 부??콤보 초기??
     setCommonCodes(prev => ({
       ...prev,
       deptDiv: []
     }));
     
-    // 사원 데이터에서 부서 코드 초기화
+    // ?�원 ?�이?�에??부??코드 초기??
     setEmployeeData(prev => ({
       ...prev!,
       DEPT_DIV_CD: ''
     }));
     
-    // 본부가 선택된 경우에만 부서 목록 로드
+    // 본�?가 ?�택??경우?�만 부??목록 로드
     if (value && value !== '') {
       loadDeptByHq(value);
     }
   };
 
-  // 사원 조회 함수
+  // ?�원 조회 ?�수
   const handleSearch = async () => {
     setIsLoading(true);
     setError(null);
@@ -666,8 +666,8 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       const empNo = employeeData?.EMP_NO;
       
       if (!empNo) {
-        setError('사원번호를 입력해 주십시요.');
-        showToast('사원번호를 입력해 주십시요.', 'warning');
+        setError('?�원번호�??�력??주십?�요.');
+        showToast('?�원번호�??�력??주십?�요.', 'warning');
         setIsLoading(false);
         return;
       }
@@ -690,7 +690,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
           const convertedData: EmployeeData = {
             EMP_NO: rec.EMP_NO,
             OWN_OUTS_DIV_CD: rec.OWN_OUTS_DIV_CD,
-            OWN_OUTS_DIV: rec.OWN_OUTS_DIV_CD === '1' ? '자사' : '외주',
+            OWN_OUTS_DIV: rec.OWN_OUTS_DIV_CD === '1' ? '?�사' : '?�주',
             ENTR_CD: rec.ENTR_CD,
             CRPN_NM: rec.CRPN_NM,
             HQ_DIV_CD: rec.HQ_DIV_CD,
@@ -750,7 +750,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
           setEmployeeData(convertedData);
           setNewFlag(false);
           
-          // 본부가 설정되면 해당 본부의 부서 목록 로드
+          // 본�?가 ?�정?�면 ?�당 본�???부??목록 로드
           if (rec.HQ_DIV_CD && rec.HQ_DIV_CD !== '') {
             loadDeptByHq(rec.HQ_DIV_CD);
           }
@@ -759,23 +759,23 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
             loadEntrList();
           }
           
-          // AS-IS MXML과 동일: 사원 데이터 로드 후 현재 데이터를 saveData에 저장
+          // AS-IS MXML�??�일: ?�원 ?�이??로드 ???�재 ?�이?��? saveData???�??
           setTimeout(() => {
             saveProjectInputData();
           }, 0);
           
         } else {
           setEmployeeData(null);
-          const errorMessage = result.message || '해당되는 데이터가 없습니다.';
+          const errorMessage = result.message || '?�당?�는 ?�이?��? ?�습?�다.';
           setError(errorMessage);
           showToast(errorMessage, 'warning');
         }
       } else {
-        throw new Error('사원 조회에 실패했습니다.');
+        throw new Error('?�원 조회???�패?�습?�다.');
       }
     } catch (error) {
-      console.error('사원 조회 중 오류:', error);
-      const errorMessage = error instanceof Error ? error.message : '조회 중 오류가 발생했습니다.';
+      console.error('?�원 조회 �??�류:', error);
+      const errorMessage = error instanceof Error ? error.message : '조회 �??�류가 발생?�습?�다.';
       setError(errorMessage);
       showToast(errorMessage, 'error');
     } finally {
@@ -785,20 +785,20 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
 
 
 
-  // AS-IS MXML의 fnInputValidationChk 함수와 동일한 로직
+  // AS-IS MXML??fnInputValidationChk ?�수?� ?�일??로직
   const validateInput = (checkType: string): boolean => {
     if (checkType === "Registe" || checkType === "CarrCalc") {
       if (!employeeData?.OWN_OUTS_DIV_CD) {
-        showToast("자사 또는 외주 구분을 선택해 주십시요.", "warning");
-        // 자사/외주 구분 select에 포커스
+        showToast("?�사 ?�는 ?�주 구분???�택??주십?�요.", "warning");
+        // ?�사/?�주 구분 select???�커??
         const ownOutsDivSelect = document.querySelector('select[value="' + (employeeData?.OWN_OUTS_DIV_CD || '') + '"]') as HTMLSelectElement;
         if (ownOutsDivSelect) ownOutsDivSelect.focus();
         return false;
       }
 
       if (employeeData.OWN_OUTS_DIV_CD === "1" && !employeeData.ENTR_DT) {
-        showToast("입사일자를 입력해 주십시요", "warning");
-        // 입사일자 input에 포커스
+        showToast("?�사?�자�??�력??주십?�요", "warning");
+        // ?�사?�자 input???�커??
         setTimeout(() => {
           const entrDtInput = document.querySelector('input[data-field="entrDt"]') as HTMLInputElement;
           if (entrDtInput) {
@@ -809,8 +809,8 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       }
 
       if (!employeeData?.HQ_DIV_CD || employeeData.HQ_DIV_CD.trim() === '') {
-        showToast("본부를 선택해 주십시요.", "warning");
-        // 본부 select에 포커스
+        showToast("본�?�??�택??주십?�요.", "warning");
+        // 본�? select???�커??
         setTimeout(() => {
           const hqDivSelect = document.querySelector('select[data-field="hqDiv"]') as HTMLSelectElement;
           if (hqDivSelect) {
@@ -821,8 +821,8 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       }
       
       if (!employeeData?.LAST_ADBG_DIV || employeeData.LAST_ADBG_DIV === '') {
-        showToast("최종학력을 선택해 주십시요", "warning");
-        // 최종학력 select에 포커스
+        showToast("최종?�력???�택??주십?�요", "warning");
+        // 최종?�력 select???�커??
         setTimeout(() => {
           const lastAdbgDivSelect = document.querySelector('select[data-field="lastAdbgDiv"]') as HTMLSelectElement;
           if (lastAdbgDivSelect) {
@@ -833,8 +833,8 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       }
       
       if (!employeeData?.FST_IN_DT) {
-        showToast("최초투입일자를 입력해 주십시요", "warning");
-        // 최초투입일자 input에 포커스
+        showToast("최초?�입?�자�??�력??주십?�요", "warning");
+        // 최초?�입?�자 input???�커??
         setTimeout(() => {
           const fstInDtInput = document.querySelector('input[data-field="fstInDt"]') as HTMLInputElement;
           if (fstInDtInput) {
@@ -845,8 +845,8 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       } 
         
       if (employeeData.OWN_OUTS_DIV_CD === "2" && !employeeData.LAST_END_DT) {
-        showToast("최종철수일자를 입력해 주십시요", "warning");
-        // 최종철수일자 input에 포커스
+        showToast("최종철수?�자�??�력??주십?�요", "warning");
+        // 최종철수?�자 input???�커??
         setTimeout(() => {
           const lastEndDtInput = document.querySelector('input[data-field="lastEndDt"]') as HTMLInputElement;
           if (lastEndDtInput) {
@@ -857,8 +857,8 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       } 
 
       if (employeeData?.CTQL_CD && employeeData?.CTQL_CD !== "null" && !employeeData?.CTQL_PUR_DT) {
-        showToast("자격취득일자를 입력해 주십시요", "warning");
-        // 자격취득일자 input에 포커스
+        showToast("?�격취득?�자�??�력??주십?�요", "warning");
+        // ?�격취득?�자 input???�커??
         setTimeout(() => {
           const ctqlPurDtInput = document.querySelector('input[data-field="ctqlPurDt"]') as HTMLInputElement;
           if (ctqlPurDtInput) {
@@ -871,8 +871,8 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     
     if (checkType === "Registe") {
       if (!employeeData?.EMP_NO && employeeData?.OWN_OUTS_DIV_CD === "1") {
-        showToast("사원번호를 입력해 주십시요", "warning");
-        // 사원번호 input에 포커스
+        showToast("?�원번호�??�력??주십?�요", "warning");
+        // ?�원번호 input???�커??
         setTimeout(() => {
           const empNoInput = document.querySelector('input[data-field="empNo"]') as HTMLInputElement;
           if (empNoInput) {
@@ -884,21 +884,21 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       }
 
       if (!employeeData?.EMP_NM) {
-        showToast("성명을 입력해 주십시요", "warning");
-        // 성명 input에 포커스 - data-field 속성으로 정확히 찾기
+        showToast("?�명???�력??주십?�요", "warning");
+        // ?�명 input???�커??- data-field ?�성?�로 ?�확??찾기
         setTimeout(() => {
           const empNmInput = document.querySelector('input[data-field="empNm"]') as HTMLInputElement;
           if (empNmInput) {
             empNmInput.focus();
-            empNmInput.select(); // 텍스트 선택도 추가
+            empNmInput.select(); // ?�스???�택??추�?
           }
         }, 100);
         return false;
       }
 
       if (employeeData?.RETIR_DT && employeeData?.WKG_ST_DIV_CD !== "3") {
-        showToast("근무상태를 퇴사로 선택해 주십시요", "warning");
-        // 근무상태 select에 포커스
+        showToast("근무?�태�??�사�??�택??주십?�요", "warning");
+        // 근무?�태 select???�커??
         setTimeout(() => {
           const wkgStDivSelect = document.querySelector('select[data-field="wkgStDiv"]') as HTMLSelectElement;
           if (wkgStDivSelect) {
@@ -908,10 +908,10 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
         return false;
       }
 
-      // 근무상태가 재직일 경우에만 체크
+      // 근무?�태가 ?�직??경우?�만 체크
       if (Number(employeeData?.CARR_MCNT || 0) === 0 && employeeData?.WKG_ST_DIV_CD === "1") {
-        showToast("경력개월수를 계산해 주십시요.", "warning");
-        // 경력계산 버튼에 포커스
+        showToast("경력개월?��? 계산??주십?�요.", "warning");
+        // 경력계산 버튼???�커??
         setTimeout(() => {
           const carrCalcBtn = document.querySelector('button[data-field="carrCalcBtn"]') as HTMLButtonElement;
           if (carrCalcBtn) {
@@ -922,8 +922,8 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       }
       
       if (!employeeData?.BIR_YR_MN_DT) {
-        showToast("생년월일을 입력해 주십시요.", "warning");
-        // 생년월일 input에 포커스
+        showToast("?�년?�일???�력??주십?�요.", "warning");
+        // ?�년?�일 input???�커??
         setTimeout(() => {
           const birYrMnDtInput = document.querySelector('input[data-field="birYrMnDt"]') as HTMLInputElement;
           if (birYrMnDtInput) {
@@ -937,35 +937,35 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     return true;
   };
 
-  // AS-IS MXML의 OnClick_RegNewPsm 함수와 동일한 사원 정보 저장 로직
+  // AS-IS MXML??OnClick_RegNewPsm ?�수?� ?�일???�원 ?�보 ?�??로직
   const handleSave = async () => {
     if (!employeeData) return;
 
-    // AS-IS MXML과 동일한 validation 체크
+    // AS-IS MXML�??�일??validation 체크
     if (!validateInput("Registe")) {
       return;
     }
 
-    // AS-IS MXML과 동일: 프로젝트정보 데이터 변경여부 Check
+    // AS-IS MXML�??�일: ?�로?�트?�보 ?�이??변경여부 Check
     if (isCheckProjectInputData() === true || newFlag === true) {
       showConfirm({
-        message: newFlag ? '새로운 사원 정보를 등록하시겠습니까?' : '사원 정보를 수정하시겠습니까?',
+        message: newFlag ? '?�로???�원 ?�보�??�록?�시겠습?�까?' : '?�원 ?�보�??�정?�시겠습?�까?',
         type: 'info',
         onConfirm: async () => {
           await fnPsmBasicInfoUpdate();
         },
         onCancel: () => {
-          // 사원 정보 저장 취소
+          // ?�원 ?�보 ?�??취소
         }
       });
     } else {
-      // AS-IS MXML과 동일: 경력개월수계산을 다시 한 후 저장을 하도록 한다.
+      // AS-IS MXML�??�일: 경력개월?�계?�을 ?�시 ?????�?�을 ?�도�??�다.
       const msg = setCarrMonthsComfirmMessage();
       showConfirm({
         message: msg,
         type: 'warning',
         onConfirm: () => {
-          // 경력계산 팝업 호출
+          // 경력계산 ?�업 ?�출
           if (validateInput("CarrCalc")) {
             setShowCarrCalcPopup(true);
           }
@@ -977,45 +977,45 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     }
   };
 
-  // AS-IS MXML의 setCarrMonthsComfirmMessage 함수와 동일한 로직
+  // AS-IS MXML??setCarrMonthsComfirmMessage ?�수?� ?�일??로직
   const setCarrMonthsComfirmMessage = (): string => {
     let strMsg = '';
 
-    // "null" 문자열을 빈 문자열로 치환하는 헬퍼 함수
+    // "null" 문자?�을 �?문자?�로 치환?�는 ?�퍼 ?�수
     const normalizeValue = (value: string | undefined): string => {
       if (!value || value === 'null') return '';
       return value;
     };
 
     if (normalizeValue(saveData.ctqlCd) !== normalizeValue(employeeData?.CTQL_CD)) {
-      strMsg = '자격증 내용이 변경되었습니다. ';
+      strMsg = '?�격�??�용??변경되?�습?�다. ';
     } else if (normalizeValue(saveData.ctqlPurDt) !== normalizeValue(employeeData?.CTQL_PUR_DT)) {
-      strMsg = '자격증취득일자가 변경되었습니다. ';
+      strMsg = '?�격증취?�일?��? 변경되?�습?�다. ';
     } else if (normalizeValue(saveData.fstInDt) !== normalizeValue(employeeData?.FST_IN_DT)) {
-      strMsg = '최초투입일자가 변경되었습니다. ';
+      strMsg = '최초?�입?�자가 변경되?�습?�다. ';
     } else if (normalizeValue(saveData.lastEndDt) !== normalizeValue(employeeData?.LAST_END_DT)) {
-      strMsg = '최종철수일자가 변경되었습니다. ';
+      strMsg = '최종철수?�자가 변경되?�습?�다. ';
     } else {
       strMsg = '';
     }
     
-    strMsg += '경력개월수 계산을 다시 한 후 [저장]을 하십시요. \n경력개월수계산 화면을 팝업하시겠습니까?';
+    strMsg += '경력개월??계산???�시 ????[?�?????�십?�요. \n경력개월?�계???�면???�업?�시겠습?�까?';
     
     return strMsg;
   };
 
-  // AS-IS MXML의 fnPsmBasicInfoUpdate 함수와 동일한 로직
+  // AS-IS MXML??fnPsmBasicInfoUpdate ?�수?� ?�일??로직
   const fnPsmBasicInfoUpdate = async () => {
     if (!employeeData) return;
 
-    // AS-IS MXML과 동일: 저장 전에 현재 데이터를 saveData에 저장
+    // AS-IS MXML�??�일: ?�???�에 ?�재 ?�이?��? saveData???�??
     saveProjectInputData();
 
     setIsLoading(true);
     setError(null);
 
     try {
-      // 전송할 데이터 로깅
+      // ?�송???�이??로깅
       const requestData = {
         mode: newFlag ? 'NEW' : 'MOD',
         empNo: employeeData.EMP_NO || '',
@@ -1066,7 +1066,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
         entrAftCtqlCarr: String(employeeData.ENTR_AFT_CTQL_CARR || '')
       };
             
-      // AS-IS MXML과 동일한 프로시저 호출 방식
+      // AS-IS MXML�??�일???�로?��? ?�출 방식
       const response = await fetch('/api/psm/employee/update', {
         method: 'POST',
         headers: {
@@ -1126,9 +1126,9 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       if (response.ok) {
         const result = await response.json();
         if (result.success) {
-          showToast('저장되었습니다.', 'info');
+          showToast('?�?�되?�습?�다.', 'info');
           
-          // AS-IS MXML과 동일: 저장 후 상위 화면 재조회 (PSM1010M00)
+          // AS-IS MXML�??�일: ?�?????�위 ?�면 ?�조??(PSM1010M00)
           if (onSearchSuccess) {
             onSearchSuccess();
           }
@@ -1137,11 +1137,11 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
           showToast(result.message, 'error');
         }
       } else {
-        throw new Error('저장에 실패했습니다.');
+        throw new Error('?�?�에 ?�패?�습?�다.');
       }
     } catch (error) {
-      console.error('저장 중 오류:', error);
-      const errorMessage = error instanceof Error ? error.message : '저장 중 오류가 발생했습니다.';
+      console.error('?�??�??�류:', error);
+      const errorMessage = error instanceof Error ? error.message : '?�??�??�류가 발생?�습?�다.';
       setError(errorMessage);
       showToast(errorMessage, 'error');
     } finally {
@@ -1149,21 +1149,21 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     }
   };
 
-  // AS-IS MXML의 setParameter 함수와 동일한 로직
+  // AS-IS MXML??setParameter ?�수?� ?�일??로직
   const setParameter = (tmpStr: string, opt: number): string => {
     if (!tmpStr || tmpStr === '') {
       return '';
     } else {
-      // 공백 제거
+      // 공백 ?�거
       if (opt === 1) {
         tmpStr = tmpStr.replace(/ /g, '');
       }
-      // 날짜 "/" 제거
+      // ?�짜 "/" ?�거
       else if (opt === 2) {
         tmpStr = tmpStr.replace(/ /g, '');
         tmpStr = tmpStr.replace(/\//g, '');
       }
-      // 주민등록번호, 우편번호 '-' 제거
+      // 주�??�록번호, ?�편번호 '-' ?�거
       else if (opt === 3) {
         tmpStr = tmpStr.replace(/ /g, '');
         tmpStr = tmpStr.replace(/-/g, '');
@@ -1172,7 +1172,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     return tmpStr;
   };
 
-  // AS-IS MXML과 동일한 파라미터 빌드 로직
+  // AS-IS MXML�??�일???�라미터 빌드 로직
   const buildUpdateParameter = (): string => {
     if (!employeeData) return '';
 
@@ -1198,9 +1198,9 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     objTemp += setParameter(employeeData.HOME_ZIP_NO || '', 3) + '|';
     objTemp += setParameter(employeeData.HOME_ADDR || '', 0) + '|';
     objTemp += setParameter(employeeData.HOME_DET_ADDR || '', 0) + '|';
-    objTemp += '|'; // 최초투입일자 (별도 처리)
+    objTemp += '|'; // 최초?�입?�자 (별도 처리)
     objTemp += setParameter(employeeData.LAST_END_DT || '', 2) + '|';
-    objTemp += '|'; // 투입횟수
+    objTemp += '|'; // ?�입?�수
     objTemp += setParameter(employeeData.LAST_ADBG_DIV || '', 1) + '|';
     objTemp += setParameter(employeeData.LAST_SCHL || '', 1) + '|';
     objTemp += setParameter(employeeData.MAJR || '', 1) + '|';
@@ -1209,7 +1209,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     objTemp += setParameter(employeeData.CTQL_PUR_DT || '', 2) + '|';
     objTemp += getCarrMCnt(employeeData.CARR_MCNT || '0', '0') + '|';
     objTemp += setParameter(employeeData.WKG_ST_DIV_CD || '', 1) + '|';
-    objTemp += 'system|'; // 로그인사용자ID
+    objTemp += 'system|'; // 로그?�사?�자ID
     objTemp += setParameter(employeeData.RMK || '', 1) + '|';
     objTemp += setParameter(employeeData.KOSA_REG_YN || 'N', 1) + '|';
     objTemp += setParameter(employeeData.KOSA_RNW_DT || '', 2) + '|';
@@ -1227,18 +1227,18 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     return objTemp;
   };
 
-  // 사원 정보 삭제
-  // AS-IS MXML의 OnClick_DelEmp() 함수와 동일한 삭제 로직
+  // ?�원 ?�보 ??��
+  // AS-IS MXML??OnClick_DelEmp() ?�수?� ?�일????�� 로직
   const handleDelete = async () => {
-    // AS-IS와 동일: 사원번호 체크
+    // AS-IS?� ?�일: ?�원번호 체크
     if (!employeeData?.EMP_NO) {
-      showToast('삭제할 사원을 선택해 주십시요.', 'warning');
+      showToast('??��???�원???�택??주십?�요.', 'warning');
       return;
     }
 
-    // AS-IS와 동일: 확인 다이얼로그
+    // AS-IS?� ?�일: ?�인 ?�이?�로�?
     showConfirm({
-      message: '정말 삭제하시겠습니까?',
+      message: '?�말 ??��?�시겠습?�까?',
       type: 'warning',
       onConfirm: async () => {
         setIsLoading(true);
@@ -1261,10 +1261,10 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
           if (response.ok) {
             const result = await response.json();
             if (result.success) {
-              // AS-IS와 동일: 성공 메시지 표시
-              showToast('삭제되었습니다.', 'info');
+              // AS-IS?� ?�일: ?�공 메시지 ?�시
+              showToast('??��?�었?�니??', 'info');
               
-              // AS-IS와 동일: 사원번호 업데이트 (성공 응답에서 받은 사원번호)
+              // AS-IS?� ?�일: ?�원번호 ?�데?�트 (?�공 ?�답?�서 받�? ?�원번호)
               if (result.data && result.data.empNo) {
                 setEmployeeData(prev => ({
                   ...prev,
@@ -1272,23 +1272,23 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                 }));
               }
               
-              // AS-IS와 동일: 화면 초기화
+              // AS-IS?� ?�일: ?�면 초기??
               handleNew();
               
-              // AS-IS와 동일: 상위 화면 재조회 (parentDocument.prf_PsmSearch)
+              // AS-IS?� ?�일: ?�위 ?�면 ?�조??(parentDocument.prf_PsmSearch)
               if (onSearchSuccess) {
                 onSearchSuccess();
               }
             } else {
-              setError(result.message || '삭제에 실패했습니다.');
-              showToast(result.message || '삭제에 실패했습니다.', 'error');
+              setError(result.message || '??��???�패?�습?�다.');
+              showToast(result.message || '??��???�패?�습?�다.', 'error');
             }
           } else {
-            throw new Error('삭제에 실패했습니다.');
+            throw new Error('??��???�패?�습?�다.');
           }
         } catch (error) {
-          console.error('사원 삭제 중 오류:', error);
-          const errorMessage = error instanceof Error ? error.message : '삭제 중 오류가 발생했습니다.';
+          console.error('?�원 ??�� �??�류:', error);
+          const errorMessage = error instanceof Error ? error.message : '??�� �??�류가 발생?�습?�다.';
           setError(errorMessage);
           showToast(errorMessage, 'error');
         } finally {
@@ -1296,30 +1296,30 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
         }
       },
       onCancel: () => {
-        // 사원 삭제 취소
+        // ?�원 ??�� 취소
       }
     });
   };
 
-  // AS-IS MXML의 initImpInfo() 함수와 동일한 신규 등록 로직
+  // AS-IS MXML??initImpInfo() ?�수?� ?�일???�규 ?�록 로직
   const handleNew = () => {
     const today = new Date();
     const todayStr = today.getFullYear().toString() + 
                     String(today.getMonth() + 1).padStart(2, '0') + 
                     String(today.getDate()).padStart(2, '0');
 
-    // AS-IS MXML과 동일한 초기화 로직
+    // AS-IS MXML�??�일??초기??로직
     setEmployeeData({
-      // 기본 구분 설정
+      // 기본 구분 ?�정
       OWN_OUTS_DIV_CD: '1',
-      OWN_OUTS_DIV: '자사',
+      OWN_OUTS_DIV: '?�사',
       ENTR_CD: '',
       CARR_DIV_CD: '1',
       WKG_ST_DIV_CD: '1',
-      WKG_ST_DIV: '재직중',
+      WKG_ST_DIV: '?�직�?,
       KOSA_REG_YN: 'N',
       
-      // 사원 정보 초기화
+      // ?�원 ?�보 초기??
       EMP_NO: '',
       EMP_NM: '',
       EMP_ENG_NM: '',
@@ -1330,18 +1330,18 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       ENTR_DT: '',
       RETIR_DT: '',
       
-      // 조직 정보 초기화 (AS-IS와 동일한 기본값)
+      // 조직 ?�보 초기??(AS-IS?� ?�일??기본�?
       HQ_DIV_CD: '',
       DEPT_DIV_CD: '',
       DUTY_CD: '9', // AS-IS: cbDuty.setValue("9")
       
-      // 학력 정보 초기화
+      // ?�력 ?�보 초기??
       LAST_ADBG_DIV: '',
       LAST_SCHL: '',
       MAJR: '',
       LAST_GRAD_DT: '',
       
-      // 연락처 정보 초기화
+      // ?�락�??�보 초기??
       MOB_PHN_NO: '',
       HOME_TEL: '',
       HOME_ZIP_NO: '',
@@ -1349,57 +1349,57 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       HOME_DET_ADDR: '',
       EMAIL_ADDR: '',
       
-      // 자격증 정보 초기화
+      // ?�격�??�보 초기??
       CTQL_CD: '',
       CTQL_PUR_DT: '',
       
-      // 경력 정보 초기화 (AS-IS와 동일한 기본값)
+      // 경력 ?�보 초기??(AS-IS?� ?�일??기본�?
       CARR_MCNT: '0',
       ENTR_BEF_CARR: '0',
       ENTR_BEF_CTQL_CARR: '0',
       ADBG_CARR_MCNT: '0',
       CTQL_CARR_MCNT: '0',
       
-      // 투입 정보 초기화 (AS-IS: 최초투입일자 = 현재일자)
+      // ?�입 ?�보 초기??(AS-IS: 최초?�입?�자 = ?�재?�자)
       FST_IN_DT: todayStr,
       LAST_END_DT: '',
       
-      // 재직년수 초기화 (AS-IS와 동일한 기본값)
+      // ?�직?�수 초기??(AS-IS?� ?�일??기본�?
       HDOFC_YEAR: '0',
       HDOFC_MONTH: '0',
       
-      // 기타 정보 초기화
+      // 기�? ?�보 초기??
       LAST_TCN_GRD: '',
       KOSA_RNW_DT: '',
       CARR_CALC_STND_DT: '',
       RMK: '',
       
-      // 입사후 경력 초기화
+      // ?�사??경력 초기??
       ENTR_AFT_ADBG_CARR: '0',
       ENTR_AFT_CTQL_CARR: '0'
     });
 
-    // AS-IS MXML과 동일: 신규 플래그 설정 및 메시지 표시
+    // AS-IS MXML�??�일: ?�규 ?�래�??�정 �?메시지 ?�시
     setNewFlag(true);
     
-    // AS-IS MXML의 경력개월수 계산 메시지와 동일
-            // 경력개월수와 기술등급은 [경력개월수계산] 화면에서 계산되고 확인처리를 통해서 입력이 가능합니다. [경력계산] 버튼을 클릭하세요.
+    // AS-IS MXML??경력개월??계산 메시지?� ?�일
+            // 경력개월?��? 기술?�급?� [경력개월?�계?? ?�면?�서 계산?�고 ?�인처리�??�해???�력??가?�합?�다. [경력계산] 버튼???�릭?�세??
     
-    // AS-IS MXML과 동일: 경력계산 버튼 표시 (newFlag가 true일 때만 표시)
-    // 이는 UI에서 newFlag 상태에 따라 경력계산 버튼의 visible을 제어하는데 사용됨
+    // AS-IS MXML�??�일: 경력계산 버튼 ?�시 (newFlag가 true???�만 ?�시)
+    // ?�는 UI?�서 newFlag ?�태???�라 경력계산 버튼??visible???�어?�는???�용??
     
-    // AS-IS MXML과 동일: 신규 등록 시 모든 필드 활성화
+    // AS-IS MXML�??�일: ?�규 ?�록 ??모든 ?�드 ?�성??
     // AS-IS: txtEmpNo.enabled = true; cbOwnOutsDiv.enabled = true; cbCrpnNm.enabled = true;
     // AS-IS: cbHqDiv.enabled = true; cbDeptDiv.enabled = true; cbDuty.enabled = true;
-            // 신규 등록: 모든 필드가 활성화되었습니다.
+            // ?�규 ?�록: 모든 ?�드가 ?�성?�되?�습?�다.
     
-    // AS-IS MXML과 동일: 신규 등록 후 현재 데이터를 saveData에 저장
+    // AS-IS MXML�??�일: ?�규 ?�록 ???�재 ?�이?��? saveData???�??
     setTimeout(() => {
       saveProjectInputData();
     }, 0);
   };
 
-  // AS-IS MXML의 getCarrMCnt 함수와 동일한 로직
+  // AS-IS MXML??getCarrMCnt ?�수?� ?�일??로직
   const getCarrMCnt = (strYCnt: string, strMCnt: string): string => {
     if (strYCnt === "" && strMCnt === "") return "";
     
@@ -1411,7 +1411,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
 
 
 
-  // 사원 정보 변경 핸들러
+  // ?�원 ?�보 변�??�들??
   const handleEmployeeChange = (field: string, value: string) => {
     if (!employeeData) return;
 
@@ -1423,17 +1423,17 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       return newData;
     });
 
-    // 경력구분 변경 시 기술등급 자동 계산 (AS-IS MXML의 onChangeCarrDiv 로직)
+    // 경력구분 변�???기술?�급 ?�동 계산 (AS-IS MXML??onChangeCarrDiv 로직)
     if (field === 'CARR_DIV_CD') {
       handleCarrDivChange(value);
     }
   };
 
-  // AS-IS MXML의 onChangeCarrDiv 로직과 동일
+  // AS-IS MXML??onChangeCarrDiv 로직�??�일
   const handleCarrDivChange = (carrDivCd: string) => {
     if (!employeeData) return;
     
-    // 기술등급 자동 계산
+    // 기술?�급 ?�동 계산
     const newTcnGrd = getTcnGrd(carrDivCd);
     setEmployeeData(prev => ({
       ...prev!,
@@ -1441,30 +1441,30 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     }));
   };
 
-  // 카카오 주소 검색 팝업 호출
+  // 카카??주소 검???�업 ?�출
   const handleAddressSearch = () => {
-    // 카카오 주소 검색 팝업 스크립트가 로드되어 있는지 확인
+    // 카카??주소 검???�업 ?�크립트가 로드?�어 ?�는지 ?�인
     if (typeof window.daum !== 'undefined' && window.daum.Postcode) {
       new window.daum.Postcode({
         oncomplete: function(data: any) {
-          // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-          // 예제를 참고하여 각주를 작성하거나, 아래 예제를 수정하여 사용하시면 됩니다.
+          // ?�업?�서 검?�결�???��???�릭?�을???�행??코드�??�성?�는 부분입?�다.
+          // ?�제�?참고?�여 각주�??�성?�거?? ?�래 ?�제�??�정?�여 ?�용?�시�??�니??
           
-          // 도로명 주소의 노출 규칙에 따라 주소를 표시합니다.
-          // 내려오는 데이터가 도로명주소일 경우 linkRoadname이 공백일 수 있습니다.
-          let roadAddr = data.roadAddress; // 도로명 주소 변수
-          let jibunAddr = data.jibunAddress; // 지번 주소 변수
+          // ?�로�?주소???�출 규칙???�라 주소�??�시?�니??
+          // ?�려?�는 ?�이?��? ?�로명주?�일 경우 linkRoadname??공백?????�습?�다.
+          let roadAddr = data.roadAddress; // ?�로�?주소 변??
+          let jibunAddr = data.jibunAddress; // 지�?주소 변??
           
-          // 우편번호와 주소 정보를 해당 필드에 넣는다.
+          // ?�편번호?� 주소 ?�보�??�당 ?�드???�는??
           setEmployeeData(prev => ({
             ...prev!,
             HOME_ZIP_NO: data.zonecode,
             HOME_ADDR: roadAddr || jibunAddr
           }));
           
-          // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-          if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-            // 상세주소 필드에 건물명을 추가
+          // 참고??�� 문자?�이 ?�을 경우 ?�당 ?�드???�는??
+          if (data.bname !== '' && /[??�?가]$/g.test(data.bname)) {
+            // ?�세주소 ?�드??건물명을 추�?
             setEmployeeData(prev => ({
               ...prev!,
               HOME_DET_ADDR: data.buildingName || ''
@@ -1473,21 +1473,21 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
         }
       }).open();
     } else {
-      // 카카오 주소 검색 스크립트가 로드되지 않은 경우
-      showToast('주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.', 'warning');
+      // 카카??주소 검???�크립트가 로드?��? ?��? 경우
+      showToast('주소 검???�비?��? 불러?�는 중입?�다. ?�시 ???�시 ?�도?�주?�요.', 'warning');
       
-      // 스크립트 동적 로드
+      // ?�크립트 ?�적 로드
       const script = document.createElement('script');
       script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
       script.onload = () => {
-        // 스크립트 로드 완료 후 다시 호출
+        // ?�크립트 로드 ?�료 ???�시 ?�출
         setTimeout(handleAddressSearch, 100);
       };
       document.head.appendChild(script);
     }
   };
 
-  // AS-IS MXML의 fnSaveProjecInputData 함수와 동일한 로직
+  // AS-IS MXML??fnSaveProjecInputData ?�수?� ?�일??로직
   const saveProjectInputData = () => {
     if (!employeeData) return;
     
@@ -1504,14 +1504,14 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     setSaveData(newSaveData);
   };
 
-  // AS-IS MXML의 isCheckProjectInputData 함수와 동일한 로직
+  // AS-IS MXML??isCheckProjectInputData ?�수?� ?�일??로직
   const isCheckProjectInputData = (): boolean => {
     if (!employeeData) return false;
     
-    // AS-IS와 동일한 날짜 포맷팅 함수
+    // AS-IS?� ?�일???�짜 ?�맷???�수
     const formatDate = (dateStr: string): string => {
       if (!dateStr) return '';
-      return dateStr.replace(/\//g, ''); // 슬래시 제거
+      return dateStr.replace(/\//g, ''); // ?�래???�거
     };
     
 
@@ -1530,13 +1530,13 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     
     else if (formatDate(saveData.lastEndDt) !== formatDate(employeeData.LAST_END_DT || '')) {
       if (employeeData.OWN_OUTS_DIV_CD === '2') {
-        return false; // 외주일 경우에만 최종철수일자를 Check한다.
+        return false; // ?�주??경우?�만 최종철수?�자�?Check?�다.
       }
     }
     return true;
   };
 
-  // AS-IS MXML의 getTcnGrd 함수와 동일한 로직
+  // AS-IS MXML??getTcnGrd ?�수?� ?�일??로직
   const getTcnGrd = (carrDivCd: string): string => {
     if (!employeeData) return "";
     
@@ -1545,20 +1545,20 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
     const ctqlCd = employeeData.CTQL_CD === 'null' ? '' : (employeeData.CTQL_CD || "");
 
     if (carrDivCd === "1") {
-      // 학력 기준
-      if (lastAdbgDiv === "04") { // 전문학사
+      // ?�력 기�?
+      if (lastAdbgDiv === "04") { // ?�문?�사
         if (carrMonths < 108) return "4";
         else if (carrMonths < 108 + 36) return "3";
         else if (carrMonths < 108 + 36 + 36) return "2";
         else return "1";
       }
-      else if (lastAdbgDiv === "03") { // 학사
+      else if (lastAdbgDiv === "03") { // ?�사
         if (carrMonths < 72) return "4";
         else if (carrMonths < 72 + 36) return "3";
         else if (carrMonths < 72 + 36 + 36) return "2";
         else return "1";
       }
-      else if (lastAdbgDiv === "02") { // 석사
+      else if (lastAdbgDiv === "02") { // ?�사
         if (carrMonths < 36) return "4";
         else if (carrMonths < 36 + 36) return "3";
         else if (carrMonths < 36 + 36 + 36) return "2";
@@ -1579,14 +1579,14 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       }
     }
     else if (carrDivCd === "2") {
-      // 기술자격 기준
+      // 기술?�격 기�?
       if (ctqlCd === "01") { // 기사
         if (carrMonths < 36) return "4";
         else if (carrMonths < 36 + 36) return "3";
         else if (carrMonths < 36 + 36 + 36) return "2";
         else return "1";
       }
-      else if (ctqlCd === "02") { // 산업기사
+      else if (ctqlCd === "02") { // ?�업기사
         if (carrMonths < 72) return "4";
         else if (carrMonths < 72 + 36) return "3";
         else if (carrMonths < 72 + 36 + 36) return "2";
@@ -1607,9 +1607,9 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
       <div className="search-div">
         <table className="search-table w-full">
           <tbody>
-            {/* 1행*/}
+            {/* 1??/}
             <tr className="search-tr">
-              <th className="search-th">자사 외주 구분</th>
+              <th className="search-th">?�사 ?�주 구분</th>
               <td className="search-td">
                 <select 
                   className="combo-base min-w-[150px] w-full"
@@ -1624,7 +1624,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
 
               </td>
 
-              <th className="search-th">업체명</th>
+              <th className="search-th">?�체�?/th>
               <td className="search-td">
                 <select 
                   className="combo-base min-w-[150px] w-full"
@@ -1633,21 +1633,21 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                   onChange={(e) => handleEmployeeChange('ENTR_CD', e.target.value)}
                   disabled={newFlag ? false : !fieldEnableState?.crpnNm}
                 >
-                  <option key="select-default" value="">선택하세요</option>
+                  <option key="select-default" value="">?�택?�세??/option>
                   {(() => {
                     
                     if (employeeData?.OWN_OUTS_DIV_CD === '1') {
-                      // 자사인 경우: 자사 업체 목록
+                      // ?�사??경우: ?�사 ?�체 목록
                       if (commonCodes.ownCompanyList.length === 0) {
-                        return <option key="loading-own" value="" disabled>로딩중...</option>;
+                        return <option key="loading-own" value="" disabled>로딩�?..</option>;
                       }
                       return commonCodes.ownCompanyList.map(code => (
                         <option key={code.data} value={code.data}>{code.label}</option>
                       ));
                     } else if (employeeData?.OWN_OUTS_DIV_CD === '2') {
-                      // 외주인 경우: 외주 업체 목록
+                      // ?�주??경우: ?�주 ?�체 목록
                       if (commonCodes.entrList.length === 0) {
-                        return <option key="loading-entr" value="" disabled>로딩중...</option>;
+                        return <option key="loading-entr" value="" disabled>로딩�?..</option>;
                       }
                       
                       return commonCodes.entrList.map(code => (
@@ -1660,7 +1660,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
 
               </td>
 
-              <th className="search-th ">사원번호</th>
+              <th className="search-th ">?�원번호</th>
               <td className="search-td">
                 <input 
                   type="text" 
@@ -1669,26 +1669,26 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                   value={employeeData?.EMP_NO || ''} 
                   onChange={(e) => {
                     const value = e.target.value;
-                    // 사원번호: 10바이트 제한 (숫자/영문 위주)
+                    // ?�원번호: 10바이???�한 (?�자/?�문 ?�주)
                     const byteLength = new Blob([value]).size;
                     if (byteLength <= 10) {
                       handleEmployeeChange('EMP_NO', value);
                     }
                   }}
                   disabled={(() => {
-                    // AS-IS MXML과 동일한 로직: 자사/외주 구분에 따른 사원번호 활성화/비활성화
+                    // AS-IS MXML�??�일??로직: ?�사/?�주 구분???�른 ?�원번호 ?�성??비활?�화
                     if (newFlag) {
-                      // 신규 모드일 때는 자사/외주 구분에 따라 제어
-                      return employeeData?.OWN_OUTS_DIV_CD === '2'; // 외주면 비활성화 (자동채번)
+                      // ?�규 모드???�는 ?�사/?�주 구분???�라 ?�어
+                      return employeeData?.OWN_OUTS_DIV_CD === '2'; // ?�주�?비활?�화 (?�동채번)
                     } else {
-                      // 수정 모드일 때는 fieldEnableState로 제어
+                      // ?�정 모드???�는 fieldEnableState�??�어
                       return !fieldEnableState?.empNo;
                     }
                   })()}
                 />
               </td>
 
-              <th className="search-th">본부</th>
+              <th className="search-th">본�?</th>
               <td className="search-td">
                 <select 
                   className="combo-base min-w-[150px] w-full"
@@ -1697,7 +1697,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                   onChange={(e) => {
                     const selectedValue = e.target.value;
                     
-                    // 직접 employeeData 업데이트
+                    // 직접 employeeData ?�데?�트
                     setEmployeeData(prev => {
                       if (!prev) return prev;
                       const newData = {
@@ -1707,10 +1707,10 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       return newData;
                     });
                     
-                    // 본부 변경 시 부서 목록 업데이트
+                    // 본�? 변�???부??목록 ?�데?�트
                     if (selectedValue) {
                       handleHqDivChange(selectedValue);
-                      // 부서 코드 초기화
+                      // 부??코드 초기??
                       setEmployeeData(prev => {
                         if (!prev) return prev;
                         return {
@@ -1722,7 +1722,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                   }}
                   disabled={newFlag ? false : !fieldEnableState?.hqDiv}
                 >
-                  {<option key="hq-select-default" value="">선택하세요</option>}
+                  {<option key="hq-select-default" value="">?�택?�세??/option>}
                   {commonCodes.hqDiv.map(code => (
                     <option key={code.data} value={code.data}>{code.label}</option>
                   ))}
@@ -1730,7 +1730,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
 
               </td>
 
-              <th className="search-th">부서</th>
+              <th className="search-th">부??/th>
               <td className="search-td">
                 <select 
                   className="combo-base min-w-[150px] w-full"
@@ -1739,7 +1739,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                   onChange={(e) => handleEmployeeChange('DEPT_DIV_CD', e.target.value)}
                   disabled={newFlag ? false : !fieldEnableState?.deptDiv}
                 >
-                  <option key="dept-select-default" value="">선택하세요</option>
+                  <option key="dept-select-default" value="">?�택?�세??/option>
                   {commonCodes.deptDiv.map(code => (
                     <option key={code.data} value={code.data}>{code.label}</option>
                   ))}
@@ -1754,7 +1754,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                   onChange={(e) => handleEmployeeChange('DUTY_CD', e.target.value)}
                   disabled={newFlag ? false : !fieldEnableState?.duty}
                 >
-                  <option key="duty-select-default" value="">선택하세요</option>
+                  <option key="duty-select-default" value="">?�택?�세??/option>
                   {commonCodes.duty.map(code => (
                     <option key={code.data} value={code.data}>{code.label}</option>
                   ))}
@@ -1762,9 +1762,9 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
               </td>
             </tr>
 
-            {/* 2행+ 조회 버튼 */}
+            {/* 2?? 조회 버튼 */}
             <tr className="search-tr">
-              <th className="search-th  ">근무상태</th>
+              <th className="search-th  ">근무?�태</th>
               <td className="search-td">
                 <select 
                   className="combo-base min-w-[150px] w-full"
@@ -1778,7 +1778,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                 </select>
               </td>
 
-              <th className="search-th ">입사일자</th>
+              <th className="search-th ">?�사?�자</th>
               <td className="search-td">
                 <input 
                   type="date" 
@@ -1789,7 +1789,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                 />
               </td>
 
-              <th className="search-th  ">퇴사일자</th>
+              <th className="search-th  ">?�사?�자</th>
               <td className="search-td">
                 <input 
                   type="date" 
@@ -1799,7 +1799,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                 />
               </td>
 
-              <th className="search-th">재직년수</th>
+              <th className="search-th">?�직?�수</th>
               <td className="search-td" colSpan={3}>
                 <div className="flex items-center gap-2">
                   <input
@@ -1809,7 +1809,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                     value={employeeData?.HDOFC_YEAR || ''}
                     readOnly
                   />
-                  <span className="m-2">년</span>
+                  <span className="m-2">??/span>
                   <input
                     type="text"
                     className="input-base input-default !w-[50px] text-right"
@@ -1817,7 +1817,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                     value={employeeData?.HDOFC_MONTH || ''}
                     readOnly
                   />
-                                    <span className="m-2">월</span>
+                                    <span className="m-2">??/span>
                   { <div className="ml-auto">
                 <button 
                   className="btn-base btn-search"
@@ -1825,7 +1825,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                   disabled={isLoading}
                   style={{visibility: 'hidden'}}
                 >
-                  {isLoading ? '조회중...' : '조회'}
+                  {isLoading ? '조회�?..' : '조회'}
                 </button>
                   </div> }
                 </div>
@@ -1837,23 +1837,23 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
         </table>
       </div>
 
-      {/* 에러 메시지 */}
+      {/* ?�러 메시지 */}
       {error && (
         <div className="text-red-500 text-sm mt-2 px-1">
           {error}
         </div>
       )}
 
-      {/*조회된 영역*/}
+      {/*조회???�역*/}
       <div className="flex gap-4 mt-4 text-sm">
-        {/* 개인 정보 */}
+        {/* 개인 ?�보 */}
         <div className="w-1/2 ">
-          <div className="font-semibold mb-1 pl-1">개인 정보</div>
+          <div className="font-semibold mb-1 pl-1">개인 ?�보</div>
           <div className="clearbox-div">
             <table className="clear-table">
               <tbody>
                 <tr className="clear-tr">
-                  <th className="clear-th">성명</th>
+                  <th className="clear-th">?�명</th>
                   <td className="clear-td">
                     <input 
                       type="text" 
@@ -1862,7 +1862,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       value={employeeData?.EMP_NM || ''}
                       onChange={(e) => {
                         const value = e.target.value;
-                        // 바이트 길이 계산 (한글 1글자 = 3바이트)
+                        // 바이??길이 계산 (?��? 1글??= 3바이??
                         const byteLength = new Blob([value]).size;
                         if (byteLength <= 20) {
                           handleEmployeeChange('EMP_NM', value);
@@ -1870,7 +1870,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       }}
                     />
                   </td>
-                  <th className="clear-th">최종학력</th>
+                  <th className="clear-th">최종?�력</th>
                   <td className="clear-td">
                     <select 
                       className="combo-base w-full"
@@ -1878,7 +1878,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       value={employeeData?.LAST_ADBG_DIV || ''}
                       onChange={(e) => handleEmployeeChange('LAST_ADBG_DIV', e.target.value)}
                     >
-                      <option key="lastAdbg-select-default" value="">선택하세요</option>
+                      <option key="lastAdbg-select-default" value="">?�택?�세??/option>
                       {commonCodes.lastAdbgDiv.map(code => (
                         <option key={code.data} value={code.data}>{code.label}</option>
                       ))}
@@ -1886,7 +1886,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                   </td>
                 </tr>
                 <tr className="clear-tr">
-                  <th className="clear-th">영문 성명</th>
+                  <th className="clear-th">?�문 ?�명</th>
                   <td className="clear-td">
                     <input 
                       type="text" 
@@ -1894,7 +1894,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       value={employeeData?.EMP_ENG_NM || ''}
                       onChange={(e) => {
                         const value = e.target.value;
-                        // 영문 성명: 50바이트 제한 (영문 위주)
+                        // ?�문 ?�명: 50바이???�한 (?�문 ?�주)
                         const byteLength = new Blob([value]).size;
                         if (byteLength <= 50) {
                           handleEmployeeChange('EMP_ENG_NM', value);
@@ -1902,7 +1902,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       }}
                     />
                   </td>
-                  <th className="clear-th">학교</th>
+                  <th className="clear-th">?�교</th>
                   <td className="clear-td">
                     <input 
                       type="text" 
@@ -1910,7 +1910,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       value={employeeData?.LAST_SCHL || ''}
                       onChange={(e) => {
                         const value = e.target.value;
-                        // 학교명: 50바이트 제한 (한글 포함)
+                        // ?�교�? 50바이???�한 (?��? ?�함)
                         const byteLength = new Blob([value]).size;
                         if (byteLength <= 50) {
                           handleEmployeeChange('LAST_SCHL', value);
@@ -1920,7 +1920,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                   </td>
                 </tr>
                 <tr className="clear-tr">
-                  <th className="clear-th">성별</th>
+                  <th className="clear-th">?�별</th>
                   <td className="clear-td">
                     <select 
                       className="combo-base w-full"
@@ -1932,7 +1932,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       ))}
                     </select>
                   </td>
-                  <th className="clear-th">전공</th>
+                  <th className="clear-th">?�공</th>
                   <td className="clear-td">
                     <input 
                       type="text" 
@@ -1940,7 +1940,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       value={employeeData?.MAJR || ''}
                       onChange={(e) => {
                         const value = e.target.value;
-                        // 전공명: 50바이트 제한 (한글 포함)
+                        // ?�공�? 50바이???�한 (?��? ?�함)
                         const byteLength = new Blob([value]).size;
                         if (byteLength <= 50) {
                           handleEmployeeChange('MAJR', value);
@@ -1950,7 +1950,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                   </td>
                 </tr>
                 <tr className="clear-tr">
-                  <th className="clear-th">국적</th>
+                  <th className="clear-th">�?��</th>
                   <td className="clear-td">
                     <select 
                       className="combo-base w-full"
@@ -1962,7 +1962,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       ))}
                     </select>
                   </td>
-                  <th className="clear-th">졸업일자</th>
+                  <th className="clear-th">졸업?�자</th>
                   <td className="clear-td">
                     <input 
                       type="date" 
@@ -1973,7 +1973,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                   </td>
                 </tr>
                 <tr className="clear-tr">
-                  <th className="clear-th">주민등록번호</th>
+                  <th className="clear-th">주�??�록번호</th>
                   <td className="clear-td">
                     <input 
                       type="text" 
@@ -1981,7 +1981,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       value={employeeData?.RES_REG_NO || ''}
                       onChange={(e) => {
                         const value = e.target.value;
-                        // 주민등록번호: 13바이트 제한 (숫자 + 하이픈)
+                        // 주�??�록번호: 13바이???�한 (?�자 + ?�이??
                         const byteLength = new Blob([value]).size;
                         if (byteLength <= 13) {
                           handleEmployeeChange('RES_REG_NO', value);
@@ -1989,7 +1989,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       }}
                     />
                   </td>
-                  <th className="clear-th">생년월일</th>
+                  <th className="clear-th">?�년?�일</th>
                   <td className="clear-td">
                     <input 
                       type="date" 
@@ -2001,7 +2001,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                   </td>
                 </tr>
                 <tr className="clear-tr">
-                  <th className="clear-th">휴대전화</th>
+                  <th className="clear-th">?��??�화</th>
                   <td className="clear-td">
                     <input 
                       type="text" 
@@ -2009,7 +2009,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       value={employeeData?.MOB_PHN_NO || ''}
                       onChange={(e) => {
                         const value = e.target.value;
-                        // 휴대전화: 20바이트 제한 (숫자 + 하이픈)
+                        // ?��??�화: 20바이???�한 (?�자 + ?�이??
                         const byteLength = new Blob([value]).size;
                         if (byteLength <= 20) {
                           handleEmployeeChange('MOB_PHN_NO', value);
@@ -2017,7 +2017,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       }}
                     />
                   </td>
-                  <th className="clear-th">자택전화</th>
+                  <th className="clear-th">?�택?�화</th>
                   <td className="clear-td">
                     <input 
                       type="text" 
@@ -2025,7 +2025,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       value={employeeData?.HOME_TEL || ''}
                       onChange={(e) => {
                         const value = e.target.value;
-                        // 자택전화: 20바이트 제한 (숫자 + 하이픈)
+                        // ?�택?�화: 20바이???�한 (?�자 + ?�이??
                         const byteLength = new Blob([value]).size;
                         if (byteLength <= 20) {
                           handleEmployeeChange('HOME_TEL', value);
@@ -2043,7 +2043,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       value={employeeData?.EMAIL_ADDR || ''}
                       onChange={(e) => {
                         const value = e.target.value;
-                        // E-Mail: 100바이트 제한 (영문 + 특수문자)
+                        // E-Mail: 100바이???�한 (?�문 + ?�수문자)
                         const byteLength = new Blob([value]).size;
                         if (byteLength <= 100) {
                           handleEmployeeChange('EMAIL_ADDR', value);
@@ -2059,11 +2059,11 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                         <input 
                           type="text" 
                           className="input-base input-default !w-[70px]" 
-                          placeholder="우편번호"
+                          placeholder="?�편번호"
                           value={employeeData?.HOME_ZIP_NO || ''}
                           onChange={(e) => {
                             const value = e.target.value;
-                            // 우편번호: 6바이트 제한 (숫자)
+                            // ?�편번호: 6바이???�한 (?�자)
                             const byteLength = new Blob([value]).size;
                             if (byteLength <= 6) {
                               handleEmployeeChange('HOME_ZIP_NO', value);
@@ -2083,7 +2083,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                           value={employeeData?.HOME_ADDR || ''}
                           onChange={(e) => {
                             const value = e.target.value;
-                            // 기본주소: 200바이트 제한 (한글 포함)
+                            // 기본주소: 200바이???�한 (?��? ?�함)
                             const byteLength = new Blob([value]).size;
                             if (byteLength <= 200) {
                               handleEmployeeChange('HOME_ADDR', value);
@@ -2092,11 +2092,11 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                         />
                         <input 
                           className="input-base input-default w-[40%]" 
-                          placeholder="상세주소"
+                          placeholder="?�세주소"
                           value={employeeData?.HOME_DET_ADDR || ''}
                           onChange={(e) => {
                             const value = e.target.value;
-                            // 상세주소: 100바이트 제한 (한글 포함)
+                            // ?�세주소: 100바이???�한 (?��? ?�함)
                             const byteLength = new Blob([value]).size;
                             if (byteLength <= 100) {
                               handleEmployeeChange('HOME_DET_ADDR', value);
@@ -2111,14 +2111,14 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
           </div>
         </div>
 
-        {/* 프로젝트 정보 */}
+        {/* ?�로?�트 ?�보 */}
         <div className="w-1/2">
-          <div className="font-semibold mb-1 pl-1">프로젝트 정보</div>
+          <div className="font-semibold mb-1 pl-1">?�로?�트 ?�보</div>
           <div className="clearbox-div">
             <table className="clear-table">
               <tbody>
                 <tr className="clear-tr">
-                  <th className="clear-th">기준 정보</th>
+                  <th className="clear-th">기�? ?�보</th>
                   <td className="clear-td" colSpan={3}>
                     <div className="flex gap-4">
                       <label className="inline-flex items-center gap-1">
@@ -2130,7 +2130,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                           onChange={(e) => handleEmployeeChange('CARR_DIV_CD', e.target.value)}
                           disabled={true}
                         /> 
-                        학력
+                        ?�력
                       </label>
                       <label className="inline-flex items-center gap-1">
                         <input 
@@ -2141,27 +2141,27 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                           onChange={(e) => handleEmployeeChange('CARR_DIV_CD', e.target.value)}
                           disabled={true}
                         /> 
-                        기술자격
+                        기술?�격
                       </label>
                     </div>
                   </td>
                 </tr>
 
                 <tr className="clear-tr">
-                  <th className="clear-th">자격증</th>
+                  <th className="clear-th">?�격�?/th>
                   <td className="clear-td">
                     <select 
                       className="combo-base w-full"
                       value={employeeData?.CTQL_CD || ''}
                       onChange={(e) => handleEmployeeChange('CTQL_CD', e.target.value)}
                     >
-                      <option key="ctql-select-default" value="">선택하세요</option>
+                      <option key="ctql-select-default" value="">?�택?�세??/option>
                       {commonCodes.ctqlCd.map(code => (
                         <option key={code.data} value={code.data}>{code.label}</option>
                       ))}
                     </select>
                   </td>
-                  <th className="clear-th">자격증 취득일자</th>
+                  <th className="clear-th">?�격�?취득?�자</th>
                   <td className="clear-td">
                     <input 
                       type="date" 
@@ -2174,7 +2174,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                 </tr>
 
                 <tr className="clear-tr">
-                  <th className="clear-th">최초 투입일자</th>
+                  <th className="clear-th">최초 ?�입?�자</th>
                   <td className="clear-td">
                     <input 
                       type="date" 
@@ -2184,7 +2184,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       onChange={(e) => handleEmployeeChange('FST_IN_DT', e.target.value.replace(/-/g, ''))}
                     />
                   </td>
-                  <th className="clear-th">최종 철수일자</th>
+                  <th className="clear-th">최종 철수?�자</th>
                   <td className="clear-td">
                     <input 
                       type="date" 
@@ -2197,7 +2197,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                 </tr>
 
                 <tr className="clear-tr">
-                  <th className="clear-th">입사 전 경력</th>
+                  <th className="clear-th">?�사 ??경력</th>
                   <td className="clear-td">
                     <div className="flex items-center gap-1">
                       <input 
@@ -2207,12 +2207,12 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                         maxLength={3}
                         onChange={(e) => {
                           const value = e.target.value;
-                          // 입사 전 경력 년수: 3바이트 제한 (숫자)
+                          // ?�사 ??경력 ?�수: 3바이???�한 (?�자)
                           const byteLength = new Blob([value]).size;
                           if (byteLength <= 3) {
                             const years = Number(value) || 0;
                             const carrDivCd = employeeData?.CARR_DIV_CD || '1';
-                            // AS-IS와 동일한 계산 로직
+                            // AS-IS?� ?�일??계산 로직
                             const currentTotalMonths = carrDivCd === '1' 
                               ? Number(employeeData?.ENTR_BEF_CARR || 0)
                               : Number(employeeData?.ENTR_BEF_CTQL_CARR || 0);
@@ -2228,16 +2228,16 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                           }
                         }}
                         value={(() => {
-                          // AS-IS MXML 로직과 동일: 경력구분에 따른 분기
+                          // AS-IS MXML 로직�??�일: 경력구분???�른 분기
                           const carrDivCd = employeeData?.CARR_DIV_CD || '1';
                           const befCarrMonths = carrDivCd === '1' 
                             ? Number(employeeData?.ENTR_BEF_CARR || 0)
                             : Number(employeeData?.ENTR_BEF_CTQL_CARR || 0);
-                          // AS-IS와 동일하게 Math.floor 사용
+                          // AS-IS?� ?�일?�게 Math.floor ?�용
                           return befCarrMonths > 0 ? Math.floor(befCarrMonths / 12) : '';
                         })()}
                       />
-                      <span className="m-0">년</span>
+                      <span className="m-0">??/span>
                       <input 
                         type="text" 
                         className="input-base input-default !w-[50px] text-right" 
@@ -2245,12 +2245,12 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                         maxLength={2}
                         onChange={(e) => {
                           const value = e.target.value;
-                          // 입사 전 경력 월수: 2바이트 제한 (숫자)
+                          // ?�사 ??경력 ?�수: 2바이???�한 (?�자)
                           const byteLength = new Blob([value]).size;
                           if (byteLength <= 2) {
                             const months = Number(value) || 0;
                             const carrDivCd = employeeData?.CARR_DIV_CD || '1';
-                            // AS-IS와 동일한 계산 로직
+                            // AS-IS?� ?�일??계산 로직
                             const currentTotalMonths = carrDivCd === '1' 
                               ? Number(employeeData?.ENTR_BEF_CARR || 0)
                               : Number(employeeData?.ENTR_BEF_CTQL_CARR || 0);
@@ -2265,20 +2265,20 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                           }
                         }}
                         value={(() => {
-                          // AS-IS MXML 로직과 동일: 경력구분에 따른 분기
+                          // AS-IS MXML 로직�??�일: 경력구분???�른 분기
                           const carrDivCd = employeeData?.CARR_DIV_CD || '1';
                           const befCarrMonths = carrDivCd === '1' 
                             ? Number(employeeData?.ENTR_BEF_CARR || 0)
                             : Number(employeeData?.ENTR_BEF_CTQL_CARR || 0);
-                          // AS-IS와 동일한 계산 로직: nBefCarrMCnt = nBefCarrMCnt - (nBefCarrYCnt*12)
+                          // AS-IS?� ?�일??계산 로직: nBefCarrMCnt = nBefCarrMCnt - (nBefCarrYCnt*12)
                           const befCarrYears = Math.floor(befCarrMonths / 12);
                           return befCarrMonths > 0 ? befCarrMonths - (befCarrYears * 12) : '';
                         })()}
                       />
-                      <span className="m-0">월</span>
+                      <span className="m-0">??/span>
                     </div>
                   </td>
-                  <th className="clear-th">경력 개월 수</th>
+                  <th className="clear-th">경력 개월 ??/th>
                   <td className="clear-td">
                     <div className="flex items-center gap-1">
                       <input 
@@ -2286,22 +2286,22 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                         className="input-base input-default !w-[50px] text-right" 
                         placeholder="00" 
                         value={(() => {
-                          // AS-IS MXML 로직과 동일: 경력개월수를 xx년xxx개월로 표시
+                          // AS-IS MXML 로직�??�일: 경력개월?��? xx?�xxx개월�??�시
                           const carrMonths = Number(employeeData?.CARR_MCNT || 0);
-                          // AS-IS와 동일하게 Math.floor 사용
+                          // AS-IS?� ?�일?�게 Math.floor ?�용
                           return carrMonths > 0 ? Math.floor(carrMonths / 12) : '';
                         })()}
                         readOnly
                       />
-                      <span className="m-0">년</span>
+                      <span className="m-0">??/span>
                       <input 
                         type="text" 
                         className="input-base input-default !w-[50px] text-right" 
                         placeholder="00" 
                         value={(() => {
-                          // AS-IS MXML 로직과 동일: 경력개월수를 xx년xxx개월로 표시
+                          // AS-IS MXML 로직�??�일: 경력개월?��? xx?�xxx개월�??�시
                           const carrMonths = Number(employeeData?.CARR_MCNT || 0);
-                          // AS-IS와 동일한 계산 로직: nCarrMCnt = nCarrMCnt - (nCarrYCnt*12)
+                          // AS-IS?� ?�일??계산 로직: nCarrMCnt = nCarrMCnt - (nCarrYCnt*12)
                           const carrYears = Math.floor(carrMonths / 12);
                           return carrMonths > 0 ? carrMonths - (carrYears * 12) : '';
                         })()}
@@ -2313,7 +2313,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                 </tr>
 
                 <tr className="clear-tr">
-                  <th className="clear-th">계산 기준 일자</th>
+                  <th className="clear-th">계산 기�? ?�자</th>
                   <td className="clear-td">
                     <input 
                       type="date" 
@@ -2322,7 +2322,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       onChange={(e) => handleEmployeeChange('CARR_CALC_STND_DT', e.target.value.replace(/-/g, ''))}
                     />
                   </td>
-                  <th className="clear-th">기술등급</th>
+                  <th className="clear-th">기술?�급</th>
                   <td className="clear-td">
                     <div className="flex gap-1">
                       <select 
@@ -2338,14 +2338,14 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                         className="btn-base btn-act w-full"
                         data-field="carrCalcBtn"
                         onClick={() => {
-                          // AS-IS MXML의 onClickBtnCarrCalc 로직과 동일
+                          // AS-IS MXML??onClickBtnCarrCalc 로직�??�일
                           if (!validateInput("CarrCalc")) {
                             return;
                           }
                           setShowCarrCalcPopup(true);
-                          // 팝업 열릴 때 body scroll 방지 및 탭 숨김
+                          // ?�업 ?�릴 ??body scroll 방�? �????��?
                           document.body.style.overflow = 'hidden';
-                          // 탭 컨테이너 숨김
+                          // ??컨테?�너 ?��?
                           const tabContainer = document.querySelector('.tab-container');
                           if (tabContainer) {
                             (tabContainer as HTMLElement).style.display = 'none';
@@ -2357,28 +2357,28 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       <button 
                         className="btn-base btn-act w-full"
                         onClick={() => {
-                          // AS-IS MXML의 onClickBtnGrdCHngSrch 로직과 동일
+                          // AS-IS MXML??onClickBtnGrdCHngSrch 로직�??�일
                           if (newFlag) {
-                            showToast('신규 입력 시에는 기술등급이력 조회를 할 수 없습니다. 저장 후 조회 하십시요.', 'warning');
+                            showToast('?�규 ?�력 ?�에??기술?�급?�력 조회�??????�습?�다. ?�????조회 ?�십?�요.', 'warning');
                             return;
                           }
                           
                           if (!employeeData?.EMP_NO) {
-                            showToast('사원번호가 필요합니다.', 'warning');
+                            showToast('?�원번호가 ?�요?�니??', 'warning');
                             return;
                           }
                           
                           setShowGradeHistoryPopup(true);
-                          // 팝업 열릴 때 body scroll 방지 및 탭 숨김
+                          // ?�업 ?�릴 ??body scroll 방�? �????��?
                           document.body.style.overflow = 'hidden';
-                          // 탭 컨테이너 숨김
+                          // ??컨테?�너 ?��?
                           const tabContainer = document.querySelector('.tab-container');
                           if (tabContainer) {
                             (tabContainer as HTMLElement).style.display = 'none';
                           }
                         }}
                       >
-                        등급이력조회
+                        ?�급?�력조회
                       </button>
                     </div>
                   </td>
@@ -2392,7 +2392,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                       value={employeeData?.RMK || ''}
                       onChange={(e) => {
                         const value = e.target.value;
-                        // 비고: 500바이트 제한 (한글 포함)
+                        // 비고: 500바이???�한 (?��? ?�함)
                         const byteLength = new Blob([value]).size;
                         if (byteLength <= 500) {
                           handleEmployeeChange('RMK', value);
@@ -2403,10 +2403,10 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                 </tr> 
               </tbody>
             </table>
-            {/* 안내문구 + 버튼들 */}
+            {/* ?�내문구 + 버튼??*/}
             <div className="flex justify-between items-center mt-2 px-1">
               <p className="text-[13px] text-[#00509A]">
-                ※ 조회만 가능합니다. 프로젝트 정보 수정은 경영지원본부 인사담당자만 가능합니다.
+                ??조회�?가?�합?�다. ?�로?�트 ?�보 ?�정?� 경영지?�본부 ?�사?�당?�만 가?�합?�다.
               </p>
               <div className="flex gap-2">
                 <button 
@@ -2414,21 +2414,21 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
                   onClick={handleDelete}
                   disabled={isLoading}
                 >
-                  삭제
+                  ??��
                 </button>
                 <button 
                   className="btn-base btn-etc"
                   onClick={handleNew}
                   disabled={isLoading}
                 >
-                  신규
+                  ?�규
                 </button>
                 <button 
                   className="btn-base btn-act"
                   onClick={handleSave}
                   disabled={isLoading || (!newFlag && (!employeeData?.EMP_NO || employeeData.EMP_NO.trim() === ''))}
                 >
-                  저장
+                  ?�??
                 </button>
               </div>
             </div>
@@ -2439,69 +2439,69 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
 
       </div>
 
-      {/* 경력계산 팝업 */}
+      {/* 경력계산 ?�업 */}
       {showCarrCalcPopup && (
         <PSM1050M00
               employeeData={employeeData}
               newFlag={newFlag}
               onClose={() => {
                 setShowCarrCalcPopup(false);
-                // 팝업 닫힐 때 body scroll 복원 및 탭 표시
+                // ?�업 ?�힐 ??body scroll 복원 �????�시
                 document.body.style.overflow = 'auto';
-                // 탭 컨테이너 다시 표시
+                // ??컨테?�너 ?�시 ?�시
                 const tabContainer = document.querySelector('.tab-container');
                 if (tabContainer) {
                   (tabContainer as HTMLElement).style.display = 'flex';
                 }
               }}
               onConfirm={(data) => {
-                // AS-IS MXML의 onBtnConfirmClick 로직과 동일
+                // AS-IS MXML??onBtnConfirmClick 로직�??�일
                 
-                // 경력계산 결과를 employeeData에 반영
+                // 경력계산 결과�?employeeData??반영
                 if (data && employeeData) {
                   const resultData = data.split('^');
                   
-                  // AS-IS MXML과 동일한 데이터 매핑
-                  // [1]최초투입일자 [2]최종철수일자 [3]입사전경력(년) [4]입사전경력(월) [5]입사후경력(년) [6]입사후경력(월) 
-                  // [7]합계(년) [8]합계(월) [9]등급명칭 [10]등급코드 [11]경력기준(학력/기술자격)
-                  // [12]자격증코드 [13]자격취득일자 [14]학력경력개월수 [15]자격경력개월수 [16]경력계산기준일
-                  // [17]입사전학력경력개월수 [18]입사전자격경력개월수 [19]입사후학력경력개월수 [20]입사후자격경력개월수
+                  // AS-IS MXML�??�일???�이??매핑
+                  // [1]최초?�입?�자 [2]최종철수?�자 [3]?�사?�경???? [4]?�사?�경???? [5]?�사?�경???? [6]?�사?�경???? 
+                  // [7]?�계(?? [8]?�계(?? [9]?�급명칭 [10]?�급코드 [11]경력기�?(?�력/기술?�격)
+                  // [12]?�격증코??[13]?�격취득?�자 [14]?�력경력개월??[15]?�격경력개월??[16]경력계산기�???
+                  // [17]?�사?�학?�경?�개?�수 [18]?�사?�자격경?�개?�수 [19]?�사?�학?�경?�개?�수 [20]?�사?�자격경?�개?�수
                   const updatedEmployeeData = {
                     ...employeeData,
                     FST_IN_DT: resultData[1] || employeeData.FST_IN_DT,
                     LAST_END_DT: resultData[2] || employeeData.LAST_END_DT,
-                    // 자격증 정보
+                    // ?�격�??�보
                     CTQL_CD: resultData[12] || employeeData.CTQL_CD,
                     CTQL_PUR_DT: resultData[13] || employeeData.CTQL_PUR_DT,
-                    // 입사전 경력 - 경력구분에 따라 설정
-                    ENTR_BEF_CARR: resultData[11] === '1' ? resultData[17] : employeeData.ENTR_BEF_CARR, // 학력기준
-                    ENTR_BEF_CTQL_CARR: resultData[11] === '2' ? resultData[18] : employeeData.ENTR_BEF_CTQL_CARR, // 기술자격기준
-                    // 입사후 경력
+                    // ?�사??경력 - 경력구분???�라 ?�정
+                    ENTR_BEF_CARR: resultData[11] === '1' ? resultData[17] : employeeData.ENTR_BEF_CARR, // ?�력기�?
+                    ENTR_BEF_CTQL_CARR: resultData[11] === '2' ? resultData[18] : employeeData.ENTR_BEF_CTQL_CARR, // 기술?�격기�?
+                    // ?�사??경력
                     ENTR_AFT_ADBG_CARR: resultData[19] || employeeData.ENTR_AFT_ADBG_CARR,
                     ENTR_AFT_CTQL_CARR: resultData[20] || employeeData.ENTR_AFT_CTQL_CARR,
-                    // 합계 경력
+                    // ?�계 경력
                     CARR_MCNT: resultData[11] === '1' ? resultData[14] : resultData[15] || employeeData.CARR_MCNT,
-                    // 기술등급
+                    // 기술?�급
                     LAST_TCN_GRD: resultData[9] || employeeData.LAST_TCN_GRD,
                     LAST_TCN_GRD_CD: resultData[10] || employeeData.LAST_TCN_GRD_CD,
                     // 경력구분
                     CARR_DIV_CD: resultData[11] || employeeData.CARR_DIV_CD,
-                    // 경력계산기준일
+                    // 경력계산기�???
                     CARR_CALC_STND_DT: resultData[16] || new Date().toISOString().slice(0, 10).replace(/-/g, '')
                   };
                   
                   setEmployeeData(updatedEmployeeData);
                   
-                  // AS-IS MXML과 동일: 경력개월수 계산 화면으로부터 데이터를 받은 값을 저장
+                  // AS-IS MXML�??�일: 경력개월??계산 ?�면?�로부???�이?��? 받�? 값을 ?�??
                   setTimeout(() => {
                     saveProjectInputData();
                   }, 0);
                 }
                 
                 setShowCarrCalcPopup(false);
-                // 팝업 닫힐 때 body scroll 복원 및 탭 표시
+                // ?�업 ?�힐 ??body scroll 복원 �????�시
                 document.body.style.overflow = 'auto';
-                // 탭 컨테이너 다시 표시
+                // ??컨테?�너 ?�시 ?�시
                 const tabContainer = document.querySelector('.tab-container');
                 if (tabContainer) {
                   (tabContainer as HTMLElement).style.display = 'flex';
@@ -2510,15 +2510,15 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
             />
       )}
 
-      {/* 등급이력조회 팝업 */}
+      {/* ?�급?�력조회 ?�업 */}
       {showGradeHistoryPopup && (
         <PSM0030P00
           empNo={employeeData?.EMP_NO}
           onClose={() => {
             setShowGradeHistoryPopup(false);
-            // 팝업 닫힐 때 body scroll 복원 및 탭 표시
+            // ?�업 ?�힐 ??body scroll 복원 �????�시
             document.body.style.overflow = 'auto';
-            // 탭 컨테이너 다시 표시
+            // ??컨테?�너 ?�시 ?�시
             const tabContainer = document.querySelector('.tab-container');
             if (tabContainer) {
               (tabContainer as HTMLElement).style.display = 'flex';
@@ -2535,7 +2535,7 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
           ctqlCarrMcnt={employeeData?.CTQL_CARR_MCNT || ''}
           carrCalcStndDt={employeeData?.CARR_CALC_STND_DT || ''}
           lastTcnGrd={(() => {
-            // 기술등급 코드에 해당하는 text 값 찾기
+            // 기술?�급 코드???�당?�는 text �?찾기
             const tcnGrdItem = commonCodes.tcnGrd.find(code => code.data === employeeData?.LAST_TCN_GRD);
             return tcnGrdItem ? tcnGrdItem.label : employeeData?.LAST_TCN_GRD || '';
           })()}
@@ -2548,3 +2548,5 @@ const SearchSection = forwardRef<PSM1020M00Ref, PSM1020M00Props>(({ selectedEmpl
 });
 
 export default SearchSection;
+
+

@@ -1,49 +1,49 @@
 /**
- * SYS1010D00 - 프로그램 검색 팝업 화면
+ * SYS1010D00 - ?�로그램 검???�업 ?�면
  *
  * 주요 기능:
- * - 프로그램 목록 조회 및 검색
- * - 프로그램 다중/단일 선택
- * - 선택된 프로그램을 부모 화면으로 전달
- * - 팝업 형태로 동작하여 부모 화면과 분리
+ * - ?�로그램 목록 조회 �?검??
+ * - ?�로그램 ?�중/?�일 ?�택
+ * - ?�택???�로그램??부�??�면?�로 ?�달
+ * - ?�업 ?�태�??�작?�여 부�??�면�?분리
  *
- * API 연동:
- * - GET /api/sys/programs - 프로그램 목록 조회
- * - POST /api/common/search - 공통코드 조회 (프로그램구분: 305, 업무구분: 303)
+ * API ?�동:
+ * - GET /api/sys/programs - ?�로그램 목록 조회
+ * - POST /api/common/search - 공통코드 조회 (?�로그램구분: 305, ?�무구분: 303)
  *
- * 상태 관리:
- * - 프로그램 목록 및 선택된 프로그램들
- * - 검색 조건 (프로그램키워드, 프로그램구분, 업무구분)
- * - 로딩 상태 및 팝업 제어
+ * ?�태 관�?
+ * - ?�로그램 목록 �??�택???�로그램??
+ * - 검??조건 (?�로그램?�워?? ?�로그램구분, ?�무구분)
+ * - 로딩 ?�태 �??�업 ?�어
  *
- * 사용자 인터페이스:
- * - 검색 조건 입력 (프로그램키워드, 프로그램구분, 업무구분)
- * - 프로그램 목록 테이블 (AG-Grid)
- * - 체크박스 다중 선택 (multiple=true인 경우)
- * - 더블클릭 단일 선택
- * - 선택/취소/닫기 버튼
+ * ?�용???�터?�이??
+ * - 검??조건 ?�력 (?�로그램?�워?? ?�로그램구분, ?�무구분)
+ * - ?�로그램 목록 ?�이�?(AG-Grid)
+ * - 체크박스 ?�중 ?�택 (multiple=true??경우)
+ * - ?�블?�릭 ?�일 ?�택
+ * - ?�택/취소/?�기 버튼
  *
- * 연관 화면:
- * - SYS1001M00: 프로그램 그룹 관리 (프로그램 추가)
- * - SYS1002M00: 메뉴별 프로그램 관리 (프로그램 연결)
- * - SYS1000M00: 프로그램 관리 (프로그램 정보)
+ * ?��? ?�면:
+ * - SYS1001M00: ?�로그램 그룹 관�?(?�로그램 추�?)
+ * - SYS1002M00: 메뉴�??�로그램 관�?(?�로그램 ?�결)
+ * - SYS1000M00: ?�로그램 관�?(?�로그램 ?�보)
  *
- * 데이터 구조:
- * - Program: 프로그램 정보 (PGM_ID, PGM_NM, PGM_DIV_CD, BIZ_DIV_CD, USE_YN 등)
- * - SYS1010D00Props: 팝업 속성 (onSelect, multiple)
+ * ?�이??구조:
+ * - Program: ?�로그램 ?�보 (PGM_ID, PGM_NM, PGM_DIV_CD, BIZ_DIV_CD, USE_YN ??
+ * - SYS1010D00Props: ?�업 ?�성 (onSelect, multiple)
  *
- * 특이사항:
- * - 팝업 형태로 동작하여 부모 화면에서 호출
- * - URL 파라미터를 통한 초기 설정 (PGM_ID, PGM_GRP_ID)
- * - 다중 선택/단일 선택 모드 지원
- * - 선택된 프로그램은 부모 화면의 콜백 함수로 전달
- * - 더블클릭 시 즉시 선택 완료
- * - 체크박스 선택 시 다중 선택 가능
+ * ?�이?�항:
+ * - ?�업 ?�태�??�작?�여 부�??�면?�서 ?�출
+ * - URL ?�라미터�??�한 초기 ?�정 (PGM_ID, PGM_GRP_ID)
+ * - ?�중 ?�택/?�일 ?�택 모드 지??
+ * - ?�택???�로그램?� 부�??�면??콜백 ?�수�??�달
+ * - ?�블?�릭 ??즉시 ?�택 ?�료
+ * - 체크박스 ?�택 ???�중 ?�택 가??
  *
- * 사용 예시:
- * - SYS1001M00에서 프로그램 그룹에 프로그램 추가 시
- * - SYS1002M00에서 메뉴에 프로그램 연결 시
- * - 기타 프로그램 선택이 필요한 모든 화면
+ * ?�용 ?�시:
+ * - SYS1001M00?�서 ?�로그램 그룹???�로그램 추�? ??
+ * - SYS1002M00?�서 메뉴???�로그램 ?�결 ??
+ * - 기�? ?�로그램 ?�택???�요??모든 ?�면
  */
 'use client';
 
@@ -81,17 +81,17 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
     BIZ_DIV_CD: ''
   });
 
-  // URL 파라미터에서 PGM_ID 가져오기
+  // URL ?�라미터?�서 PGM_ID 가?�오�?
   const [popupPgmId, setPopupPgmId] = useState<string | null>(null);
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     setPopupPgmId(urlParams.get('PGM_ID'));
   }, []);
 
-  // AG-Grid 관련
+  // AG-Grid 관??
   const gridRef = useRef<AgGridReact>(null);
 
-  // AG-Grid 컬럼 정의
+  // AG-Grid 컬럼 ?�의
   const columnDefs: ColDef[] = [
     ...(multiple ? [{
       headerName: '',
@@ -104,7 +104,7 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
       headerClass: 'ag-center-header',
     }] : []),
     {
-      headerName: '프로그램ID',
+      headerName: '?�로그램ID',
       field: 'PGM_ID',
       flex: 1,
       minWidth: 120,
@@ -112,7 +112,7 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
       filter: true
     },
     {
-      headerName: '프로그램명',
+      headerName: '?�로그램�?,
       field: 'PGM_NM',
       flex: 2,
       minWidth: 180,
@@ -129,7 +129,7 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
       filter: true
     },
     {
-      headerName: '업무',
+      headerName: '?�무',
       field: 'BIZ_DIV_CD',
       flex: 1,
       minWidth: 80,
@@ -138,16 +138,16 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
     }
   ];
 
-  // 프로그램 목록 로드
+  // ?�로그램 목록 로드
   const loadPrograms = useCallback(async (params?: any) => {
-    console.log('loadPrograms 호출됨, 파라미터:', params);
+    console.log('loadPrograms ?�출?? ?�라미터:', params);
     setLoading(true);
     try {
-      // URL 파라미터에서 PGM_GRP_ID 가져오기
+      // URL ?�라미터?�서 PGM_GRP_ID 가?�오�?
       const urlParams = new URLSearchParams(window.location.search);
       const pgmGrpId = urlParams.get('PGM_GRP_ID');
       
-      // API 호출을 위한 쿼리 파라미터 구성
+      // API ?�출???�한 쿼리 ?�라미터 구성
       const queryParams = new URLSearchParams();
       if (params?.PGM_KWD) queryParams.append('PGM_KWD', params.PGM_KWD);
       if (params?.PGM_DIV_CD) queryParams.append('PGM_DIV_CD', params.PGM_DIV_CD);
@@ -159,19 +159,19 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
       
       if (result.success) {
         setPrograms(result.data);
-        // 데이터 로드 후 컬럼 자동 맞춤
+        // ?�이??로드 ??컬럼 ?�동 맞춤
         setTimeout(() => {
           if (gridRef.current && gridRef.current.api) {
             gridRef.current.api.sizeColumnsToFit();
           }
         }, 0);
       } else {
-        console.error('프로그램 목록 로드 실패:', result.message);
-        showToast(`프로그램 목록 로드 실패: ${result.message}`, 'error');
+        console.error('?�로그램 목록 로드 ?�패:', result.message);
+        showToast(`?�로그램 목록 로드 ?�패: ${result.message}`, 'error');
       }
     } catch (error: any) {
-      console.error('프로그램 목록 로드 실패:', error);
-      showToast(`프로그램 목록 로드 실패: ${error?.message || '알 수 없는 오류'}`, 'error');
+      console.error('?�로그램 목록 로드 ?�패:', error);
+      showToast(`?�로그램 목록 로드 ?�패: ${error?.message || '?????�는 ?�류'}`, 'error');
     } finally {
       setLoading(false);
     }
@@ -182,14 +182,14 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
     loadPrograms(searchParams);
   }, []);
 
-  // 검색 버튼 클릭
+  // 검??버튼 ?�릭
   const handleSearch = () => {
-    console.log('조회 버튼 클릭됨');
-    console.log('검색 파라미터:', searchParams);
+    console.log('조회 버튼 ?�릭??);
+    console.log('검???�라미터:', searchParams);
     loadPrograms(searchParams);
   };
 
-  // AG-Grid 이벤트 핸들러
+  // AG-Grid ?�벤???�들??
   const onSelectionChanged = (event: SelectionChangedEvent) => {
     const selectedRows = event.api.getSelectedRows();
     setSelectedPrograms(selectedRows);
@@ -199,57 +199,57 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
     event.api.sizeColumnsToFit();
   };
 
-  // 행 더블클릭 핸들러
+  // ???�블?�릭 ?�들??
   const handleRowDoubleClick = (event: any) => {
     const row = event.data;
     if (!row) return;
-    // 부모 창에 메시지 전송 (팝업인 경우)
+    // 부�?창에 메시지 ?�송 (?�업??경우)
     if (window.opener) {
       const messageData = {
         type: 'SELECTED_PROGRAMS',
         data: [row],
-        PGM_ID: popupPgmId // 팝업에서 받은 PGM_ID도 함께 보냄
+        PGM_ID: popupPgmId // ?�업?�서 받�? PGM_ID???�께 보냄
       };
       window.opener.postMessage(messageData, '*');
       window.close();
     }
-    // onSelect 콜백도 호출 (옵션)
+    // onSelect 콜백???�출 (?�션)
     if (onSelect) {
       onSelect([row]);
     }
   };
 
-  // 추가 버튼 클릭
+  // 추�? 버튼 ?�릭
   const handleAdd = () => {
-    console.log('=== 추가 버튼 클릭 ===');
-    console.log('선택된 프로그램 개수:', selectedPrograms.length);
-    console.log('선택된 프로그램 데이터:', selectedPrograms);
+    console.log('=== 추�? 버튼 ?�릭 ===');
+    console.log('?�택???�로그램 개수:', selectedPrograms.length);
+    console.log('?�택???�로그램 ?�이??', selectedPrograms);
     
     if (selectedPrograms.length === 0) {
-      showToast('추가할 프로그램을 선택해주세요.', 'warning');
+      showToast('추�????�로그램???�택?�주?�요.', 'warning');
       return;
     }
 
     if (onSelect) {
-      console.log('onSelect 콜백 호출');
+      console.log('onSelect 콜백 ?�출');
       onSelect(selectedPrograms);
     }
 
-    // 부모 창에 메시지 전송 (팝업인 경우)
+    // 부�?창에 메시지 ?�송 (?�업??경우)
     if (window.opener) {
       const messageData = {
         type: 'SELECTED_PROGRAMS',
         data: selectedPrograms,
-        PGM_ID: popupPgmId // 추가: 팝업에서 받은 PGM_ID도 함께 보냄
+        PGM_ID: popupPgmId // 추�?: ?�업?�서 받�? PGM_ID???�께 보냄
       };
-      console.log('부모 창으로 전송할 메시지:', messageData);
+      console.log('부�?창으�??�송??메시지:', messageData);
       window.opener.postMessage(messageData, '*');
-      console.log('부모 창으로 메시지 전송 완료');
+      console.log('부�?창으�?메시지 ?�송 ?�료');
       window.close();
     }
   };
 
-  // 팝업 닫기
+  // ?�업 ?�기
   const handleClose = () => {
     if (window.opener) {
       window.close();
@@ -258,12 +258,12 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
 
   return (
     <div className='mdi' style={{ width: '850px', height: '430px', padding: '8px', minWidth: '850px' }}>
-      {/* 🔍 조회 영역 */}
+      {/* ?�� 조회 ?�역 */}
       <div className='search-div mb-2'>
         <table className='search-table w-full'>
           <tbody>
             <tr className='search-tr'>
-              <th className='search-th w-[90px]'>프로그램 ID명</th>
+              <th className='search-th w-[90px]'>?�로그램 ID�?/th>
               <td className='search-td w-[120px]'>
                 <input
                   type='text'
@@ -271,7 +271,7 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
                   value={searchParams.PGM_KWD}
                   onChange={(e) => setSearchParams(prev => ({ ...prev, PGM_KWD: e.target.value }))}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  aria-label='프로그램 ID명 입력'
+                  aria-label='?�로그램 ID�??�력'
                 />
               </td>
               <th className='search-th w-[60px]'>구분</th>
@@ -280,24 +280,24 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
                   className='combo-base w-full'
                   value={searchParams.PGM_DIV_CD}
                   onChange={(e) => setSearchParams(prev => ({ ...prev, PGM_DIV_CD: e.target.value }))}
-                  aria-label='구분 선택'
+                  aria-label='구분 ?�택'
                 >
-                  <option value="">선택</option>
-                  <option value="화면">화면</option>
-                  <option value="팝업">팝업</option>
+                  <option value="">?�택</option>
+                  <option value="?�면">?�면</option>
+                  <option value="?�업">?�업</option>
                 </select>
               </td>
-              <th className='search-th w-[60px]'>업무</th>
+              <th className='search-th w-[60px]'>?�무</th>
               <td className='search-td w-[80px]'>
                 <select
                   className='combo-base w-full'
                   value={searchParams.BIZ_DIV_CD}
                   onChange={(e) => setSearchParams(prev => ({ ...prev, BIZ_DIV_CD: e.target.value }))}
-                  aria-label='업무 선택'
+                  aria-label='?�무 ?�택'
                 >
-                  <option value="">선택</option>
-                  <option value="업무">업무</option>
-                  <option value="시스템">시스템</option>
+                  <option value="">?�택</option>
+                  <option value="?�무">?�무</option>
+                  <option value="?�스??>?�스??/option>
                 </select>
               </td>
               <td className='search-td text-right w-[60px]'>
@@ -310,12 +310,12 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
         </table>
       </div>
 
-      {/* 📋 타이틀 */}
+      {/* ?�� ?�?��? */}
       <div className='tit_area mb-1'>
-        <h3 className='text-sm'>프로그램목록</h3>
+        <h3 className='text-sm'>?�로그램목록</h3>
       </div>
 
-      {/* 📊 AG-Grid 영역 */}
+      {/* ?�� AG-Grid ?�역 */}
       <div className='gridbox-div mb-2'>
         <div className='ag-theme-alpine' style={{ height: '300px', width: '100%' }}>
           <AgGridReact
@@ -325,8 +325,8 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
             rowSelection={multiple ? 'multiple' : 'single'}
             onSelectionChanged={onSelectionChanged}
             onGridReady={onGridReady}
-            loadingOverlayComponent={() => <div>로딩 중...</div>}
-            noRowsOverlayComponent={() => <div>조회된 정보가 없습니다.</div>}
+            loadingOverlayComponent={() => <div>로딩 �?..</div>}
+            noRowsOverlayComponent={() => <div>조회???�보가 ?�습?�다.</div>}
             suppressRowClickSelection={false}
             animateRows={true}
             pagination={false}
@@ -337,7 +337,7 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
         </div>
       </div>
 
-      {/* ⬇ 하단 버튼 */}
+      {/* �??�단 버튼 */}
       <div className='flex justify-end gap-2 mt-2'>
         {onSelect && (
           <button type='button' className='btn-base btn-etc text-xs px-2 py-1' onClick={handleClose}>
@@ -345,9 +345,10 @@ export default function SYS1010D00({ onSelect, multiple = true }: SYS1010D00Prop
           </button>
         )}
         <button type='button' className='btn-base btn-act text-xs px-2 py-1' onClick={handleAdd}>
-          {multiple ? '추가' : '선택'}
+          {multiple ? '추�?' : '?�택'}
         </button>
       </div>
     </div>
   );
 } 
+

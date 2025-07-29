@@ -1,57 +1,57 @@
 /**
- * SYS1003M00 - 사용자 역할 관리 화면
+ * SYS1003M00 - ?�용????�� 관�??�면
  *
  * 주요 기능:
- * - 사용자 역할 목록 조회 및 검색
- * - 사용자 역할 신규 등록 및 수정
- * - 사용자 역할별 프로그램 그룹 연결 관리
- * - 사용자 역할 복사 기능
- * - 메뉴 정보 조회
+ * - ?�용????�� 목록 조회 �?검??
+ * - ?�용????�� ?�규 ?�록 �??�정
+ * - ?�용????���??�로그램 그룹 ?�결 관�?
+ * - ?�용????�� 복사 기능
+ * - 메뉴 ?�보 조회
  *
- * API 연동:
+ * API ?�동:
  * - GET /api/sys/user-roles/menus - 메뉴 목록 조회
- * - GET /api/sys/user-roles/user-roles - 사용자 역할 목록 조회
- * - POST /api/sys/user-roles/user-roles - 사용자 역할 저장
- * - GET /api/sys/user-roles/user-roles/:usrRoleId/program-groups - 역할별 프로그램 그룹 조회
- * - GET /api/sys/user-roles/program-groups - 전체 프로그램 그룹 조회
- * - POST /api/sys/user-roles/user-roles/:usrRoleId/program-groups - 역할별 프로그램 그룹 저장
- * - POST /api/sys/user-roles/user-roles/:usrRoleId/copy - 사용자 역할 복사
+ * - GET /api/sys/user-roles/user-roles - ?�용????�� 목록 조회
+ * - POST /api/sys/user-roles/user-roles - ?�용????�� ?�??
+ * - GET /api/sys/user-roles/user-roles/:usrRoleId/program-groups - ??���??�로그램 그룹 조회
+ * - GET /api/sys/user-roles/program-groups - ?�체 ?�로그램 그룹 조회
+ * - POST /api/sys/user-roles/user-roles/:usrRoleId/program-groups - ??���??�로그램 그룹 ?�??
+ * - POST /api/sys/user-roles/user-roles/:usrRoleId/copy - ?�용????�� 복사
  *
- * 상태 관리:
- * - 사용자 역할 목록 및 선택된 역할
- * - 폼 데이터 (신규/수정용)
- * - 프로그램 그룹 목록 및 선택 상태
- * - 메뉴 정보
- * - 로딩 상태 및 에러 처리
+ * ?�태 관�?
+ * - ?�용????�� 목록 �??�택????��
+ * - ???�이??(?�규/?�정??
+ * - ?�로그램 그룹 목록 �??�택 ?�태
+ * - 메뉴 ?�보
+ * - 로딩 ?�태 �??�러 처리
  *
- * 사용자 인터페이스:
- * - 검색 조건 입력 (역할ID/명, 사용여부)
- * - 사용자 역할 목록 테이블 (선택 가능)
- * - 사용자 역할 정보 입력 폼 (신규/수정)
- * - 프로그램 그룹 관리 그리드 (체크박스)
- * - 메뉴 정보 표시
- * - 저장/초기화/복사/삭제 버튼
+ * ?�용???�터?�이??
+ * - 검??조건 ?�력 (??��ID/�? ?�용?��?)
+ * - ?�용????�� 목록 ?�이�?(?�택 가??
+ * - ?�용????�� ?�보 ?�력 ??(?�규/?�정)
+ * - ?�로그램 그룹 관�?그리??(체크박스)
+ * - 메뉴 ?�보 ?�시
+ * - ?�??초기??복사/??�� 버튼
  *
- * 연관 화면:
- * - USR2010M00: 사용자 관리 (역할 정보 연동)
+ * ?��? ?�면:
+ * - USR2010M00: ?�용??관�?(??�� ?�보 ?�동)
  *
- * 데이터 구조:
- * - TblUserRole: 사용자 역할 정보 (usrRoleId, usrRoleNm, athrGrdCd, orgInqRngCd, menuId, useYn)
- * - TblUserRolePgmGrp: 사용자 역할별 프로그램 그룹 연결 (usrRoleId, pgmGrpId, useYn)
- * - TblPgmGrpInf: 프로그램 그룹 정보 (pgmGrpId, pgmGrpNm, useYn)
- * - TblMenuInf: 메뉴 정보 (menuId, menuNm, useYn)
+ * ?�이??구조:
+ * - TblUserRole: ?�용????�� ?�보 (usrRoleId, usrRoleNm, athrGrdCd, orgInqRngCd, menuId, useYn)
+ * - TblUserRolePgmGrp: ?�용????���??�로그램 그룹 ?�결 (usrRoleId, pgmGrpId, useYn)
+ * - TblPgmGrpInf: ?�로그램 그룹 ?�보 (pgmGrpId, pgmGrpNm, useYn)
+ * - TblMenuInf: 메뉴 ?�보 (menuId, menuNm, useYn)
  */
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AgGridReact } from "ag-grid-react";
-import { ColDef, SelectionChangedEvent } from "ag-grid-community"; // ColDef 타입 import
+import { ColDef, SelectionChangedEvent } from "ag-grid-community"; // ColDef ?�??import
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import "@/app/common/common.css"; // 공통 CSS 경로로 수정
+import "@/app/common/common.css"; // 공통 CSS 경로�??�정
 
-// 사용자 역할 정보 타입
+// ?�용????�� ?�보 ?�??
 interface TblUserRole {
 	usrRoleId: string;
 	usrRoleNm: string;
@@ -64,7 +64,7 @@ interface TblUserRole {
 	[key: string]: any;
 }
 
-// 프로그램 그룹 정보 타입
+// ?�로그램 그룹 ?�보 ?�??
 interface ProgramGroupData {
 	pgmGrpId: string;
 	pgmGrpNm: string;
@@ -73,7 +73,7 @@ interface ProgramGroupData {
 	[key: string]: any;
 }
 
-// 메뉴 정보 타입
+// 메뉴 ?�보 ?�??
 interface TblMenuInf {
 	menuId: string;
 	menuNm: string;
@@ -89,34 +89,34 @@ import {
 	saveProgramGroups,
 	copyUserRole,
 	fetchMenus,
-} from "../../modules/sys/services"; // 서비스 import
-import { usrApiService } from "../../modules/usr/services/usr-api.service"; // 공통코드 API 서비스
+} from "../../modules/sys/services"; // ?�비??import
+import { usrApiService } from "../../modules/usr/services/usr-api.service"; // 공통코드 API ?�비??
 import { useToast } from "@/contexts/ToastContext";
 import { usePopup } from "@/modules/com/hooks/usePopup";
 
 /**
- * SYS1003M00 - 사용자역할 관리 화면
+ * SYS1003M00 - ?�용?�역??관�??�면
  *
  * 주요 기능:
- * - 사용자 역할 등록/수정/삭제
- * - 프로그램 그룹 권한 관리
- * - 역할 복사 기능
- * - 메뉴별 권한 설정
+ * - ?�용????�� ?�록/?�정/??��
+ * - ?�로그램 그룹 권한 관�?
+ * - ??�� 복사 기능
+ * - 메뉴�?권한 ?�정
  *
- * 연관 테이블:
- * - TBL_USER_ROLE (사용자 역할)
- * - TBL_USER_ROLE_PGM_GRP (사용자 역할 프로그램 그룹)
- * - TBL_MENU_INF (메뉴 정보)
- * - TBL_PGM_GRP (프로그램 그룹)
+ * ?��? ?�이�?
+ * - TBL_USER_ROLE (?�용????��)
+ * - TBL_USER_ROLE_PGM_GRP (?�용????�� ?�로그램 그룹)
+ * - TBL_MENU_INF (메뉴 ?�보)
+ * - TBL_PGM_GRP (?�로그램 그룹)
  */
 
-// 공통코드 타입 정의
+// 공통코드 ?�???�의
 interface CodeData {
 	data: string;
 	label: string;
 }
 
-// API 응답을 CodeData로 매핑하는 유틸리티 함수
+// API ?�답??CodeData�?매핑?�는 ?�틸리티 ?�수
 function mapCodeApiToCodeData(apiData: any[]): CodeData[] {
 	return apiData.map((item) => ({
 		data: item.codeId,
@@ -124,53 +124,53 @@ function mapCodeApiToCodeData(apiData: any[]): CodeData[] {
 	}));
 }
 
-// 백엔드에서 camelCase로 변환된 데이터 구조에 맞는 타입 정의
+// 백엔?�에??camelCase�?변?�된 ?�이??구조??맞는 ?�???�의
 type PgmGrpRow = ProgramGroupData;
 
 export default function RoleManagementPage() {
 	const { showToast, showConfirm } = useToast();
 
-	// 사용자 역할 목록 상태 관리 (ASIS: grdUserRole.dataProvider)
-	// useState<ProgramGroupData[]> 등에서 타입 충돌이 발생하지 않도록, 상단에 직접 정의한 타입만 사용하도록 명시적으로 타입 선언
+	// ?�용????�� 목록 ?�태 관�?(ASIS: grdUserRole.dataProvider)
+	// useState<ProgramGroupData[]> ?�에???�??충돌??발생?��? ?�도�? ?�단??직접 ?�의???�?�만 ?�용?�도�?명시?�으�??�???�언
 	const [rowData, setRowData] = useState<TblUserRole[]>([]);
-	// 선택된 사용자 역할 상태 관리 (ASIS: grdUserRole.selectedItem)
+	// ?�택???�용????�� ?�태 관�?(ASIS: grdUserRole.selectedItem)
 	const [selectedRole, setSelectedRole] = useState<TblUserRole | null>(null);
-	// 프로그램 그룹 목록 상태 관리 (ASIS: grdPgmGrp.dataProvider)
+	// ?�로그램 그룹 목록 ?�태 관�?(ASIS: grdPgmGrp.dataProvider)
 	const [pgmGrpRowData, setPgmGrpRowData] = useState<ProgramGroupData[]>([]);
-	// 메뉴 목록 상태 관리 (ASIS: cboMenu.dataProvider)
+	// 메뉴 목록 ?�태 관�?(ASIS: cboMenu.dataProvider)
 	const [menuList, setMenuList] = useState<TblMenuInf[]>([]);
 
-	// 팝업 관리 훅 (ASIS: PopUpManager와 동일한 역할)
+	// ?�업 관�???(ASIS: PopUpManager?� ?�일????��)
 	const { openPopup } = usePopup();
 
-	// 신규 모드 상태 관리 (ASIS: isNewMode 변수와 동일)
+	// ?�규 모드 ?�태 관�?(ASIS: isNewMode 변?��? ?�일)
 	const [isNewMode, setIsNewMode] = useState(false);
-	// 역할복사 버튼 활성화 상태 관리 (ASIS: btnCopy.enabled)
+	// ??��복사 버튼 ?�성???�태 관�?(ASIS: btnCopy.enabled)
 	const [isCopyButtonEnabled, setIsCopyButtonEnabled] = useState(false);
 
-	// 조회 조건 상태 관리 (ASIS: txtUsrRoleId.text, cboUseYn.selectedItem)
+	// 조회 조건 ?�태 관�?(ASIS: txtUsrRoleId.text, cboUseYn.selectedItem)
 	const [searchConditions, setSearchConditions] = useState({
-		usrRoleId: "", // 사용자역할코드/명 검색어
-		useYn: "", // 사용여부 필터
+		usrRoleId: "", // ?�용?�역?�코??�?검?�어
+		useYn: "", // ?�용?��? ?�터
 	});
 
-	// 공통코드 API 호출 (ASIS: COM_03_0101_S 프로시저로 조회)
+	// 공통코드 API ?�출 (ASIS: COM_03_0101_S ?�로?��?�?조회)
 	const { data: useYnApiData } = useQuery({
 		queryKey: ["useYnCodes"],
-		queryFn: () => usrApiService.getCodes("300"), // 사용여부 코드 (대분류: 300)
+		queryFn: () => usrApiService.getCodes("300"), // ?�용?��? 코드 (?�분류: 300)
 	});
 
 	const { data: athrGrdApiData } = useQuery({
 		queryKey: ["athrGrdCodes"],
-		queryFn: () => usrApiService.getCodes("301"), // 권한등급 코드 (대분류: 301)
+		queryFn: () => usrApiService.getCodes("301"), // 권한?�급 코드 (?�분류: 301)
 	});
 
 	const { data: orgInqRngApiData } = useQuery({
 		queryKey: ["orgInqRngCodes"],
-		queryFn: () => usrApiService.getCodes("302"), // 조직조회범위 코드 (대분류: 302)
+		queryFn: () => usrApiService.getCodes("302"), // 조직조회범위 코드 (?�분류: 302)
 	});
 
-	// API 응답을 CodeData로 매핑
+	// API ?�답??CodeData�?매핑
 	const useYnData = useYnApiData ? mapCodeApiToCodeData(useYnApiData) : [];
 	const athrGrdData = athrGrdApiData
 		? mapCodeApiToCodeData(athrGrdApiData)
@@ -180,10 +180,10 @@ export default function RoleManagementPage() {
 		: [];
 
 	/**
-	 * 조회 조건 변경 핸들러
-	 * ASIS: txtUsrRoleId_change(), cboUseYn_change() 함수와 동일한 역할
-	 * 검색 조건 입력 시 상태를 업데이트
-	 * @param e 입력 이벤트
+	 * 조회 조건 변�??�들??
+	 * ASIS: txtUsrRoleId_change(), cboUseYn_change() ?�수?� ?�일????��
+	 * 검??조건 ?�력 ???�태�??�데?�트
+	 * @param e ?�력 ?�벤??
 	 */
 	const handleSearchChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -195,10 +195,10 @@ export default function RoleManagementPage() {
 	};
 
 	/**
-	 * 엔터키 입력 시 자동조회 핸들러
-	 * ASIS: 키보드 이벤트 처리와 동일
-	 * Enter 키 입력 시 자동으로 조회 실행
-	 * @param e 키보드 이벤트
+	 * ?�터???�력 ???�동조회 ?�들??
+	 * ASIS: ?�보???�벤??처리?� ?�일
+	 * Enter ???�력 ???�동?�로 조회 ?�행
+	 * @param e ?�보???�벤??
 	 */
 	const handleKeyPress = (
 		e: React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>
@@ -212,25 +212,25 @@ export default function RoleManagementPage() {
 	const pgmGrpGridRef = useRef<AgGridReact<ProgramGroupData>>(null);
 
 	const [colDefs] = useState<ColDef[]>([
-		// 사용자역할코드 (코드/ID) - 가운데 정렬
+		// ?�용?�역?�코??(코드/ID) - 가?�데 ?�렬
 		{
-			headerName: "사용자역할코드",
+			headerName: "?�용?�역?�코??,
 			field: "usrRoleId",
 			width: 150,
 			flex: 0,
 			cellStyle: { textAlign: "center" },
 			headerClass: "ag-center-header",
 		},
-		// 사용자역할명 (텍스트/이름) - 왼쪽 정렬
+		// ?�용?�역?�명 (?�스???�름) - ?�쪽 ?�렬
 		{
-			headerName: "사용자역할명",
+			headerName: "?�용?�역?�명",
 			field: "usrRoleNm",
 			width: 150,
 			flex: 1,
 			cellStyle: { textAlign: "left" },
 			headerClass: "ag-center-header",
 		},
-		// 메뉴 (텍스트/이름) - 왼쪽 정렬
+		// 메뉴 (?�스???�름) - ?�쪽 ?�렬
 		{
 			headerName: "메뉴",
 			field: "menuNm",
@@ -239,18 +239,18 @@ export default function RoleManagementPage() {
 			cellStyle: { textAlign: "left" },
 			headerClass: "ag-center-header",
 		},
-		// 사용여부 (체크박스/아이콘) - 가운데 정렬
+		// ?�용?��? (체크박스/?�이�? - 가?�데 ?�렬
 		{
-			headerName: "사용여부",
+			headerName: "?�용?��?",
 			field: "useYn",
 			width: 100,
 			flex: 0,
 			cellStyle: { textAlign: "center" },
 			headerClass: "ag-center-header",
 		},
-		// 사용자수 (숫자형) - 오른쪽 정렬
+		// ?�용?�수 (?�자?? - ?�른�??�렬
 		{
-			headerName: "사용자수",
+			headerName: "?�용?�수",
 			field: "cnt",
 			width: 100,
 			flex: 0,
@@ -261,7 +261,7 @@ export default function RoleManagementPage() {
 	]);
 
 	const [pgmGrpColDefs] = useState<ColDef[]>([
-		// 체크박스 컬럼 - 가운데 정렬
+		// 체크박스 컬럼 - 가?�데 ?�렬
 		{
 			headerName: " ",
 			checkboxSelection: true,
@@ -274,36 +274,36 @@ export default function RoleManagementPage() {
 			cellStyle: { textAlign: "center" },
 			headerClass: "ag-center-header",
 		},
-		// 프로그램그룹 코드 (코드/ID) - 가운데 정렬
+		// ?�로그램그룹 코드 (코드/ID) - 가?�데 ?�렬
 		{
-			headerName: "프로그램그룹 코드",
+			headerName: "?�로그램그룹 코드",
 			field: "pgmGrpId",
 			width: 150,
 			flex: 0,
 			cellStyle: { textAlign: "center" },
 			headerClass: "ag-center-header",
 		},
-		// 프로그램그룹명 (텍스트/이름) - 왼쪽 정렬
+		// ?�로그램그룹�?(?�스???�름) - ?�쪽 ?�렬
 		{
-			headerName: "프로그램그룹명",
+			headerName: "?�로그램그룹�?,
 			field: "pgmGrpNm",
 			width: 200,
 			flex: 2,
 			cellStyle: { textAlign: "left" },
 			headerClass: "ag-center-header",
 		},
-		// 사용여부 (체크박스/아이콘) - 가운데 정렬
+		// ?�용?��? (체크박스/?�이�? - 가?�데 ?�렬
 		{
-			headerName: "사용여부",
+			headerName: "?�용?��?",
 			field: "pgmGrpUseYn",
 			width: 100,
 			flex: 0,
 			cellStyle: { textAlign: "center" },
 			headerClass: "ag-center-header",
 		},
-		// 사용자수 (숫자형) - 오른쪽 정렬
+		// ?�용?�수 (?�자?? - ?�른�??�렬
 		{
-			headerName: "사용자수",
+			headerName: "?�용?�수",
 			field: "cnt",
 			width: 100,
 			flex: 0,
@@ -314,18 +314,18 @@ export default function RoleManagementPage() {
 	]);
 
 	/**
-	 * 사용자 역할 목록 조회 함수
-	 * ASIS: fn_srch() 함수와 동일한 역할
-	 * 검색 조건에 따라 사용자 역할 목록을 조회하고 화면에 표시
-	 * 기존 시스템과 동일하게 조회 시에도 프로그램 그룹 목록을 함께 조회
+	 * ?�용????�� 목록 조회 ?�수
+	 * ASIS: fn_srch() ?�수?� ?�일????��
+	 * 검??조건???�라 ?�용????�� 목록??조회?�고 ?�면???�시
+	 * 기존 ?�스?�과 ?�일?�게 조회 ?�에???�로그램 그룹 목록???�께 조회
 	 */
 	const loadData = async () => {
 		try {
-			// 사용자 역할 목록 조회 (ASIS: USR_02_0101_S 프로시저 호출)
+			// ?�용????�� 목록 조회 (ASIS: USR_02_0101_S ?�로?��? ?�출)
 			const data = await fetchUserRoles(searchConditions);
 			setRowData((data as any[]).map((item) => ({ ...item })));
 
-			// 기존 시스템과 동일하게 조회 시에도 프로그램 그룹 목록 조회
+			// 기존 ?�스?�과 ?�일?�게 조회 ?�에???�로그램 그룹 목록 조회
 			try {
 				const allPgmGrps = await fetchAllProgramGroups();
 				setPgmGrpRowData((allPgmGrps as any[]).map((item) => ({ ...item })));
@@ -336,7 +336,7 @@ export default function RoleManagementPage() {
 		} catch (error) {
 			console.error(error);
 			showConfirm({
-				message: "데이터를 불러오는 중 오류가 발생했습니다.",
+				message: "?�이?��? 불러?�는 �??�류가 발생?�습?�다.",
 				type: "error",
 				onConfirm: () => {},
 				confirmOnly: true,
@@ -354,7 +354,7 @@ export default function RoleManagementPage() {
 			} catch (error) {
 				console.error(error);
 				showConfirm({
-					message: "메뉴 목록을 불러오는 중 오류가 발생했습니다.",
+					message: "메뉴 목록??불러?�는 �??�류가 발생?�습?�다.",
 					type: "error",
 					onConfirm: () => {},
 					confirmOnly: true,
@@ -364,7 +364,7 @@ export default function RoleManagementPage() {
 		loadMenus();
 	}, []);
 
-	// postMessage 이벤트 리스너 추가
+	// postMessage ?�벤??리스??추�?
 	useEffect(() => {
 		const handleMessage = (event: MessageEvent) => {
 			if (event.data.type === "SELECTED_PROGRAMS") {
@@ -403,7 +403,7 @@ export default function RoleManagementPage() {
 	const handleSave = async () => {
 		if (!selectedRole) {
 			showConfirm({
-				message: "저장할 역할을 선택해주세요.",
+				message: "?�?�할 ??��???�택?�주?�요.",
 				type: "warning",
 				onConfirm: () => {},
 				confirmOnly: true,
@@ -411,13 +411,13 @@ export default function RoleManagementPage() {
 			return;
 		}
 
-		// 유효성 검사
+		// ?�효??검??
 		if (!selectedRole.usrRoleNm || selectedRole.usrRoleNm.trim() === "") {
 			showConfirm({
-				message: "사용자역할명을 입력해주세요.",
+				message: "?�용?�역?�명???�력?�주?�요.",
 				type: "warning",
 				onConfirm: () => {
-					// 사용자역할명 입력 필드에 포커스
+					// ?�용?�역?�명 ?�력 ?�드???�커??
 					const usrRoleNmInput = document.getElementById(
 						"usrRoleNm"
 					) as HTMLInputElement;
@@ -431,10 +431,10 @@ export default function RoleManagementPage() {
 		}
 		if (!selectedRole.useYn || selectedRole.useYn.trim() === "") {
 			showConfirm({
-				message: "사용여부를 선택해주세요.",
+				message: "?�용?��?�??�택?�주?�요.",
 				type: "warning",
 				onConfirm: () => {
-					// 사용여부 선택 필드에 포커스
+					// ?�용?��? ?�택 ?�드???�커??
 					const useYnSelect = document.getElementById(
 						"useYn"
 					) as HTMLSelectElement;
@@ -448,10 +448,10 @@ export default function RoleManagementPage() {
 		}
 		if (!selectedRole.menuId || selectedRole.menuId.trim() === "") {
 			showConfirm({
-				message: "메뉴를 선택해주세요.",
+				message: "메뉴�??�택?�주?�요.",
 				type: "warning",
 				onConfirm: () => {
-					// 메뉴 선택 필드에 포커스
+					// 메뉴 ?�택 ?�드???�커??
 					const menuIdSelect = document.getElementById(
 						"menuId"
 					) as HTMLSelectElement;
@@ -465,10 +465,10 @@ export default function RoleManagementPage() {
 		}
 		if (!selectedRole.athrGrdCd || selectedRole.athrGrdCd.trim() === "") {
 			showConfirm({
-				message: "등급을 선택해주세요.",
+				message: "?�급???�택?�주?�요.",
 				type: "warning",
 				onConfirm: () => {
-					// 등급 선택 필드에 포커스
+					// ?�급 ?�택 ?�드???�커??
 					const athrGrdCdSelect = document.getElementById(
 						"athrGrdCd"
 					) as HTMLSelectElement;
@@ -482,10 +482,10 @@ export default function RoleManagementPage() {
 		}
 		if (!selectedRole.orgInqRngCd || selectedRole.orgInqRngCd.trim() === "") {
 			showConfirm({
-				message: "조직조회범위를 선택해주세요.",
+				message: "조직조회범위�??�택?�주?�요.",
 				type: "warning",
 				onConfirm: () => {
-					// 조직조회범위 선택 필드에 포커스
+					// 조직조회범위 ?�택 ?�드???�커??
 					const orgInqRngCdSelect = document.getElementById(
 						"orgInqRngCd"
 					) as HTMLSelectElement;
@@ -498,17 +498,17 @@ export default function RoleManagementPage() {
 			return;
 		}
 
-		// 저장 확인 메시지
+		// ?�???�인 메시지
 		showConfirm({
-			message: "저장하시겠습니까?",
+			message: "?�?�하?�겠?�니�?",
 			type: "info",
 			onConfirm: async () => {
-				// 저장 로직을 여기로 이동
+				// ?�??로직???�기�??�동
 				if (!selectedRole) return;
 
 				try {
-					// 1. 역할 상세 정보 저장
-					// usrRoleId가 빈 문자열이면 신규 저장, 아니면 수정
+					// 1. ??�� ?�세 ?�보 ?�??
+					// usrRoleId가 �?문자?�이�??�규 ?�?? ?�니�??�정
 					const isNewRole =
 						!selectedRole.usrRoleId || selectedRole.usrRoleId.trim() === "";
 
@@ -518,35 +518,35 @@ export default function RoleManagementPage() {
 						deletedRows: [],
 					});
 
-					// 2. 프로그램 그룹 정보 저장
+					// 2. ?�로그램 그룹 ?�보 ?�??
 					if (pgmGrpGridRef.current?.api) {
 						const selectedPgmGrps = pgmGrpGridRef.current.api
 							.getSelectedRows()
 							.map((row) => ({
-								usrRoleId: selectedRole.usrRoleId || "", // 신규 시에는 빈 문자열
+								usrRoleId: selectedRole.usrRoleId || "", // ?�규 ?�에??�?문자??
 								pgmGrpId: row.pgmGrpId,
-								useYn: row.useYn || "Y", // 기본값 설정
+								useYn: row.useYn || "Y", // 기본�??�정
 							}));
 
-						// 신규 저장 시에는 저장 후 반환된 역할 ID를 사용
+						// ?�규 ?�???�에???�????반환????�� ID�??�용
 						const roleIdToUse =
 							isNewRole && saveResult.savedRoles.length > 0
 								? saveResult.savedRoles[0].usrRoleId
 								: selectedRole.usrRoleId;
 
-						// 선택된 프로그램 그룹이 있는 경우에만 저장
+						// ?�택???�로그램 그룹???�는 경우?�만 ?�??
 						if (selectedPgmGrps.length > 0) {
 							await saveProgramGroups(roleIdToUse, selectedPgmGrps);
 						}
 					}
 
-					showToast("성공적으로 저장되었습니다.", "info");
+					showToast("?�공?�으�??�?�되?�습?�다.", "info");
 
-					// 저장 후 버튼 상태 업데이트
+					// ?�????버튼 ?�태 ?�데?�트
 					setIsNewMode(false);
 					setIsCopyButtonEnabled(false);
 
-					// 기존 시스템과 동일하게 전체 화면 초기화 (프로그램 그룹 목록도 재조회)
+					// 기존 ?�스?�과 ?�일?�게 ?�체 ?�면 초기??(?�로그램 그룹 목록???�조??
 					handleSaveInitialize();
 				} catch (error) {
 					console.error(error);
@@ -561,40 +561,40 @@ export default function RoleManagementPage() {
 		});
 	};
 
-	// 전체 화면 초기화 함수 (기존 시스템의 fn_init과 동일)
+	// ?�체 ?�면 초기???�수 (기존 ?�스?�의 fn_init�??�일)
 	const handleInitialize = () => {
-		// 좌측 그리드 선택 해제
+		// 좌측 그리???�택 ?�제
 		if (userRoleGridRef.current?.api) {
 			userRoleGridRef.current.api.deselectAll();
 		}
 
-		// 우측 영역 완전 초기화
+		// ?�측 ?�역 ?�전 초기??
 		setSelectedRole(null);
 		setPgmGrpRowData([]);
 
-		// 버튼 상태 초기화
+		// 버튼 ?�태 초기??
 		setIsNewMode(false);
 		setIsCopyButtonEnabled(false);
 
-		// 데이터 재조회
+		// ?�이???�조??
 		loadData();
 	};
 
-	// 저장 후 초기화 함수 (기존 시스템의 fn_srch와 동일)
+	// ?�????초기???�수 (기존 ?�스?�의 fn_srch?� ?�일)
 	const handleSaveInitialize = async () => {
-		// 좌측 그리드 선택 해제
+		// 좌측 그리???�택 ?�제
 		if (userRoleGridRef.current?.api) {
 			userRoleGridRef.current.api.deselectAll();
 		}
 
-		// 우측 영역 완전 초기화
+		// ?�측 ?�역 ?�전 초기??
 		setSelectedRole(null);
 
-		// 버튼 상태 초기화
+		// 버튼 ?�태 초기??
 		setIsNewMode(false);
 		setIsCopyButtonEnabled(false);
 
-		// 기존 시스템과 동일하게 프로그램 그룹 목록도 재조회
+		// 기존 ?�스?�과 ?�일?�게 ?�로그램 그룹 목록???�조??
 		try {
 			const allPgmGrps = await fetchAllProgramGroups();
 			setPgmGrpRowData(allPgmGrps as ProgramGroupData[]);
@@ -603,77 +603,77 @@ export default function RoleManagementPage() {
 			setPgmGrpRowData([]);
 		}
 
-		// 데이터 재조회
+		// ?�이???�조??
 		loadData();
 	};
 
 	const handleNew = async () => {
-		// 좌측 그리드 선택 해제
+		// 좌측 그리???�택 ?�제
 		if (userRoleGridRef.current?.api) {
 			userRoleGridRef.current.api.deselectAll();
 		}
 
-		// 신규 버튼 클릭 시 빈 값으로 초기화 (사용자가 직접 선택하도록)
+		// ?�규 버튼 ?�릭 ??�?값으�?초기??(?�용?��? 직접 ?�택?�도�?
 		const newRole: TblUserRole = {
 			usrRoleId: "",
 			usrRoleNm: "",
-			useYn: "", // 빈 값으로 초기화
+			useYn: "", // �?값으�?초기??
 			athrGrdCd: "",
 			orgInqRngCd: "",
 			menuId: "",
 			baseOutputScrnPgmIdCtt: "",
-			baseOutputScrnPgmNmCtt: "", // 신규 모드에서 추가된 필드
+			baseOutputScrnPgmNmCtt: "", // ?�규 모드?�서 추�????�드
 		};
 
-		// 모든 프로그램 그룹 목록 조회 (체크박스로 선택 가능한 상태)
+		// 모든 ?�로그램 그룹 목록 조회 (체크박스�??�택 가?�한 ?�태)
 		try {
 			const allPgmGrps = await fetchAllProgramGroups();
 			setPgmGrpRowData(allPgmGrps as ProgramGroupData[]);
 		} catch (error) {
 			console.error(error);
 			showToast(
-				"프로그램 그룹 목록을 불러오는 중 오류가 발생했습니다.",
+				"?�로그램 그룹 목록??불러?�는 �??�류가 발생?�습?�다.",
 				"error"
 			);
 		}
 
-		// 상태를 마지막에 업데이트 (다른 함수 호출 후)
+		// ?�태�?마�?막에 ?�데?�트 (?�른 ?�수 ?�출 ??
 		setSelectedRole(newRole);
-		setIsNewMode(true); // 신규 모드로 설정
-		setIsCopyButtonEnabled(false); // 신규 모드에서는 역할복사 버튼 비활성화
+		setIsNewMode(true); // ?�규 모드�??�정
+		setIsCopyButtonEnabled(false); // ?�규 모드?�서????��복사 버튼 비활?�화
 	};
 
-	// 역할 선택 시 프로그램 그룹 조회
+	// ??�� ?�택 ???�로그램 그룹 조회
 	const onSelectionChanged = async (event: SelectionChangedEvent) => {
 		const selectedRows = event.api.getSelectedRows();
 		if (selectedRows.length > 0) {
 			const role = selectedRows[0];
 
-			// 백엔드 키명을 프론트엔드 키명으로 매핑
+			// 백엔???�명???�론?�엔???�명?�로 매핑
 			const roleWithDefaults = {
 				...role,
-				// 백엔드: athtGrdCd -> 프론트엔드: athrGrdCd
+				// 백엔?? athtGrdCd -> ?�론?�엔?? athrGrdCd
 				athrGrdCd: role.athtGrdCd || role.athrGrdCd || "1",
-				// 백엔드: orgInqRangCd -> 프론트엔드: orgInqRngCd
+				// 백엔?? orgInqRangCd -> ?�론?�엔?? orgInqRngCd
 				orgInqRngCd: role.orgInqRangCd || role.orgInqRngCd || "ALL",
 				useYn: role.useYn || "Y",
 				menuId: role.menuId || "",
 				usrRoleNm: role.usrRoleNm || "",
 				baseOutputScrnPgmIdCtt: role.baseOutputScrnPgmIdCtt || "",
-				baseOutputScrnPgmNmCtt: role.baseOutputScrnPgmNmCtt || "", // 기존 역할 선택 시 추가된 필드
+				baseOutputScrnPgmNmCtt: role.baseOutputScrnPgmNmCtt || "", // 기존 ??�� ?�택 ??추�????�드
 			};
 
 			setSelectedRole(roleWithDefaults);
-			setIsNewMode(false); // 기존 역할 선택 시 신규 모드 해제
-			setIsCopyButtonEnabled(true); // 기존 역할 선택 시 역할복사 버튼 활성화
+			setIsNewMode(false); // 기존 ??�� ?�택 ???�규 모드 ?�제
+			setIsCopyButtonEnabled(true); // 기존 ??�� ?�택 ????��복사 버튼 ?�성??
 
 			try {
 				const pgmGrps = await fetchProgramGroups(role.usrRoleId);
-				setPgmGrpRowData((pgmGrps as any[]).map((item) => ({ ...item }))); // 변환 없이 그대로 할당
+				setPgmGrpRowData((pgmGrps as any[]).map((item) => ({ ...item }))); // 변???�이 그�?�??�당
 			} catch (error) {
 				console.error(error);
 				showConfirm({
-					message: "프로그램 그룹을 불러오는 중 오류가 발생했습니다.",
+					message: "?�로그램 그룹??불러?�는 �??�류가 발생?�습?�다.",
 					type: "error",
 					onConfirm: () => {},
 					confirmOnly: true,
@@ -687,11 +687,11 @@ export default function RoleManagementPage() {
 		}
 	};
 
-	// 상세 폼 입력 변경 핸들러
+	// ?�세 ???�력 변�??�들??
 	const handleFormChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
-		// selectedRole이 null이면 빈 객체로 초기화 (기본값 설정하지 않음)
+		// selectedRole??null?�면 �?객체�?초기??(기본�??�정?��? ?�음)
 		const currentRole = selectedRole || {
 			usrRoleId: "",
 			menuId: "",
@@ -699,7 +699,7 @@ export default function RoleManagementPage() {
 			athrGrdCd: "",
 			orgInqRngCd: "",
 			baseOutputScrnPgmIdCtt: "",
-			baseOutputScrnPgmNmCtt: "", // 추가된 필드
+			baseOutputScrnPgmNmCtt: "", // 추�????�드
 			useYn: "",
 		};
 
@@ -709,22 +709,22 @@ export default function RoleManagementPage() {
 		});
 	};
 
-	// 기본출력화면 필드 초기화 핸들러
+	// 기본출력?�면 ?�드 초기???�들??
 	const handleClearBaseOutput = () => {
 		if (!selectedRole) return;
 		setSelectedRole({
 			...selectedRole,
 			baseOutputScrnPgmIdCtt: "",
-			baseOutputScrnPgmNmCtt: "", // 추가된 필드
-			// baseOutputScrnPgmNmCtt 필드가 있다면 같이 초기화해야 합니다.
-			// 현재 타입 정의에 없어 우선 ID 필드만 초기화합니다.
+			baseOutputScrnPgmNmCtt: "", // 추�????�드
+			// baseOutputScrnPgmNmCtt ?�드가 ?�다�?같이 초기?�해???�니??
+			// ?�재 ?�???�의???�어 ?�선 ID ?�드�?초기?�합?�다.
 		});
 	};
 
-	// 프로그램 검색 핸들러
+	// ?�로그램 검???�들??
 	const handleProgramSearch = (rowData: any, rowIndex: number) => {
-		console.log("프로그램 검색 클릭:", rowData, rowIndex);
-		// 프로그램 검색 팝업 열기 (그리드 안쪽: 클릭한 로우의 순번을 PGM_ID로 전달)
+		console.log("?�로그램 검???�릭:", rowData, rowIndex);
+		// ?�로그램 검???�업 ?�기 (그리???�쪽: ?�릭??로우???�번??PGM_ID�??�달)
 		openPopup({
 			url: `/popup/sys/SYS1010D00?PGM_ID=${rowIndex}`,
 			size: "custom",
@@ -738,13 +738,13 @@ export default function RoleManagementPage() {
 		});
 	};
 
-	// 프로그램 그룹 삭제 핸들러
+	// ?�로그램 그룹 ??�� ?�들??
 	const handleDeletePgmGrp = () => {
 		if (!pgmGrpGridRef.current) return;
 		const selectedNodes = pgmGrpGridRef.current.api.getSelectedNodes();
 		if (selectedNodes.length === 0) {
 			showConfirm({
-				message: "삭제할 프로그램 그룹을 선택해주세요.",
+				message: "??��???�로그램 그룹???�택?�주?�요.",
 				type: "warning",
 				onConfirm: () => {},
 				confirmOnly: true,
@@ -753,17 +753,17 @@ export default function RoleManagementPage() {
 		}
 		const selectedIds = selectedNodes
 			.map((node) => node.data?.pgmGrpId)
-			.filter(Boolean); // undefined나 null인 경우 제거
+			.filter(Boolean); // undefined??null??경우 ?�거
 		setPgmGrpRowData((prevData) =>
 			prevData.filter((row) => !selectedIds.includes(row.pgmGrpId))
 		);
 	};
 
-	// 역할 복사 핸들러
+	// ??�� 복사 ?�들??
 	const handleCopyRole = async () => {
 		if (!selectedRole) {
 			showConfirm({
-				message: "복사할 역할을 선택해주세요.",
+				message: "복사????��???�택?�주?�요.",
 				type: "warning",
 				onConfirm: () => {},
 				confirmOnly: true,
@@ -771,13 +771,13 @@ export default function RoleManagementPage() {
 			return;
 		}
 		showConfirm({
-			message: `'${selectedRole.usrRoleNm}' 역할을 복사하시겠습니까?`,
+			message: `'${selectedRole.usrRoleNm}' ??��??복사?�시겠습?�까?`,
 			type: "info",
 			onConfirm: async () => {
 				try {
 					await copyUserRole(selectedRole.usrRoleId);
-					showToast("역할이 복사되었습니다.", "info");
-					loadData(); // 목록 새로고침
+					showToast("??��??복사?�었?�니??", "info");
+					loadData(); // 목록 ?�로고침
 				} catch (error) {
 					console.error(error);
 					showConfirm({
@@ -793,12 +793,12 @@ export default function RoleManagementPage() {
 
 	return (
 		<div className='mdi'>
-			{/* 🔍 조회 영역 */}
+			{/* ?�� 조회 ?�역 */}
 			<div className='search-div mb-4'>
 				<table className='search-table w-full'>
 					<tbody>
 						<tr className='search-tr'>
-							<th className='search-th w-[130px]'>사용자역할코드/명</th>
+							<th className='search-th w-[130px]'>?�용?�역?�코??�?/th>
 							<td className='search-td w-[20%]'>
 								<input
 									type='text'
@@ -807,11 +807,11 @@ export default function RoleManagementPage() {
 									onChange={handleSearchChange}
 									onKeyPress={handleKeyPress}
 									className='input-base input-default w-full'
-									aria-label='사용자역할코드/명 입력'
-									placeholder='코드 또는 명 입력'
+									aria-label='?�용?�역?�코??�??�력'
+									placeholder='코드 ?�는 �??�력'
 								/>
 							</td>
-							<th className='search-th w-[100px]'>사용여부</th>
+							<th className='search-th w-[100px]'>?�용?��?</th>
 							<td className='search-td w-[10%]'>
 								<select
 									name='useYn'
@@ -819,9 +819,9 @@ export default function RoleManagementPage() {
 									onChange={handleSearchChange}
 									onKeyPress={handleKeyPress}
 									className='combo-base w-full min-w-[80px]'
-									aria-label='사용여부 선택'
+									aria-label='?�용?��? ?�택'
 								>
-									<option value=''>전체</option>
+									<option value=''>?�체</option>
 									{useYnData?.map((item) => (
 										<option key={item.data} value={item.data}>
 											{item.label}
@@ -843,12 +843,12 @@ export default function RoleManagementPage() {
 				</table>
 			</div>
 
-			{/* 📋 좌우 2단 */}
+			{/* ?�� 좌우 2??*/}
 			<div className='flex gap-4 flex-1 overflow-auto'>
-				{/* ◀ 좌측 */}
+				{/* ?� 좌측 */}
 				<div className='w-1/2 flex flex-col'>
 					<div className='tit_area mb-2'>
-						<h3>사용자역할 목록</h3>
+						<h3>?�용?�역??목록</h3>
 					</div>
 					<div
 						className='gridbox-div flex-1 overflow-auto ag-theme-alpine'
@@ -876,15 +876,15 @@ export default function RoleManagementPage() {
 					</div>
 				</div>
 
-				{/* ▶ 우측 상세 폼 */}
+				{/* ???�측 ?�세 ??*/}
 				<div className='w-1/2 flex flex-col'>
 					<div className='tit_area mb-2'>
-						<h3>사용자역할 정보</h3>
+						<h3>?�용?�역???�보</h3>
 					</div>
 					<table className='form-table mb-2'>
 						<tbody>
 							<tr className='form-tr'>
-								<th className='form-th required w-[120px]'>사용자역할명</th>
+								<th className='form-th required w-[120px]'>?�용?�역?�명</th>
 								<td className='form-td'>
 									<input
 										type='text'
@@ -893,12 +893,12 @@ export default function RoleManagementPage() {
 										value={selectedRole?.usrRoleNm || ""}
 										onChange={handleFormChange}
 										className='input-base input-default w-full'
-										aria-label='상세 사용자역할명'
+										aria-label='?�세 ?�용?�역?�명'
 										maxLength={33}
-										placeholder='최대 33글자 (한글 기준)'
+										placeholder='최�? 33글??(?��? 기�?)'
 									/>
 								</td>
-								<th className='form-th required w-[100px]'>사용여부</th>
+								<th className='form-th required w-[100px]'>?�용?��?</th>
 								<td className='form-td'>
 									<select
 										name='useYn'
@@ -906,9 +906,9 @@ export default function RoleManagementPage() {
 										value={selectedRole ? selectedRole.useYn : ""}
 										onChange={handleFormChange}
 										className='combo-base w-full'
-										aria-label='상세 사용여부'
+										aria-label='?�세 ?�용?��?'
 									>
-										<option value=''>선택</option>
+										<option value=''>?�택</option>
 										{useYnData?.map((item) => (
 											<option key={item.data} value={item.data}>
 												{item.label}
@@ -916,7 +916,7 @@ export default function RoleManagementPage() {
 										))}
 									</select>
 								</td>
-								<th className='form-th w-[80px]'>등급</th>
+								<th className='form-th w-[80px]'>?�급</th>
 								<td className='form-td'>
 									<select
 										name='athrGrdCd'
@@ -924,9 +924,9 @@ export default function RoleManagementPage() {
 										value={selectedRole ? selectedRole.athrGrdCd : ""}
 										onChange={handleFormChange}
 										className='combo-base w-full'
-										aria-label='상세 등급'
+										aria-label='?�세 ?�급'
 									>
-										<option value=''>선택</option>
+										<option value=''>?�택</option>
 										{athrGrdData?.map((item) => (
 											<option key={item.data} value={item.data}>
 												{item.label}
@@ -944,9 +944,9 @@ export default function RoleManagementPage() {
 										value={selectedRole ? selectedRole.orgInqRngCd : ""}
 										onChange={handleFormChange}
 										className='combo-base w-full'
-										aria-label='상세 조직조회범위'
+										aria-label='?�세 조직조회범위'
 									>
-										<option value=''>선택</option>
+										<option value=''>?�택</option>
 										{orgInqRngData?.map((item) => (
 											<option key={item.data} value={item.data}>
 												{item.label}
@@ -962,9 +962,9 @@ export default function RoleManagementPage() {
 										value={selectedRole ? selectedRole.menuId : ""}
 										onChange={handleFormChange}
 										className='combo-base w-full'
-										aria-label='상세 메뉴'
+										aria-label='?�세 메뉴'
 									>
-										<option value=''>선택</option>
+										<option value=''>?�택</option>
 										{menuList.map((menu) => (
 											<option key={menu.menuId} value={menu.menuId}>
 												{menu.menuNm}
@@ -974,9 +974,9 @@ export default function RoleManagementPage() {
 								</td>
 							</tr>
 							<tr className='form-tr'>
-								<th className='form-th'>기본출력화면</th>
+								<th className='form-th'>기본출력?�면</th>
 								<td className='form-td' colSpan={4}>
-									{/* 프로그램ID는 hidden, 프로그램명은 표시 */}
+									{/* ?�로그램ID??hidden, ?�로그램명�? ?�시 */}
 									<input
 										type='hidden'
 										name='baseOutputScrnPgmIdCtt'
@@ -989,7 +989,7 @@ export default function RoleManagementPage() {
 										value={selectedRole?.baseOutputScrnPgmNmCtt || ""}
 										readOnly
 										className='input-base input-default w-full'
-										aria-label='상세 기본출력화면'
+										aria-label='?�세 기본출력?�면'
 									/>
 								</td>
 								<td className='form-td'>
@@ -999,7 +999,7 @@ export default function RoleManagementPage() {
 											className='btn-base btn-etc text-xs px-3 py-1'
 											onClick={() => handleProgramSearch(null, 0)}
 										>
-											+ 추가
+											+ 추�?
 										</button>
 										<button
 											type='button'
@@ -1014,7 +1014,7 @@ export default function RoleManagementPage() {
 						</tbody>
 					</table>
 
-					{/* ➕ 버튼 영역 - 원본에 없으므로 제거 */}
+					{/* ??버튼 ?�역 - ?�본???�으므�??�거 */}
 					{/*
 					<div className='flex justify-between items-center mb-2 px-1'>
 						<div></div>
@@ -1023,7 +1023,7 @@ export default function RoleManagementPage() {
 								type='button'
 								className='btn-base btn-etc text-xs px-3 py-1'
 							>
-								+ 추가
+								+ 추�?
 							</button>
 							<button
 								type='button'
@@ -1036,9 +1036,9 @@ export default function RoleManagementPage() {
 					</div>
 					*/}
 
-					{/* 프로그램 그룹 목록 */}
+					{/* ?�로그램 그룹 목록 */}
 					<div className='tit_area mb-2'>
-						<h3>사용자역할 프로그램그룹 목록</h3>
+						<h3>?�용?�역???�로그램그룹 목록</h3>
 					</div>
 					<div
 						className='gridbox-div flex-1 overflow-auto ag-theme-alpine'
@@ -1054,7 +1054,7 @@ export default function RoleManagementPage() {
 								filter: true,
 							}}
 							rowSelection='multiple'
-							suppressRowClickSelection={true} // 행 클릭으로 선택되는 것 방지
+							suppressRowClickSelection={true} // ???�릭?�로 ?�택?�는 �?방�?
 							getRowId={(params) => params.data.pgmGrpId}
 							onGridReady={(params) => {
 								params.api.forEachNode((node) => {
@@ -1073,7 +1073,7 @@ export default function RoleManagementPage() {
 				</div>
 			</div>
 
-			{/* ⬇ 하단 버튼 */}
+			{/* �??�단 버튼 */}
 			<div className='flex justify-end gap-2 mt-4'>
 				<button
 					type='button'
@@ -1081,10 +1081,10 @@ export default function RoleManagementPage() {
 					onClick={handleCopyRole}
 					disabled={!isCopyButtonEnabled}
 				>
-					역할복사
+					??��복사
 				</button>
 				<button type='button' className='btn-base btn-etc' onClick={handleNew}>
-					신규
+					?�규
 				</button>
 				<button
 					type='button'
@@ -1092,12 +1092,14 @@ export default function RoleManagementPage() {
 					onClick={handleSave}
 					disabled={!isNewMode && !selectedRole}
 				>
-					저장
+					?�??
 				</button>
 			</div>
 
-			{/* 프로그램 찾기 팝업 */}
-			{/* 제거 (조건부 렌더링 및 팝업 JSX 삭제) */}
+			{/* ?�로그램 찾기 ?�업 */}
+			{/* ?�거 (조건부 ?�더�?�??�업 JSX ??��) */}
 		</div>
 	);
 }
+
+

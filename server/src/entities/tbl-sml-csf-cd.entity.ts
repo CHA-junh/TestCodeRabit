@@ -20,3 +20,5 @@ export class TblSmlCsfCd {
   @Column({ name: 'SORT_ORD', nullable: true })
   sortOrd: number;
 }
+
+

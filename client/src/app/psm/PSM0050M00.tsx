@@ -14,52 +14,52 @@ import COMZ080P00 from '../com/COMZ080P00';
 import '../common/common.css';
 
 /**
- * 사원 기본 정보 데이터 인터페이스
+ * ?�원 기본 ?�보 ?�이???�터?�이??
  * 
- * AS-IS PSM_01_0101_S 프로시저에서 반환되는 사원 정보와 동일한 구조
+ * AS-IS PSM_01_0101_S ?�로?��??�서 반환?�는 ?�원 ?�보?� ?�일??구조
  * 
- * @property {string} EMP_NO - 사원번호
- * @property {string} OWN_OUTS_DIV - 내부/외주 구분 (1: 내부, 2: 외주)
- * @property {string} OWN_OUTS_NM - 내부/외주 구분명
- * @property {string} EMP_NM - 사원명
- * @property {string} ENTR_DT - 입사일 (YYYYMMDD)
- * @property {string} RETIR_DT - 퇴사일 (YYYYMMDD)
- * @property {string} PRJ_YN - 프로젝트 참여 여부 (Y/N)
- * @property {string} BSN_NO - 사업번호
- * @property {string} BSN_NM - 사업명
- * @property {string} DEV_NM - 개발명
- * @property {string} CO_CD - 회사코드
- * @property {string} CO_NM - 회사명
- * @property {string} EXEC_IN_STRT_DT - 실행중 시작일
- * @property {string} EXEC_IN_END_DT - 실행중 종료일
- * @property {string} CHRG_WRK - 담당업무
- * @property {string} EXEC_IN_YN - 실행중 여부 (Y/N)
- * @property {string} HQ_DIV_CD - 본부구분코드
- * @property {string} HQ_DIV_NM - 본부구분명
- * @property {string} DEPT_DIV_CD - 부서구분코드
- * @property {string} DEPT_DIV_NM - 부서구분명
+ * @property {string} EMP_NO - ?�원번호
+ * @property {string} OWN_OUTS_DIV - ?��?/?�주 구분 (1: ?��?, 2: ?�주)
+ * @property {string} OWN_OUTS_NM - ?��?/?�주 구분�?
+ * @property {string} EMP_NM - ?�원�?
+ * @property {string} ENTR_DT - ?�사??(YYYYMMDD)
+ * @property {string} RETIR_DT - ?�사??(YYYYMMDD)
+ * @property {string} PRJ_YN - ?�로?�트 참여 ?��? (Y/N)
+ * @property {string} BSN_NO - ?�업번호
+ * @property {string} BSN_NM - ?�업�?
+ * @property {string} DEV_NM - 개발�?
+ * @property {string} CO_CD - ?�사코드
+ * @property {string} CO_NM - ?�사�?
+ * @property {string} EXEC_IN_STRT_DT - ?�행�??�작??
+ * @property {string} EXEC_IN_END_DT - ?�행�?종료??
+ * @property {string} CHRG_WRK - ?�당?�무
+ * @property {string} EXEC_IN_YN - ?�행�??��? (Y/N)
+ * @property {string} HQ_DIV_CD - 본�?구분코드
+ * @property {string} HQ_DIV_NM - 본�?구분�?
+ * @property {string} DEPT_DIV_CD - 부?�구분코??
+ * @property {string} DEPT_DIV_NM - 부?�구분명
  * @property {string} DUTY_CD - 직책코드
- * @property {string} DUTY_CD_NM - 직책명
+ * @property {string} DUTY_CD_NM - 직책�?
  * @property {string} DUTY_DIV_CD - 직책구분코드
- * @property {string} TCN_GRD - 기술등급
- * @property {string} TCN_GRD_NM - 기술등급명
- * @property {string} WKG_ST_DIV - 근무상태구분
- * @property {string} WKG_ST_DIV_NM - 근무상태구분명
+ * @property {string} TCN_GRD - 기술?�급
+ * @property {string} TCN_GRD_NM - 기술?�급�?
+ * @property {string} WKG_ST_DIV - 근무?�태구분
+ * @property {string} WKG_ST_DIV_NM - 근무?�태구분�?
  * @property {string} RMK - 비고
- * @property {string} PARTY_NM - 소속명
- * @property {string} EXEC_ING_BSN_NM - 실행중 사업명
- * @property {string} EXEC_ING_YN - 실행중 여부 (Y/N)
- * @property {string} CSF_CO_CD - CSF 회사코드
- * @property {string} OUTS_FIX_YN - 외주고정여부 (Y/N)
- * @property {string} LAST_SCHL - 최종학력
- * @property {string} MAJR - 전공
- * @property {string} LAST_GRAD_DT - 최종졸업일 (YYYYMMDD)
- * @property {string} CTQL_CD_NM - 자격증명
- * @property {string} CTQL_CD - 자격증코드
- * @property {string} CTQL_PUR_DT - 자격증취득일 (YYYYMMDD)
- * @property {string} CARR_MCNT - 경력개월수
- * @property {string} ENTR_BEF_CARR - 입사전경력
- * @property {string} CARR_CALC_STND_DT - 경력계산기준일 (YYYYMMDD)
+ * @property {string} PARTY_NM - ?�속�?
+ * @property {string} EXEC_ING_BSN_NM - ?�행�??�업�?
+ * @property {string} EXEC_ING_YN - ?�행�??��? (Y/N)
+ * @property {string} CSF_CO_CD - CSF ?�사코드
+ * @property {string} OUTS_FIX_YN - ?�주고정?��? (Y/N)
+ * @property {string} LAST_SCHL - 최종?�력
+ * @property {string} MAJR - ?�공
+ * @property {string} LAST_GRAD_DT - 최종졸업??(YYYYMMDD)
+ * @property {string} CTQL_CD_NM - ?�격증명
+ * @property {string} CTQL_CD - ?�격증코??
+ * @property {string} CTQL_PUR_DT - ?�격증취?�일 (YYYYMMDD)
+ * @property {string} CARR_MCNT - 경력개월??
+ * @property {string} ENTR_BEF_CARR - ?�사?�경??
+ * @property {string} CARR_CALC_STND_DT - 경력계산기�???(YYYYMMDD)
  */
 interface EmployeeData {
   EMP_NO: string;
@@ -177,47 +177,47 @@ interface ProfileCarrData {
 }
 
 /**
- * PSM0050M00 - 개발자 프로필 관리 화면
+ * PSM0050M00 - 개발???�로??관�??�면
  * 
- * 개발자의 프로필 정보를 관리하는 핵심 화면입니다.
- * 사원 정보 조회, 프로필 등록/수정/삭제, 경력 계산 등의 기능을 제공합니다.
+ * 개발?�의 ?�로???�보�?관리하???�심 ?�면?�니??
+ * ?�원 ?�보 조회, ?�로???�록/?�정/??��, 경력 계산 ?�의 기능???�공?�니??
  * 
  * 주요 기능:
- * - 사원 정보 조회 및 프로필 관리
- * - 프로필 등록/수정/삭제 (CRUD)
- * - 경력 계산 및 표시 (입사 전/후 경력 분리)
- * - 개발환경 선택 팝업 (PSM0060M00)
- * - 사원 검색 팝업 (COMZ080P00)
- * - CSV 다운로드 (AG Grid Community 버전)
- * - AG Grid를 활용한 프로필 목록 표시
+ * - ?�원 ?�보 조회 �??�로??관�?
+ * - ?�로???�록/?�정/??�� (CRUD)
+ * - 경력 계산 �??�시 (?�사 ????경력 분리)
+ * - 개발?�경 ?�택 ?�업 (PSM0060M00)
+ * - ?�원 검???�업 (COMZ080P00)
+ * - CSV ?�운로드 (AG Grid Community 버전)
+ * - AG Grid�??�용???�로??목록 ?�시
  * 
- * AS-IS: PSM_03_0110.mxml (개발프로필 등록 및 수정)
- * TO-BE: React 기반 프로필 관리 화면
+ * AS-IS: PSM_03_0110.mxml (개발?�로???�록 �??�정)
+ * TO-BE: React 기반 ?�로??관�??�면
  * 
- * 사용 예시:
+ * ?�용 ?�시:
  * ```tsx
- * // 독립 화면으로 사용
+ * // ?�립 ?�면?�로 ?�용
  * <PSM0050M00 />
  * 
- * // 탭 모드로 사용 (PSM1010M00 내부)
- * <PSM0050M00 isTabMode={true} parentEmpNo="10001" parentEmpNm="홍길동" />
+ * // ??모드�??�용 (PSM1010M00 ?��?)
+ * <PSM0050M00 isTabMode={true} parentEmpNo="10001" parentEmpNm="?�길?? />
  * ```
  * 
  * @author BIST Development Team
  * @since 2024
  */
 interface PSM0050M00Props {
-  /** 탭 모드 여부 (PSM1010M00의 탭으로 사용될 때 true) */
+  /** ??모드 ?��? (PSM1010M00????���??�용????true) */
   isTabMode?: boolean;
-  /** 부모 컴포넌트에서 전달받은 사원번호 */
+  /** 부�?컴포?�트?�서 ?�달받�? ?�원번호 */
   parentEmpNo?: string;
-  /** 부모 컴포넌트에서 전달받은 사원명 */
+  /** 부�?컴포?�트?�서 ?�달받�? ?�원�?*/
   parentEmpNm?: string;
-  /** 프로필 등록 버튼 클릭 시 호출될 콜백 */
+  /** ?�로???�록 버튼 ?�릭 ???�출??콜백 */
   onProfileRegist?: (empNo: string) => void;
 }
 
-// API 호출을 위한 공통 함수 (컴포넌트 외부로 이동)
+// API ?�출???�한 공통 ?�수 (컴포?�트 ?��?�??�동)
 const callApi = async (url: string, data: any): Promise<any> => {
   const response = await fetch(url, {
     method: 'POST',
@@ -228,7 +228,7 @@ const callApi = async (url: string, data: any): Promise<any> => {
   });
 
   if (!response.ok) {
-    throw new Error(`API 호출 실패: ${response.status}`);
+    throw new Error(`API ?�출 ?�패: ${response.status}`);
   }
 
   return response.json();
@@ -301,7 +301,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
 
   const gridApiRef = useRef<GridApi | null>(null);
   
-  // 입력 필드 refs
+  // ?�력 ?�드 refs
   const strtDateRef = useRef<HTMLInputElement>(null);
   const endDateRef = useRef<HTMLInputElement>(null);
   const prjtNmRef = useRef<HTMLInputElement>(null);
@@ -311,69 +311,69 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
 
   /**
    * AS-IS 권한 체크 로직
-   * 경영지원본부 (01), 본부장(00), 부서장(10), 영업본부 영업대표(02)만 사원 조회 가능
-   * @returns {boolean} 사원 조회 권한 여부
+   * 경영지?�본부 (01), 본�???00), 부?�장(10), ?�업본�? ?�업?�??02)�??�원 조회 가??
+   * @returns {boolean} ?�원 조회 권한 ?��?
    */
   const isEnableSrchEmpAuthority = (): boolean => {
     const hqDivCd = user?.hqDivCd || '';
     const authCd = user?.authCd || '';
     const deptTp = user?.deptTp || '';
 
-    if (hqDivCd === '01' || deptTp === 'ADM') return true; // 경영지원본부
-    if (authCd === '00') return true; // 본부장
-    if (authCd === '10') return true; // 부서장
-    if (hqDivCd === '02' || deptTp === 'BIZ') return true; // 영업본부 영업대표
+    if (hqDivCd === '01' || deptTp === 'ADM') return true; // 경영지?�본부
+    if (authCd === '00') return true; // 본�???
+    if (authCd === '10') return true; // 부?�장
+    if (hqDivCd === '02' || deptTp === 'BIZ') return true; // ?�업본�? ?�업?�??
 
     return false;
   };
 
   /**
-   * AS-IS 입력값 검증 로직
-   * 필수 입력 필드 검증 및 오류 시 해당 필드에 포커스
-   * @returns {boolean} 검증 통과 여부
+   * AS-IS ?�력�?검�?로직
+   * ?�수 ?�력 ?�드 검�?�??�류 ???�당 ?�드???�커??
+   * @returns {boolean} 검�??�과 ?��?
    */
   const validateInputData = (): boolean => {
     const { strtDate, endDate, prjtNm, mmbrCo, delpEnvr, chrgWrk } = profileForm;
 
     if (!strtDate || strtDate === '') {
-      showToast('시작일자를 입력해 주십시요.', 'error');
+      showToast('?�작?�자�??�력??주십?�요.', 'error');
       setTimeout(() => strtDateRef.current?.focus(), 100);
       return false;
     }
 
     if (!endDate || endDate === '') {
-      showToast('종료일자를 입력해 주십시요.', 'error');
+      showToast('종료?�자�??�력??주십?�요.', 'error');
       setTimeout(() => endDateRef.current?.focus(), 100);
       return false;
     }
 
     if (prjtNm === '') {
-      showToast('프로젝트명을 입력해 주십시요.', 'error');
+      showToast('?�로?�트명을 ?�력??주십?�요.', 'error');
       setTimeout(() => prjtNmRef.current?.focus(), 100);
       return false;
     }
 
     if (mmbrCo === '') {
-      showToast('고객사를 입력해 주십시요.', 'error');
+      showToast('고객?��? ?�력??주십?�요.', 'error');
       setTimeout(() => mmbrCoRef.current?.focus(), 100);
       return false;
     }
 
     if (chrgWrk === '') {
-      showToast('담당업무를 입력해 주십시요.', 'error');
+      showToast('?�당?�무�??�력??주십?�요.', 'error');
       setTimeout(() => chrgWrkRef.current?.focus(), 100);
       return false;
     }
 
     if (delpEnvr === '') {
-      showToast('개발환경/DBMS/언어를 입력해 주십시요.', 'error');
+      showToast('개발?�경/DBMS/?�어�??�력??주십?�요.', 'error');
       setTimeout(() => delpEnvrRef.current?.focus(), 100);
       return false;
     }
 
-    // 시작일자가 종료일자보다 늦은 경우 체크
+    // ?�작?�자가 종료?�자보다 ??? 경우 체크
     if (strtDate > endDate) {
-      showToast('시작일자는 종료일자보다 같거나 작아야 합니다. 개발기간을 다시 입력해 주십시요.', 'error');
+      showToast('?�작?�자??종료?�자보다 같거???�아???�니?? 개발기간???�시 ?�력??주십?�요.', 'error');
       setTimeout(() => strtDateRef.current?.focus(), 100);
       return false;
     }
@@ -382,11 +382,11 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * AS-IS 경력개월수 합계 구하기
-   * 년과 개월을 입력받아 총 개월수로 변환
-   * @param {string} strYCnt - 년수
-   * @param {string} strMCnt - 개월수
-   * @returns {string} 총 개월수
+   * AS-IS 경력개월???�계 구하�?
+   * ?�과 개월???�력받아 �?개월?�로 변??
+   * @param {string} strYCnt - ?�수
+   * @param {string} strMCnt - 개월??
+   * @returns {string} �?개월??
    */
   const getCarrMCnt = (strYCnt: string, strMCnt: string): string => {
     if (strYCnt === '' && strMCnt === '') return '';
@@ -398,30 +398,30 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * AS-IS 시작일자 입력 데이터 년월일 합치기
-   * 년과 월을 입력받아 YYYYMMDD 형식으로 변환 (일자는 항상 01)
-   * @param {string} year - 년도
-   * @param {string} month - 월
-   * @returns {string} YYYYMMDD 형식의 시작일자
+   * AS-IS ?�작?�자 ?�력 ?�이???�월???�치�?
+   * ?�과 ?�을 ?�력받아 YYYYMMDD ?�식?�로 변??(?�자????�� 01)
+   * @param {string} year - ?�도
+   * @param {string} month - ??
+   * @returns {string} YYYYMMDD ?�식???�작?�자
    */
   const packStrtDate = (year: string, month: string): string => {
     return year + month + '01';
   };
 
   /**
-   * AS-IS 종료일자 입력 데이터 년월일 합치기
-   * 년과 월을 입력받아 YYYYMMDD 형식으로 변환 (일자는 해당 월의 마지막 날)
-   * @param {string} year - 년도
-   * @param {string} month - 월
-   * @returns {string} YYYYMMDD 형식의 종료일자
+   * AS-IS 종료?�자 ?�력 ?�이???�월???�치�?
+   * ?�과 ?�을 ?�력받아 YYYYMMDD ?�식?�로 변??(?�자???�당 ?�의 마�?�???
+   * @param {string} year - ?�도
+   * @param {string} month - ??
+   * @returns {string} YYYYMMDD ?�식??종료?�자
    */
   const packEndDate = (year: string, month: string): string => {
     const arrLastDay = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     
-    // 윤년일 경우
+    // ?�년??경우
     const yearNum = parseInt(year);
     if (yearNum % 4 === 0 && (yearNum % 100 !== 0 || yearNum % 400 === 0)) {
-      arrLastDay[2] = 29; // 윤년 2월
+      arrLastDay[2] = 29; // ?�년 2??
     }
     
     return year + month + String(arrLastDay[parseInt(month)]);
@@ -429,16 +429,16 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
 
   /**
    * AS-IS 경력 계산 로직
-   * 프로필 리스트를 기반으로 입사전/입사후 경력을 계산
-   * @param {string} kb - 계산 타입 ('ALL', 'Before', 'After')
+   * ?�로??리스?��? 기반?�로 ?�사???�사??경력??계산
+   * @param {string} kb - 계산 ?�??('ALL', 'Before', 'After')
    */
   const calculateCareer = (kb: string) => {
     if (!employeeData || !profileList.length) return;
 
     const strEntrYm = employeeData.ENTR_DT?.replace(/\//g, '').substring(0, 6) || '';
     
-    let nBefCarrMcnt = 0; // 입사전 경력개월수
-    let nAftCarrMcnt = 0; // 입사후 경력개월수
+    let nBefCarrMcnt = 0; // ?�사??경력개월??
+    let nAftCarrMcnt = 0; // ?�사??경력개월??
     
     const now = new Date();
     const nowYearMonth = now.getFullYear().toString() + 
@@ -451,21 +451,21 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
         : profile.END_YM?.replace(/\//g, '') || '';
 
       if (employeeData.OWN_OUTS_DIV === '1') {
-        // 자사일 경우
+        // ?�사??경우
         if (Number(strEntrYm) > Number(strDevStrtYm)) {
-          // 입사전 경력
+          // ?�사??경력
           nBefCarrMcnt += getMonthCnt(strDevStrtYm, strDevEndYm);
         } else {
-          // 입사후 경력
+          // ?�사??경력
           nAftCarrMcnt += getMonthCnt(strDevStrtYm, strDevEndYm);
         }
       } else {
-        // 외주일 경우
+        // ?�주??경우
         if (!profile.BSN_NO || profile.BSN_NO === '') {
-          // 타사개발경력
+          // ?�?�개발경??
           nBefCarrMcnt += getMonthCnt(strDevStrtYm, strDevEndYm);
         } else {
-          // 자사개발경력
+          // ?�사개발경력
           nAftCarrMcnt += getMonthCnt(strDevStrtYm, strDevEndYm);
         }
       }
@@ -487,11 +487,11 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * AS-IS 개월수 계산
-   * 시작년월과 종료년월 사이의 개월수를 계산
-   * @param {string} startYm - 시작년월 (YYYYMM 형식)
-   * @param {string} endYm - 종료년월 (YYYYMM 형식)
-   * @returns {number} 개월수
+   * AS-IS 개월??계산
+   * ?�작?�월�?종료?�월 ?�이??개월?��? 계산
+   * @param {string} startYm - ?�작?�월 (YYYYMM ?�식)
+   * @param {string} endYm - 종료?�월 (YYYYMM ?�식)
+   * @returns {number} 개월??
    */
   const getMonthCnt = (startYm: string, endYm: string): number => {
     if (!startYm || !endYm) return 0;
@@ -505,9 +505,9 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * 개월수를 년과 개월로 변환하는 유틸리티 함수
-   * @param {number} carrMcnt - 경력 개월수
-   * @returns {{years: number, months: number}} 년과 개월
+   * 개월?��? ?�과 개월�?변?�하???�틸리티 ?�수
+   * @param {number} carrMcnt - 경력 개월??
+   * @returns {{years: number, months: number}} ?�과 개월
    */
   const convertMonthsToYearsAndMonths = (carrMcnt: number) => {
     const years = Math.floor(carrMcnt / 12);
@@ -516,10 +516,10 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * YYYY-MM 형식의 날짜에서 년과 월을 추출하는 유틸리티 함수
-   * @param {string} startDate - 시작일자 (YYYY-MM 형식)
-   * @param {string} endDate - 종료일자 (YYYY-MM 형식)
-   * @returns {{strtYear: string, strtMonth: string, endYear: string, endMonth: string}} 년월 정보
+   * YYYY-MM ?�식???�짜?�서 ?�과 ?�을 추출?�는 ?�틸리티 ?�수
+   * @param {string} startDate - ?�작?�자 (YYYY-MM ?�식)
+   * @param {string} endDate - 종료?�자 (YYYY-MM ?�식)
+   * @returns {{strtYear: string, strtMonth: string, endYear: string, endMonth: string}} ?�월 ?�보
    */
   const extractYearMonthFromDateRange = (startDate: string, endDate: string) => {
     const strtYear = startDate.substring(0, 4);
@@ -530,9 +530,9 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * AS-IS 입사전경력 화면 출력
-   * 개월수를 년과 개월로 변환하여 상태에 저장
-   * @param {number} carrMcnt - 경력 개월수
+   * AS-IS ?�사?�경???�면 출력
+   * 개월?��? ?�과 개월�?변?�하???�태???�??
+   * @param {number} carrMcnt - 경력 개월??
    */
   const prtEntrBefCarr = (carrMcnt: number) => {
     const { years, months } = convertMonthsToYearsAndMonths(carrMcnt);
@@ -545,9 +545,9 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * AS-IS 입사후경력 화면 출력
-   * 개월수를 년과 개월로 변환하여 상태에 저장
-   * @param {number} carrMcnt - 경력 개월수
+   * AS-IS ?�사?�경???�면 출력
+   * 개월?��? ?�과 개월�?변?�하???�태???�??
+   * @param {number} carrMcnt - 경력 개월??
    */
   const prtEntrAftCarr = (carrMcnt: number) => {
     const { years, months } = convertMonthsToYearsAndMonths(carrMcnt);
@@ -560,9 +560,9 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * AS-IS 경력합계 화면 출력
-   * 개월수를 년과 개월로 변환하여 상태에 저장
-   * @param {number} carrMcnt - 경력 개월수
+   * AS-IS 경력?�계 ?�면 출력
+   * 개월?��? ?�과 개월�?변?�하???�태???�??
+   * @param {number} carrMcnt - 경력 개월??
    */
   const prtCarrTotal = (carrMcnt: number) => {
     const { years, months } = convertMonthsToYearsAndMonths(carrMcnt);
@@ -575,47 +575,47 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * AS-IS 프로필 중복 체크
-   * 사업번호로 프로필 중복 등록 여부 확인
-   * @param {string} bsnNo - 사업번호
-   * @returns {boolean} 중복 여부
+   * AS-IS ?�로??중복 체크
+   * ?�업번호�??�로??중복 ?�록 ?��? ?�인
+   * @param {string} bsnNo - ?�업번호
+   * @returns {boolean} 중복 ?��?
    */
   const checkProfileExisted = (bsnNo: string): boolean => {
     return profileList.some(profile => profile.BSN_NO === bsnNo);
   };
 
   /**
-   * AS-IS 입력 필드 활성화/비활성화
+   * AS-IS ?�력 ?�드 ?�성??비활?�화
    * AS-IS 로직:
-   * - 시작일자, 종료일자, 담당업무: enabled에 따라 제어
-   * - 프로젝트명, 고객사, 개발환경: 항상 활성화 (AS-IS에서 주석처리됨)
-   * @param {boolean} enabled - 활성화 여부
+   * - ?�작?�자, 종료?�자, ?�당?�무: enabled???�라 ?�어
+   * - ?�로?�트�? 고객?? 개발?�경: ??�� ?�성??(AS-IS?�서 주석처리??
+   * @param {boolean} enabled - ?�성???��?
    */
   const setEnabledInputItem = (enabled: boolean) => {
     setInputEnabled(enabled);
   };
 
   /**
-   * AS-IS 개발환경 입력 팝업
-   * 개발환경 선택 팝업을 열기
+   * AS-IS 개발?�경 ?�력 ?�업
+   * 개발?�경 ?�택 ?�업???�기
    */
   const handleDevEnvPopup = () => {
     setShowDevEnvPopup(true);
   };
 
   /**
-   * AS-IS 경력 저장 기능 (간단한 알림으로 대체)
-   * 경력 저장은 별도 팝업으로 구현 예정
+   * AS-IS 경력 ?�??기능 (간단???�림?�로 ?��?
+   * 경력 ?�?��? 별도 ?�업?�로 구현 ?�정
    */
   const handleCareerSave = () => {
-    showToast('경력 저장 기능은 별도 팝업으로 구현됩니다.', 'info');
+    showToast('경력 ?�??기능?� 별도 ?�업?�로 구현?�니??', 'info');
   };
 
   /**
-   * AS-IS DataGrid 번호 매기는 함수
-   * AG-Grid에서 행 번호를 표시하기 위한 렌더러
-   * @param {any} params - AG-Grid 파라미터
-   * @returns {string} 행 번호
+   * AS-IS DataGrid 번호 매기???�수
+   * AG-Grid?�서 ??번호�??�시?�기 ?�한 ?�더??
+   * @param {any} params - AG-Grid ?�라미터
+   * @returns {string} ??번호
    */
   const setRowNum = (params: any) => {
     if (gridApiRef.current && params.node && params.node.rowIndex !== null && params.node.rowIndex !== undefined) {
@@ -629,40 +629,40 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * 초기 데이터 로드
-   * 공통코드 로드 및 권한 체크
+   * 초기 ?�이??로드
+   * 공통코드 로드 �?권한 체크
    */
   const initializeData = async () => {
     try {
-      // 공통코드는 항상 로드 (담당업무 콤보박스용)
+      // 공통코드????�� 로드 (?�당?�무 콤보박스??
       await loadCommonCodes();
       
-      // 탭 모드인 경우 부모로부터 전달받은 사원 정보 사용
+      // ??모드??경우 부모로부???�달받�? ?�원 ?�보 ?�용
       if (isTabMode && parentEmpNo && parentEmpNm) {
         setSearchEmpNm(parentEmpNm);
-        // 부모로부터 전달받은 사원 정보로 조회
+        // 부모로부???�달받�? ?�원 ?�보�?조회
         await searchEmployeeInfo('1', parentEmpNo, 'ALL');
       } else {
-        // AS-IS와 동일한 초기 설정
+        // AS-IS?� ?�일??초기 ?�정
         if (user?.userId) {
           setSearchEmpNm(user.name || '');
         }
       }
       
-      // 권한 체크는 사원 검색 시에만 적용
+      // 권한 체크???�원 검???�에�??�용
       if (!isEnableSrchEmpAuthority()) {
-        showToast('사원 조회 권한이 없습니다.', 'warning');
+        showToast('?�원 조회 권한???�습?�다.', 'warning');
       }
     } catch (error) {
-      console.error('초기화 중 오류:', error);
-      showToast('초기화 중 오류가 발생했습니다.', 'error');
+      console.error('초기??�??�류:', error);
+      showToast('초기??�??�류가 발생?�습?�다.', 'error');
     }
   };
 
   /**
    * 공통코드 로드
-   * AS-IS: COM_03_0101_S 프로시저 호출, 파라미터: I_LRG_CSF_CD (대분류코드)
-   * 담당업무 콤보박스용 공통코드 조회
+   * AS-IS: COM_03_0101_S ?�로?��? ?�출, ?�라미터: I_LRG_CSF_CD (?�분류코드)
+   * ?�당?�무 콤보박스??공통코드 조회
    */
   const loadCommonCodes = async () => {
     try {
@@ -670,23 +670,23 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
         largeCategoryCode: '107'
       });
       
-      // API 응답에 success 필드가 없으므로 data가 있으면 성공으로 처리
+      // API ?�답??success ?�드가 ?�으므�?data가 ?�으�??�공?�로 처리
       if (result.data && Array.isArray(result.data)) {
         setCommonCodes(result.data);
       } else {
-        console.error('공통코드 API 실패:', result);
+        console.error('공통코드 API ?�패:', result);
       }
     } catch (error) {
-      console.error('공통코드 조회 오류:', error);
+      console.error('공통코드 조회 ?�류:', error);
     }
   };
 
   /**
-   * 사원 정보 검색
-   * AS-IS 로직에 따라 사원번호 또는 사원명으로 사원 정보 조회
-   * @param {string} kb - 검색 타입 ('1': 사원번호, '2': 사원명)
-   * @param {string} strEmp - 검색할 사원번호 또는 사원명
-   * @param {string} strOutsOwn - 자사/외주 구분 ('ALL', '1': 자사, '2': 외주)
+   * ?�원 ?�보 검??
+   * AS-IS 로직???�라 ?�원번호 ?�는 ?�원명으�??�원 ?�보 조회
+   * @param {string} kb - 검???�??('1': ?�원번호, '2': ?�원�?
+   * @param {string} strEmp - 검?�할 ?�원번호 ?�는 ?�원�?
+   * @param {string} strOutsOwn - ?�사/?�주 구분 ('ALL', '1': ?�사, '2': ?�주)
    */
   const searchEmployeeInfo = async (kb: string, strEmp: string, strOutsOwn: string) => {
     try {
@@ -702,41 +702,41 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
       console.log('[PSM0050M00] searchEmployeeInfo result:', result);
       
       if (result.success && result.data && result.data.length > 0) {
-        // AS-IS empBscInfSeltHandler 로직과 동일
+        // AS-IS empBscInfSeltHandler 로직�??�일
         if (result.data.length > 1) {
-        // 2건 이상일 경우 사원 선택 팝업 호출 (AS-IS: COM_02_0410)
-        // TO-BE: COMZ080P00 팝업 호출
+        // 2�??�상??경우 ?�원 ?�택 ?�업 ?�출 (AS-IS: COM_02_0410)
+        // TO-BE: COMZ080P00 ?�업 ?�출
         openEmployeeSearchPopup(kb, strEmp, strOutsOwn, result.data);
         return;
         } else {
-          // 한 건일 경우 사원 정보 설정
+          // ??건일 경우 ?�원 ?�보 ?�정
           console.log('[PSM0050M00] Employee found:', result.data[0]);
           const employee = result.data[0];
           setEmployeeData(employee);
           
-          // AS-IS와 동일하게 프로필 내역 조회
+          // AS-IS?� ?�일?�게 ?�로???�역 조회
           await loadProfileList(employee.EMP_NO);
           await loadProfileCarrData(employee.EMP_NO);
           
-          // 사원 조회 시 프로필 입력 폼 초기화 (AS-IS: onClickBtnNew)
+          // ?�원 조회 ???�로???�력 ??초기??(AS-IS: onClickBtnNew)
           handleNew();
         }
       } else {
         console.log('[PSM0050M00] No employee found');
-        showToast('사원 정보를 찾을 수 없습니다.', 'warning');
+        showToast('?�원 ?�보�?찾을 ???�습?�다.', 'warning');
       }
     } catch (error) {
-      console.error('사원 정보 조회 오류:', error);
-      showToast('사원 정보 조회 중 오류가 발생했습니다.', 'error');
+      console.error('?�원 ?�보 조회 ?�류:', error);
+      showToast('?�원 ?�보 조회 �??�류가 발생?�습?�다.', 'error');
     } finally {
       setIsLoading(false);
     }
   };
 
   /**
-   * 프로필 리스트 로드
-   * 사원번호로 프로필 목록 조회
-   * @param {string} empNo - 사원번호
+   * ?�로??리스??로드
+   * ?�원번호�??�로??목록 조회
+   * @param {string} empNo - ?�원번호
    */
   const loadProfileList = async (empNo: string) => {
     try {
@@ -746,11 +746,11 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
       });
       
       if (result.success) {
-        // result.data가 배열인지 확인하고 안전하게 설정
+        // result.data가 배열?��? ?�인?�고 ?�전?�게 ?�정
         const profileData = Array.isArray(result.data) ? result.data : [];
         setProfileList(profileData);
         
-        // 데이터 로드 후 컬럼 크기 조정
+        // ?�이??로드 ??컬럼 ?�기 조정
         setTimeout(() => {
           if (gridApiRef.current) {
             gridApiRef.current.sizeColumnsToFit();
@@ -758,15 +758,15 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
         }, 200);
       }
     } catch (error) {
-      console.error('프로필 리스트 조회 오류:', error);
-      showToast('프로필 리스트 조회 중 오류가 발생했습니다.', 'error');
+      console.error('?�로??리스??조회 ?�류:', error);
+      showToast('?�로??리스??조회 �??�류가 발생?�습?�다.', 'error');
     }
   };
 
   /**
-   * 프로필 경력 데이터 로드
-   * 사원번호로 경력 계산 데이터 조회
-   * @param {string} empNo - 사원번호
+   * ?�로??경력 ?�이??로드
+   * ?�원번호�?경력 계산 ?�이??조회
+   * @param {string} empNo - ?�원번호
    */
   const loadProfileCarrData = async (empNo: string) => {
     try {
@@ -776,23 +776,23 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
       });
       
       if (result.success && result.data && result.data.length > 0) {
-        // AS-IS fnSelectProfileCarr 함수의 aftCarrCalcHandler 로직
-        const rec = result.data[0]; // 배열의 첫 번째 요소 사용
+        // AS-IS fnSelectProfileCarr ?�수??aftCarrCalcHandler 로직
+        const rec = result.data[0]; // 배열??�?번째 ?�소 ?�용
         
         if (!rec) {
-          // 프로필 경력 출력 항목 Clear
+          // ?�로??경력 출력 ??�� Clear
           clearProfileCarr();
           return;
         }
 
-        // 학력기준 경력(입사전/입사후)과 등급
+        // ?�력기�? 경력(?�사???�사??�??�급
         const befMCnt = Number(rec.BEF_M_CNT || 0);
         const aftMCnt = Number(rec.AFT_M_CNT || 0);
         const totMCnt = befMCnt + aftMCnt;
         
         setProfileCarrData({
           calcStadDt: rec.CALC_STAD_DT || '',
-          // 학력기준
+          // ?�력기�?
           entrBefInYcnt: Math.floor(befMCnt / 12),
           entrBefInMcnt: befMCnt - (Math.floor(befMCnt / 12) * 12),
           entrAftInYcnt: Math.floor(aftMCnt / 12),
@@ -801,7 +801,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
           totCarrMcnt: totMCnt - (Math.floor(totMCnt / 12) * 12),
           adbgTcnGrdNm: rec.TCN_GRD_NM || '',
           adbgTcnGrdCd: rec.TCN_GRD || '',
-          // 기술자격기준
+          // 기술?�격기�?
           ctqlEntrBefInYcnt: Math.floor(Number(rec.BEF_CTQL_M_CNT || 0) / 12),
           ctqlEntrBefInMcnt: Number(rec.BEF_CTQL_M_CNT || 0) - (Math.floor(Number(rec.BEF_CTQL_M_CNT || 0) / 12) * 12),
           ctqlEntrAftInYcnt: Math.floor(Number(rec.AFT_CTQL_M_CNT || 0) / 12),
@@ -813,13 +813,13 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
         });
       }
     } catch (error) {
-      console.error('프로필 경력 계산 데이터 조회 오류:', error);
+      console.error('?�로??경력 계산 ?�이??조회 ?�류:', error);
     }
   };
 
   /**
-   * 프로필 경력 데이터 초기화
-   * 경력 계산 데이터를 기본값으로 초기화
+   * ?�로??경력 ?�이??초기??
+   * 경력 계산 ?�이?��? 기본값으�?초기??
    */
   const clearProfileCarr = () => {
     setProfileCarrData({
@@ -844,24 +844,24 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * 사원 검색 버튼 클릭 핸들러
-   * 사원명으로 사원 검색 실행
+   * ?�원 검??버튼 ?�릭 ?�들??
+   * ?�원명으�??�원 검???�행
    */
   const handleEmpSearch = () => {
     if (!searchEmpNm.trim()) {
-      showToast('사원명을 입력해 주십시요.', 'warning');
+      showToast('?�원명을 ?�력??주십?�요.', 'warning');
       return;
     }
     searchEmployeeInfo('2', searchEmpNm.trim(), 'ALL');
   };
 
   /**
-   * 조회 버튼 클릭 핸들러
-   * 현재 선택된 사원의 프로필과 경력 데이터를 새로고침
+   * 조회 버튼 ?�릭 ?�들??
+   * ?�재 ?�택???�원???�로?�과 경력 ?�이?��? ?�로고침
    */
   const handleRefreshData = () => {
     if (!employeeData?.EMP_NO.trim()) {
-      showToast('사원명을 입력해 주십시요.', 'warning');
+      showToast('?�원명을 ?�력??주십?�요.', 'warning');
       return;
     } else {
       loadProfileList(employeeData.EMP_NO);
@@ -870,14 +870,14 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * AS-IS DblClick_COM_02_0410 함수와 동일한 기능
-   * 사원 선택 팝업에서 선택된 사원 정보 처리
-   * @param {string} empNo - 선택된 사원번호
-   * @param {string} empNm - 선택된 사원명
-   * @param {string} ownOutsDiv - 자사/외주 구분
+   * AS-IS DblClick_COM_02_0410 ?�수?� ?�일??기능
+   * ?�원 ?�택 ?�업?�서 ?�택???�원 ?�보 처리
+   * @param {string} empNo - ?�택???�원번호
+   * @param {string} empNm - ?�택???�원�?
+   * @param {string} ownOutsDiv - ?�사/?�주 구분
    */
   /**
-   * COMZ080P00 팝업 열기 함수
+   * COMZ080P00 ?�업 ?�기 ?�수
    */
   const openEmployeeSearchPopup = (searchType: string, searchValue: string, ownOutsDiv: string, empList: any[]) => {
     const width = 1000;
@@ -894,7 +894,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
     if (popup) {
       setPopupWindow(popup);
       
-      // 팝업이 로드된 후 데이터 전송
+      // ?�업??로드?????�이???�송
       popup.onload = () => {
         setTimeout(() => {
           sendDataToEmployeePopup(popup, searchType, searchValue, ownOutsDiv, empList);
@@ -904,7 +904,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * 팝업에 데이터 전송
+   * ?�업???�이???�송
    */
   const sendDataToEmployeePopup = (popup: Window, searchType: string, searchValue: string, ownOutsDiv: string, empList: any[]) => {
     const popupData = {
@@ -920,7 +920,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * 메시지 수신 처리
+   * 메시지 ?�신 처리
    */
   React.useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -928,7 +928,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
         const selectedEmp = event.data.data;
         handleEmployeeSelected(selectedEmp.empNo, selectedEmp.empNm, selectedEmp.ownOutsDiv);
         
-        // 팝업 닫기
+        // ?�업 ?�기
         if (popupWindow) {
           popupWindow.close();
           setPopupWindow(null);
@@ -946,39 +946,39 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
     setEmployeeData({ EMP_NO: empNo, EMP_NM: empNm, OWN_OUTS_DIV: ownOutsDiv } as EmployeeData);
     setSearchEmpNm(empNm);
     
-    // AS-IS와 동일하게 프로필 내역 조회
+    // AS-IS?� ?�일?�게 ?�로???�역 조회
     loadProfileList(empNo);
     loadProfileCarrData(empNo);
     
-    // 사원 조회 시 프로필 입력 폼 초기화 (AS-IS: onClickBtnNew)
+    // ?�원 조회 ???�로???�력 ??초기??(AS-IS: onClickBtnNew)
     handleNew();
   };
 
   /**
-   * 프로필 검색 버튼 클릭 핸들러
-   * 현재 선택된 사원의 프로필 목록 새로고침
+   * ?�로??검??버튼 ?�릭 ?�들??
+   * ?�재 ?�택???�원???�로??목록 ?�로고침
    */
   const handleProfileSearch = () => {
     if (!employeeData) {
-      showToast('먼저 사원을 검색해주세요.', 'warning');
+      showToast('먼�? ?�원??검?�해주세??', 'warning');
       return;
     }
     loadProfileList(employeeData.EMP_NO);
   };
 
   /**
-   * 프로필 엑셀 다운로드 핸들러
-   * CSV 형태로 데이터 다운로드 (Community 버전 대응)
+   * ?�로???��? ?�운로드 ?�들??
+   * CSV ?�태�??�이???�운로드 (Community 버전 ?�??
    */
   const handleProfileExcel = () => {
     if (!profileList || profileList.length === 0) {
-      showToast('다운로드할 프로필 데이터가 없습니다.', 'warning');
+      showToast('?�운로드???�로???�이?��? ?�습?�다.', 'warning');
       return;
     }
 
     try {
-      // CSV 형태로 데이터 내보내기
-      const headers = ['프로젝트명', '시작년월', '종료년월', '개월수', '고객사', '담당업무', '개발환경', '사업번호', '등록일', '등록자', '비고'];
+      // CSV ?�태�??�이???�보?�기
+      const headers = ['?�로?�트�?, '?�작?�월', '종료?�월', '개월??, '고객??, '?�당?�무', '개발?�경', '?�업번호', '?�록??, '?�록??, '비고'];
       const csvData = profileList.map(profile => [
         profile.PRJT_NM || '',
         profile.STRT_YM || '',
@@ -1001,79 +1001,79 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
       link.setAttribute('href', url);
-      link.setAttribute('download', `${employeeData?.EMP_NM || ''}_프로필_내역.csv`);
+      link.setAttribute('download', `${employeeData?.EMP_NM || ''}_?�로???�역.csv`);
       link.style.visibility = 'hidden';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
 
-      showToast('CSV 다운로드가 완료되었습니다.', 'info');
+      showToast('CSV ?�운로드가 ?�료?�었?�니??', 'info');
     } catch (error) {
-      console.error('CSV 다운로드 오류:', error);
-      showToast('CSV 다운로드 중 오류가 발생했습니다.', 'error');
+      console.error('CSV ?�운로드 ?�류:', error);
+      showToast('CSV ?�운로드 �??�류가 발생?�습?�다.', 'error');
     }
   };
 
   /**
-   * 프로필 등록 팝업 핸들러
+   * ?�로???�록 ?�업 ?�들??
    */
   const handleProfileRegist = () => {
     if (isTabMode && employeeData?.EMP_NO) {
-      showToast('개발중입니다.', 'error');
-      // 탭 모드에서는 COM0000M00의 전역 handleMenuClick 함수를 호출
+      showToast('개발중입?�다.', 'error');
+      // ??모드?�서??COM0000M00???�역 handleMenuClick ?�수�??�출
       // const globalHandleMenuClick = (window as any).handleMenuClick;
       // if (globalHandleMenuClick && typeof globalHandleMenuClick === 'function') {
-      //   // 사원번호를 파라미터로 전달
+      //   // ?�원번호�??�라미터�??�달
       //   globalHandleMenuClick('PSM0040', { 
       //     empNo: employeeData.EMP_NO,
       //     empNm: employeeData.EMP_NM 
       //   });
       // } else {
-      //   showToast('메뉴 시스템에 연결할 수 없습니다.', 'error');
+      //   showToast('메뉴 ?�스?�에 ?�결?????�습?�다.', 'error');
       // }
     }
   };
 
   /**
-   * 자사/외주 구분에 따른 경력 라벨 반환
-   * AS-IS: 자사(1)면 "입사전/입사후 경력", 외주(2)면 "타사/자사 경력"
-   * @param {string} ownOutsDiv - 자사/외주 구분 ('1': 자사, '2': 외주)
-   * @param {string} type - 라벨 타입 ('before' | 'after')
-   * @returns {string} 경력 라벨
+   * ?�사/?�주 구분???�른 경력 ?�벨 반환
+   * AS-IS: ?�사(1)�?"?�사???�사??경력", ?�주(2)�?"?�???�사 경력"
+   * @param {string} ownOutsDiv - ?�사/?�주 구분 ('1': ?�사, '2': ?�주)
+   * @param {string} type - ?�벨 ?�??('before' | 'after')
+   * @returns {string} 경력 ?�벨
    */
   const getCareerLabel = (ownOutsDiv: string, type: 'before' | 'after'): string => {
     if (ownOutsDiv === '1') {
-      // 자사
-      return type === 'before' ? '입사전 경력' : '입사후 경력';
+      // ?�사
+      return type === 'before' ? '?�사??경력' : '?�사??경력';
     } else {
-      // 외주
-      return type === 'before' ? '타사 경력' : '자사 경력';
+      // ?�주
+      return type === 'before' ? '?�??경력' : '?�사 경력';
     }
   };
 
   /**
-   * 투입내역 불러오기 핸들러
-   * 투입인력현황(BSN0660P00) 화면 개발 중
+   * ?�입?�역 불러?�기 ?�들??
+   * ?�입?�력?�황(BSN0660P00) ?�면 개발 �?
    */
   const handleLoadProjectInput = () => {
-    showToast('투입인력현황(BSN0660P00) 화면 개발중입니다.', 'info');
+    showToast('?�입?�력?�황(BSN0660P00) ?�면 개발중입?�다.', 'info');
   };
 
   /**
-   * 프로필 더블클릭 핸들러
-   * 프로필 목록에서 항목을 더블클릭하여 수정 모드로 전환
-   * @param {number} index - 프로필 목록 인덱스
+   * ?�로???�블?�릭 ?�들??
+   * ?�로??목록?�서 ??��???�블?�릭?�여 ?�정 모드�??�환
+   * @param {number} index - ?�로??목록 ?�덱??
    */
   const handleProfileDoubleClick = (index: number) => {
     if (index < 0 || index >= profileList.length) return;
     
     const profile = profileList[index];
     
-    // AS-IS 로직: 날짜를 년/월로 분리
+    // AS-IS 로직: ?�짜�????�로 분리
     const strtDt = profile.STRT_DT || '';
     const endDt = profile.END_DT || '';
     
-    // YYYYMMDD 형식을 YYYY-MM 형식으로 변환
+    // YYYYMMDD ?�식??YYYY-MM ?�식?�로 변??
     const formatDateToMonth = (dateStr: string): string => {
       if (!dateStr || dateStr.length < 6) return '';
       const year = dateStr.substring(0, 4);
@@ -1095,27 +1095,27 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
       chrgWrk: profile.CHRG_WRK || '',
       taskNm: profile.CHRG_WRK_NM || '',
       rmk: profile.RMK || '',
-      strtDate: formatDateToMonth(strtDt), // YYYY-MM 형식으로 변환
-      endDate: formatDateToMonth(endDt),   // YYYY-MM 형식으로 변환
+      strtDate: formatDateToMonth(strtDt), // YYYY-MM ?�식?�로 변??
+      endDate: formatDateToMonth(endDt),   // YYYY-MM ?�식?�로 변??
       bsnNm: profile.BSN_NO || '',
       custNm: profile.MMBR_CO || ''
     });
     
     setNewFlag(false);
     
-    // AS-IS 로직: 실투입등록내역으로 등록된 프로필인지 체크
+    // AS-IS 로직: ?�투?�등록내??���??�록???�로?�인지 체크
     if (!profile.BSN_NO || profile.BSN_NO === '') {
-      // 모든 입력 항목 입력 가능
+      // 모든 ?�력 ??�� ?�력 가??
       setEnabledInputItem(true);
     } else {
-      // 개발환경만 빼고 나머지는 입력 불가능
+      // 개발?�경�?빼고 ?�머지???�력 불�???
       setEnabledInputItem(false);
     }
   };
 
   /**
-   * 신규 버튼 클릭 핸들러
-   * 프로필 입력 폼을 초기화하고 신규 등록 모드로 전환
+   * ?�규 버튼 ?�릭 ?�들??
+   * ?�로???�력 ?�을 초기?�하�??�규 ?�록 모드�??�환
    */
   const handleNew = () => {
     setProfileForm({
@@ -1138,17 +1138,17 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
       custNm: ''
     });
     setNewFlag(true);
-    // AS-IS: setEnabledInputItem(true) - 입력항목 활성화
+    // AS-IS: setEnabledInputItem(true) - ?�력??�� ?�성??
     setInputEnabled(true);
   };
 
   /**
-   * 저장 버튼 클릭 핸들러
-   * 저장 확인 다이얼로그 표시
+   * ?�??버튼 ?�릭 ?�들??
+   * ?�???�인 ?�이?�로�??�시
    */
   const handleSave = () => {
     if (!employeeData) {
-      showToast('먼저 사원을 검색해주세요.', 'warning');
+      showToast('먼�? ?�원??검?�해주세??', 'warning');
       return;
     }
 
@@ -1158,23 +1158,23 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
 
     // AS-IS 중복 체크
     if (newFlag && checkProfileExisted(profileForm.bsnNo)) {
-      showToast('이미 등록된 프로필입니다.', 'warning');
+      showToast('?��? ?�록???�로?�입?�다.', 'warning');
       return;
     }
 
-    // 저장 확인 다이얼로그 표시
+    // ?�???�인 ?�이?�로�??�시
     setShowSaveConfirm(true);
   };
 
   /**
-   * 저장 확인 다이얼로그 확인 핸들러
-   * 프로필 등록 또는 수정 API 호출
+   * ?�???�인 ?�이?�로�??�인 ?�들??
+   * ?�로???�록 ?�는 ?�정 API ?�출
    */
   const handleSaveConfirm = async () => {
     setShowSaveConfirm(false);
 
     if (!employeeData) {
-      showToast('사원 정보가 없습니다.', 'error');
+      showToast('?�원 ?�보가 ?�습?�다.', 'error');
       return;
     }
 
@@ -1182,9 +1182,9 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
       setIsLoading(true);
       const url = newFlag ? '/api/psm/profile/insert' : '/api/psm/profile/update';
       
-      // strtDate와 endDate에서 년월 추출 (YYYY-MM 형식에서)
+      // strtDate?� endDate?�서 ?�월 추출 (YYYY-MM ?�식?�서)
       if (!profileForm.strtDate || !profileForm.endDate) {
-        showToast('시작일자와 종료일자를 모두 입력해주세요.', 'error');
+        showToast('?�작?�자?� 종료?�자�?모두 ?�력?�주?�요.', 'error');
         return;
       }
       
@@ -1193,7 +1193,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
         profileForm.endDate
       );
 
-      // 공통 요청 데이터 구성
+      // 공통 ?�청 ?�이??구성
       const baseRequestData = {
         empNo: employeeData.EMP_NO,
         bsnNo: profileForm.bsnNo,
@@ -1208,7 +1208,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
         userId: user?.userId || 'system'
       };
 
-      // Update 시에만 seqNo 추가
+      // Update ?�에�?seqNo 추�?
       const requestData = newFlag ? baseRequestData : {
         ...baseRequestData,
         seqNo: String(profileForm.seqNo)
@@ -1217,47 +1217,47 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
       const result = await callApi(url, requestData);
       
       if (result.success) {
-        showToast(newFlag ? '프로필이 등록되었습니다.' : '프로필이 수정되었습니다.', 'info');
+        showToast(newFlag ? '?�로?�이 ?�록?�었?�니??' : '?�로?�이 ?�정?�었?�니??', 'info');
         await loadProfileList(employeeData!.EMP_NO);
         handleNew();
       } else {
-        showToast(result.message || '저장 중 오류가 발생했습니다.', 'error');
+        showToast(result.message || '?�??�??�류가 발생?�습?�다.', 'error');
       }
     } catch (error) {
-      console.error('프로필 저장 오류:', error);
-      showToast('프로필 저장 중 오류가 발생했습니다.', 'error');
+      console.error('?�로???�???�류:', error);
+      showToast('?�로???�??�??�류가 발생?�습?�다.', 'error');
     } finally {
       setIsLoading(false);
     }
   };
 
   /**
-   * 삭제 버튼 클릭 핸들러
-   * 삭제 확인 다이얼로그 표시
+   * ??�� 버튼 ?�릭 ?�들??
+   * ??�� ?�인 ?�이?�로�??�시
    */
   const handleDelete = async () => {
     if (!employeeData || !profileForm.seqNo) {
-      showToast('삭제할 프로필을 선택해주세요.', 'warning');
+      showToast('??��???�로?�을 ?�택?�주?�요.', 'warning');
       return;
     }
 
     const confirmMessage = profileForm.bsnNo 
-      ? '프로젝트관리에서 등록된 투입현황 내역의 프로필 입니다. 그래도 삭제하시겠습니까?'
-      : '선택한 프로필을 삭제하시겠습니까?';
+      ? '?�로?�트관리에???�록???�입?�황 ?�역???�로???�니?? 그래????��?�시겠습?�까?'
+      : '?�택???�로?�을 ??��?�시겠습?�까?';
 
     setDeleteConfirmMessage(confirmMessage);
     setShowDeleteConfirm(true);
   };
 
   /**
-   * 삭제 확인 다이얼로그 확인 핸들러
-   * 프로필 삭제 API 호출
+   * ??�� ?�인 ?�이?�로�??�인 ?�들??
+   * ?�로????�� API ?�출
    */
   const handleDeleteConfirm = async () => {
     setShowDeleteConfirm(false);
 
     if (!employeeData) {
-      showToast('사원 정보가 없습니다.', 'error');
+      showToast('?�원 ?�보가 ?�습?�다.', 'error');
       return;
     }
 
@@ -1270,33 +1270,33 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
       });
       
       if (result.success) {
-        showToast('프로필이 삭제되었습니다.', 'info');
+        showToast('?�로?�이 ??��?�었?�니??', 'info');
         await loadProfileList(employeeData.EMP_NO);
         handleNew();
       } else {
-        showToast(result.message || '삭제 중 오류가 발생했습니다.', 'error');
+        showToast(result.message || '??�� �??�류가 발생?�습?�다.', 'error');
       }
     } catch (error) {
-      console.error('프로필 삭제 오류:', error);
-      showToast('프로필 삭제 중 오류가 발생했습니다.', 'error');
+      console.error('?�로????�� ?�류:', error);
+      showToast('?�로????�� �??�류가 발생?�습?�다.', 'error');
     } finally {
       setIsLoading(false);
     }
   };
 
   /**
-   * 폼 필드 변경 핸들러
-   * 프로필 입력 폼의 필드 값 변경 처리
-   * @param {keyof ProfileFormData} field - 변경할 필드명
-   * @param {string} value - 변경할 값
+   * ???�드 변�??�들??
+   * ?�로???�력 ?�의 ?�드 �?변�?처리
+   * @param {keyof ProfileFormData} field - 변경할 ?�드�?
+   * @param {string} value - 변경할 �?
    */
   const handleFormChange = (field: keyof ProfileFormData, value: string) => {
     setProfileForm(prev => ({ ...prev, [field]: value }));
   };
 
   /**
-   * AS-IS 경력 변경 시 자동 계산
-   * 프로필 변경 시 경력을 자동으로 재계산
+   * AS-IS 경력 변�????�동 계산
+   * ?�로??변�???경력???�동?�로 ?�계??
    */
   const handleCareerChange = () => {
     calculateCareer('ALL');
@@ -1306,13 +1306,13 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
     initializeData();
   }, []);
 
-  // 탭 모드에서 부모 props 변경 시 재조회
+  // ??모드?�서 부�?props 변�????�조??
   useEffect(() => {
     console.log('[PSM0050M00] useEffect triggered:', { isTabMode, parentEmpNo, parentEmpNm });
     if (parentEmpNo && parentEmpNo.trim() !== '') {
       console.log('[PSM0050M00] Loading employee info for:', parentEmpNo);
       setSearchEmpNm(parentEmpNm || '');
-      // 자동으로 사원 정보 조회 및 프로필 조회까지 수행
+      // ?�동?�로 ?�원 ?�보 조회 �??�로??조회까�? ?�행
       searchEmployeeInfo('1', parentEmpNo, 'ALL');
     }
   }, [isTabMode, parentEmpNo, parentEmpNm]);
@@ -1324,29 +1324,29 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
       width: 70,
       cellRenderer: setRowNum
     },
-    { headerName: '프로젝트명', field: 'PRJT_NM', width: 250 },
-    { headerName: '시작년월', field: 'STRT_YM', width: 100 },
-    { headerName: '종료년월', field: 'END_YM', width: 100 },
-    { headerName: '개월수', field: 'IN_MCNT', width: 120 },
-    { headerName: '고객사', field: 'MMBR_CO', width: 150 },
-    { headerName: '담당업무', field: 'CHRG_WRK_NM', width: 100 },
-    { headerName: '개발환경', field: 'DVLP_ENVR', width: 250 },
-    { headerName: '사업번호', field: 'BSN_NO', width: 150 },
-    { headerName: '등록일', field: 'REG_DT', width: 130 },
-    { headerName: '등록자', field: 'CHNGR_NM', width: 100 },
+    { headerName: '?�로?�트�?, field: 'PRJT_NM', width: 250 },
+    { headerName: '?�작?�월', field: 'STRT_YM', width: 100 },
+    { headerName: '종료?�월', field: 'END_YM', width: 100 },
+    { headerName: '개월??, field: 'IN_MCNT', width: 120 },
+    { headerName: '고객??, field: 'MMBR_CO', width: 150 },
+    { headerName: '?�당?�무', field: 'CHRG_WRK_NM', width: 100 },
+    { headerName: '개발?�경', field: 'DVLP_ENVR', width: 250 },
+    { headerName: '?�업번호', field: 'BSN_NO', width: 150 },
+    { headerName: '?�록??, field: 'REG_DT', width: 130 },
+    { headerName: '?�록??, field: 'CHNGR_NM', width: 100 },
     { headerName: '비고', field: 'RMK', width: 400 }
   ];
 
   /**
-   * AS-IS CommMethods.setDateFormat 함수와 동일한 기능
-   * YYYYMMDD 형식을 YYYY/MM/DD 형식으로 변환
-   * @param {string} dateStr - YYYYMMDD 형식의 날짜 문자열
-   * @returns {string} YYYY/MM/DD 형식의 날짜 문자열
+   * AS-IS CommMethods.setDateFormat ?�수?� ?�일??기능
+   * YYYYMMDD ?�식??YYYY/MM/DD ?�식?�로 변??
+   * @param {string} dateStr - YYYYMMDD ?�식???�짜 문자??
+   * @returns {string} YYYY/MM/DD ?�식???�짜 문자??
    */
   const formatDate = (dateStr: string): string => {
     if (!dateStr || dateStr.length < 8) return '';
     
-    // YYYYMMDD 형식을 YYYY/MM/DD 형식으로 변환
+    // YYYYMMDD ?�식??YYYY/MM/DD ?�식?�로 변??
     const year = dateStr.substring(0, 4);
     const month = dateStr.substring(4, 6);
     const day = dateStr.substring(6, 8);
@@ -1355,15 +1355,15 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
   };
 
   /**
-   * AG-Grid 준비 완료 핸들러
-   * 그리드 API 참조 저장 및 컬럼 크기 자동 조정
-   * @param {GridReadyEvent} params - AG-Grid 준비 완료 이벤트 파라미터
+   * AG-Grid 준�??�료 ?�들??
+   * 그리??API 참조 ?�??�?컬럼 ?�기 ?�동 조정
+   * @param {GridReadyEvent} params - AG-Grid 준�??�료 ?�벤???�라미터
    */
   const onGridReady = (params: GridReadyEvent) => {
     gridApiRef.current = params.api;
   };
 
-  // 윈도우 리사이즈 시에도 컬럼 크기 조정
+  // ?�도??리사?�즈 ?�에??컬럼 ?�기 조정
   useEffect(() => {
     const handleResize = () => {
       if (gridApiRef.current) {
@@ -1377,13 +1377,13 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
 
   return (
     <div className={isTabMode ? "" : "mdi"}>
-      {/* 조회 영역 */}
+      {/* 조회 ?�역 */}
       <div className="search-div mb-4">
         <table className="search-table w-full">
           <tbody>
-            {/* 1행 */}
+            {/* 1??*/}
             <tr className="search-tr">
-              <th className="search-th">사원명</th>
+              <th className="search-th">?�원�?/th>
               <td className="search-td" colSpan={3}>
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-1">
@@ -1398,19 +1398,19 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                           handleEmpSearch();
                         }
                       }}
-                      placeholder="사원명"
+                      placeholder="?�원�?
                       disabled={isTabMode}
                     />
                     <button 
                       type="button"
                       onClick={handleEmpSearch}
                       className="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded border border-blue-500 hover:border-blue-600 transition-colors shadow-sm disabled:bg-gray-400 disabled:border-gray-400 disabled:cursor-not-allowed"
-                      title="사원 검색"
+                      title="?�원 검??
                       disabled={isTabMode || !isEnableSrchEmpAuthority()}
                     >
                       <img 
                         src="/icon_search_bk.svg" 
-                        alt="검색" 
+                        alt="검?? 
                         className="w-4 h-4 filter brightness-0 invert"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
@@ -1418,7 +1418,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                           target.nextElementSibling?.classList.remove('hidden');
                         }}
                       />
-                      <span className="hidden text-sm font-medium text-white">검색</span>
+                      <span className="hidden text-sm font-medium text-white">검??/span>
                     </button>
                   </div>
                   <div className="flex items-center gap-1">
@@ -1438,7 +1438,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                 </div>
               </td>
 
-              <th className="search-th">소속</th>
+              <th className="search-th">?�속</th>
               <td className="search-td" colSpan={3}>
                 <input 
                   type="text" 
@@ -1465,7 +1465,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                 />
               </td>
 
-              <th className="search-th">근무상태</th>
+              <th className="search-th">근무?�태</th>
               <td className="search-td">
                 <input 
                   type="text" 
@@ -1476,10 +1476,10 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
               </td>
             </tr>
 
-            {/* 2행 */}
+            {/* 2??*/}
             <tr className="search-tr">
 
-              <th className="search-th">입사일자</th>
+              <th className="search-th">?�사?�자</th>
               <td className="search-td">
                 <input 
                   type="text" 
@@ -1489,7 +1489,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                 />
               </td>
 
-              <th className="search-th">퇴사일자</th>
+              <th className="search-th">?�사?�자</th>
               <td className="search-td">
                 <input 
                   type="text" 
@@ -1499,7 +1499,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                 />
               </td>
 
-              <th className="search-th">학력/전공</th>
+              <th className="search-th">?�력/?�공</th>
               <td className="search-td">
                 <input 
                   type="text" 
@@ -1516,7 +1516,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                 />
               </td>
 
-              <th className="search-th">자격증/취득일</th>
+              <th className="search-th">?�격�?취득??/th>
               <td className="search-td">
                 <input
                   type="text"
@@ -1541,7 +1541,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                     value={Math.floor((Number(employeeData?.CARR_MCNT) || 0) / 12)}
                     readOnly
                   />
-                  <span className="m-0">년</span>
+                  <span className="m-0">??/span>
                   <input 
                     type="text" 
                     className="input-base input-default !w-[50px] text-right" 
@@ -1552,7 +1552,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                 </div>
               </td>
 
-              <th className="search-th">등급</th>
+              <th className="search-th">?�급</th>
               <td className="search-td">
                 <input 
                   type="text" 
@@ -1576,11 +1576,11 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
         </table>
       </div>
 
-      {/* 개발 프로필 내역 AG-Grid */}
+      {/* 개발 ?�로???�역 AG-Grid */}
       <div className="gridbox-div mb-4">
         <div className="grid-header">
           <div className="flex justify-between items-center w-full">
-            <h3>개발 프로필 내역</h3>
+            <h3>개발 ?�로???�역</h3>
             <div className="flex gap-2">
               <button 
                 type="button" 
@@ -1589,14 +1589,14 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
               >
                 CSV
               </button>
-              {/* 탭 모드에서만 프로필 등록 버튼 표시 */}
+              {/* ??모드?�서�??�로???�록 버튼 ?�시 */}
               {isTabMode && (
                 <button 
                   type="button" 
                   className="btn-base btn-act"
                   onClick={handleProfileRegist}
                 >
-                  프로필등록
+                  ?�로?�등�?
                 </button>
               )}
             </div>
@@ -1624,23 +1624,23 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
           </div>
       </div>
 
-      {/* 테이블 영역 */}
+      {/* ?�이�??�역 */}
       <div className="box-wrap">
         <div className="tit_area">
           <h3>
-            프로필 경력
+            ?�로??경력
             <span className="ml-2 text-sm text-gray-500 font-normal">
-              (기준일: {profileCarrData?.calcStadDt ? profileCarrData.calcStadDt : ''})
+              (기�??? {profileCarrData?.calcStadDt ? profileCarrData.calcStadDt : ''})
             </span>
           </h3>
         </div>
         
-        {/* 테이블 */}
+        {/* ?�이�?*/}
         <table className="form-table w-full mb-4">
           <tbody>
-            {/* 1행: 학력 기준 */}
+            {/* 1?? ?�력 기�? */}
             <tr className="form-tr">
-              <th className="form-th w-[130px]">학력기준</th>
+              <th className="form-th w-[130px]">?�력기�?</th>
               <td className="form-td w-[250px]">
                 {getCareerLabel(employeeData?.OWN_OUTS_DIV || '1', 'before')}
                 <input 
@@ -1648,13 +1648,13 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                   className="input-base input-default !w-[50px] text-center mx-1" 
                   value={profileCarrData?.entrBefInYcnt ?? 0}
                   readOnly
-                />년
+                />??
                 <input 
                   type="text" 
                   className="input-base input-default !w-[50px] text-center mx-1" 
                   value={profileCarrData?.entrBefInMcnt ?? 0}
                   readOnly
-                />월
+                />??
               </td>
               <td className="form-td w-[250px]">
                 {getCareerLabel(employeeData?.OWN_OUTS_DIV || '1', 'after')}
@@ -1663,36 +1663,36 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                    className="input-base input-default !w-[50px] text-center mx-1" 
                    value={profileCarrData?.entrAftInYcnt ?? 0}
                    readOnly
-                 />년
+                 />??
                  <input 
                    type="text" 
                    className="input-base input-default !w-[50px] text-center mx-1" 
                    value={profileCarrData?.entrAftInMcnt ?? 0}
                    readOnly
-                 />월
+                 />??
                </td>
                <td className="form-td">
-                 합계
+                 ?�계
                  <input 
                    type="text" 
                    className="input-base input-default !w-[50px] text-center mx-1" 
                    value={profileCarrData?.totCarrYcnt ?? 0}
                    readOnly
-                 />년
+                 />??
                  <input 
                    type="text" 
                    className="input-base input-default !w-[50px] text-center mx-1" 
                    value={profileCarrData?.totCarrMcnt ?? 0}
                    readOnly
-                 />월
+                 />??
                  <span className="ml-2 font-bold text-blue-600">
                    {profileCarrData?.adbgTcnGrdNm || ''}
                  </span>
                </td>
              </tr>
-             {/* 2행: 기술자격 기준 */}
+             {/* 2?? 기술?�격 기�? */}
              <tr className="form-tr">
-               <th className="form-th w-[130px]">기술자격기준</th>
+               <th className="form-th w-[130px]">기술?�격기�?</th>
                <td className="form-td">
                  {getCareerLabel(employeeData?.OWN_OUTS_DIV || '1', 'before')}
                  <input 
@@ -1700,13 +1700,13 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                    className="input-base input-default !w-[50px] text-center mx-1" 
                    value={profileCarrData?.ctqlEntrBefInYcnt ?? 0}
                    readOnly
-                 />년
+                 />??
                  <input 
                    type="text" 
                    className="input-base input-default !w-[50px] text-center mx-1" 
                    value={profileCarrData?.ctqlEntrBefInMcnt ?? 0}
                    readOnly
-                 />월
+                 />??
                </td>
                <td className="form-td">
                  {getCareerLabel(employeeData?.OWN_OUTS_DIV || '1', 'after')}
@@ -1715,28 +1715,28 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                    className="input-base input-default !w-[50px] text-center mx-1" 
                    value={profileCarrData?.ctqlEntrAftInYcnt ?? 0}
                    readOnly
-                 />년
+                 />??
                  <input 
                    type="text" 
                    className="input-base input-default !w-[50px] text-center mx-1" 
                    value={profileCarrData?.ctqlEntrAftInMcnt ?? 0}
                    readOnly
-                 />월
+                 />??
                </td>
                <td className="form-td">
-                 합계
+                 ?�계
                  <input 
                    type="text" 
                    className="input-base input-default !w-[50px] text-center mx-1" 
                    value={profileCarrData?.ctqlTotCarrYcnt ?? 0}
                    readOnly
-                 />년
+                 />??
                  <input 
                    type="text" 
                    className="input-base input-default !w-[50px] text-center mx-1" 
                    value={profileCarrData?.ctqlTotCarrMcnt ?? 0}
                    readOnly
-                 />월
+                 />??
                  <span className="ml-2 font-bold text-blue-600">
                    {profileCarrData?.ctqlTcnGrdNm || ''}
                  </span>
@@ -1745,34 +1745,34 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
           </tbody>
         </table>
 
-        {/* 탭 모드가 아닐 때만 프로필 작성 영역 표시 */}
+        {/* ??모드가 ?�닐 ?�만 ?�로???�성 ?�역 ?�시 */}
         {!isTabMode && (
           <div className="tit_area">
-            <h3>프로필 작성</h3>
+            <h3>?�로???�성</h3>
             <div>
               <button
                 className="btn-base btn-act"
                 onClick={handleLoadProjectInput}
               >
-                투입내역 불러오기
+                ?�입?�역 불러?�기
               </button>
             </div>
           </div>
         )}
 
-        {/* 탭 모드가 아닐 때만 프로필 입력 폼 표시 */}
+        {/* ??모드가 ?�닐 ?�만 ?�로???�력 ???�시 */}
         {!isTabMode && (
           <div className="gridbox-div mb-4">
           <div className="grid-scroll-wrap">
             <table className="grid-table">
               <thead>
                 <tr>
-                  <th className="grid-th">시작일자</th>
-                  <th className="grid-th">종료일자</th>
-                  <th className="grid-th">프로젝트명</th>
-                  <th className="grid-th">고객사</th>
-                  <th className="grid-th">담당업무</th>
-                                     <th className="grid-th flex justify-between items-center">개발환경/DBMS/언어<button type="button" className="btn-base btn-etc" onClick={handleDevEnvPopup}>선택</button></th>
+                  <th className="grid-th">?�작?�자</th>
+                  <th className="grid-th">종료?�자</th>
+                  <th className="grid-th">?�로?�트�?/th>
+                  <th className="grid-th">고객??/th>
+                  <th className="grid-th">?�당?�무</th>
+                                     <th className="grid-th flex justify-between items-center">개발?�경/DBMS/?�어<button type="button" className="btn-base btn-etc" onClick={handleDevEnvPopup}>?�택</button></th>
                 </tr>
               </thead>
               <tbody>
@@ -1830,7 +1830,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
                       onChange={(e) => handleFormChange('chrgWrk', e.target.value)}
                       disabled={!inputEnabled}
                     >
-                      <option value="">선택하세요</option>
+                      <option value="">?�택?�세??/option>
                       {commonCodes.map(code => (
                         <option key={code.codeId} value={code.codeId}>
                           {code.codeNm}
@@ -1855,7 +1855,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
           </div>
         </div>)}
 
-        {/* 탭 모드가 아닐 때만 프로필 입력 폼 표시 */}
+        {/* ??모드가 ?�닐 ?�만 ?�로???�력 ???�시 */}
         {!isTabMode && (
           <div className="flex justify-end gap-2 mt-2">
             <button 
@@ -1863,19 +1863,19 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
               onClick={handleDelete}
               disabled={!profileForm.seqNo}
             >
-              삭제
+              ??��
             </button>
             <button 
               className="btn-base btn-etc"
               onClick={handleNew}
             >
-              신규
+              ?�규
             </button>
             <button 
               className="btn-base btn-act"
               onClick={handleSave}
             >
-              저장
+              ?�??
             </button>
           </div>
         )}
@@ -1886,7 +1886,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
       {showDevEnvPopup && (
         <PSM0060M00
           onConfirm={(data) => {
-            // AS-IS 로직: 선택된 항목들을 쉼표로 구분하여 연결
+            // AS-IS 로직: ?�택????��?�을 ?�표�?구분?�여 ?�결
             let strDelpEnvr = "";
             if (Array.isArray(data)) {
               for (let i = 0; i < data.length; i++) {
@@ -1910,7 +1910,7 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
 
 
 
-      {/* 삭제 확인 다이얼로그 */}
+      {/* ??�� ?�인 ?�이?�로�?*/}
       <ConfirmDialog
         isVisible={showDeleteConfirm}
         type="warning"
@@ -1919,11 +1919,11 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
         onCancel={() => setShowDeleteConfirm(false)}
       />
 
-      {/* 저장 확인 다이얼로그 */}
+      {/* ?�???�인 ?�이?�로�?*/}
       <ConfirmDialog
         isVisible={showSaveConfirm}
         type="info"
-        message={newFlag ? '프로필을 등록하시겠습니까?' : '프로필을 수정하시겠습니까?'}
+        message={newFlag ? '?�로?�을 ?�록?�시겠습?�까?' : '?�로?�을 ?�정?�시겠습?�까?'}
         onConfirm={handleSaveConfirm}
         onCancel={() => setShowSaveConfirm(false)}
       />
@@ -1932,3 +1932,5 @@ const PSM0050M00: React.FC<PSM0050M00Props> = ({
 };
 
 export default PSM0050M00;
+
+

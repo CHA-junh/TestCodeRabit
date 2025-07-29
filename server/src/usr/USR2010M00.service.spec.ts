@@ -2,42 +2,42 @@ import axios from 'axios';
 
 describe('UsrService (Real DB - HTTP Integration)', () => {
   const baseURL = 'http://localhost:8080/api/usr';
-  const timeout = 30000; // 30초 타임아웃
+  const timeout = 30000; // 30�??�?�아??
 
   beforeAll(async () => {
-    // 서버가 실행 중인지 확인
+    // ?�버가 ?�행 중인지 ?�인
     try {
       await axios.get('http://localhost:8080/api/health', { timeout: 5000 });
-      console.log('✅ 서버가 정상적으로 실행 중입니다.');
+      console.log('???�버가 ?�상?�으�??�행 중입?�다.');
     } catch (error) {
       throw new Error(
-        '❌ 서버가 실행되지 않았습니다. 먼저 서버를 시작하세요: npm run start:server',
+        '???�버가 ?�행?��? ?�았?�니?? 먼�? ?�버�??�작?�세?? npm run start:server',
       );
     }
   });
 
   describe('getUserList', () => {
-    it('실제 DB에서 사용자 목록을 조회한다', async () => {
+    it('?�제 DB?�서 ?�용??목록??조회?�다', async () => {
       const response = await axios.get(`${baseURL}/list`, { timeout });
       expect(response.status).toBe(200);
 
       const result = response.data as any;
       expect(result.success).toBe(true);
       expect(Array.isArray(result.data)).toBe(true);
-      console.log(`📊 실제 DB에서 조회된 사용자 수: ${result.data.length}명`);
+      console.log(`?�� ?�제 DB?�서 조회???�용???? ${result.data.length}�?);
 
       if (result.data.length > 0) {
         const firstUser = result.data[0];
         expect(firstUser).toHaveProperty('empNo');
         expect(firstUser).toHaveProperty('empNm');
         console.log(
-          `👤 첫 번째 사용자: ${firstUser.empNm} (${firstUser.empNo})`,
+          `?�� �?번째 ?�용?? ${firstUser.empNm} (${firstUser.empNo})`,
         );
       }
     });
 
-    it('사용자명으로 검색 시 필터링된 결과를 반환한다', async () => {
-      // 검색 파라미터를 쿼리스트링으로 전달
+    it('?�용?�명?�로 검?????�터링된 결과�?반환?�다', async () => {
+      // 검???�라미터�?쿼리?�트링으�??�달
       const response = await axios.get(`${baseURL}/list?userNm=김`, {
         timeout,
       });
@@ -46,9 +46,9 @@ describe('UsrService (Real DB - HTTP Integration)', () => {
       const result = response.data as any;
       expect(result.success).toBe(true);
       expect(Array.isArray(result.data)).toBe(true);
-      console.log(`🔍 '김' 검색 결과: ${result.data.length}명`);
+      console.log(`?�� '김' 검??결과: ${result.data.length}�?);
 
-      // 검색 결과가 있다면 '김'으로 시작하는지 확인
+      // 검??결과가 ?�다�?'김'?�로 ?�작?�는지 ?�인
       if (result.data.length > 0) {
         result.data.forEach((user: any) => {
           expect(user.empNm).toMatch(/^김/);
@@ -58,8 +58,8 @@ describe('UsrService (Real DB - HTTP Integration)', () => {
   });
 
   describe('getWorkAuthList', () => {
-    it('실제 DB에서 사용자의 업무권한 목록을 조회한다', async () => {
-      // 먼저 사용자 목록을 가져와서 테스트할 사용자 선택
+    it('?�제 DB?�서 ?�용?�의 ?�무권한 목록??조회?�다', async () => {
+      // 먼�? ?�용??목록??가?��????�스?�할 ?�용???�택
       const userListResponse = await axios.get(`${baseURL}/list`, { timeout });
       const userListResult = userListResponse.data as any;
 
@@ -75,7 +75,7 @@ describe('UsrService (Real DB - HTTP Integration)', () => {
         expect(result.success).toBe(true);
         expect(Array.isArray(result.data)).toBe(true);
         console.log(
-          `🔑 ${testUser.empNm}의 업무권한 수: ${result.data.length}개`,
+          `?�� ${testUser.empNm}???�무권한 ?? ${result.data.length}�?,
         );
 
         if (result.data.length > 0) {
@@ -83,17 +83,17 @@ describe('UsrService (Real DB - HTTP Integration)', () => {
           expect(firstAuth).toHaveProperty('smlCsfCd');
           expect(firstAuth).toHaveProperty('smlCsfNm');
           console.log(
-            `📋 첫 번째 권한: ${firstAuth.smlCsfNm} (${firstAuth.smlCsfCd})`,
+            `?�� �?번째 권한: ${firstAuth.smlCsfNm} (${firstAuth.smlCsfCd})`,
           );
         }
       } else {
-        console.log('⚠️ 테스트할 사용자가 없습니다.');
+        console.log('?�️ ?�스?�할 ?�용?��? ?�습?�다.');
       }
     });
   });
 
   describe('getUserRoles', () => {
-    it('실제 DB에서 사용자 역할 목록을 조회한다', async () => {
+    it('?�제 DB?�서 ?�용????�� 목록??조회?�다', async () => {
       const response = await axios.get(`${baseURL}/roles`, { timeout });
       expect(response.status).toBe(200);
 
@@ -101,7 +101,7 @@ describe('UsrService (Real DB - HTTP Integration)', () => {
       expect(result.success).toBe(true);
       expect(Array.isArray(result.data)).toBe(true);
       console.log(
-        `🎭 실제 DB에서 조회된 사용자 역할 수: ${result.data.length}개`,
+        `?�� ?�제 DB?�서 조회???�용????�� ?? ${result.data.length}�?,
       );
 
       if (result.data.length > 0) {
@@ -109,14 +109,14 @@ describe('UsrService (Real DB - HTTP Integration)', () => {
         expect(firstRole).toHaveProperty('usrRoleId');
         expect(firstRole).toHaveProperty('usrRoleNm');
         console.log(
-          `👑 첫 번째 역할: ${firstRole.usrRoleNm} (${firstRole.usrRoleId})`,
+          `?�� �?번째 ??��: ${firstRole.usrRoleNm} (${firstRole.usrRoleId})`,
         );
       }
     });
   });
 
   describe('searchApprover', () => {
-    it('실제 DB에서 승인결재자를 검색한다', async () => {
+    it('?�제 DB?�서 ?�인결재?��? 검?�한??, async () => {
       const response = await axios.get(
         `${baseURL}/approver-search?approverNm=김`,
         {
@@ -128,7 +128,7 @@ describe('UsrService (Real DB - HTTP Integration)', () => {
       const result = response.data as any;
       expect(result.success).toBe(true);
       expect(Array.isArray(result.data)).toBe(true);
-      console.log(`🔍 '김' 승인결재자 검색 결과: ${result.data.length}명`);
+      console.log(`?�� '김' ?�인결재??검??결과: ${result.data.length}�?);
 
       if (result.data.length > 0) {
         const firstApprover = result.data[0];
@@ -136,15 +136,15 @@ describe('UsrService (Real DB - HTTP Integration)', () => {
         expect(firstApprover).toHaveProperty('empNm');
         expect(firstApprover).toHaveProperty('authCd');
         console.log(
-          `✅ 첫 번째 승인결재자: ${firstApprover.empNm} (${firstApprover.empNo})`,
+          `??�?번째 ?�인결재?? ${firstApprover.empNm} (${firstApprover.empNo})`,
         );
       }
     });
   });
 
   describe('real-db-procedure', () => {
-    it('실제 DB 프로시저를 호출한다', async () => {
-      // DB 테스트 API를 통해 실제 쿼리 실행
+    it('?�제 DB ?�로?��?�??�출?�다', async () => {
+      // DB ?�스??API�??�해 ?�제 쿼리 ?�행
       const response = await axios.get('http://localhost:8080/api/db-test', {
         timeout,
       });
@@ -154,13 +154,13 @@ describe('UsrService (Real DB - HTTP Integration)', () => {
       expect(data.success).toBe(true);
       expect(data.data).toBeDefined();
 
-      console.log(`📊 실제 DB 연결 테스트 성공`);
+      console.log(`?�� ?�제 DB ?�결 ?�스???�공`);
     });
   });
 
   describe('saveUser', () => {
-    it('실제 DB에서 사용자 정보를 저장한다 (읽기 전용 테스트)', async () => {
-      // 실제 DB에서는 데이터 변경을 피하고 읽기 전용으로 테스트
+    it('?�제 DB?�서 ?�용???�보�??�?�한??(?�기 ?�용 ?�스??', async () => {
+      // ?�제 DB?�서???�이??변경을 ?�하�??�기 ?�용?�로 ?�스??
       const response = await axios.get(`${baseURL}/list`, { timeout });
       expect(response.status).toBe(200);
 
@@ -171,19 +171,21 @@ describe('UsrService (Real DB - HTTP Integration)', () => {
       if (userList.length > 0) {
         const testUser = userList[0];
         console.log(
-          `📝 사용자 정보 저장 테스트 (읽기 전용): ${testUser.empNm}`,
+          `?�� ?�용???�보 ?�???�스??(?�기 ?�용): ${testUser.empNm}`,
         );
 
-        // 실제 저장은 하지 않고 데이터 구조만 확인
+        // ?�제 ?�?��? ?��? ?�고 ?�이??구조�??�인
         expect(testUser).toHaveProperty('empNo');
         expect(testUser).toHaveProperty('empNm');
         expect(testUser).toHaveProperty('hqDivCd');
         expect(testUser).toHaveProperty('deptDivCd');
 
-        console.log(`✅ 사용자 데이터 구조 검증 완료: ${testUser.empNm}`);
+        console.log(`???�용???�이??구조 검�??�료: ${testUser.empNm}`);
       } else {
-        console.log('⚠️ 테스트할 사용자가 없습니다.');
+        console.log('?�️ ?�스?�할 ?�용?��? ?�습?�다.');
       }
     });
   });
 });
+
+

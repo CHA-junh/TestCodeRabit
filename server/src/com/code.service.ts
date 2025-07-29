@@ -14,7 +14,7 @@ export class CodeService {
   ) {}
 
   async searchCodes(largeCategoryCode: string): Promise<CodeSearchResponseDto> {
-    // Oracle 프로시저 호출 방식 유지
+    // Oracle ?�로?��? ?�출 방식 ?��?
     const connection = await (this.dataSource.driver as any).oracle.getConnection();
     
     try {
@@ -48,7 +48,7 @@ export class CodeService {
         return response;
       }
 
-      // Entity 형태로 변환
+      // Entity ?�태�?변??
       const codeEntities: CodeEntity[] = rows.map((code: any) => ({
         codeId: code.DATA || code.data,
         codeNm: code.LABEL || code.label,
@@ -56,7 +56,7 @@ export class CodeService {
         sortSeq: 0
       }));
 
-      // Entity를 DTO로 변환
+      // Entity�?DTO�?변??
       const codeDtos: CodeDto[] = codeEntities.map(entity => ({
         codeId: entity.codeId,
         codeNm: entity.codeNm,
@@ -64,7 +64,7 @@ export class CodeService {
         sortSeq: entity.sortSeq
       }));
 
-      // DB에서 실시간으로 프로시저 정보 가져오기
+      // DB?�서 ?�시간으�??�로?��? ?�보 가?�오�?
       const procedureInfo = await this.getProcedureInfo('COM_03_0101_S');
       
       const response = new CodeSearchResponseDto();
@@ -74,15 +74,15 @@ export class CodeService {
       
       return response;
     } catch (error: any) {
-      console.error('코드 조회 오류:', error);
-      throw new Error(`코드 조회 중 오류가 발생했습니다: ${error.message}`);
+      console.error('코드 조회 ?�류:', error);
+      throw new Error(`코드 조회 �??�류가 발생?�습?�다: ${error.message}`);
     } finally {
       await connection.close();
     }
   }
 
   /**
-   * DB에서 실시간으로 프로시저 정보 조회
+   * DB?�서 ?�시간으�??�로?��? ?�보 조회
    */
   private async getProcedureInfo(procedureName: string): Promise<ProcedureInfoDto> {
     try {
@@ -94,14 +94,15 @@ export class CodeService {
       
       return dto;
     } catch (error) {
-      console.error(`프로시저 정보 조회 오류 (${procedureName}):`, error);
+      console.error(`?�로?��? ?�보 조회 ?�류 (${procedureName}):`, error);
       
-      // 오류 발생 시 기본 정보 반환
+      // ?�류 발생 ??기본 ?�보 반환
       const dto = new ProcedureInfoDto();
       dto.name = procedureName;
-      dto.originalCommentLines = ['프로시저 정보를 조회할 수 없습니다.'];
+      dto.originalCommentLines = ['?�로?��? ?�보�?조회?????�습?�다.'];
       
       return dto;
     }
   }
 } 
+

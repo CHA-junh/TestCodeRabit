@@ -1,0 +1,171 @@
+/* 팝업 스타일 */
+.popupHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  border-radius: 4px 4px 0 0;
+}
+
+.popupTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.popupClose {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #666;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.popupClose:hover {
+  background-color: #e9ecef;
+  color: #333;
+}
+
+/* 팝업 컨테이너 */
+.popupContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 800px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+/* 팝업 오버레이 */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* 팝업 내용 영역 */
+.popupContent {
+  padding: 20px;
+  max-height: calc(90vh - 120px);
+  overflow-y: auto;
+}
+
+/* 선택된 프로그램 표시 영역 */
+.selectedPrograms {
+  background-color: #f0f8ff;
+  border: 1px solid #b3d9ff;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.selectedProgramsTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0066cc;
+  margin-bottom: 8px;
+}
+
+.selectedProgramsList {
+  font-size: 12px;
+  color: #0066cc;
+  line-height: 1.4;
+}
+
+.selectedProgramsList span {
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 4px;
+  padding: 2px 6px;
+  background-color: #e6f3ff;
+  border-radius: 3px;
+}
+
+/* 체크박스 스타일 */
+.checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* 그리드 행 선택 스타일 */
+.selectedRow {
+  background-color: #e3f2fd !important;
+  border-left: 3px solid #2196f3;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .popupContainer {
+    min-width: 95vw;
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+  
+  .popupContent {
+    padding: 16px;
+    max-height: calc(95vh - 100px);
+  }
+  
+  .searchTable {
+    font-size: 12px;
+  }
+  
+  .searchTh {
+    min-width: 80px !important;
+  }
+  
+  .searchTd {
+    min-width: 120px !important;
+  }
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.popupContainer {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* 스크롤바 스타일 */
+.popupContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.popupContent::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.popupContent::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.popupContent::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+} 

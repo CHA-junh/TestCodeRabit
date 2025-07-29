@@ -1,0 +1,49 @@
+{
+	"name": "client",
+	"version": "0.0.1",
+	"description": "BIST_NEW Client Application",
+	"private": true,
+	"scripts": {
+		"dev": "next dev -H 0.0.0.0 -p 3000",
+		"dev:local": "next dev -H localhost -p 3000",
+		"dev:hmr:local": "NEXT_PUBLIC_WS_URL=ws://localhost:3000 next dev -H localhost -p 3000",
+		"dev:hmr:dev": "NEXT_PUBLIC_WS_URL=ws://172.20.30.176:3000 next dev -H 0.0.0.0 -p 3000",
+		"dev:no-hmr": "NEXT_DISABLE_HMR=true next dev -H 0.0.0.0 -p 3000",
+		"build": "next build",
+		"start": "HOSTNAME=0.0.0.0 next start -H 0.0.0.0 -p 3000",
+		"start:local": "next start -H localhost -p 3000",
+		"lint": "next lint",
+		"clean": "rimraf .next dist build coverage"
+	},
+	"dependencies": {
+		"@tanstack/react-query": "^5.83.0",
+		"ag-grid-community": "^31.0.0",
+		"ag-grid-enterprise": "^31.0.0",
+		"ag-grid-react": "^31.0.0",
+		"axios": "^1.11.0",
+		"next": "^14.2.30",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-icons": "^5.5.0",
+		"styled-jsx": "^5.1.1"
+	},
+	"devDependencies": {
+		"@testing-library/jest-dom": "^6.6.3",
+		"@testing-library/react": "^14.2.1",
+		"@testing-library/user-event": "^14.6.1",
+		"@types/jest": "^30.0.0",
+		"@types/node": "^20.0.0",
+		"@types/react": "^18.0.28",
+		"@types/react-dom": "^18.0.11",
+		"autoprefixer": "^10.4.15",
+		"eslint": "^8.55.0",
+		"eslint-config-next": "14.0.0",
+		"identity-obj-proxy": "^3.0.0",
+		"ignore-loader": "^0.1.2",
+		"jest": "^30.0.4",
+		"jest-environment-jsdom": "^30.0.4",
+		"postcss": "^8.4.31",
+		"tailwindcss": "^3.4.1",
+		"typescript": "^5.4.5"
+	}
+}
